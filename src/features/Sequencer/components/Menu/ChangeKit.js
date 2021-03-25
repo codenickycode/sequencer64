@@ -7,7 +7,9 @@ import { changeKit } from '../../reducers/sequenceSlice';
 export const ChangeKit = () => {
   const dispatch = useDispatch();
   const kit = useSelector((state) => state.sequence.present.kit);
-  const buffersLoaded = useSelector((state) => state.tone.buffersLoaded);
+  // const buffersLoaded = useSelector((state) => state.tone.buffersLoaded);
+
+  const buffersLoaded = true;
 
   const changeKitMemo = useMemo(() => {
     // console.log('rendering: ChangeKit');

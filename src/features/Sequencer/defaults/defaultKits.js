@@ -3,7 +3,7 @@ export const analog = {
   sounds: [
     {
       name: 'kick',
-      sample: './audio/analog/kick.mp3',
+      sample: 'analog/kick.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -13,7 +13,7 @@ export const analog = {
     },
     {
       name: 'snr',
-      sample: './audio/analog/snr.mp3',
+      sample: 'analog/snr.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -23,7 +23,7 @@ export const analog = {
     },
     {
       name: 'clp',
-      sample: './audio/analog/clp.mp3',
+      sample: 'analog/clp.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -33,7 +33,7 @@ export const analog = {
     },
     {
       name: 'ch',
-      sample: './audio/analog/ch.mp3',
+      sample: 'analog/ch.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -43,7 +43,7 @@ export const analog = {
     },
     {
       name: 'oh',
-      sample: './audio/analog/oh.mp3',
+      sample: 'analog/oh.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -53,7 +53,7 @@ export const analog = {
     },
     {
       name: 'cym',
-      sample: './audio/analog/cym.mp3',
+      sample: 'analog/cym.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -63,7 +63,7 @@ export const analog = {
     },
     {
       name: 'ht',
-      sample: './audio/analog/ht.mp3',
+      sample: 'analog/ht.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -73,7 +73,7 @@ export const analog = {
     },
     {
       name: 'mt',
-      sample: './audio/analog/mt.mp3',
+      sample: 'analog/mt.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -83,7 +83,7 @@ export const analog = {
     },
     {
       name: 'lt',
-      sample: './audio/analog/lt.mp3',
+      sample: 'analog/lt.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -99,7 +99,7 @@ export const house = {
   sounds: [
     {
       name: 'verb kick',
-      sample: './audio/house/kick_verb.mp3',
+      sample: 'house/kick_verb.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -109,7 +109,7 @@ export const house = {
     },
     {
       name: 'kick',
-      sample: './audio/house/kick.mp3',
+      sample: 'house/kick.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -119,7 +119,7 @@ export const house = {
     },
     {
       name: 'snr',
-      sample: './audio/house/snr.mp3',
+      sample: 'house/snr.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -129,7 +129,7 @@ export const house = {
     },
     {
       name: 'shk',
-      sample: './audio/house/shk.mp3',
+      sample: 'house/shk.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -139,7 +139,7 @@ export const house = {
     },
     {
       name: 'oh',
-      sample: './audio/house/oh.mp3',
+      sample: 'house/oh.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -149,7 +149,7 @@ export const house = {
     },
     {
       name: 'clp',
-      sample: './audio/house/clp.mp3',
+      sample: 'house/clp.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -159,7 +159,7 @@ export const house = {
     },
     {
       name: 'voc',
-      sample: './audio/house/voc.mp3',
+      sample: 'house/voc.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -169,7 +169,7 @@ export const house = {
     },
     {
       name: 'mt',
-      sample: './audio/house/mt.mp3',
+      sample: 'house/mt.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -179,7 +179,7 @@ export const house = {
     },
     {
       name: 'lt',
-      sample: './audio/house/lt.mp3',
+      sample: 'house/lt.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -195,7 +195,7 @@ export const lush = {
   sounds: [
     {
       name: 'long kick',
-      sample: './audio/lush/kick_long.mp3',
+      sample: 'lush/kick_long.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -205,7 +205,7 @@ export const lush = {
     },
     {
       name: 'med kick',
-      sample: './audio/lush/kick_mid.mp3',
+      sample: 'lush/kick_mid.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -215,7 +215,7 @@ export const lush = {
     },
     {
       name: 'short kick',
-      sample: './audio/lush/kick_short.mp3',
+      sample: 'lush/kick_short.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -225,7 +225,7 @@ export const lush = {
     },
     {
       name: 'ch',
-      sample: './audio/lush/ch.mp3',
+      sample: 'lush/ch.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -235,7 +235,7 @@ export const lush = {
     },
     {
       name: 'oh',
-      sample: './audio/lush/oh.mp3',
+      sample: 'lush/oh.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -245,7 +245,7 @@ export const lush = {
     },
     {
       name: 'snr',
-      sample: './audio/lush/snr.mp3',
+      sample: 'lush/snr.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -255,7 +255,7 @@ export const lush = {
     },
     {
       name: 'tamb',
-      sample: './audio/lush/tamb.mp3',
+      sample: 'lush/tamb.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -265,7 +265,7 @@ export const lush = {
     },
     {
       name: 'plop',
-      sample: './audio/lush/plop.mp3',
+      sample: 'lush/plop.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -275,7 +275,7 @@ export const lush = {
     },
     {
       name: 'clp',
-      sample: './audio/lush/clp.mp3',
+      sample: 'lush/clp.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -291,7 +291,7 @@ export const vinyl = {
   sounds: [
     {
       name: 'kick',
-      sample: './audio/vinyl/kick.mp3',
+      sample: 'vinyl/kick.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -301,7 +301,7 @@ export const vinyl = {
     },
     {
       name: 'kick 2',
-      sample: './audio/vinyl/kick2.mp3',
+      sample: 'vinyl/kick2.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -311,7 +311,7 @@ export const vinyl = {
     },
     {
       name: 'snr',
-      sample: './audio/vinyl/snr.mp3',
+      sample: 'vinyl/snr.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -321,7 +321,7 @@ export const vinyl = {
     },
     {
       name: 'ch',
-      sample: './audio/vinyl/ch.mp3',
+      sample: 'vinyl/ch.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -331,7 +331,7 @@ export const vinyl = {
     },
     {
       name: 'oh',
-      sample: './audio/vinyl/oh.mp3',
+      sample: 'vinyl/oh.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -341,7 +341,7 @@ export const vinyl = {
     },
     {
       name: 'clp',
-      sample: './audio/vinyl/clp.mp3',
+      sample: 'vinyl/clp.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -351,7 +351,7 @@ export const vinyl = {
     },
     {
       name: 'bass',
-      sample: './audio/vinyl/bass.mp3',
+      sample: 'vinyl/bass.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -361,7 +361,7 @@ export const vinyl = {
     },
     {
       name: 'shk',
-      sample: './audio/vinyl/shk.mp3',
+      sample: 'vinyl/shk.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,
@@ -371,7 +371,7 @@ export const vinyl = {
     },
     {
       name: 'rim',
-      sample: './audio/vinyl/rim.mp3',
+      sample: 'vinyl/rim.mp3',
       pitchMod: 0,
       lengthMod: 1,
       velocityMod: 1,

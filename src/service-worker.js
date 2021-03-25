@@ -50,7 +50,8 @@ registerRoute(
 // precache, in this case same-origin .png requests like those from in public/
 registerRoute(
   // Add in any other file extensions or routing criteria as needed.
-  ({ url }) => url.origin === self.location.origin && url.pathname.endsWith('.png'), // Customize this strategy as needed, e.g., by changing to CacheFirst.
+  ({ url }) =>
+    url.origin === self.location.origin && url.pathname.endsWith('.png'), // Customize this strategy as needed, e.g., by changing to CacheFirst.
   new StaleWhileRevalidate({
     cacheName: 'images',
     plugins: [
@@ -70,3 +71,28 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+self.addEventListener('fetch', (e) => {
+  const url = e.request.url;
+  if (url.match('.mp3')) {
+    let cachedResFunc = async function () {
+      const cache = await caches.open('kits');
+      let cachedRes = await cache.match(e.request, { ignoreVary: true });
+      if (cachedRes) {
+        console.log('returning from cache:', cachedRes);
+        return cachedRes;
+      } else {
+        try {
+          const res = await fetch(url);
+          cachedRes = res;
+          await cache.put(e.request, res.clone());
+        } catch (e) {
+          console.log(e);
+        } finally {
+          console.log('returning from fetch: ', cachedRes);
+          return cachedRes;
+        }
+      }
+    };
+    e.respondWith(cachedResFunc());
+  }
+});
