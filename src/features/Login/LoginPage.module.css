@@ -1,0 +1,31 @@
+.loginPage {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginMethods {
+  width: 100%;
+}
+
+.methodBtn {
+  margin: 1rem 0;
+  background: transparent;
+  height: 5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.methodBtn img {
+  height: 2rem;
+}
+
+.methodBtn p {
+  color: white;
+}

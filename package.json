@@ -21,7 +21,14 @@
     "workbox-range-requests": "^5.1.4",
     "workbox-routing": "^5.1.4",
     "workbox-strategies": "^5.1.4",
-    "workbox-streams": "^5.1.4"
+    "workbox-streams": "^5.1.4",
+    "@reduxjs/toolkit": "^1.5.0",
+    "axios": "^0.21.1",
+    "cuid": "^2.1.8",
+    "react-redux": "^7.2.2",
+    "react-router-dom": "^5.2.0",
+    "redux-undo": "^1.0.1",
+    "tone": "^14.8.9"
   },
   "scripts": {
     "start": "react-scripts start",

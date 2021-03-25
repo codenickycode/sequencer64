@@ -1,26 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as Tone from 'tone';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { LoginPage } from './features/Login/LoginPage';
+import { SequencerPage } from './features/Sequencer/Sequencer';
+import { StatusBar } from './features/StatusBar/StatusBar';
 
-function App() {
+export default function App() {
+  // console.log('rendering: App');
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route path='/' exact component={SequencerPage} />
+        <Route path='/login' component={LoginPage} />
+      </Switch>
+      <StatusBar />
+    </Router>
   );
 }
 
-export default App;
+const initialClick = async () => {
+  await Tone.start();
+  console.log('audio ready');
+  document.removeEventListener('click', initialClick);
+};
+document.addEventListener('click', initialClick);
+
+Tone.getDestination().volume.value = -12;
+
+window.addEventListener('orientationchange', resize);
+window.addEventListener('blur', () => {
+  window.addEventListener('focus', resize);
+});
+
+function resize() {
+  document.body.style.display = 'none';
+  setTimeout(function () {
+    document.body.style.display = 'initial';
+  }, 10);
+  window.removeEventListener('focus', resize);
+}
