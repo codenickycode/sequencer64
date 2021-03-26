@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { getSS, setSS } from '../utils/storage';
 
 export const INITIAL_USER = {
   googleId: '',
@@ -13,7 +14,7 @@ export const INITIAL_USER = {
 const INITIAL_STATE = {
   user: INITIAL_USER,
   status: { count: 0, message: 'loading' },
-  show: '',
+  show: getSS('show') || '',
   fetching: false,
   networkError: false,
   serviceWorkerActive: false,
@@ -25,10 +26,12 @@ export const appSlice = createSlice({
   reducers: {
     setShow: (state, { payload }) => {
       state.show = payload;
+      setSS('show', payload);
     },
-    setUser: (state, { user, status }) => {
-      state.user = user;
-      state.status = status;
+    setUser: (state, { payload: { user, status } }) => {
+      state.user = { username: user.username, sequences: user.sequences };
+      state.status.count++;
+      state.status.message = status;
     },
     setStatus: (state, { payload }) => {
       state.status.count++;
@@ -70,7 +73,7 @@ export const getUser = () => async (dispatch) => {
   try {
     dispatch(appSlice.actions.setFetching(true));
     const res = await axios.get(
-      // 'https://drumnickydrum-sequencer.herokuapp.com/user',
+      //   // 'https://drumnickydrum-sequencer.herokuapp.com/user',
       'http://localhost:4000/user',
       {
         withCredentials: true,
@@ -80,8 +83,7 @@ export const getUser = () => async (dispatch) => {
       dispatch(setUser({ user: res.data, status: 'User logged in' }));
     }
   } catch (e) {
-    console.log('Get User ERROR ->\n');
-    console.log(e.response?.data || e.message);
+    console.log('Get User ERROR ->\n', e);
     dispatch(appSlice.actions.setStatus('User not logged in'));
   } finally {
     dispatch(appSlice.actions.setFetching(false));

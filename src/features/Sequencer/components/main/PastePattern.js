@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as defaultKits from '../../defaults/defaultKits';
 import * as icons from '../../../../icons/kit';
@@ -46,14 +46,12 @@ const SoundBtn = ({ i, icon, color }) => {
   const dispatch = useDispatch();
   const selectedSound = useSelector((state) => state.editor.selectedSound);
   const pattern = useSelector((state) => state.sequence.present.pattern);
-  const ref = useRef(null);
 
+  const [flashClass, setFlashClass] = useState('cells');
   const onClick = () => {
     dispatch(paste({ sound: i, selectedSound }));
-    if (ref.current) {
-      ref.current.classList.add('selected');
-      setTimeout(() => ref.current.classList.remove('selected'));
-    }
+    setFlashClass('cells selected');
+    setTimeout(() => setFlashClass('cells'));
   };
 
   let classes = `sound borderDefault`;
@@ -67,7 +65,7 @@ const SoundBtn = ({ i, icon, color }) => {
       ) : (
         <div className='paste-icon-wrapper'>{icons[icon](color)}</div>
       )}
-      <div ref={ref} className={selected ? 'cells selected' : 'cells'}>
+      <div className={flashClass}>
         {pattern.map((step, s) => {
           const classes = step[i].noteOn ? `cell bg${i} on` : 'cell';
           return <div key={`paste-pattern-${s}-${i}`} className={classes} />;

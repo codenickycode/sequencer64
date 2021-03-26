@@ -41,16 +41,7 @@ export const SaveSequence = ({ stopSequencer }) => {
       pattern,
     };
     setNewName('');
-    try {
-      dispatch(setFetching(true));
-      await dispatch(saveSequence(newSequence));
-      setConfirmation('Sequence saved!');
-    } catch (e) {
-      console.log('Save Sequence ERROR ->\n', e);
-      setError('Server error: please try again later.');
-    } finally {
-      dispatch(setFetching(false));
-    }
+    dispatch(saveSequence(newSequence));
   };
 
   // console.log('rendering: SaveSequence');

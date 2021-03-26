@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as Tone from 'tone';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { LoginPage } from './features/Login/LoginPage';
@@ -6,8 +6,16 @@ import { SequencerPage } from './features/Sequencer/Sequencer';
 import { StatusBar } from './features/StatusBar/StatusBar';
 import ErrorBoundary from './ErrorBoundary';
 import ErrorHandler from './features/ErrorHandler';
+import { useDispatch } from 'react-redux';
+import { getUser } from './reducers/appSlice';
 
 export default function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUser());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // console.log('rendering: App');
   return (
     <Router>

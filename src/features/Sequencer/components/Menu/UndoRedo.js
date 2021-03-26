@@ -14,13 +14,13 @@ let UndoRedo = ({ canUndo, canRedo, onUndo, onRedo }) => {
   const buffersLoaded = useSelector((state) => state.tone.buffersLoaded);
 
   const handleUndo = useCallback(() => {
-    const prefix = !undoStatus.match(/bpm|kit/g) ? 'undo: ' : '';
+    const prefix = !undoStatus.match(/bpm|kit|sequence/g) ? 'undo: ' : '';
     dispatch(setStatus(prefix + undoStatus));
     onUndo();
   }, [dispatch, onUndo, undoStatus]);
 
   const handleRedo = useCallback(() => {
-    const prefix = !redoStatus.match(/bpm|kit/g) ? 'redo: ' : '';
+    const prefix = !redoStatus.match(/bpm|kit|sequence/g) ? 'redo: ' : '';
     dispatch(setStatus(prefix + redoStatus));
     onRedo();
   }, [dispatch, onRedo, redoStatus]);

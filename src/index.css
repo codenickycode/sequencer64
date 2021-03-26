@@ -1412,7 +1412,7 @@ div[data-cursor='true'] .cursor {
   top: 0;
   height: 2.5rem;
   width: 100%;
-  z-index: 5;
+  z-index: 201;
 }
 .status {
   padding: 0.5rem;

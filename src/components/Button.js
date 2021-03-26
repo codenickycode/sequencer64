@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '../icons';
-import { pressDown, pressUp } from '../utils/press';
 
 export const Button = ({
   fwdRef,
