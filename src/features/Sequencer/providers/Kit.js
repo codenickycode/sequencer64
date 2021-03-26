@@ -34,21 +34,15 @@ export const KitProvider = ({ children }) => {
   const loadSamples = useCallback(
     (kit) => {
       if (kitRef.current.sounds[0].sampler) disposeSamples();
-      // console.log(Kick);
       async function loadBuffers() {
         for (let i = 0; i < 9; i++) {
           const samplePath = kitRef.current.sounds[i].sample;
           const sampleUrl = 'http://localhost:4000/kits/' + samplePath;
-          // const sample = await cacheSample(sampleUrl);
-          // console.log(sample);
           kitRef.current.sounds[i].sampler = new Tone.Sampler({
             urls: {
               C2: sampleUrl,
             },
             onload: () => {
-              kitRef.current.sounds[i].duration = kitRef.current.sounds[
-                i
-              ].sampler._buffers._buffers.get('36')._buffer.duration;
               if (i === 8) {
                 console.log('buffers loaded!');
                 dispatch(setBuffersLoaded(true));

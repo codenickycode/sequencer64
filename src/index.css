@@ -192,7 +192,7 @@ body {
   width: 100%;
   max-width: 800px;
   height: 30%;
-  padding: 0.25rem;
+  /* padding: 0.25rem; */
   border-top: 1px solid var(--purple);
   border-bottom: 1px solid var(--purple);
   background: var(--purple-third);
@@ -445,7 +445,94 @@ body {
 }
 
 /*************************************/
-/********** Paste Sequence ***********/
+/************* Load Kit **************/
+/*************************************/
+
+#load-kit {
+  pointer-events: none;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: var(--black-3q);
+  opacity: 0;
+  transition: 150ms;
+}
+
+#load-kit.show {
+  pointer-events: initial;
+  opacity: 1;
+}
+
+#load-kit-kits {
+  padding: 0.25rem;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 0.2rem;
+}
+
+.kit-btn {
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--white);
+  border-radius: 0.5rem;
+  border: 1px solid var(--purple);
+  background: none;
+  font-size: 1rem;
+}
+
+.kit-btn.selected {
+  border: 1px solid var(--white);
+  animation: flashing 500ms alternate infinite;
+}
+
+.kit-btn.dim-border {
+  border: 1px solid var(--purple-half);
+}
+
+.kit-btn-dummy,
+.kit-btn-p,
+.kit-btn .icon {
+  height: 100%;
+}
+
+.kit-btn-p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.kit-btn-p.small {
+  font-size: 0.8rem;
+  font-weight: normal;
+}
+
+.kit-btn .icon {
+  fill: var(--white);
+}
+
+.kit-info {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 0.5rem 0.5rem;
+  overflow: hidden;
+  background: var(--black-90);
+}
+
+/*************************************/
+/*********** Paste Pattern ***********/
 /*************************************/
 
 #paste-pattern {

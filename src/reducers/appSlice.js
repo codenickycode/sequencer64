@@ -15,6 +15,7 @@ const INITIAL_STATE = {
   status: { count: 0, message: 'loading' },
   show: '',
   fetching: false,
+  networkError: false,
 };
 
 export const appSlice = createSlice({
@@ -35,8 +36,26 @@ export const appSlice = createSlice({
     setFetching: (state, { payload }) => {
       state.fetching = payload;
     },
+    setNetworkError: (state, { payload: { val, timeout } }) => {
+      state.networkError = val;
+      if (val) {
+        state.networkTimeout = timeout;
+      } else {
+        console.log('clearing networkTimeout');
+        clearTimeout(state.networkTimeout);
+      }
+    },
   },
 });
+
+export const changeNetworkError = (val) => (dispatch) => {
+  let timer;
+  dispatch(appSlice.actions.setNetworkError(val, timer));
+  if (val)
+    timer = setTimeout(() =>
+      dispatch(appSlice.actions.setNetworkError(false), 1000 * 60)
+    );
+};
 
 export const getUser = () => async (dispatch) => {
   try {

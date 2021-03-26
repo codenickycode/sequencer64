@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid } from './components/main/Grid';
 import { PastePattern } from './components/main/PastePattern';
+import { LoadKit, LoadKitInfo } from './components/main/LoadKit';
 import { SoundPanel } from './components/sound-panel/SoundPanel';
 import { LoadSaveSequence } from './components/load/LoadSaveSequence';
 import { Menu } from './components/Menu';
@@ -17,9 +18,11 @@ export const SequencerPage = () => {
           <div id='main'>
             <Grid />
             <PastePattern />
+            <LoadKit />
           </div>
           <div id='sound-panel'>
             <SoundPanel />
+            <LoadKitInfo />
           </div>
           <Menu />
         </div>
