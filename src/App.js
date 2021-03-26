@@ -4,16 +4,21 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { LoginPage } from './features/Login/LoginPage';
 import { SequencerPage } from './features/Sequencer/Sequencer';
 import { StatusBar } from './features/StatusBar/StatusBar';
+import ErrorBoundary from './ErrorBoundary';
+import ErrorHandler from './features/ErrorHandler';
 
 export default function App() {
   // console.log('rendering: App');
   return (
     <Router>
-      <Switch>
-        <Route path='/' exact component={SequencerPage} />
-        <Route path='/login' component={LoginPage} />
-      </Switch>
-      <StatusBar />
+      <ErrorBoundary>
+        <Switch>
+          <Route path='/' exact component={SequencerPage} />
+          <Route path='/login' component={LoginPage} />
+          <Route path='/error/' component={ErrorHandler} />
+        </Switch>
+        <StatusBar />
+      </ErrorBoundary>
     </Router>
   );
 }
