@@ -4,6 +4,7 @@ import * as defaultKits from '../../defaults/defaultKits';
 import * as icons from '../../../../icons/kit';
 import { MODES } from '../../reducers/editorSlice';
 import { paste } from '../../reducers/sequenceSlice';
+import { Button } from '../../../../components/Button';
 
 export const PastePattern = () => {
   const kit = useSelector((state) => state.sequence.present.kit);
@@ -60,7 +61,7 @@ const SoundBtn = ({ i, icon, color }) => {
   if (selected) classes += ' flashing';
 
   return (
-    <div className={classes} onClick={onClick}>
+    <Button classes={classes} onClick={onClick}>
       {selected ? (
         <p className='flashing'>copying...</p>
       ) : (
@@ -73,6 +74,6 @@ const SoundBtn = ({ i, icon, color }) => {
         })}
       </div>
       <div className='border-flashing' />
-    </div>
+    </Button>
   );
 };

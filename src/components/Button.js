@@ -11,14 +11,22 @@ export const Button = ({
   children,
 }) => {
   const ref = useRef(null);
+  const [pressed, setPressed] = useState(false);
+
+  const onTouchStart = () => {
+    if (!disabled) setPressed(true);
+  };
+
+  const onTouchEnd = () => setPressed(false);
+
   return (
     <button
       ref={fwdRef || ref}
       id={id}
-      className={classes + ' btn'}
+      className={classes + (pressed ? ' pressed btn' : ' btn')}
       disabled={disabled}
-      onTouchStart={() => pressDown(ref)}
-      onTouchEnd={() => pressUp(ref)}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
       onClick={onClick}
     >
       {children}

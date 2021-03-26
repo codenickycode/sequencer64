@@ -53,7 +53,6 @@ export const KitBtn = ({ counterRef, kitName, available }) => {
     (state) => state.app.serviceWorkerActive
   );
   const kit = useSelector((state) => state.sequence.present.kit);
-  const buffersLoaded = useSelector((state) => state.tone.buffersLoaded);
   const networkError = useSelector((state) => state.app.networkError);
   const selected = kitName === kit;
 
@@ -105,8 +104,8 @@ export const KitBtn = ({ counterRef, kitName, available }) => {
   };
 
   return (
-    <button
-      className={
+    <Button
+      classes={
         selected
           ? 'kit-btn selected'
           : !ready
@@ -137,7 +136,7 @@ export const KitBtn = ({ counterRef, kitName, available }) => {
       ) : (
         <div className='kit-btn-dummy' />
       )}
-    </button>
+    </Button>
   );
 };
 
