@@ -48,7 +48,7 @@ export const Transport = () => {
           );
           animateSound(time, patternRef.current[stepRef.current]);
         } catch (e) {
-          console.log('schedulePattern ERROR ->\n', e);
+          console.log('scheduleRepeat passed buffer interupt');
         }
         stepRef.current = (stepRef.current + 1) % patternRef.current.length;
       }, '16n');

@@ -385,6 +385,7 @@ export const vinyl = {
     },
   ],
 };
+
 export const another = {
   name: 'another',
   available: false,
@@ -481,6 +482,7 @@ export const another = {
     },
   ],
 };
+
 export const new2 = {
   name: 'new2',
   available: false,
@@ -577,6 +579,7 @@ export const new2 = {
     },
   ],
 };
+
 export const anotherKit = {
   name: 'anotherKit',
   available: false,
@@ -673,6 +676,7 @@ export const anotherKit = {
     },
   ],
 };
+
 export const thumpy = {
   name: 'thumpy',
   available: false,
@@ -769,6 +773,7 @@ export const thumpy = {
     },
   ],
 };
+
 export const dope = {
   name: 'dope',
   available: false,

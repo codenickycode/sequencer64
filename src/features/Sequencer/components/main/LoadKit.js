@@ -90,8 +90,8 @@ export const KitBtn = ({ counterRef, kitName, available }) => {
         }
       } else {
         dispatch(changeKit(kitName));
-        setReady(true);
       }
+      setReady(true);
     } catch (e) {
       if (!ready) {
         dispatch(setStatus('Error downloading kit: ', kitName));
@@ -113,9 +113,7 @@ export const KitBtn = ({ counterRef, kitName, available }) => {
           ? 'kit-btn dim-border'
           : 'kit-btn'
       }
-      disabled={
-        disabled || !buffersLoaded || (!ready && networkError) || fetching
-      }
+      disabled={disabled || (!ready && networkError) || fetching}
       onClick={onClick}
     >
       <p className={showReady ? 'kit-btn-ready show' : 'kit-btn-ready'}>

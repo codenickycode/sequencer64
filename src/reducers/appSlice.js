@@ -48,7 +48,11 @@ export const appSlice = createSlice({
     },
     setServiceWorkerActive: (state, { payload }) => {
       state.serviceWorkerActive = payload;
-      console.log('service worker is active');
+      if (payload) {
+        console.log('service worker is active');
+      } else {
+        console.log('service worker is not active');
+      }
     },
   },
 });
