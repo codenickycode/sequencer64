@@ -16,6 +16,7 @@ const INITIAL_STATE = {
   show: '',
   fetching: false,
   networkError: false,
+  serviceWorkerActive: false,
 };
 
 export const appSlice = createSlice({
@@ -44,6 +45,10 @@ export const appSlice = createSlice({
         console.log('clearing networkTimeout');
         clearTimeout(state.networkTimeout);
       }
+    },
+    setServiceWorkerActive: (state, { payload }) => {
+      state.serviceWorkerActive = payload;
+      console.log('service worker is active');
     },
   },
 });
@@ -96,6 +101,12 @@ export const logout = () => async (dispatch) => {
   }
 };
 
-export const { setShow, setUser, setStatus, setFetching } = appSlice.actions;
+export const {
+  setShow,
+  setUser,
+  setStatus,
+  setFetching,
+  setServiceWorkerActive,
+} = appSlice.actions;
 
 export default appSlice.reducer;

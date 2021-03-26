@@ -49,6 +49,9 @@ export const LoadKit = () => {
 
 export const KitBtn = ({ counterRef, kitName, available }) => {
   const dispatch = useDispatch();
+  const serviceWorkerActive = useSelector(
+    (state) => state.app.serviceWorkerActive
+  );
   const kit = useSelector((state) => state.sequence.present.kit);
   const buffersLoaded = useSelector((state) => state.tone.buffersLoaded);
   const networkError = useSelector((state) => state.app.networkError);
@@ -77,17 +80,17 @@ export const KitBtn = ({ counterRef, kitName, available }) => {
     counterRef.current++;
     const thisClick = counterRef.current;
     try {
-      if (!ready) {
+      if (!ready && serviceWorkerActive) {
         setFetching(true);
         const received = await fetchSamples(kitName);
         if (received) {
-          setReady(true);
           if (thisClick === counterRef.current) {
             dispatch(changeKit(kitName));
           }
         }
       } else {
         dispatch(changeKit(kitName));
+        setReady(true);
       }
     } catch (e) {
       if (!ready) {

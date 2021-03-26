@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Tone from 'tone';
 import { setLS } from '../../../utils/storage';
 import * as defaultKits from '../defaults/defaultKits';
-import { setBuffersLoaded, prepRestart } from '../reducers/toneSlice';
+import {
+  setBuffersLoaded,
+  prepRestart,
+  setRestarting,
+  unload,
+} from '../reducers/toneSlice';
 
 const getInitialKit = (kit) => {
   const sounds = defaultKits[kit].sounds.map((sound) => ({
@@ -71,8 +76,10 @@ export const KitProvider = ({ children }) => {
 
   useEffect(() => {
     if (Tone.Transport.state === 'started') {
-      dispatch(prepRestart());
+      console.log('prepping restart');
+      dispatch(setRestarting(true));
     }
+    dispatch(unload());
     kitRef.current.name = defaultKits[kit].name;
     kitRef.current.sounds = defaultKits[kit].sounds.map((sound) => ({
       ...sound,
