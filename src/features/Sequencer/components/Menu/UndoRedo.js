@@ -20,7 +20,8 @@ let UndoRedo = ({ canUndo, canRedo, onUndo, onRedo }) => {
   }, [dispatch, onUndo, undoStatus]);
 
   const handleRedo = useCallback(() => {
-    dispatch(setStatus('redo: ' + redoStatus));
+    const prefix = !redoStatus.match(/bpm|kit/g) ? 'redo: ' : '';
+    dispatch(setStatus(prefix + redoStatus));
     onRedo();
   }, [dispatch, onRedo, redoStatus]);
 
