@@ -1,19 +1,20 @@
 import cuid from 'cuid';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CloudDownloadIcon } from '../../../../icons';
-import { setFetching, setStatus } from '../../../../reducers/appSlice';
+import { setStatus } from '../../../../reducers/appSlice';
 import * as defaultKits from '../../defaults/defaultKits';
-import { MODES } from '../../reducers/editorSlice';
+import { MODES, setMode } from '../../reducers/editorSlice';
 import { changeKit } from '../../reducers/sequenceSlice';
 import { host } from '../../../../host';
+import { Button } from '../../../../components/Button';
 
 const kits = Object.values(defaultKits);
 
 export const LoadKit = () => {
   const mode = useSelector((state) => state.editor.mode);
-  //   const showLoadKit = mode === MODES.LOAD_KIT;
-  const showLoadKit = true;
+  const showLoadKit = mode === MODES.LOAD_KIT;
+  const counterRef = useRef(0);
 
   const loadKitMemo = useMemo(() => {
     // console.log('rendering: LoadKit');
@@ -30,7 +31,12 @@ export const LoadKit = () => {
               const available = kits[i].available;
               const kitName = kits[i].name;
               return (
-                <KitBtn key={cuid()} kitName={kitName} available={available} />
+                <KitBtn
+                  key={cuid()}
+                  counterRef={counterRef}
+                  kitName={kitName}
+                  available={available}
+                />
               );
             })}
           </div>
@@ -41,7 +47,7 @@ export const LoadKit = () => {
   return loadKitMemo;
 };
 
-export const KitBtn = ({ kitName, available }) => {
+export const KitBtn = ({ counterRef, kitName, available }) => {
   const dispatch = useDispatch();
   const kit = useSelector((state) => state.sequence.present.kit);
   const buffersLoaded = useSelector((state) => state.tone.buffersLoaded);
@@ -49,16 +55,37 @@ export const KitBtn = ({ kitName, available }) => {
   const selected = kitName === kit;
 
   const [ready, setReady] = useState(available);
+  const [showReady, setShowReady] = useState(false);
+  const prevReadyRef = useRef(ready);
+  useEffect(() => {
+    let timer;
+    if (ready) {
+      if (!showReady && !prevReadyRef.current) {
+        setShowReady(true);
+        prevReadyRef.current = true;
+      }
+      timer = setTimeout(() => setShowReady(false), 1500);
+    }
+    return () => clearTimeout(timer);
+  }, [ready, showReady]);
+
   const [fetching, setFetching] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
   const onClick = async () => {
     setDisabled(true);
+    counterRef.current++;
+    const thisClick = counterRef.current;
     try {
       if (!ready) {
         setFetching(true);
         const received = await fetchSamples(kitName);
-        if (received) setReady(true);
+        if (received) {
+          setReady(true);
+          if (thisClick === counterRef.current) {
+            dispatch(changeKit(kitName));
+          }
+        }
       } else {
         dispatch(changeKit(kitName));
       }
@@ -88,8 +115,20 @@ export const KitBtn = ({ kitName, available }) => {
       }
       onClick={onClick}
     >
-      <div className='kit-btn-dummy' />
-      <p className={!ready ? 'kit-btn-p dim' : 'kit-btn-p'}>{kitName}</p>
+      <p className={showReady ? 'kit-btn-ready show' : 'kit-btn-ready'}>
+        ready!
+      </p>
+      <p
+        className={
+          fetching
+            ? 'kit-btn-p flashing'
+            : !ready
+            ? 'kit-btn-p dim'
+            : 'kit-btn-p'
+        }
+      >
+        {kitName}
+      </p>
       {!ready ? (
         <CloudDownloadIcon addClass={fetching ? 'flashing' : ''} />
       ) : selected ? (
@@ -102,7 +141,22 @@ export const KitBtn = ({ kitName, available }) => {
 };
 
 export const LoadKitInfo = () => {
-  return <div className='kit-info'>Some instructions about loading kit</div>;
+  const dispatch = useDispatch();
+  const mode = useSelector((state) => state.editor.mode);
+  const showLoadInfo = mode === MODES.LOAD_KIT;
+  const loadKitInfoMemo = useMemo(() => {
+    const onClick = () => {
+      dispatch(setMode(null));
+    };
+    return (
+      <div className={showLoadInfo ? 'kit-info show' : 'kit-info'}>
+        <Button classes='kit-info-close' onClick={onClick}>
+          close
+        </Button>
+      </div>
+    );
+  }, [dispatch, showLoadInfo]);
+  return loadKitInfoMemo;
 };
 
 const fetchSamples = async (kitName) => {
@@ -112,5 +166,9 @@ const fetchSamples = async (kitName) => {
     const url = host + '/kits/' + sound.sample;
     promises.push(fetch(url));
   });
+  //   //   mock serve wait
+  //   await new Promise((resolve) => {
+  //     setTimeout(resolve, 3000);
+  //   });
   return await Promise.all(promises);
 };

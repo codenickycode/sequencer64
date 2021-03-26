@@ -17,7 +17,7 @@ export const Erase = () => {
     const onClick = () => {
       dispatch(eraseAll());
       if (editing) {
-        dispatch(setMode({ mode: MODES.PAINTING }));
+        dispatch(setMode(MODES.PAINTING));
       }
     };
 

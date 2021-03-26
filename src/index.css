@@ -485,11 +485,11 @@ body {
   border: 1px solid var(--purple);
   background: none;
   font-size: 1rem;
+  outline: none;
 }
 
 .kit-btn.selected {
-  border: 1px solid var(--white);
-  animation: flashing 500ms alternate infinite;
+  border: 2px solid var(--white);
 }
 
 .kit-btn.dim-border {
@@ -498,23 +498,46 @@ body {
 
 .kit-btn-dummy,
 .kit-btn-p,
+.kit-btn-ready,
 .kit-btn .icon {
   height: 100%;
 }
 
-.kit-btn-p {
+.kit-btn-p,
+.kit-btn-ready {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.kit-btn-p.small {
+.kit-btn-p.small,
+.kit-btn-ready {
   font-size: 0.8rem;
   font-weight: normal;
 }
 
+.kit-btn-ready {
+  opacity: 0;
+  transition: 1500ms;
+  color: var(--green);
+}
+
+.kit-btn-ready.show {
+  transition: none;
+  opacity: 1;
+}
+
 .kit-btn .icon {
   fill: var(--white);
+}
+
+.kit-btn-p.flashing,
+.kit-btn .icon.flashing {
+  animation: flashing 400ms alternate infinite;
+}
+
+.kit-btn:disabled {
+  opacity: 1;
 }
 
 .kit-info {
@@ -523,12 +546,42 @@ body {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
   padding: 0.5rem 0.5rem;
   overflow: hidden;
-  background: var(--black-90);
+  background: var(--black-half);
+  opacity: 0;
+  pointer-events: none;
+  transition: 150ms;
+}
+
+.kit-info.show {
+  opacity: 1;
+  pointer-events: initial;
+}
+
+.kit-info-p {
+  padding: 1rem;
+  max-width: 60%;
+  text-align: center;
+  background: var(--black-half);
+}
+
+.kit-info-close {
+  display: block;
+  cursor: pointer;
+  height: 2.5rem;
+  width: 60%;
+  padding: 0.5rem;
+  outline: none;
+  border: 1px solid var(--white);
+  border-radius: 0.3rem;
+  color: var(--white);
+  background: var(--black-half);
+  text-decoration: none;
+  text-align: center;
 }
 
 /*************************************/

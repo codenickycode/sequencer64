@@ -8,6 +8,7 @@ export const MODES = {
   MOD_VELOCITY: 'velocity',
   MOD_LENGTH: 'length',
   MOD_PITCH: 'pitch',
+  LOAD_KIT: 'LOAD_KIT',
 };
 
 export const INITIAL_MODS = {
@@ -38,8 +39,8 @@ export const editorSlice = createSlice({
       state.mode = MODES.PAINTING;
       state.spAlert = { ...INITIAL_STATE.spAlert };
     },
-    setMode: (state, { payload: { mode } }) => {
-      state.mode = mode;
+    setMode: (state, { payload }) => {
+      state.mode = payload;
     },
     setSpAlert: (state, { payload }) => {
       state.spAlert.count++;

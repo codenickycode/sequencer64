@@ -31,12 +31,12 @@ export const SoundPanel = () => {
       if (mode !== MODES.COPYING) {
         hideEditable();
       }
-      dispatch(setMode({ mode: MODES.PAINTING }));
+      dispatch(setMode(MODES.PAINTING));
     };
 
     const selectMode = (mode) => {
       if (mode === MODES.ERASING || mode === MODES.SLICING) showEditable();
-      dispatch(setMode({ mode }));
+      dispatch(setMode(mode));
     };
 
     return (
