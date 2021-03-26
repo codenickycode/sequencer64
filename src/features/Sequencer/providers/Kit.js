@@ -1,21 +1,17 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Tone from 'tone';
+import { host } from '../../../host';
 import { setLS } from '../../../utils/storage';
 import * as defaultKits from '../defaults/defaultKits';
-import {
-  setBuffersLoaded,
-  prepRestart,
-  setRestarting,
-  unload,
-} from '../reducers/toneSlice';
+import { setBuffersLoaded, setRestarting, unload } from '../reducers/toneSlice';
 
 const getInitialKit = (kit) => {
   const sounds = defaultKits[kit].sounds.map((sound) => ({
     ...sound,
   }));
   return {
-    name: defaultKits[kit].name,
+    name: 'init',
     sounds: sounds,
   };
 };
@@ -26,31 +22,30 @@ export const KitProvider = ({ children }) => {
 
   const kit = useSelector((state) => state.sequence.present.kit);
   const kitRef = useRef(getInitialKit(kit));
+  const onLoadCountRef = useRef(0);
 
-  const disposeSamples = useCallback(() => {
-    for (let i = 0; i < 9; i++) {
-      kitRef.current.sounds[i].sampler?.dispose();
-      delete kitRef.current.sounds[i].sampler;
-      kitRef.current.sounds[i].channel?.dispose();
-      delete kitRef.current.sounds[i].channel;
-    }
-  }, []);
-
+  const reloadSamples = useSelector((state) => state.tone.reloadSamples);
   const loadSamples = useCallback(
     (kit) => {
-      if (kitRef.current.sounds[0].sampler) disposeSamples();
+      if (kitRef.current.sounds[0].sampler) disposeSamples(kitRef);
+      kitRef.current.sounds = defaultKits[kit].sounds.map((sound) => ({
+        ...sound,
+      }));
       async function loadBuffers() {
-        for (let i = 0; i < 9; i++) {
+        for (let i = 0, len = kitRef.current.sounds.length; i < len; i++) {
           const samplePath = kitRef.current.sounds[i].sample;
-          const sampleUrl = 'http://localhost:4000/kits/' + samplePath;
+          const sampleUrl = host + '/kits/' + samplePath;
           kitRef.current.sounds[i].sampler = new Tone.Sampler({
             urls: {
               C2: sampleUrl,
             },
             onload: () => {
-              if (i === 8) {
+              onLoadCountRef.current++;
+              if (onLoadCountRef.current === len) {
                 console.log('buffers loaded!');
+                kitRef.current.name = defaultKits[kit].name;
                 dispatch(setBuffersLoaded(true));
+                onLoadCountRef.current = 0;
               }
             },
           });
@@ -67,27 +62,24 @@ export const KitProvider = ({ children }) => {
 
       loadBuffers();
     },
-    [dispatch, disposeSamples]
+    [dispatch]
   );
 
   useEffect(() => {
-    loadSamples(kitRef.current.name);
-  }, [loadSamples]);
+    if (reloadSamples) {
+      loadSamples(kit);
+    }
+  }, [reloadSamples, loadSamples, kit]);
 
   useEffect(() => {
-    if (Tone.Transport.state === 'started') {
-      console.log('prepping restart');
-      dispatch(setRestarting(true));
+    if (kitRef.current.name !== kit) {
+      if (Tone.Transport.state === 'started') {
+        dispatch(setRestarting(true));
+      }
+      dispatch(unload());
+      loadSamples(kit);
     }
-    dispatch(unload());
-    kitRef.current.name = defaultKits[kit].name;
-    kitRef.current.sounds = defaultKits[kit].sounds.map((sound) => ({
-      ...sound,
-    }));
-    if (kitRef.current.sounds.length > 0) {
-      loadSamples(kitRef.current.name);
-    }
-  }, [dispatch, disposeSamples, kit, loadSamples]);
+  }, [dispatch, kit, loadSamples]);
 
   // console.log('returning: KitProvider');
   return (
@@ -102,19 +94,11 @@ export const KitProvider = ({ children }) => {
   );
 };
 
-// const cacheSample = async (url) => {
-//   let cachedRes;
-//   const cache = await caches.open('kits');
-//   cachedRes = await cache.match(url);
-//   if (!cachedRes) {
-//     try {
-//       const res = await fetch(url);
-//       cachedRes = res;
-//       console.log(cachedRes);
-//       await cache.put(url, res.clone());
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   }
-//   return cachedRes;
-// };
+const disposeSamples = (kitRef) => {
+  for (let i = 0; i < 9; i++) {
+    kitRef.current.sounds[i].sampler?.dispose();
+    delete kitRef.current.sounds[i].sampler;
+    kitRef.current.sounds[i].channel?.dispose();
+    delete kitRef.current.sounds[i].channel;
+  }
+};

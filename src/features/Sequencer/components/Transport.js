@@ -3,7 +3,14 @@ import * as Tone from 'tone';
 import { PatternRef } from '../providers/PatternRef';
 import { Kit } from '../providers/Kit';
 import { useDispatch, useSelector } from 'react-redux';
-import { restart, setTransportState } from '../reducers/toneSlice';
+import {
+  restart,
+  setBufferError,
+  setReloadSamples,
+  setRestarting,
+  setTransportState,
+  unload,
+} from '../reducers/toneSlice';
 
 export const Transport = () => {
   const dispatch = useDispatch();
@@ -32,10 +39,10 @@ export const Transport = () => {
     }
   }, [buffersLoaded, dispatch, restarting]);
 
+  const retryCountRef = useRef(0);
   useEffect(() => {
     const schedulePattern = () => {
       Tone.Transport.scheduleRepeat((time) => {
-        if (!buffersLoaded) return;
         try {
           scheduleCell(
             time,
@@ -59,7 +66,19 @@ export const Transport = () => {
       if (prevTransportStateRef.current !== 'started') {
         pauseFlashing();
         if (prevTransportStateRef.current === 'stopped') schedulePattern();
-        Tone.Transport.start();
+        if (!buffersLoaded) {
+          if (retryCountRef > 3) {
+            console.log('buffer error');
+            return dispatch(setBufferError(true));
+          }
+          console.log('retrying restart due to buffers not loaded');
+          retryCountRef.current++;
+          dispatch(setRestarting(true));
+          dispatch(unload());
+          return dispatch(setReloadSamples(true));
+        } else {
+          Tone.Transport.start();
+        }
       } else {
         dispatch(setTransportState('paused'));
       }

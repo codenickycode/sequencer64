@@ -6,6 +6,8 @@ const INITIAL_STATE = {
   buffersLoaded: false,
   transportState: Tone.Transport.state,
   restarting: false,
+  reloadSamples: false,
+  bufferError: false,
 };
 
 export const toneSlice = createSlice({
@@ -14,6 +16,7 @@ export const toneSlice = createSlice({
   reducers: {
     setBuffersLoaded: (state, { payload }) => {
       state.buffersLoaded = payload;
+      if (payload) state.reloadSamples = false;
     },
     setTransportState: (state, { payload }) => {
       if (payload === 'stopped') Tone.Transport.stop();
@@ -33,6 +36,12 @@ export const toneSlice = createSlice({
       state.restarting = false;
       state.transportState = 'started';
     },
+    setReloadSamples: (state, { payload }) => {
+      state.reloadSamples = payload;
+    },
+    setBufferError: (state, { payload }) => {
+      state.bufferError = payload;
+    },
   },
 });
 
@@ -42,6 +51,8 @@ export const {
   setRestarting,
   unload,
   restart,
+  setReloadSamples,
+  setBufferError,
 } = toneSlice.actions;
 
 export default toneSlice.reducer;
