@@ -14,7 +14,8 @@ let UndoRedo = ({ canUndo, canRedo, onUndo, onRedo }) => {
   const buffersLoaded = useSelector((state) => state.tone.buffersLoaded);
 
   const handleUndo = useCallback(() => {
-    dispatch(setStatus('undo: ' + undoStatus));
+    const prefix = !undoStatus.match(/bpm|kit/g) ? 'undo: ' : '';
+    dispatch(setStatus(prefix + undoStatus));
     onUndo();
   }, [dispatch, onUndo, undoStatus]);
 

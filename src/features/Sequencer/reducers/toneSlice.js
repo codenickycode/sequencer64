@@ -27,14 +27,15 @@ export const toneSlice = createSlice({
     setRestarting: (state, { payload }) => {
       state.restarting = payload;
     },
-    unload: (state) => {
-      stopAndCancelEvents();
-      state.transportState = 'stopped';
-      state.buffersLoaded = false;
-    },
     restart: (state) => {
       state.restarting = false;
       state.transportState = 'started';
+    },
+    prepRestart: (state) => {
+      stopAndCancelEvents();
+      state.transportState = 'stopped';
+      state.buffersLoaded = false;
+      state.restarting = true;
     },
     setReloadSamples: (state, { payload }) => {
       state.reloadSamples = payload;
@@ -49,7 +50,7 @@ export const {
   setBuffersLoaded,
   setTransportState,
   setRestarting,
-  unload,
+  prepRestart,
   restart,
   setReloadSamples,
   setBufferError,

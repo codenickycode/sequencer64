@@ -4,24 +4,14 @@ import * as Tone from 'tone';
 import { host } from '../../../host';
 import { setLS } from '../../../utils/storage';
 import * as defaultKits from '../defaults/defaultKits';
-import { setBuffersLoaded, setRestarting, unload } from '../reducers/toneSlice';
-
-const getInitialKit = (kit) => {
-  const sounds = defaultKits[kit].sounds.map((sound) => ({
-    ...sound,
-  }));
-  return {
-    name: 'init',
-    sounds: sounds,
-  };
-};
+import { setBuffersLoaded, prepRestart } from '../reducers/toneSlice';
 
 export const Kit = React.createContext();
 export const KitProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   const kit = useSelector((state) => state.sequence.present.kit);
-  const kitRef = useRef(getInitialKit(kit));
+  const kitRef = useRef(getInitialKit());
   const onLoadCountRef = useRef(0);
 
   const reloadSamples = useSelector((state) => state.tone.reloadSamples);
@@ -31,7 +21,7 @@ export const KitProvider = ({ children }) => {
       kitRef.current.sounds = defaultKits[kit].sounds.map((sound) => ({
         ...sound,
       }));
-      async function loadBuffers() {
+      function loadBuffers() {
         for (let i = 0, len = kitRef.current.sounds.length; i < len; i++) {
           const samplePath = kitRef.current.sounds[i].sample;
           const sampleUrl = host + '/kits/' + samplePath;
@@ -74,9 +64,8 @@ export const KitProvider = ({ children }) => {
   useEffect(() => {
     if (kitRef.current.name !== kit) {
       if (Tone.Transport.state === 'started') {
-        dispatch(setRestarting(true));
+        dispatch(prepRestart());
       }
-      dispatch(unload());
       loadSamples(kit);
     }
   }, [dispatch, kit, loadSamples]);
@@ -92,6 +81,16 @@ export const KitProvider = ({ children }) => {
       {children}
     </Kit.Provider>
   );
+};
+
+const getInitialKit = () => {
+  // const sounds = defaultKits[kit].sounds.map((sound) => ({
+  //   ...sound,
+  // }));
+  return {
+    name: 'init',
+    sounds: [{}],
+  };
 };
 
 const disposeSamples = (kitRef) => {

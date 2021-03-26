@@ -118,12 +118,12 @@ export const sequenceSlice = createSlice({
       state.undoStatus = `load sequence: ${sequence.name}`;
     },
     changeKit: (state, { payload }) => {
+      state.undoStatus = `load kit: ${state.kit}`;
       state.kit = payload;
-      state.undoStatus = `load kit: ${payload}`;
     },
     changeBpm: (state, { payload }) => {
+      state.undoStatus = `change bpm: ${state.bpm}`;
       state.bpm = payload;
-      state.undoStatus = `change bpm: ${payload}`;
     },
   },
 });

@@ -4,6 +4,7 @@ import { PatternRef } from '../providers/PatternRef';
 import { Kit } from '../providers/Kit';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  prepRestart,
   restart,
   setBufferError,
   setReloadSamples,
@@ -73,8 +74,7 @@ export const Transport = () => {
           }
           console.log('retrying restart due to buffers not loaded');
           retryCountRef.current++;
-          dispatch(setRestarting(true));
-          dispatch(unload());
+          dispatch(prepRestart());
           return dispatch(setReloadSamples(true));
         } else {
           Tone.Transport.start();
