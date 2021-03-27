@@ -1,15 +1,8 @@
-import axios from 'axios';
 import { createSlice } from '@reduxjs/toolkit';
 import undoable, { groupByActionTypes } from 'redux-undo';
 import { analog } from '../defaults/defaultSequences';
 import { getLS } from '../../../utils/storage';
 import { getNoteTally, inc, dec, initSoundStep } from '../utils';
-import {
-  setFetching,
-  setStatus,
-  setUser,
-  saveSuccess,
-} from '../../../reducers/appSlice';
 import { INITIAL_MODS, MODES, setSpAlert } from './editorSlice';
 
 // const INITIAL_PATTERN = getLS('pattern') || analog.pattern;
@@ -17,6 +10,9 @@ const INITIAL_PATTERN = analog.pattern;
 
 const INITIAL_STATE = {
   ...analog,
+  kit: getLS('kit') || analog.kit,
+  bpm: getLS('bpm') || analog.bpm,
+  length: getLS('length') || analog.length,
   pattern: getLS('pattern') || INITIAL_PATTERN,
   noteTally: getNoteTally(analog.pattern),
   undoStatus: '',

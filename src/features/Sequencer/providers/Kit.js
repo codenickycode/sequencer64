@@ -34,6 +34,7 @@ export const KitProvider = ({ children }) => {
               if (onLoadCountRef.current === len) {
                 console.log('buffers loaded!');
                 kitRef.current.name = defaultKits[kit].name;
+                setLS('kit', kit);
                 dispatch(setBuffersLoaded(true));
                 onLoadCountRef.current = 0;
               }

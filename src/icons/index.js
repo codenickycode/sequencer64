@@ -14,7 +14,7 @@ import { ReactComponent as Pitch } from './pitch.svg';
 import { ReactComponent as Velocity } from './velocity.svg';
 import { ReactComponent as Length } from './length.svg';
 import { ReactComponent as Square } from './square.svg';
-import { ReactComponent as PointRight } from './point-right.svg';
+// import { ReactComponent as PointRight } from './point-right.svg';
 import { ReactComponent as PointUp } from './point-up.svg';
 import { ReactComponent as PointDown } from './point-down.svg';
 import { ReactComponent as Paint } from './paint.svg';

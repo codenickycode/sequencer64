@@ -82,7 +82,6 @@ export const appSlice = createSlice({
 });
 
 export const updateSequences = (type, data) => async (dispatch, getState) => {
-  console.log(data);
   dispatch(appSlice.actions.setFetching(true));
   let user = getState().app.user;
   let message = '',
@@ -105,7 +104,6 @@ export const updateSequences = (type, data) => async (dispatch, getState) => {
     message = 'unsuccessful :(';
     error = 'network error: Please try again later';
   } finally {
-    console.log('new message: ', message);
     dispatch(
       appSlice.actions.updateSequencesFinally({
         user,

@@ -8,26 +8,30 @@ import {
   restart,
   setBufferError,
   setReloadSamples,
-  setRestarting,
   setTransportState,
-  unload,
 } from '../reducers/toneSlice';
+import { setLS } from '../../../utils/storage';
 
 export const Transport = () => {
   const dispatch = useDispatch();
   const { patternRef, cellsRef } = useContext(PatternRef);
   const { kitRef } = useContext(Kit);
 
-  const length = useSelector((state) => state.sequence.present.length);
   const transportState = useSelector((state) => state.tone.transportState);
   const prevTransportStateRef = useRef(transportState);
   const buffersLoaded = useSelector((state) => state.tone.buffersLoaded);
 
   const stepRef = useRef(0);
 
+  const length = useSelector((state) => state.sequence.present.length);
+  useEffect(() => {
+    setLS('length', length);
+  }, [length]);
+
   const bpm = useSelector((state) => state.sequence.present.bpm);
   useEffect(() => {
     Tone.Transport.bpm.value = bpm;
+    setLS('bpm', bpm);
   }, [bpm]);
 
   const restarting = useSelector((state) => state.tone.restarting);

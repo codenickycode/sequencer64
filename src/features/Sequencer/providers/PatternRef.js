@@ -6,12 +6,10 @@ export const PatternRef = React.createContext();
 export const PatternRefProvider = ({ children }) => {
   const pattern = useSelector((state) => state.sequence.present.pattern);
 
-  const updatePatternLS = () => setLS('pattern', patternRef.current);
-
   const patternRef = useRef(pattern);
   useEffect(() => {
     patternRef.current = pattern;
-    updatePatternLS(pattern);
+    setLS('pattern', patternRef.current);
   }, [pattern]);
 
   const cellsRef = useRef({});
