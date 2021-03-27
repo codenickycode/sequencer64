@@ -106,7 +106,8 @@ export const PitchVelocityLength = ({
             />
             <div className='mod-value-wrapper'>
               <label htmlFor='mod-velocity-slider' className='mod-label'>
-                Velocity Value:
+                {mode && mode.substr(0, 1).toUpperCase() + mode.substr(1)}{' '}
+                Value:
               </label>
               <p className='mod-value'>{value}</p>
             </div>
