@@ -4,17 +4,14 @@ import { PatternRef } from '../providers/PatternRef';
 import { Kit } from '../providers/Kit';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  prepRestart,
   restart,
   setBufferError,
-  setReloadSamples,
   setTransportState,
 } from '../reducers/toneSlice';
-import { setLS } from '../../../utils/storage';
 
 export const Transport = () => {
   const dispatch = useDispatch();
-  const { patternRef, cellsRef } = useContext(PatternRef);
+  const { patternRef } = useContext(PatternRef);
   const { kitRef } = useContext(Kit);
 
   const transportState = useSelector((state) => state.tone.transportState);
@@ -24,15 +21,6 @@ export const Transport = () => {
   const stepRef = useRef(0);
 
   const length = useSelector((state) => state.sequence.present.length);
-  useEffect(() => {
-    setLS('length', length);
-  }, [length]);
-
-  const bpm = useSelector((state) => state.sequence.present.bpm);
-  useEffect(() => {
-    Tone.Transport.bpm.value = bpm;
-    setLS('bpm', bpm);
-  }, [bpm]);
 
   const restarting = useSelector((state) => state.tone.restarting);
   const [restartTimer, setRestartTimer] = useState(0);
@@ -71,10 +59,7 @@ export const Transport = () => {
             patternRef.current[stepRef.current],
             kitRef.current.sounds
           );
-          animateCell(
-            time,
-            cellsRef.current[`cell-${stepRef.current}`].cellRef.current
-          );
+          animateCell(time, document.getElementById(`cell-${stepRef.current}`));
           animateSound(time, patternRef.current[stepRef.current]);
         } catch (e) {
           console.log('scheduleRepeat passed buffer interupt');
@@ -88,19 +73,19 @@ export const Transport = () => {
       if (prevTransportStateRef.current !== 'started') {
         pauseFlashing();
         if (prevTransportStateRef.current === 'stopped') schedulePattern();
-        if (!buffersLoaded) {
-          if (retryCountRef.current > 3) {
-            console.log('buffer error');
-            return dispatch(setBufferError(true));
-          } else {
-            console.log('retrying restart due to buffers not loaded');
-            retryCountRef.current++;
-            dispatch(prepRestart());
-            return dispatch(setReloadSamples(true));
-          }
-        } else {
-          Tone.Transport.start();
-        }
+        // if (!buffersLoaded) {
+        //   if (retryCountRef.current > 3) {
+        //     console.log('buffer error');
+        //     return dispatch(setBufferError(true));
+        //   } else {
+        //     console.log('retrying restart due to buffers not loaded');
+        //     retryCountRef.current++;
+        //     dispatch(prepRestart());
+        //     return dispatch(setReloadSamples(true));
+        //   }
+        // } else {
+        Tone.Transport.start();
+        // }
       } else {
         dispatch(setTransportState('paused'));
       }
@@ -114,15 +99,7 @@ export const Transport = () => {
       stepRef.current = 0;
     }
     prevTransportStateRef.current = transportState;
-  }, [
-    buffersLoaded,
-    cellsRef,
-    dispatch,
-    kitRef,
-    length,
-    patternRef,
-    transportState,
-  ]);
+  }, [buffersLoaded, dispatch, kitRef, length, patternRef, transportState]);
 
   return null;
 };

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../../../components/Button';
 import { StopIcon, StartIcon, PauseIcon } from '../../../../icons';
+import { setStatus } from '../../../../reducers/appSlice';
 import { changeBpm } from '../../reducers/sequenceSlice';
 import { setBufferError, setTransportState } from '../../reducers/toneSlice';
 
@@ -32,7 +33,9 @@ export const TransportPanel = () => {
     if (bufferError) {
       console.log('setting ture');
       setReady(true);
-      dispatch(setBufferError(false));
+      let timer = setTimeout(() => dispatch(setBufferError(false), 5000));
+      dispatch(setStatus('Audio buffer error'));
+      return () => clearTimeout(timer);
     }
   }, [bufferError, dispatch]);
 

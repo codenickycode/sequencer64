@@ -6,7 +6,7 @@ import { setStatus } from '../../../../reducers/appSlice';
 import * as defaultKits from '../../defaults/defaultKits';
 import { MODES, setMode } from '../../reducers/editorSlice';
 import { changeKit } from '../../reducers/sequenceSlice';
-import { host } from '../../../../host';
+import { HOST } from '../../../../network';
 import { Button } from '../../../../components/Button';
 
 const kits = Object.values(defaultKits);
@@ -142,6 +142,7 @@ export const KitBtn = ({ counterRef, kitName, available }) => {
 
 export const LoadKitInfo = () => {
   const dispatch = useDispatch();
+  const bufferError = useSelector((state) => state.tone.bufferError);
   const mode = useSelector((state) => state.editor.mode);
   const showLoadInfo = mode === MODES.LOAD_KIT;
   const loadKitInfoMemo = useMemo(() => {
@@ -149,13 +150,22 @@ export const LoadKitInfo = () => {
       dispatch(setMode(null));
     };
     return (
-      <div className={showLoadInfo ? 'kit-info show' : 'kit-info'}>
+      <div
+        className={showLoadInfo || bufferError ? 'kit-info show' : 'kit-info'}
+      >
+        {bufferError && (
+          <p className='error'>
+            There was an error loading the samples. You may be offline and
+            requesting a kit from the cloud. Please check your internet
+            connection or try again later.
+          </p>
+        )}
         <Button classes='kit-info-close' onClick={onClick}>
           close
         </Button>
       </div>
     );
-  }, [dispatch, showLoadInfo]);
+  }, [bufferError, dispatch, showLoadInfo]);
   return loadKitInfoMemo;
 };
 
@@ -163,7 +173,7 @@ const fetchSamples = async (kitName) => {
   const sounds = defaultKits[kitName].sounds;
   const promises = [];
   sounds.forEach((sound) => {
-    const url = host + '/kits/' + sound.sample;
+    const url = HOST + '/kits/' + sound.sample;
     promises.push(fetch(url));
   });
   //   //   mock serve wait

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { getSS, setSS } from '../utils/storage';
-import { host } from '../host';
+import { HOST } from '../network';
 
 export const INITIAL_USER = {
   googleId: '',
@@ -89,7 +89,7 @@ export const updateSequences = (type, data) => async (dispatch, getState) => {
     error = '';
   try {
     const res = await axios({
-      url: `${host}/user/sequence/${type}`,
+      url: `${HOST}/user/sequence/${type}`,
       method: 'POST',
       data,
       withCredentials: true,
@@ -127,7 +127,7 @@ export const changeNetworkError = (val) => (dispatch) => {
 export const getUser = () => async (dispatch) => {
   try {
     dispatch(appSlice.actions.setFetching(true));
-    const res = await axios.get(`${host}/user`, {
+    const res = await axios.get(`${HOST}/user`, {
       withCredentials: true,
     });
     if (res.data) {
@@ -145,7 +145,7 @@ export const logout = () => async (dispatch) => {
   try {
     dispatch(appSlice.actions.setFetching(true));
     await axios({
-      url: `${host}/user/logout`,
+      url: `${HOST}/user/logout`,
       method: 'GET',
       withCredentials: true,
     });

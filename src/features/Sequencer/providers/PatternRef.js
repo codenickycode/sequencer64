@@ -12,12 +12,8 @@ export const PatternRefProvider = ({ children }) => {
     setLS('pattern', patternRef.current);
   }, [pattern]);
 
-  const cellsRef = useRef({});
-
   // console.log('returning: PatternRefProvider');
   return (
-    <PatternRef.Provider value={{ patternRef, cellsRef }}>
-      {children}
-    </PatternRef.Provider>
+    <PatternRef.Provider value={{ patternRef }}>{children}</PatternRef.Provider>
   );
 };

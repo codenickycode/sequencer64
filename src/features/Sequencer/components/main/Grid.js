@@ -1,15 +1,8 @@
-import React, {
-  useEffect,
-  useContext,
-  useMemo,
-  useRef,
-  useCallback,
-} from 'react';
+import React, { useEffect, useMemo, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { modCell } from '../../reducers/sequenceSlice';
 import * as defaultKits from '../../defaults/defaultKits';
 import { SawIcon } from '../../../../icons';
-import { PatternRef } from '../../providers/PatternRef';
 import { MIDI_NOTES } from '../../utils/MIDI_NOTES';
 import { setTapCellById, setToggleOn } from '../../reducers/editorSlice';
 
@@ -100,13 +93,6 @@ const Cell = ({ id, step, selectedSound }) => {
     }
   }, [dispatch, id, tapCell, tapCellAlert]);
 
-  const { cellsRef } = useContext(PatternRef);
-  const cellRef = useRef(null);
-  useEffect(() => {
-    cellsRef.current[id] = { events: {} };
-    cellsRef.current[id].cellRef = cellRef;
-  }, [id, cellsRef]);
-
   const onTouchStart = useCallback(
     (e) => {
       e.stopPropagation();
@@ -138,12 +124,7 @@ const Cell = ({ id, step, selectedSound }) => {
     };
     return (
       <div className='cell-wrapper'>
-        <div
-          ref={cellRef}
-          id={id}
-          className={cellClasses}
-          onTouchStart={onTouchStart}
-        >
+        <div id={id} className={cellClasses} onTouchStart={onTouchStart}>
           <div className='cell-mods'>
             <p className={pitchUpClasses}>+{pitchShift}</p>
             <p className={pitchDownClasses}>{pitchShift}</p>
