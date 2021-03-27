@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '../../../../components/Button';
 import { updateSequences } from '../../../../reducers/appSlice';
 
-export const SaveSequence = ({ stopSequencer }) => {
+export const SaveSequence = ({ handleStopSequence }) => {
   const dispatch = useDispatch();
 
   const bpm = useSelector((state) => state.sequence.present.bpm);
@@ -50,7 +50,7 @@ export const SaveSequence = ({ stopSequencer }) => {
             </p>
             <Link
               className='login-btn'
-              onTouchStart={stopSequencer}
+              onTouchStart={handleStopSequence}
               to='/login'
               disabled={fetching}
             >

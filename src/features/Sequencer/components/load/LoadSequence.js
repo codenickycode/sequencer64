@@ -8,7 +8,7 @@ import { DeleteIcon } from '../../../../icons';
 import { Button } from '../../../../components/Button';
 import cuid from 'cuid';
 
-export const LoadSequence = ({ stopSequencer }) => {
+export const LoadSequence = ({ handleStopSequence }) => {
   const dispatch = useDispatch();
 
   const sequences = useSelector((state) => state.app.user.sequences);
@@ -35,7 +35,7 @@ export const LoadSequence = ({ stopSequencer }) => {
         <h1 className='sequence-title'>Load Sequences</h1>
         <div className='sequence-select'>
           <UserSection
-            stopSequencer={stopSequencer}
+            handleStopSequence={handleStopSequence}
             selectSequence={selectSequence}
             selectedId={selectedId}
           />
@@ -46,7 +46,7 @@ export const LoadSequence = ({ stopSequencer }) => {
         </div>
       </div>
     );
-  }, [stopSequencer, selectedId, sequences, dispatch]);
+  }, [handleStopSequence, selectedId, sequences, dispatch]);
   return loadSequenceMemo;
 };
 
@@ -83,7 +83,7 @@ const DefaultSection = ({ selectSequence, selectedId }) => {
   return defaultSectionMemo;
 };
 
-const UserSection = ({ stopSequencer, selectSequence, selectedId }) => {
+const UserSection = ({ handleStopSequence, selectSequence, selectedId }) => {
   const fetching = useSelector((state) => state.app.fetching);
   const username = useSelector((state) => state.app.user.username);
 
@@ -97,7 +97,7 @@ const UserSection = ({ stopSequencer, selectSequence, selectedId }) => {
             </p>
             <Link
               className='login-btn'
-              onTouchStart={stopSequencer}
+              onTouchStart={handleStopSequence}
               to='/login'
               disabled={fetching}
             >
@@ -112,7 +112,7 @@ const UserSection = ({ stopSequencer, selectSequence, selectedId }) => {
         )}
       </div>
     );
-  }, [fetching, selectSequence, selectedId, stopSequencer, username]);
+  }, [fetching, selectSequence, selectedId, handleStopSequence, username]);
   return userSectionMemo;
 };
 

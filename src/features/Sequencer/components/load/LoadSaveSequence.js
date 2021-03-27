@@ -3,13 +3,13 @@ import { LoadSequence } from './LoadSequence';
 import { SaveSequence } from './SaveSequence';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, setShow } from '../../../../reducers/appSlice';
-// import { setTransportState } from '../../reducers/toneSlice';
+import { stopSequence } from '../../reducers/toneSlice';
 import { Button } from '../../../../components/Button';
 
 export const LoadSaveSequence = () => {
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.app.user);
+  const username = useSelector((state) => state.app.user.username);
 
   const show = useSelector((state) => state.app.show);
   const fetching = useSelector((state) => state.app.fetching);
@@ -23,8 +23,8 @@ export const LoadSaveSequence = () => {
 
     const onClose = () => dispatch(setShow(''));
 
-    const stopSequencer = () => {
-      // dispatch(setTransportState('stopped'));
+    const handleStopSequence = () => {
+      dispatch(stopSequence());
     };
 
     let loadStyle = 'load-save-tab';
@@ -54,13 +54,13 @@ export const LoadSaveSequence = () => {
               <label htmlFor='save-tab'>Save</label>
             </button>
           </div>
-          {user.username && (
+          {username && (
             <>
               <div className='login-status'>
                 {fetching ? (
                   <p>please wait...</p>
                 ) : (
-                  <p>Logged in as: {user.username}</p>
+                  <p>Logged in as: {username}</p>
                 )}
                 <button disabled={fetching} onClick={onLogout}>
                   logout
@@ -68,8 +68,12 @@ export const LoadSaveSequence = () => {
               </div>
             </>
           )}
-          {show === 'save' && <SaveSequence stopSequencer={stopSequencer} />}
-          {show === 'load' && <LoadSequence stopSequencer={stopSequencer} />}
+          {show === 'save' && (
+            <SaveSequence handleStopSequence={handleStopSequence} />
+          )}
+          {show === 'load' && (
+            <LoadSequence handleStopSequence={handleStopSequence} />
+          )}
         </div>
         <div className={show ? 'bottom-btn show' : 'bottom-btn'}>
           <Button classes='load-save-sequence-close' onClick={onClose}>
@@ -78,6 +82,6 @@ export const LoadSaveSequence = () => {
         </div>
       </>
     );
-  }, [dispatch, fetching, show, user.username]);
+  }, [dispatch, fetching, show, username]);
   return loadSaveSequenceMemo;
 };

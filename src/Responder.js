@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getLS, setLS } from './utils/storage';
 import { loadSamples } from './features/Sequencer/reducers/toneSlice';
 import { Kit } from './features/Sequencer/providers/Kit';
+import { getUser } from './reducers/appSlice';
 
 export const Responder = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,13 @@ export const Responder = () => {
   const serviceWorkerActive = useSelector(
     (state) => state.app.serviceWorkerActive
   );
+
+  // App effects
+  useEffect(() => {
+    console.log('getting user');
+    dispatch(getUser());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Tone Reducer
   const bufferedKit = useSelector((state) => state.tone.bufferedKit);
