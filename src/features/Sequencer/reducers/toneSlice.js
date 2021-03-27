@@ -113,11 +113,9 @@ const stopAndCancelEvents = () => {
 };
 
 const disposeSamplers = (kit) => {
-  for (let i = 0; i < 9; i++) {
-    kit.sounds[i].sampler?.dispose();
-    delete kit.sounds[i].sampler;
-    kit.sounds[i].channel?.dispose();
-    delete kit.sounds[i].channel;
+  for (let sound of kit.sounds) {
+    sound.sampler?.dispose();
+    sound.channel?.dispose();
   }
 };
 

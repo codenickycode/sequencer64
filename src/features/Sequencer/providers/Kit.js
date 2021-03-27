@@ -6,6 +6,8 @@ export const KitProvider = ({ children }) => {
   const kit = useSelector((state) => state.tone.kit);
   const kitRef = useRef(kit);
 
+  console.log('new kit!');
+
   // console.log('returning: KitProvider');
   return (
     <Kit.Provider
