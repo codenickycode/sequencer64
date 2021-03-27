@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../../../components/Button';
-import { StopIcon, StartIcon, PauseIcon } from '../../../../icons';
+import { StopIcon, StartIcon, PauseIcon, CheckIcon } from '../../../../icons';
 import { setStatus } from '../../../../reducers/appSlice';
 import { changeBpm } from '../../reducers/sequenceSlice';
 import * as Tone from 'tone';
@@ -19,7 +19,6 @@ export const TransportPanel = () => {
 
   const transportState = useSelector((state) => state.tone.transportState);
   const buffersLoaded = useSelector((state) => state.tone.buffersLoaded);
-  const bufferError = useSelector((state) => state.tone.bufferError);
 
   const bpm = useSelector((state) => state.sequence.present.bpm);
   useEffect(() => {
@@ -27,8 +26,7 @@ export const TransportPanel = () => {
   }, [bpm]);
 
   const [tempBpm, setTempBpm] = useState(bpm);
-
-  let timerRef = useRef(null);
+  const [bpmEdited, setBpmEdited] = useState(false);
 
   const [ready, setReady] = useState(true);
   useEffect(() => {
@@ -37,21 +35,6 @@ export const TransportPanel = () => {
     }
   }, [ready, buffersLoaded]);
 
-  // const [transportState, setTransportState] = useState(null);
-  // useEffect(() => {
-  //   console.log(Tone.Transport.emit('start'));
-  // }, [transportState]);
-  // document.addEventListener('start', () => {
-  //   setTransportState('start');
-  // });
-
-  // document.addEventListener('pause', () => {
-  //   setTransportState('pause');
-  // });
-  // document.addEventListener('stop', () => {
-  //   setTransportState('stop');
-  // });
-
   const transportMemo = useMemo(() => {
     // console.log('rendering: TransportPanel');
 
@@ -59,25 +42,29 @@ export const TransportPanel = () => {
       if (value.match(/\D/)) return;
       const newTempo = value > 300 ? 300 : value;
       setTempBpm(newTempo);
-      if (newTempo !== tempBpm) {
-        clearTimeout(timerRef.current);
-        timerRef.current = setTimeout(() => {
-          dispatch(changeBpm(newTempo));
-        }, 1000);
+      if (newTempo !== bpm) {
+        setBpmEdited(true);
+      } else {
+        setBpmEdited(false);
       }
     };
 
     const onStop = () => {
-      if (Tone.Transport.state !== 'stopped') dispatch(stopSequence());
+      if (transportState !== 'stopped') dispatch(stopSequence());
     };
     const onStart = () => {
       // if (bufferError) dispatch(setBufferError(false));
-      if (Tone.Transport.state === 'started') {
+      if (transportState === 'started') {
         dispatch(pauseSequence());
       } else {
         setReady(false);
         dispatch(startSequence(kitRef.current));
       }
+    };
+
+    const handleBpm = () => {
+      dispatch(changeBpm(tempBpm));
+      setBpmEdited(false);
     };
 
     return (
@@ -96,15 +83,29 @@ export const TransportPanel = () => {
             {transportState === 'started' ? <PauseIcon /> : <StartIcon />}
             <label htmlFor='start'>start</label>
           </Button>
-          <div className='input'>
-            <input id='bpm' type='tel' value={tempBpm} onChange={onChange} />
-            <label htmlFor='bpm' id='bpm-label'>
-              bpm
-            </label>
+          <div className='input-div'>
+            <input
+              id='bpm'
+              className={bpmEdited ? 'input edited' : 'input'}
+              type='tel'
+              value={tempBpm}
+              onChange={onChange}
+            ></input>
+            <div className='bpm-or-btn'>
+              {bpmEdited ? (
+                <Button id='bpm-btn' classes='bpm-btn' onClick={handleBpm}>
+                  <label htmlFor='bpm-btn'>
+                    <CheckIcon />
+                  </label>
+                </Button>
+              ) : (
+                <label htmlFor='bpm'>bpm</label>
+              )}
+            </div>
           </div>
         </div>
       </div>
     );
-  }, [bufferError, dispatch, ready, tempBpm, transportState]);
+  }, [bpmEdited, dispatch, kitRef, ready, tempBpm, transportState]);
   return transportMemo;
 };

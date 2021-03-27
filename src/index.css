@@ -1394,13 +1394,16 @@ div[data-cursor='true'] .cursor {
   pointer-events: none;
 }
 
-.transport .input {
+.transport .input-div {
   margin-left: 0.25rem;
+  width: 7rem;
   user-select: initial;
+  display: flex;
+  align-items: center;
 }
 
-.transport input {
-  max-width: 5rem;
+.transport .input {
+  width: 4rem;
   height: 100%;
   padding: 0.25rem;
   border: none;
@@ -1414,11 +1417,33 @@ div[data-cursor='true'] .cursor {
   font-size: 1.25rem;
 }
 
-#bpm-label {
+.transport .input.edited {
+  animation: flashing 300ms alternate infinite;
+}
+
+.bpm-or-btn {
+  width: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bpm-label {
+  display: inline-block;
+  width: 100%;
   font-style: normal;
-  height: 2rem;
-  width: 4rem;
   padding: 0.5rem;
+}
+
+.bpm-btn {
+  background: none;
+  border: 1px solid var(--white);
+  border-radius: 0.5rem;
+  outline: none;
+}
+
+.bpm-btn .icon {
+  fill: var(--green);
 }
 
 /*************************************/

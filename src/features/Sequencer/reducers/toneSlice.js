@@ -44,6 +44,10 @@ export const toneSlice = createSlice({
       pauseFlashing();
       addCursor(state.step);
       startFlashing();
+      state.transportState = 'paused';
+    },
+    setTransportState: (state, { payload }) => {
+      state.transportState = payload;
     },
   },
 });
@@ -57,7 +61,6 @@ export const loadSamples = (kit) => async (dispatch, getState) => {
   try {
     if (kit.samples[0].sampler) disposeSamplers(kit);
     await buildSamplers(kit, sequenceKitName);
-    kit.name = sequenceKitName;
     payload.bufferedKit = kit.name;
     payload.buffersLoaded = true;
   } catch (e) {
@@ -68,28 +71,6 @@ export const loadSamples = (kit) => async (dispatch, getState) => {
     dispatch(toneSlice.actions.loadSamplesFinally(payload));
     if (restart && payload.buffersLoaded) dispatch(startSequence(kit));
   }
-};
-
-export const startSequence = (kit) => (dispatch, getState) => {
-  const length = getState().sequence.present.length;
-  const step = getState().tone.step;
-  removeCursor(length, step);
-  if (Tone.Transport.state === 'stopped')
-    schedulePattern(dispatch, getState, kit);
-  Tone.Transport.start();
-};
-
-export const stopSequence = () => (dispatch, getState) => {
-  Tone.Transport.stop();
-  Tone.Transport.position = 0;
-  Tone.Transport.cancel(0);
-  const scheduledEvents = Tone.Transport._scheduledEvents;
-  Object.keys(scheduledEvents).forEach((id) => Tone.Transport.clear(id));
-  const length = getState().sequence.present.length;
-  const step = getState().tone.step;
-  removeCursor(length, step);
-  startFlashing();
-  dispatch(toneSlice.actions.setStep(0));
 };
 
 export const schedulePattern = (dispatch, getState, kit) => {
@@ -107,6 +88,30 @@ export const schedulePattern = (dispatch, getState, kit) => {
     const length = getState().sequence.present.length;
     dispatch(toneSlice.actions.setStep((step + 1) % length));
   }, '16n');
+};
+
+export const startSequence = (kit) => (dispatch, getState) => {
+  const length = getState().sequence.present.length;
+  const step = getState().tone.step;
+  removeCursor(length, step);
+  if (Tone.Transport.state === 'stopped')
+    schedulePattern(dispatch, getState, kit);
+  Tone.Transport.start();
+  dispatch(toneSlice.actions.setTransportState('started'));
+};
+
+export const stopSequence = () => (dispatch, getState) => {
+  Tone.Transport.stop();
+  dispatch(toneSlice.actions.setTransportState('stopped'));
+  Tone.Transport.position = 0;
+  Tone.Transport.cancel(0);
+  const scheduledEvents = Tone.Transport._scheduledEvents;
+  Object.keys(scheduledEvents).forEach((id) => Tone.Transport.clear(id));
+  const length = getState().sequence.present.length;
+  const step = getState().tone.step;
+  removeCursor(length, step);
+  startFlashing();
+  dispatch(toneSlice.actions.setStep(0));
 };
 
 export const { pauseSequence } = toneSlice.actions;

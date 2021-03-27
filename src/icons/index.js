@@ -32,6 +32,7 @@ import { ReactComponent as Delete } from './delete.svg';
 import { ReactComponent as Kit } from './kit.svg';
 import { ReactComponent as Eraser } from './eraser.svg';
 import { ReactComponent as CloudDownload } from './cloud-download.svg';
+import { ReactComponent as Check } from './check-bold.svg';
 
 export const ChevronDownIcon = ({ addClass = '' }) => (
   <ChevronDown className={addClass + ' chevron-down'} />
@@ -136,6 +137,10 @@ export const CloudDownloadIcon = ({ addClass = '' }) => (
 
 export const KitIcon = ({ addClass = '' }) => (
   <Kit className={addClass + ' icon'} />
+);
+
+export const CheckIcon = ({ addClass = '' }) => (
+  <Check className={addClass + ' icon'} />
 );
 
 export const PointDownIcon = ({ addClass = '' }) => (
