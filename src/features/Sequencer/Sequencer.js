@@ -6,7 +6,7 @@ import { SoundPanel } from './components/sound-panel/SoundPanel';
 import { LoadSaveSequence } from './components/load/LoadSaveSequence';
 import { Menu } from './components/Menu';
 import { KitProvider } from './providers/Kit';
-import { Transport } from './components/Transport';
+// import { Transport } from './components/Transport';
 import { PatternRefProvider } from './providers/PatternRef';
 
 export const SequencerPage = () => {
@@ -27,7 +27,7 @@ export const SequencerPage = () => {
           <Menu />
         </div>
         <LoadSaveSequence />
-        <Transport />
+        {/* <Transport /> */}
       </PatternRefProvider>
     </KitProvider>
   );

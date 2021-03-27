@@ -6,14 +6,14 @@ import { getNoteTally, inc, dec, initSoundStep } from '../utils';
 import { INITIAL_MODS, MODES, setSpAlert } from './editorSlice';
 
 // const INITIAL_PATTERN = getLS('pattern') || analog.pattern;
-const INITIAL_PATTERN = getLS('pattern') || analog.pattern;
+const INITIAL_PATTERN = getLS('sequencePattern') || analog.pattern;
 
 const INITIAL_STATE = {
-  _id: getLS('_id') || analog._id,
-  name: getLS('name') || analog.name,
-  kit: getLS('kit') || analog.kit,
-  bpm: getLS('bpm') || analog.bpm,
-  length: getLS('length') || analog.length,
+  _id: getLS('sequenceId') || analog._id,
+  name: getLS('sequenceName') || analog.name,
+  kit: getLS('sequenceKitName') || analog.kit,
+  bpm: getLS('sequenceBpm') || analog.bpm,
+  length: getLS('sequenceLength') || analog.length,
   pattern: INITIAL_PATTERN,
   noteTally: getNoteTally(INITIAL_PATTERN),
   undoStatus: '',

@@ -4,7 +4,12 @@ import { Button } from '../../../../components/Button';
 import { StopIcon, StartIcon, PauseIcon } from '../../../../icons';
 import { setStatus } from '../../../../reducers/appSlice';
 import { changeBpm } from '../../reducers/sequenceSlice';
-import { setBufferError, setTransportState } from '../../reducers/toneSlice';
+import * as Tone from 'tone';
+import {
+  pauseSequence,
+  startSequence,
+  stopSequence,
+} from '../../reducers/toneSlice';
 
 export const TransportPanel = () => {
   const dispatch = useDispatch();
@@ -29,15 +34,15 @@ export const TransportPanel = () => {
     }
   }, [ready, buffersLoaded]);
 
-  useEffect(() => {
-    if (bufferError) {
-      console.log('setting ture');
-      setReady(true);
-      let timer = setTimeout(() => dispatch(setBufferError(false), 5000));
-      dispatch(setStatus('Audio buffer error'));
-      return () => clearTimeout(timer);
-    }
-  }, [bufferError, dispatch]);
+  // useEffect(() => {
+  //   if (bufferError) {
+  //     console.log('setting ture');
+  //     setReady(true);
+  //     let timer = setTimeout(() => dispatch(setBufferError(false), 5000));
+  //     dispatch(setStatus('Audio buffer error'));
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [bufferError, dispatch]);
 
   const transportMemo = useMemo(() => {
     // console.log('rendering: TransportPanel');
@@ -55,15 +60,16 @@ export const TransportPanel = () => {
     };
 
     const onStop = () => {
-      if (transportState !== 'stopped') dispatch(setTransportState('stopped'));
+      if (Tone.Transport.state !== 'stopped') dispatch(stopSequence());
     };
     const onStart = () => {
-      if (bufferError) dispatch(setBufferError(false));
-      if (transportState === 'started') {
-        dispatch(setTransportState('paused'));
+      // if (bufferError) dispatch(setBufferError(false));
+      if (Tone.Transport.state === 'started') {
+        dispatch(pauseSequence());
       } else {
         setReady(false);
-        dispatch(setTransportState('started'));
+        console.log('dispatching startSequence()');
+        dispatch(startSequence());
       }
     };
 

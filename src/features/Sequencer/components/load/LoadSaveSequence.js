@@ -3,7 +3,7 @@ import { LoadSequence } from './LoadSequence';
 import { SaveSequence } from './SaveSequence';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, setShow } from '../../../../reducers/appSlice';
-import { setTransportState } from '../../reducers/toneSlice';
+// import { setTransportState } from '../../reducers/toneSlice';
 import { Button } from '../../../../components/Button';
 
 export const LoadSaveSequence = () => {
@@ -24,7 +24,7 @@ export const LoadSaveSequence = () => {
     const onClose = () => dispatch(setShow(''));
 
     const stopSequencer = () => {
-      dispatch(setTransportState('stopped'));
+      // dispatch(setTransportState('stopped'));
     };
 
     let loadStyle = 'load-save-tab';

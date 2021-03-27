@@ -1,7 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 import * as Tone from 'tone';
-import { HOST, NETWORK_TIMEOUT } from '../../../network';
 import * as defaultKits from '../defaults/defaultKits';
+import {
+  addCursor,
+  animateCell,
+  animateSound,
+  pauseFlashing,
+  removeCursor,
+  startFlashing,
+} from './functions/animations';
+import {
+  buildSamplers,
+  disposeSamplers,
+  triggerStep,
+} from './functions/sampler';
 
 const INITIAL_STATE = {
   bufferedKit: null,
@@ -11,45 +23,13 @@ const INITIAL_STATE = {
   transportState: Tone.Transport.state,
   restarting: false,
   kit: { name: 'init', sounds: [{}] },
+  step: 0,
 };
 
 export const toneSlice = createSlice({
   name: 'tone',
   initialState: INITIAL_STATE,
   reducers: {
-    setBuffersLoaded: (state, { payload }) => {
-      state.buffersLoaded = payload;
-      if (payload) state.reloadSamples = false;
-    },
-    setTransportState: (state, { payload }) => {
-      if (payload === 'stopped') Tone.Transport.stop();
-      if (payload === 'started') Tone.Transport.start();
-      if (payload === 'paused') Tone.Transport.pause();
-      state.transportState = payload;
-    },
-    setRestarting: (state, { payload }) => {
-      state.restarting = payload;
-    },
-    restart: (state) => {
-      state.restarting = false;
-      state.transportState = 'started';
-    },
-    prepRestart: (state) => {
-      stopAndCancelEvents();
-      state.transportState = 'stopped';
-      state.buffersLoaded = false;
-      state.restarting = true;
-    },
-    setBufferError: (state, { payload }) => {
-      state.bufferError = payload;
-      if (payload) {
-        console.log('catastrophic buffer error');
-        stopAndCancelEvents();
-        state.transportState = 'stopped';
-        state.buffersLoaded = false;
-        state.restarting = false;
-      }
-    },
     setLoadingBuffers: (state, { payload }) => {
       state.loadingBuffers = payload;
     },
@@ -59,12 +39,21 @@ export const toneSlice = createSlice({
       state.bufferedKit = payload.bufferedKit;
       if (payload.bufferedKit === payload.kit.name) state.kit = payload.kit;
     },
+    setStep: (state, { payload }) => {
+      state.step = payload;
+    },
+    pauseSequence: (state) => {
+      Tone.Transport.pause();
+      pauseFlashing();
+      addCursor(state.step);
+      startFlashing();
+    },
   },
 });
 
 export const loadSamples = () => async (dispatch, getState) => {
   let restart = Tone.Transport.state === 'started';
-  stopAndCancelEvents();
+  dispatch(stopSequence());
   const sequenceKitName = getState().sequence.present.kit;
   const oldKit = getState().tone.kit;
   let payload = { bufferedKit: oldKit.name };
@@ -77,9 +66,7 @@ export const loadSamples = () => async (dispatch, getState) => {
         ...sound,
       })),
     };
-    console.log('building Samplers');
     await buildSamplers(payload.kit);
-    console.log('resolved');
     payload.bufferedKit = sequenceKitName;
     payload.buffersLoaded = true;
   } catch (e) {
@@ -88,74 +75,48 @@ export const loadSamples = () => async (dispatch, getState) => {
   } finally {
     payload.loadingBuffers = false;
     dispatch(toneSlice.actions.loadSamplesFinally(payload));
-    if (restart && payload.buffersLoaded)
-      dispatch(toneSlice.actions.startSequence());
+    if (restart && payload.buffersLoaded) dispatch(startSequence());
   }
 };
 
-export const {
-  setBuffersLoaded,
-  setTransportState,
-  setRestarting,
-  prepRestart,
-  restart,
-  setBufferError,
-} = toneSlice.actions;
+export const startSequence = () => (dispatch, getState) => {
+  const length = getState().sequence.present.length;
+  const step = getState().tone.step;
+  removeCursor(length, step);
+  if (Tone.Transport.state === 'stopped') schedulePattern(dispatch, getState);
+  Tone.Transport.start();
+};
 
-export default toneSlice.reducer;
-
-const stopAndCancelEvents = () => {
+export const stopSequence = () => (dispatch, getState) => {
   Tone.Transport.stop();
   Tone.Transport.position = 0;
   Tone.Transport.cancel(0);
   const scheduledEvents = Tone.Transport._scheduledEvents;
   Object.keys(scheduledEvents).forEach((id) => Tone.Transport.clear(id));
+  const length = getState().sequence.present.length;
+  const step = getState().tone.step;
+  removeCursor(length, step);
+  startFlashing();
+  dispatch(toneSlice.actions.setStep(0));
 };
 
-const disposeSamplers = (kit) => {
-  for (let sound of kit.sounds) {
-    sound.sampler?.dispose();
-    sound.channel?.dispose();
-  }
-};
-
-const buildSamplers = (kit) =>
-  new Promise(async (resolve, reject) => {
-    const promises = [];
-    for (let sound of kit.sounds) {
-      const samplePath = sound.sample;
-      const sampleUrl = HOST + '/kits/' + samplePath;
-      promises.push(
-        new Promise((resolveSample) => {
-          sound.sampler = new Tone.Sampler({
-            urls: {
-              C2: sampleUrl,
-            },
-            onload: () => {
-              sound.channel = new Tone.Channel({
-                volume: 0,
-                pan: 0,
-                channelCount: 2,
-              }).toDestination();
-              sound.sampler.connect(sound.channel);
-              console.log(`${sound.name} loaded`);
-              resolveSample();
-            },
-          });
-        })
-      );
-    }
+export const schedulePattern = (dispatch, getState) => {
+  Tone.Transport.scheduleRepeat((time) => {
+    const step = getState().tone.step;
+    const patternStep = getState().sequence.present.pattern[step];
+    const sounds = getState().tone.kit.sounds;
     try {
-      let rejectTimer = setTimeout(
-        () => reject('error loading samples'),
-        NETWORK_TIMEOUT
-      );
-      await Promise.all(promises);
-      console.log('promsied all resolved');
-      clearTimeout(rejectTimer);
-      console.log(`${kit.name} buffers loaded!`);
-      resolve();
+      triggerStep(time, patternStep, sounds);
+      animateCell(time, document.getElementById(`cell-${step}`));
+      animateSound(time, patternStep);
     } catch (e) {
-      reject('error loading samples');
+      console.log('scheduleRepeat passed buffer interupt');
     }
-  });
+    const length = getState().sequence.present.length;
+    dispatch(toneSlice.actions.setStep((step + 1) % length));
+  }, '16n');
+};
+
+export const { pauseSequence } = toneSlice.actions;
+
+export default toneSlice.reducer;
