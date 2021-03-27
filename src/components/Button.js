@@ -7,6 +7,7 @@ export const Button = ({
   classes,
   disabled = false,
   onClick,
+  type,
   children,
 }) => {
   const ref = useRef(null);
@@ -21,6 +22,7 @@ export const Button = ({
   return (
     <button
       ref={fwdRef || ref}
+      type={type || 'button'}
       id={id}
       className={classes + (pressed ? ' pressed btn' : ' btn')}
       disabled={disabled}

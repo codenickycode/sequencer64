@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setFetching } from '../../../../reducers/appSlice';
-import { saveSequence } from '../../reducers/sequenceSlice';
+import { Button } from '../../../../components/Button';
+import { updateSequences } from '../../../../reducers/appSlice';
 
 export const SaveSequence = ({ stopSequencer }) => {
   const dispatch = useDispatch();
@@ -17,21 +17,16 @@ export const SaveSequence = ({ stopSequencer }) => {
 
   const [newName, setNewName] = useState('');
 
-  const [confirmation, setConfirmation] = useState('');
+  const error = useSelector((state) => state.app.error);
+  const confirmation = useSelector((state) => state.app.confirmation);
+  const [userError, setUserError] = useState('');
   useEffect(() => {
-    let timeout = setTimeout(() => setConfirmation(''), 3000);
-    return () => clearTimeout(timeout);
-  }, [confirmation]);
-
-  const [error, setError] = useState('');
-  useEffect(() => {
-    let timeout = setTimeout(() => setError(''), 3000);
-    return () => clearTimeout(timeout);
+    setUserError(error);
   }, [error]);
 
   const save = async (e) => {
     e.preventDefault();
-    if (!newName) return setError('name required');
+    if (!newName) return setUserError('name required');
     const cleanName = newName.replace(/[^a-zA-Z0-9 ]/g, '');
     const newSequence = {
       name: cleanName,
@@ -41,7 +36,7 @@ export const SaveSequence = ({ stopSequencer }) => {
       pattern,
     };
     setNewName('');
-    dispatch(saveSequence(newSequence));
+    dispatch(updateSequences('add', newSequence));
   };
 
   // console.log('rendering: SaveSequence');
@@ -72,17 +67,18 @@ export const SaveSequence = ({ stopSequencer }) => {
               type='text'
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
-              placeholder='Enter sequence name'
+              disabled={fetching}
+              placeholder={fetching ? 'saving...' : 'Enter sequence name'}
             />
-            <button type='submit' disabled={!newName}>
+            <Button type='submit' disabled={!newName}>
               Save
-            </button>
+            </Button>
           </div>
         </form>
       )}
       {user.username && (
-        <p className={error ? 'error' : 'confirmation'}>
-          {error ? error : confirmation}
+        <p className={userError ? 'error' : 'confirmation'}>
+          {userError ? userError : confirmation}
         </p>
       )}
     </div>

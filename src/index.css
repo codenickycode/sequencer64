@@ -344,9 +344,15 @@ body {
   background: var(--green-half);
 }
 
+.sequence.deleting {
+  opacity: 0.5;
+}
+
 .delete-btn {
   background: transparent;
   padding: 0.25rem;
+  outline: none;
+  border: none;
 }
 
 .delete-btn .icon {
@@ -1421,7 +1427,7 @@ div[data-cursor='true'] .cursor {
   color: var(--red);
   letter-spacing: 2px;
   text-align: center;
-  background: var(--black-half);
+  background: var(--black-90);
   filter: drop-shadow(2px 2px 2px var(--purple-half));
   opacity: 0;
   transition: 1500ms;

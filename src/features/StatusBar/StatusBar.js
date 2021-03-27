@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 export const StatusBar = () => {
+  const count = useSelector((state) => state.app.status.count);
   const message = useSelector((state) => state.app.status.message);
   const [classes, setClasses] = useState('status');
 
@@ -21,7 +22,7 @@ export const StatusBar = () => {
       clearTimeout(onTimer);
       clearTimeout(fadeTimer);
     };
-  }, [message]);
+  }, [message, count]);
 
   let index, status;
   if (message) {

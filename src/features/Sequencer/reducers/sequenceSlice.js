@@ -4,7 +4,12 @@ import undoable, { groupByActionTypes } from 'redux-undo';
 import { analog } from '../defaults/defaultSequences';
 import { getLS } from '../../../utils/storage';
 import { getNoteTally, inc, dec, initSoundStep } from '../utils';
-import { setFetching, setStatus, setUser } from '../../../reducers/appSlice';
+import {
+  setFetching,
+  setStatus,
+  setUser,
+  saveSuccess,
+} from '../../../reducers/appSlice';
 import { INITIAL_MODS, MODES, setSpAlert } from './editorSlice';
 
 // const INITIAL_PATTERN = getLS('pattern') || analog.pattern;
@@ -173,35 +178,6 @@ export const modCell = (step, noteOn) => (dispatch, getState) => {
     default:
       return null;
   }
-};
-
-export const saveSequence = (sequence) => async (dispatch) => {
-  dispatch(setFetching(true));
-  try {
-    const res = await axios({
-      url: 'http://localhost:4000/user/sequence/add',
-      method: 'POST',
-      data: sequence,
-      withCredentials: true,
-    });
-    console.log('success: ', res.data);
-    dispatch(setUser({ user: res.data, status: 'Sequence saved to cloud!' }));
-  } catch (e) {
-    console.log(e);
-    dispatch(setStatus('Error: Please try again later'));
-  } finally {
-    dispatch(setFetching(false));
-  }
-};
-
-export const deleteSequence = (sequence) => async (dispatch) => {
-  const res = await axios({
-    url: 'http://localhost:4000/user/sequence/delete',
-    method: 'POST',
-    data: { _id: sequence },
-    withCredentials: true,
-  });
-  dispatch(setUser({ user: res.data, status: 'User data refreshed' }));
 };
 
 export const {

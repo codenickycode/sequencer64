@@ -12,6 +12,7 @@ import { getUser } from './reducers/appSlice';
 export default function App() {
   const dispatch = useDispatch();
   useEffect(() => {
+    console.log('getting user');
     dispatch(getUser());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

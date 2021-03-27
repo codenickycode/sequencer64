@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { getSS, setSS } from '../utils/storage';
+import { host } from '../host';
 
 export const INITIAL_USER = {
   googleId: '',
@@ -16,6 +17,8 @@ const INITIAL_STATE = {
   status: { count: 0, message: 'loading' },
   show: getSS('show') || '',
   fetching: false,
+  confirmation: '',
+  error: '',
   networkError: false,
   serviceWorkerActive: false,
 };
@@ -26,12 +29,18 @@ export const appSlice = createSlice({
   reducers: {
     setShow: (state, { payload }) => {
       state.show = payload;
+      state.confirmation = '';
+      state.error = '';
       setSS('show', payload);
     },
-    setUser: (state, { payload: { user, status } }) => {
-      state.user = { username: user.username, sequences: user.sequences };
+    setUser: (state, { payload: { user, message } }) => {
+      state.user = {
+        username: user.username,
+        sequences: user.sequences,
+        __v: user.__v,
+      };
       state.status.count++;
-      state.status.message = status;
+      state.status.message = message;
     },
     setStatus: (state, { payload }) => {
       state.status.count++;
@@ -57,8 +66,56 @@ export const appSlice = createSlice({
         console.log('service worker is not active');
       }
     },
+    updateSequencesFinally: (
+      state,
+      { payload: { user, message, error, confirmation } }
+    ) => {
+      state.user.sequences = user.sequences;
+      state.user.__v = user.__v;
+      state.status.count++;
+      state.status.message = message;
+      if (confirmation) state.confirmation = confirmation;
+      if (error) state.error = error;
+      state.fetching = false;
+    },
   },
 });
+
+export const updateSequences = (type, data) => async (dispatch, getState) => {
+  console.log(data);
+  dispatch(appSlice.actions.setFetching(true));
+  let user = getState().app.user;
+  let message = '',
+    confirmation = '',
+    error = '';
+  try {
+    const res = await axios({
+      url: `${host}/user/sequence/${type}`,
+      method: 'POST',
+      data,
+      withCredentials: true,
+    });
+    user = res.data;
+    message = 'success!';
+    confirmation = `succesfully ${
+      type === 'add' ? 'saved' : 'deleted'
+    } sequence: ${data.name}`;
+  } catch (e) {
+    console.log(e);
+    message = 'unsuccessful :(';
+    error = 'network error: Please try again later';
+  } finally {
+    console.log('new message: ', message);
+    dispatch(
+      appSlice.actions.updateSequencesFinally({
+        user,
+        message,
+        error,
+        confirmation,
+      })
+    );
+  }
+};
 
 export const changeNetworkError = (val) => (dispatch) => {
   let timer;
@@ -72,15 +129,11 @@ export const changeNetworkError = (val) => (dispatch) => {
 export const getUser = () => async (dispatch) => {
   try {
     dispatch(appSlice.actions.setFetching(true));
-    const res = await axios.get(
-      //   // 'https://drumnickydrum-sequencer.herokuapp.com/user',
-      'http://localhost:4000/user',
-      {
-        withCredentials: true,
-      }
-    );
+    const res = await axios.get(`${host}/user`, {
+      withCredentials: true,
+    });
     if (res.data) {
-      dispatch(setUser({ user: res.data, status: 'User logged in' }));
+      dispatch(setUser({ user: res.data, message: 'User logged in' }));
     }
   } catch (e) {
     console.log('Get User ERROR ->\n', e);
@@ -94,11 +147,13 @@ export const logout = () => async (dispatch) => {
   try {
     dispatch(appSlice.actions.setFetching(true));
     await axios({
-      url: 'http://localhost:4000/user/logout',
+      url: `${host}/user/logout`,
       method: 'GET',
       withCredentials: true,
     });
-    dispatch(setUser(INITIAL_USER));
+    dispatch(
+      setUser({ user: INITIAL_USER, message: 'Successfully logged out' })
+    );
   } catch (e) {
     console.log('Logout ERROR ->\n', e);
     dispatch(appSlice.actions.setStatus('Error logging out'));
@@ -113,6 +168,8 @@ export const {
   setStatus,
   setFetching,
   setServiceWorkerActive,
+  saveSuccess,
+  saveFail,
 } = appSlice.actions;
 
 export default appSlice.reducer;
