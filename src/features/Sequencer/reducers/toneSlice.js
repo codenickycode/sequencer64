@@ -1,10 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import * as Tone from 'tone';
-import * as defaultKits from '../defaults/defaultKits';
 import {
   addCursor,
   animateCell,
-  animateSound,
+  animateSample,
   pauseFlashing,
   removeCursor,
   startFlashing,
@@ -22,7 +21,6 @@ const INITIAL_STATE = {
   bufferError: false,
   transportState: Tone.Transport.state,
   restarting: false,
-  kit: { name: 'init', sounds: [{}] },
   step: 0,
 };
 
@@ -37,7 +35,6 @@ export const toneSlice = createSlice({
       state.loadingBuffers = payload.loadingBuffers;
       state.buffersLoaded = payload.buffersLoaded;
       state.bufferedKit = payload.bufferedKit;
-      if (payload.bufferedKit === payload.kit.name) state.kit = payload.kit;
     },
     setStep: (state, { payload }) => {
       state.step = payload;
@@ -51,23 +48,17 @@ export const toneSlice = createSlice({
   },
 });
 
-export const loadSamples = () => async (dispatch, getState) => {
+export const loadSamples = (kit) => async (dispatch, getState) => {
   let restart = Tone.Transport.state === 'started';
   dispatch(stopSequence());
   const sequenceKitName = getState().sequence.present.kit;
-  const oldKit = getState().tone.kit;
-  let payload = { bufferedKit: oldKit.name };
+  let payload = { bufferedKit: kit.name };
   dispatch(toneSlice.actions.setLoadingBuffers(true));
   try {
-    if (oldKit.sounds[0].sampler) disposeSamplers(oldKit);
-    payload.kit = {
-      name: sequenceKitName,
-      sounds: defaultKits[sequenceKitName].sounds.map((sound) => ({
-        ...sound,
-      })),
-    };
-    await buildSamplers(payload.kit);
-    payload.bufferedKit = sequenceKitName;
+    if (kit.samples[0].sampler) disposeSamplers(kit);
+    await buildSamplers(kit, sequenceKitName);
+    kit.name = sequenceKitName;
+    payload.bufferedKit = kit.name;
     payload.buffersLoaded = true;
   } catch (e) {
     console.log('loadSamples ->\n', e);
@@ -75,15 +66,16 @@ export const loadSamples = () => async (dispatch, getState) => {
   } finally {
     payload.loadingBuffers = false;
     dispatch(toneSlice.actions.loadSamplesFinally(payload));
-    if (restart && payload.buffersLoaded) dispatch(startSequence());
+    if (restart && payload.buffersLoaded) dispatch(startSequence(kit));
   }
 };
 
-export const startSequence = () => (dispatch, getState) => {
+export const startSequence = (kit) => (dispatch, getState) => {
   const length = getState().sequence.present.length;
   const step = getState().tone.step;
   removeCursor(length, step);
-  if (Tone.Transport.state === 'stopped') schedulePattern(dispatch, getState);
+  if (Tone.Transport.state === 'stopped')
+    schedulePattern(dispatch, getState, kit);
   Tone.Transport.start();
 };
 
@@ -100,15 +92,15 @@ export const stopSequence = () => (dispatch, getState) => {
   dispatch(toneSlice.actions.setStep(0));
 };
 
-export const schedulePattern = (dispatch, getState) => {
+export const schedulePattern = (dispatch, getState, kit) => {
   Tone.Transport.scheduleRepeat((time) => {
     const step = getState().tone.step;
     const patternStep = getState().sequence.present.pattern[step];
-    const sounds = getState().tone.kit.sounds;
+    const samples = kit.samples;
     try {
-      triggerStep(time, patternStep, sounds);
+      triggerStep(time, patternStep, samples);
       animateCell(time, document.getElementById(`cell-${step}`));
-      animateSound(time, patternStep);
+      animateSample(time, patternStep);
     } catch (e) {
       console.log('scheduleRepeat passed buffer interupt');
     }

@@ -18,7 +18,7 @@ export const INITIAL_MODS = {
 };
 
 const INITIAL_STATE = {
-  selectedSound: -1,
+  selectedSample: -1,
   mode: null,
   spAlert: { count: 0, message: '' },
   mods: { ...INITIAL_MODS },
@@ -31,11 +31,11 @@ export const editorSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     close: (state) => {
-      state.selectedSound = INITIAL_STATE.selectedSound;
+      state.selectedSample = INITIAL_STATE.selectedSample;
       state.mode = INITIAL_STATE.mode;
     },
-    edit: (state, { payload: { sound } }) => {
-      state.selectedSound = sound;
+    edit: (state, { payload: { sample } }) => {
+      state.selectedSample = sample;
       state.mode = MODES.PAINTING;
       state.spAlert = { ...INITIAL_STATE.spAlert };
     },

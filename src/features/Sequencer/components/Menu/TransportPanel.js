@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../../../components/Button';
 import { StopIcon, StartIcon, PauseIcon } from '../../../../icons';
@@ -10,9 +10,12 @@ import {
   startSequence,
   stopSequence,
 } from '../../reducers/toneSlice';
+import { Kit } from '../../providers/Kit';
 
 export const TransportPanel = () => {
   const dispatch = useDispatch();
+
+  const { kitRef } = useContext(Kit);
 
   const transportState = useSelector((state) => state.tone.transportState);
   const buffersLoaded = useSelector((state) => state.tone.buffersLoaded);
@@ -34,15 +37,20 @@ export const TransportPanel = () => {
     }
   }, [ready, buffersLoaded]);
 
+  // const [transportState, setTransportState] = useState(null);
   // useEffect(() => {
-  //   if (bufferError) {
-  //     console.log('setting ture');
-  //     setReady(true);
-  //     let timer = setTimeout(() => dispatch(setBufferError(false), 5000));
-  //     dispatch(setStatus('Audio buffer error'));
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [bufferError, dispatch]);
+  //   console.log(Tone.Transport.emit('start'));
+  // }, [transportState]);
+  // document.addEventListener('start', () => {
+  //   setTransportState('start');
+  // });
+
+  // document.addEventListener('pause', () => {
+  //   setTransportState('pause');
+  // });
+  // document.addEventListener('stop', () => {
+  //   setTransportState('stop');
+  // });
 
   const transportMemo = useMemo(() => {
     // console.log('rendering: TransportPanel');
@@ -68,8 +76,7 @@ export const TransportPanel = () => {
         dispatch(pauseSequence());
       } else {
         setReady(false);
-        console.log('dispatching startSequence()');
-        dispatch(startSequence());
+        dispatch(startSequence(kitRef.current));
       }
     };
 

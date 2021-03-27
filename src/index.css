@@ -186,7 +186,7 @@ body {
   border-bottom: none;
 }
 
-#sound-panel {
+#sample-panel {
   position: fixed;
   top: 60%;
   width: 100%;
@@ -616,7 +616,7 @@ body {
   opacity: 1;
 }
 
-#paste-pattern-sounds {
+#paste-pattern-samples {
   position: relative;
   min-width: 100%;
   min-height: 100%;
@@ -626,12 +626,12 @@ body {
   gap: 0.2rem;
 }
 
-#paste-pattern-sounds .sound {
+#paste-pattern-samples .sample {
   position: relative;
   background: none;
 }
 
-#paste-pattern-sounds p {
+#paste-pattern-samples p {
   padding: 0.5rem;
   text-align: center;
   background: var(--black-3q);
@@ -644,13 +644,13 @@ body {
   width: 25%;
 }
 
-#paste-pattern-sounds .icon {
+#paste-pattern-samples .icon {
   height: 100%;
   width: 100%;
   fill: var(--white);
 }
 
-#paste-pattern-sounds .cells {
+#paste-pattern-samples .cells {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -665,17 +665,17 @@ body {
   transition: 150ms;
 }
 
-#paste-pattern-sounds .cells.selected {
+#paste-pattern-samples .cells.selected {
   transition: none;
   opacity: 1;
 }
 
-#paste-pattern-sounds .cell {
+#paste-pattern-samples .cell {
   border: none;
 }
 
 /*************************************/
-/************* SoundPanel ************/
+/************* SamplePanel ***********/
 /*************************************/
 .sp-alert-wrapper {
   pointer-events: none;
@@ -730,7 +730,7 @@ body {
   }
 }
 
-.sound-menu {
+.sample-menu {
   width: 100%;
   height: 100%;
   padding: 0.25rem;
@@ -740,7 +740,7 @@ body {
   gap: 0.2rem;
 }
 
-.sound {
+.sample {
   position: relative;
   cursor: pointer;
   display: flex;
@@ -749,8 +749,8 @@ body {
   color: var(--white);
 }
 
-.sound .border,
-.sound .border-pulse {
+.sample .border,
+.sample .border-pulse {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -758,70 +758,70 @@ body {
   transition: 500ms;
 }
 
-.sound .border-pulse {
+.sample .border-pulse {
   opacity: 0;
 }
 
-.sound .bg {
+.sample .bg {
   position: absolute;
   width: 100%;
   height: 100%;
   opacity: 1;
 }
 
-.sound.pressed .border,
-.sound.pulse .border {
+.sample.pressed .border,
+.sample.pulse .border {
   transition: none;
   opacity: 0;
 }
 
-.sound.pulse .border-pulse {
+.sample.pulse .border-pulse {
   transition: none;
   opacity: 1;
 }
 
-.sound.pressed .bg {
+.sample.pressed .bg {
   transition: none;
   opacity: 1;
 }
 
-.sound-btn {
+.sample-btn {
   border: none;
   color: none;
   background: var(--grey-quarter);
 }
 
-.sound-btn .border {
+.sample-btn .border {
   opacity: 1;
   border: 1px solid var(--purple-half);
 }
 
-.sound-btn .icon {
+.sample-btn .icon {
   height: 1.5rem;
   width: 1.5rem;
   transition: 500ms;
 }
 
-.sound-btn .icon.colorDefault {
+.sample-btn .icon.colorDefault {
   opacity: 1;
 }
 
-.sound-btn .icon.color {
+.sample-btn .icon.color {
   opacity: 1;
 }
 
-.sound-btn label {
+.sample-btn label {
   visibility: hidden;
   width: 0;
   user-select: none;
   pointer-events: none;
 }
 
-.sound-name {
+.sample-name {
   z-index: 2;
 }
 
-.sound-edit {
+.sample-edit {
   position: absolute;
   z-index: 6;
   width: 100%;
@@ -833,12 +833,12 @@ body {
   pointer-events: none;
 }
 
-.sound-edit.show {
+.sample-edit.show {
   opacity: 1;
   pointer-events: initial;
 }
 
-.sound-edit-menu {
+.sample-edit-menu {
   position: relative;
   height: 100%;
   white-space: nowrap;
@@ -846,7 +846,7 @@ body {
   overflow-y: hidden;
 }
 
-.sound-edit-btn {
+.sample-edit-btn {
   position: relative;
   z-index: 1;
   display: inline-block;
@@ -862,13 +862,13 @@ body {
   transform: translateY(-0.25rem);
 }
 
-.sound-edit-dummy {
+.sample-edit-dummy {
   display: inline-block;
   width: 3rem;
   height: 100%;
 }
 
-.sound-edit-close {
+.sample-edit-close {
   z-index: 2;
   position: absolute;
   top: 0.25rem;
@@ -880,22 +880,22 @@ body {
   color: var(--white);
 }
 
-.sound-edit-close .chevron-left {
+.sample-edit-close .chevron-left {
   width: 2.5rem;
 }
 
-.sound-edit-close.pressed {
+.sample-edit-close.pressed {
   transition: none;
   transform: scale(0.8);
 }
 
-.sound-edit .icon {
+.sample-edit .icon {
   width: 100%;
   max-width: 4rem;
   fill: var(--white);
 }
 
-.sound-edit-detail {
+.sample-edit-detail {
   position: relative;
   width: 100%;
   height: 100%;
@@ -907,7 +907,7 @@ body {
   overflow: hidden;
 }
 
-.sound-edit-title {
+.sample-edit-title {
   max-width: 50%;
   display: flex;
   flex-direction: column;
@@ -916,8 +916,8 @@ body {
   color: var(--white);
 }
 
-.sound-edit-instructions,
-.sound-edit-middle {
+.sample-edit-instructions,
+.sample-edit-middle {
   max-width: 50%;
   height: 100%;
   color: var(--white);
@@ -928,14 +928,14 @@ body {
   white-space: initial;
 }
 
-.sound-edit-middle {
+.sample-edit-middle {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
 }
 
-.sound-edit-middle .sound-edit-dummy {
+.sample-edit-middle .sample-edit-dummy {
   height: auto;
 }
 
@@ -1211,7 +1211,7 @@ div[data-cursor='true'] .cursor {
   right: 0.25rem;
 }
 
-.sound-cells {
+.sample-cells {
   pointer-events: none;
   position: absolute;
   width: 100%;
@@ -1225,7 +1225,7 @@ div[data-cursor='true'] .cursor {
   opacity: 0.5;
 }
 
-.sound-cell {
+.sample-cell {
   color: var(--none);
   transform: scale(0.5);
   border: 1px solid;
@@ -1233,8 +1233,8 @@ div[data-cursor='true'] .cursor {
   transition: 200ms;
 }
 
-.cell.flash .sound-cell,
-.cell.pulse .sound-cell {
+.cell.flash .sample-cell,
+.cell.pulse .sample-cell {
   transition: none;
   transform: scale(2);
 }
@@ -1717,7 +1717,7 @@ p.dim {
   transform: translateY(-50%);
 }
 
-.sound-edit svg.pvl-swipe {
+.sample-edit svg.pvl-swipe {
   position: relative;
   z-index: 2;
   top: 45%;

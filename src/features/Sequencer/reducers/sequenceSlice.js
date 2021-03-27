@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import undoable, { groupByActionTypes } from 'redux-undo';
 import { analog } from '../defaults/defaultSequences';
 import { getLS } from '../../../utils/storage';
-import { getNoteTally, inc, dec, initSoundStep } from '../utils';
+import { getNoteTally, inc, dec, initSampleStep } from './functions/sequence';
 import { INITIAL_MODS, MODES, setSpAlert } from './editorSlice';
 
 // const INITIAL_PATTERN = getLS('pattern') || analog.pattern;
@@ -23,19 +23,19 @@ export const sequenceSlice = createSlice({
   name: 'sequence',
   initialState: INITIAL_STATE,
   reducers: {
-    paintCell: (state, { payload: { step, selectedSound, noteOn } }) => {
-      state.pattern[step][selectedSound].noteOn = noteOn;
-      if (noteOn) inc(state.noteTally, selectedSound);
-      else dec(state.noteTally, selectedSound);
-      state.undoStatus = `toggle cells | sound: ${selectedSound}`;
+    paintCell: (state, { payload: { step, selectedSample, noteOn } }) => {
+      state.pattern[step][selectedSample].noteOn = noteOn;
+      if (noteOn) inc(state.noteTally, selectedSample);
+      else dec(state.noteTally, selectedSample);
+      state.undoStatus = `toggle cells | sample: ${selectedSample}`;
     },
-    sliceCell: (state, { payload: { step, selectedSound } }) => {
-      let notes = state.pattern[step][selectedSound].notes;
+    sliceCell: (state, { payload: { step, selectedSample } }) => {
+      let notes = state.pattern[step][selectedSample].notes;
       const len = notes.length;
       const note = notes[0];
       if (len === 3) notes.length = 0;
       notes.push(note);
-      state.undoStatus = `slice cells | sound: ${selectedSound}`;
+      state.undoStatus = `slice cells | sample: ${selectedSample}`;
     },
     resetSlice: (state, { payload }) => {
       state.pattern.forEach((step) => {
@@ -44,36 +44,36 @@ export const sequenceSlice = createSlice({
         step[payload].notes.push(note);
       });
     },
-    paste: (state, { payload: { sound, selectedSound } }) => {
+    paste: (state, { payload: { sample, selectedSample } }) => {
       state.pattern.forEach((step) => {
-        step[sound].noteOn = step[selectedSound].noteOn;
-        step[sound].notes = step[selectedSound].notes.map((note) => ({
+        step[sample].noteOn = step[selectedSample].noteOn;
+        step[sample].notes = step[selectedSample].notes.map((note) => ({
           ...note,
         }));
       });
       state.noteTally.total.count +=
-        state.noteTally[selectedSound].count - state.noteTally[sound].count;
-      state.noteTally[sound] = { ...state.noteTally[selectedSound] };
-      state.undoStatus = `copy cells from: ${selectedSound} to: ${sound}`;
+        state.noteTally[selectedSample].count - state.noteTally[sample].count;
+      state.noteTally[sample] = { ...state.noteTally[selectedSample] };
+      state.undoStatus = `copy cells from: ${selectedSample} to: ${sample}`;
     },
-    eraseCell: (state, { payload: { step, selectedSound } }) => {
-      initSoundStep(state.pattern[step][selectedSound]);
-      dec(state.noteTally, selectedSound);
-      state.undoStatus = `erase cells | sound: ${selectedSound}`;
+    eraseCell: (state, { payload: { step, selectedSample } }) => {
+      initSampleStep(state.pattern[step][selectedSample]);
+      dec(state.noteTally, selectedSample);
+      state.undoStatus = `erase cells | sample: ${selectedSample}`;
     },
-    eraseSound: (state, { payload: { selectedSound } }) => {
+    eraseSample: (state, { payload: { selectedSample } }) => {
       state.pattern.forEach((step) => {
-        initSoundStep(step[selectedSound]);
+        initSampleStep(step[selectedSample]);
       });
-      state.noteTally.total.count -= state.noteTally[selectedSound].count;
-      state.noteTally[selectedSound].count = 0;
-      state.noteTally[selectedSound].empty = true;
-      state.undoStatus = `erase all cells | sound: ${selectedSound}`;
+      state.noteTally.total.count -= state.noteTally[selectedSample].count;
+      state.noteTally[selectedSample].count = 0;
+      state.noteTally[selectedSample].empty = true;
+      state.undoStatus = `erase all cells | sample: ${selectedSample}`;
     },
     eraseAll: (state) => {
       state.pattern.forEach((step) => {
-        step.forEach((sound) => {
-          initSoundStep(sound);
+        step.forEach((sample) => {
+          initSampleStep(sample);
         });
       });
       Object.keys(state.noteTally).forEach((tally) => {
@@ -83,31 +83,31 @@ export const sequenceSlice = createSlice({
       state.noteTally.total.empty = true;
       state.undoStatus = `erase sequence`;
     },
-    modCell: (state, { payload: { selectedSound, type, value, step } }) => {
+    modCell: (state, { payload: { selectedSample, type, value, step } }) => {
       if (type === MODES.MOD_LENGTH && value < 1) value *= 0.25;
-      state.pattern[step][selectedSound].notes.forEach((note) => {
+      state.pattern[step][selectedSample].notes.forEach((note) => {
         note[type] = value;
       });
-      state.undoStatus = `modify cells | sound: ${selectedSound}`;
+      state.undoStatus = `modify cells | sample: ${selectedSample}`;
     },
-    modAll: (state, { payload: { selectedSound, type, value } }) => {
+    modAll: (state, { payload: { selectedSample, type, value } }) => {
       if (type === MODES.MOD_LENGTH && value < 1) value *= 0.25;
       state.pattern.forEach((step) => {
-        if (step[selectedSound].noteOn) {
-          step[selectedSound].notes.forEach((note) => {
+        if (step[selectedSample].noteOn) {
+          step[selectedSample].notes.forEach((note) => {
             note[type] = value;
           });
         }
       });
-      state.undoStatus = `modify all cells | sound: ${selectedSound}`;
+      state.undoStatus = `modify all cells | sample: ${selectedSample}`;
     },
-    resetMods: (state, { payload: { selectedSound, type } }) => {
+    resetMods: (state, { payload: { selectedSample, type } }) => {
       state.pattern.forEach((step) => {
-        step[selectedSound].notes.forEach((note) => {
+        step[selectedSample].notes.forEach((note) => {
           note[type] = INITIAL_MODS[type];
         });
       });
-      state.undoStatus = `reset cell mods | sound: ${selectedSound}`;
+      state.undoStatus = `reset cell mods | sample: ${selectedSample}`;
     },
     loadSequence: (state, { payload: { sequence } }) => {
       state._id = sequence._id;
@@ -131,9 +131,9 @@ export const sequenceSlice = createSlice({
 });
 
 export const modCell = (step, noteOn) => (dispatch, getState) => {
-  const selectedSound = getState().editor.selectedSound;
-  if (selectedSound === -1) {
-    dispatch(setSpAlert('select a sound to edit'));
+  const selectedSample = getState().editor.selectedSample;
+  if (selectedSample === -1) {
+    dispatch(setSpAlert('select a sample to edit'));
     return;
   }
   const mode = getState().editor.mode;
@@ -144,18 +144,18 @@ export const modCell = (step, noteOn) => (dispatch, getState) => {
         dispatch(
           sequenceSlice.actions.paintCell({
             step,
-            selectedSound,
+            selectedSample,
             noteOn: toggleOn,
           })
         );
       break;
     case MODES.ERASING:
       if (noteOn)
-        dispatch(sequenceSlice.actions.eraseCell({ step, selectedSound }));
+        dispatch(sequenceSlice.actions.eraseCell({ step, selectedSample }));
       break;
     case MODES.SLICING:
       if (noteOn)
-        dispatch(sequenceSlice.actions.sliceCell({ step, selectedSound }));
+        dispatch(sequenceSlice.actions.sliceCell({ step, selectedSample }));
       break;
     case MODES.MOD_LENGTH:
     case MODES.MOD_PITCH:
@@ -165,7 +165,7 @@ export const modCell = (step, noteOn) => (dispatch, getState) => {
         dispatch(
           sequenceSlice.actions.modCell({
             step,
-            selectedSound,
+            selectedSample,
             type: mode,
             value,
           })
@@ -183,7 +183,7 @@ export const {
   resetSlice,
   paste,
   eraseCell,
-  eraseSound,
+  eraseSample,
   eraseAll,
   modAll,
   resetMods,

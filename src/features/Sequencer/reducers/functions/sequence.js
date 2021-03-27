@@ -7,8 +7,8 @@ export const getNoteTally = (pattern) => {
     noteTally[i] = { count: 0, empty: true };
   });
   pattern.forEach((step) => {
-    step.forEach((sound, i) => {
-      if (sound.noteOn) {
+    step.forEach((sample, i) => {
+      if (sample.noteOn) {
         noteTally[i].count++;
         noteTally.total.count++;
       }
@@ -23,37 +23,37 @@ export const getNoteTally = (pattern) => {
   return noteTally;
 };
 
-export const inc = (noteTally, sound) => {
-  noteTally[sound].count++;
-  noteTally[sound].empty = false;
+export const inc = (noteTally, sample) => {
+  noteTally[sample].count++;
+  noteTally[sample].empty = false;
   noteTally.total.count++;
   noteTally.total.count = false;
 };
 
-export const dec = (noteTally, sound) => {
-  noteTally[sound].count--;
-  if (noteTally[sound].count === 0) noteTally[sound].empty = true;
+export const dec = (noteTally, sample) => {
+  noteTally[sample].count--;
+  if (noteTally[sample].count === 0) noteTally[sample].empty = true;
   noteTally.total.count--;
   if (noteTally.total.count === 0) noteTally.total.empty = true;
 };
 
-export const initSoundStep = (sound) => {
-  sound.noteOn = false;
-  sound.notes.length = 0;
-  sound.notes.push({ pitch: 'C2', velocity: 1, length: 1 });
+export const initSampleStep = (sample) => {
+  sample.noteOn = false;
+  sample.notes.length = 0;
+  sample.notes.push({ pitch: 'C2', velocity: 1, length: 1 });
 };
 
 export const INIT_PATTERN = () => {
   let pattern = [];
-  let sounds = [];
+  let samples = [];
   for (let i = 0; i < 9; i++) {
-    sounds.push({
+    samples.push({
       noteOn: true,
       notes: [{ pitch: 'C2', velocity: 1, length: 1 }],
     });
   }
   for (let i = 0; i < 64; i++) {
-    pattern.push(sounds);
+    pattern.push(samples);
   }
   return pattern;
 };

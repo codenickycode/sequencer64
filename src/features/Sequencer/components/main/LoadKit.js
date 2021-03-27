@@ -170,10 +170,10 @@ export const LoadKitInfo = () => {
 };
 
 const fetchSamples = async (kitName) => {
-  const sounds = defaultKits[kitName].sounds;
+  const samples = defaultKits[kitName].samples;
   const promises = [];
-  sounds.forEach((sound) => {
-    const url = HOST + '/kits/' + sound.sample;
+  samples.forEach((sample) => {
+    const url = HOST + '/kits/' + sample.path;
     promises.push(fetch(url));
   });
   //   //   mock serve wait

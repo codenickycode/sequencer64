@@ -38,13 +38,13 @@ export const animateCell = (time, cell) => {
   }, time);
 };
 
-export const animateSound = (time, step) => {
-  const soundBtns = document.querySelectorAll('.sound-btn');
+export const animateSample = (time, step) => {
+  const sampleBtns = document.querySelectorAll('.sample-btn');
   Tone.Draw.schedule(() => {
-    step.forEach((sound, i) => {
-      if (sound.noteOn) {
-        soundBtns[i].classList.add('pulse');
-        setTimeout(() => soundBtns[i].classList.remove('pulse'), 0);
+    step.forEach((sample, i) => {
+      if (sample.noteOn) {
+        sampleBtns[i].classList.add('pulse');
+        setTimeout(() => sampleBtns[i].classList.remove('pulse'), 0);
       }
     });
   }, time);

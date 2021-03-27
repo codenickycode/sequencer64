@@ -7,11 +7,14 @@ import store from './store';
 import { Provider } from 'react-redux';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import { KitProvider } from './features/Sequencer/providers/Kit';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
-    <Responder />
+    <KitProvider>
+      <App />
+      <Responder />
+    </KitProvider>
   </Provider>,
   document.getElementById('root')
 );

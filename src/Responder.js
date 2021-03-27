@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import * as Tone from 'tone';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLS, setLS } from './utils/storage';
 import { loadSamples } from './features/Sequencer/reducers/toneSlice';
+import { Kit } from './features/Sequencer/providers/Kit';
 
 export const Responder = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ export const Responder = () => {
   const reloadSamples = useSelector((state) => state.tone.reloadSamples);
 
   // Editor Reducer
-  const selectedSound = useSelector((state) => state.editor.selectedSound);
+  const selectedSample = useSelector((state) => state.editor.selectedSample);
   const mode = useSelector((state) => state.editor.mode);
   const spAlertCount = useSelector((state) => state.editor.spAlert.count);
   const spAlertMessage = useSelector((state) => state.editor.spAlert.message);
@@ -79,11 +80,12 @@ export const Responder = () => {
     setLS('sequenceKitName', sequenceKitName);
   }, [sequenceKitName]);
 
+  const { kitRef } = useContext(Kit);
   useEffect(() => {
     if (bufferedKit !== sequenceKitName && !loadingBuffers) {
-      dispatch(loadSamples());
+      dispatch(loadSamples(kitRef.current));
     }
-  }, [bufferedKit, dispatch, sequenceKitName, loadingBuffers]);
+  }, [bufferedKit, dispatch, sequenceKitName, loadingBuffers, kitRef]);
 
   return null;
 };

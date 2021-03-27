@@ -17,7 +17,7 @@ import { PitchVelocityLength } from './PitchVelocityLength';
 import { SpAlert } from './SpAlert';
 import { Button } from '../../../../components/Button';
 
-export const SoundPanel = () => {
+export const SamplePanel = () => {
   const dispatch = useDispatch();
 
   const mode = useSelector((state) => state.editor.mode);
@@ -25,7 +25,7 @@ export const SoundPanel = () => {
   const [showEditMenu, setShowEditMenu] = useState(false);
 
   const spMemo = useMemo(() => {
-    // console.log('rendering: SoundPanel');
+    // console.log('rendering: SamplePanel');
 
     const onReturn = () => {
       if (mode !== MODES.COPYING) {
@@ -42,7 +42,7 @@ export const SoundPanel = () => {
     return (
       <>
         <SpAlert />
-        <div className={showEditMenu ? 'sound-edit show' : 'sound-edit'}>
+        <div className={showEditMenu ? 'sample-edit show' : 'sample-edit'}>
           {mode === MODES.ERASING ? (
             <Erase onReturn={onReturn} />
           ) : mode === MODES.SLICING ? (
@@ -57,13 +57,13 @@ export const SoundPanel = () => {
               hideEditable={hideEditable}
             />
           ) : (
-            <SoundEditMenu
+            <SampleEditMenu
               selectMode={selectMode}
               setShowEditMenu={setShowEditMenu}
             />
           )}
         </div>
-        <SoundBtns setShowEditMenu={setShowEditMenu} />
+        <SampleBtns setShowEditMenu={setShowEditMenu} />
       </>
     );
   }, [dispatch, mode, showEditMenu]);
@@ -71,15 +71,15 @@ export const SoundPanel = () => {
   return spMemo;
 };
 
-const SoundEditMenu = ({ selectMode, setShowEditMenu }) => {
+const SampleEditMenu = ({ selectMode, setShowEditMenu }) => {
   const dispatch = useDispatch();
-  const selectedSound = useSelector((state) => state.editor.selectedSound);
+  const selectedSample = useSelector((state) => state.editor.selectedSample);
   const disabled = useSelector(
-    (state) => state.sequence.present.noteTally[selectedSound].empty
+    (state) => state.sequence.present.noteTally[selectedSample].empty
   );
 
-  const soundEditMenuMemo = useMemo(() => {
-    // console.log('rendering: SoundEditMenu');
+  const sampleEditMenuMemo = useMemo(() => {
+    // console.log('rendering: SampleEditMenu');
 
     const onClose = () => {
       dispatch(close());
@@ -87,66 +87,66 @@ const SoundEditMenu = ({ selectMode, setShowEditMenu }) => {
     };
 
     return (
-      <div className='sound-edit-menu'>
-        <Button classes='sound-edit-close' onClick={onClose}>
+      <div className='sample-edit-menu'>
+        <Button classes='sample-edit-close' onClick={onClose}>
           <CloseIcon />
         </Button>
-        <div className='sound-edit-dummy' />
+        <div className='sample-edit-dummy' />
         <Button
-          classes={'sound-edit-btn'}
+          classes={'sample-edit-btn'}
           disabled={disabled}
           onClick={() => selectMode(MODES.ERASING)}
         >
-          <div className='sound-edit-icon-div'>
+          <div className='sample-edit-icon-div'>
             <EraserIcon />
             <p>Erase</p>
           </div>
         </Button>
         <Button
-          classes='sound-edit-btn'
+          classes='sample-edit-btn'
           disabled={disabled}
           onClick={() => selectMode(MODES.SLICING)}
         >
-          <div className='sound-edit-icon-div'>
+          <div className='sample-edit-icon-div'>
             <SawIcon />
             <p>Slice</p>
           </div>
         </Button>
         <Button
-          classes='sound-edit-btn'
+          classes='sample-edit-btn'
           onClick={() => selectMode(MODES.COPYING)}
         >
-          <div className='sound-edit-icon-div'>
+          <div className='sample-edit-icon-div'>
             <CopyIcon />
             <p>Copy</p>
           </div>
         </Button>
         <Button
-          classes='sound-edit-btn'
+          classes='sample-edit-btn'
           disabled={disabled}
           onClick={() => selectMode(MODES.MOD_VELOCITY)}
         >
-          <div className='sound-edit-icon-div'>
+          <div className='sample-edit-icon-div'>
             <VelocityIcon />
             <p>Velocity</p>
           </div>
         </Button>
         <Button
-          classes='sound-edit-btn'
+          classes='sample-edit-btn'
           disabled={disabled}
           onClick={() => selectMode(MODES.MOD_LENGTH)}
         >
-          <div className='sound-edit-icon-div'>
+          <div className='sample-edit-icon-div'>
             <LengthIcon />
             <p>Length</p>
           </div>
         </Button>
         <Button
-          classes='sound-edit-btn'
+          classes='sample-edit-btn'
           disabled={disabled}
           onClick={() => selectMode(MODES.MOD_PITCH)}
         >
-          <div className='sound-edit-icon-div'>
+          <div className='sample-edit-icon-div'>
             <PitchIcon />
             <p>Pitch</p>
           </div>
@@ -154,46 +154,46 @@ const SoundEditMenu = ({ selectMode, setShowEditMenu }) => {
       </div>
     );
   }, [disabled, dispatch, selectMode, setShowEditMenu]);
-  return soundEditMenuMemo;
+  return sampleEditMenuMemo;
 };
 
-const SoundBtns = ({ setShowEditMenu }) => {
+const SampleBtns = ({ setShowEditMenu }) => {
   const dispatch = useDispatch();
   const kit = useSelector((state) => state.sequence.present.kit);
 
-  const soundBtnsMemo = useMemo(() => {
-    // console.log('rendering: SoundBtns');
+  const sampleBtnsMemo = useMemo(() => {
+    // console.log('rendering: SampleBtns');
 
-    const selectSound = (i) => {
-      dispatch(edit({ sound: i }));
+    const selectSample = (i) => {
+      dispatch(edit({ sample: i }));
       setShowEditMenu(true);
     };
 
     return (
-      <div className='sound-menu'>
+      <div className='sample-menu'>
         {defaultKits[kit] &&
-          defaultKits[kit].sounds.map((sound, i) => (
-            <SoundBtn
-              key={`sound-menu-${sound.name}`}
+          defaultKits[kit].samples.map((sample, i) => (
+            <SampleBtn
+              key={`sample-menu-${sample.name}`}
               i={i}
-              sound={sound}
-              selectSound={selectSound}
+              sample={sample}
+              selectSample={selectSample}
             />
           ))}
       </div>
     );
   }, [dispatch, kit, setShowEditMenu]);
-  return soundBtnsMemo;
+  return sampleBtnsMemo;
 };
 
-const SoundBtn = ({ i, sound, selectSound }) => {
+const SampleBtn = ({ i, sample, selectSample }) => {
   return (
     <Button
-      classes={`sound sound-btn color${i}`}
-      onClick={() => selectSound(i)}
+      classes={`sample sample-btn color${i}`}
+      onClick={() => selectSample(i)}
     >
-      {icons[sound.icon](sound.color)}
-      <label className='sound-name'>{sound.name}</label>
+      {icons[sample.icon](sample.color)}
+      <label className='sample-name'>{sample.name}</label>
       <div className='border' />
       <div className={`border-pulse border${i}`} />
     </Button>

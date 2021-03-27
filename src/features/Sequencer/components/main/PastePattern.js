@@ -8,7 +8,7 @@ import { Button } from '../../../../components/Button';
 
 export const PastePattern = () => {
   const kit = useSelector((state) => state.sequence.present.kit);
-  const sounds = defaultKits[kit].sounds;
+  const samples = defaultKits[kit].samples;
 
   const mode = useSelector((state) => state.editor.mode);
   const pasting = mode === MODES.COPYING;
@@ -16,21 +16,21 @@ export const PastePattern = () => {
   const pastePatternMemo = useMemo(() => {
     // console.log('rendering: PastePattern');
     let grid = [];
-    for (let i = 0, len = sounds.length; i < len; i++) {
+    for (let i = 0, len = samples.length; i < len; i++) {
       grid.push(i);
     }
 
     return (
       <div id='paste-pattern' className={pasting ? 'show' : ''}>
         {pasting && (
-          <div id='paste-pattern-sounds'>
+          <div id='paste-pattern-samples'>
             {grid.map((i) => {
               return (
-                <SoundBtn
-                  key={`paste-pattern-${sounds[i].name}`}
+                <SampleBtn
+                  key={`paste-pattern-${samples[i].name}`}
                   i={i}
-                  icon={sounds[i].icon}
-                  color={sounds[i].color}
+                  icon={samples[i].icon}
+                  color={samples[i].color}
                 />
               );
             })}
@@ -38,24 +38,24 @@ export const PastePattern = () => {
         )}
       </div>
     );
-  }, [pasting, sounds]);
+  }, [pasting, samples]);
   return pastePatternMemo;
 };
 
-const SoundBtn = ({ i, icon, color }) => {
+const SampleBtn = ({ i, icon, color }) => {
   const dispatch = useDispatch();
-  const selectedSound = useSelector((state) => state.editor.selectedSound);
+  const selectedSample = useSelector((state) => state.editor.selectedSample);
   const pattern = useSelector((state) => state.sequence.present.pattern);
 
   const [flashClass, setFlashClass] = useState('cells');
   const onClick = () => {
-    dispatch(paste({ sound: i, selectedSound }));
+    dispatch(paste({ sample: i, selectedSample }));
     setFlashClass('cells selected');
     setTimeout(() => setFlashClass('cells'));
   };
 
-  let classes = `sound borderDefault`;
-  const selected = i === selectedSound;
+  let classes = `sample borderDefault`;
+  const selected = i === selectedSample;
   if (selected) classes += ' flashing';
 
   return (

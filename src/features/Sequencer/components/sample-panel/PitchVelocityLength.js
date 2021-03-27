@@ -13,7 +13,7 @@ export const PitchVelocityLength = ({
   hideEditable,
 }) => {
   const dispatch = useDispatch();
-  const selectedSound = useSelector((state) => state.editor.selectedSound);
+  const selectedSample = useSelector((state) => state.editor.selectedSample);
   const value = useSelector((state) => state.editor.mods[mode]);
 
   const [editAll, setEditAll] = useState(true);
@@ -25,7 +25,7 @@ export const PitchVelocityLength = ({
   const dispatchModAll = () => {
     dispatch(
       modAll({
-        selectedSound,
+        selectedSample,
         type: mode,
         value,
       })
@@ -52,21 +52,21 @@ export const PitchVelocityLength = ({
     if (mode === MODES.MOD_PITCH && editAll)
       dispatch(
         modAll({
-          selectedSound,
+          selectedSample,
           type: MODES.MOD_PITCH,
           value,
         })
       );
-  }, [dispatch, editAll, mode, selectedSound, value]);
+  }, [dispatch, editAll, mode, selectedSample, value]);
 
   const onReset = () => {
     dispatch(setModVal(INITIAL_MODS[mode]));
-    dispatch(resetMods({ selectedSound, type: mode }));
+    dispatch(resetMods({ selectedSample, type: mode }));
   };
 
   return (
-    <div className='sound-edit-detail col'>
-      <Button classes='sound-edit-close' onClick={onReturn}>
+    <div className='sample-edit-detail col'>
+      <Button classes='sample-edit-close' onClick={onReturn}>
         <ChevronLeftIcon />
       </Button>
       <div className='mod-wrapper'>
@@ -113,10 +113,10 @@ export const PitchVelocityLength = ({
           </>
         )}
         <div className='mod-btns'>
-          <Button classes='sound-edit-btn mod-all' onClick={onReset}>
+          <Button classes='sample-edit-btn mod-all' onClick={onReset}>
             Reset All
           </Button>
-          <Button classes='sound-edit-btn mod-all' onClick={toggleAll}>
+          <Button classes='sample-edit-btn mod-all' onClick={toggleAll}>
             {editAll ? 'Tap Cell' : 'Apply All'}
           </Button>
         </div>
