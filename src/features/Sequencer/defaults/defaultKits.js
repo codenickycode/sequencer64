@@ -5,9 +5,6 @@ export const analog = {
     {
       name: 'kick',
       path: 'analog/kick.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num1',
       color: 0,
       icon: 'kick',
@@ -15,9 +12,6 @@ export const analog = {
     {
       name: 'snr',
       path: 'analog/snr.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num2',
       color: 1,
       icon: 'snr',
@@ -25,9 +19,6 @@ export const analog = {
     {
       name: 'clp',
       path: 'analog/clp.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num3',
       color: 2,
       icon: 'clp',
@@ -35,9 +26,6 @@ export const analog = {
     {
       name: 'ch',
       path: 'analog/ch.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num4',
       color: 3,
       icon: 'ch',
@@ -45,9 +33,6 @@ export const analog = {
     {
       name: 'oh',
       path: 'analog/oh.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num5',
       color: 4,
       icon: 'oh',
@@ -55,9 +40,6 @@ export const analog = {
     {
       name: 'cym',
       path: 'analog/cym.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num6',
       color: 5,
       icon: 'cym',
@@ -65,9 +47,6 @@ export const analog = {
     {
       name: 'ht',
       path: 'analog/ht.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num7',
       color: 6,
       icon: 'tom',
@@ -75,9 +54,6 @@ export const analog = {
     {
       name: 'mt',
       path: 'analog/mt.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num8',
       color: 7,
       icon: 'tom',
@@ -85,9 +61,6 @@ export const analog = {
     {
       name: 'lt',
       path: 'analog/lt.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num9',
       color: 8,
       icon: 'tom',
@@ -102,9 +75,6 @@ export const house = {
     {
       name: 'verb kick',
       path: 'house/kick_verb.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num1',
       color: 0,
       icon: 'kick',
@@ -112,9 +82,6 @@ export const house = {
     {
       name: 'kick',
       path: 'house/kick.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num2',
       color: 1,
       icon: 'kick',
@@ -122,9 +89,6 @@ export const house = {
     {
       name: 'snr',
       path: 'house/snr.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num3',
       color: 2,
       icon: 'snr',
@@ -132,9 +96,6 @@ export const house = {
     {
       name: 'shk',
       path: 'house/shk.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num4',
       color: 3,
       icon: 'shk',
@@ -142,9 +103,6 @@ export const house = {
     {
       name: 'oh',
       path: 'house/oh.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num5',
       color: 4,
       icon: 'oh',
@@ -152,9 +110,6 @@ export const house = {
     {
       name: 'clp',
       path: 'house/clp.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num6',
       color: 5,
       icon: 'clp',
@@ -162,9 +117,6 @@ export const house = {
     {
       name: 'voc',
       path: 'house/voc.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num7',
       color: 6,
       icon: 'voc',
@@ -172,9 +124,6 @@ export const house = {
     {
       name: 'mt',
       path: 'house/mt.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num8',
       color: 7,
       icon: 'tom',
@@ -182,9 +131,6 @@ export const house = {
     {
       name: 'lt',
       path: 'house/lt.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num9',
       color: 8,
       icon: 'tom',
@@ -199,9 +145,6 @@ export const lush = {
     {
       name: 'long kick',
       path: 'lush/kick_long.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num1',
       color: 0,
       icon: 'kick',
@@ -209,9 +152,6 @@ export const lush = {
     {
       name: 'med kick',
       path: 'lush/kick_mid.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num2',
       color: 1,
       icon: 'kick',
@@ -219,9 +159,6 @@ export const lush = {
     {
       name: 'short kick',
       path: 'lush/kick_short.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num3',
       color: 2,
       icon: 'kick',
@@ -229,9 +166,6 @@ export const lush = {
     {
       name: 'ch',
       path: 'lush/ch.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num4',
       color: 3,
       icon: 'ch',
@@ -239,9 +173,6 @@ export const lush = {
     {
       name: 'oh',
       path: 'lush/oh.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num5',
       color: 4,
       icon: 'oh',
@@ -249,9 +180,6 @@ export const lush = {
     {
       name: 'snr',
       path: 'lush/snr.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num6',
       color: 5,
       icon: 'snr',
@@ -259,9 +187,6 @@ export const lush = {
     {
       name: 'tamb',
       path: 'lush/tamb.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num7',
       color: 6,
       icon: 'tamb',
@@ -269,9 +194,6 @@ export const lush = {
     {
       name: 'plop',
       path: 'lush/plop.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num8',
       color: 7,
       icon: 'wb',
@@ -279,9 +201,6 @@ export const lush = {
     {
       name: 'clp',
       path: 'lush/clp.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num9',
       color: 8,
       icon: 'clp',
@@ -296,9 +215,6 @@ export const vinyl = {
     {
       name: 'kick',
       path: 'vinyl/kick.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num1',
       color: 0,
       icon: 'kick',
@@ -306,9 +222,6 @@ export const vinyl = {
     {
       name: 'kick 2',
       path: 'vinyl/kick2.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num2',
       color: 1,
       icon: 'kick2',
@@ -316,9 +229,6 @@ export const vinyl = {
     {
       name: 'snr',
       path: 'vinyl/snr.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num3',
       color: 2,
       icon: 'snr',
@@ -326,9 +236,6 @@ export const vinyl = {
     {
       name: 'ch',
       path: 'vinyl/ch.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num4',
       color: 3,
       icon: 'ch',
@@ -336,9 +243,6 @@ export const vinyl = {
     {
       name: 'oh',
       path: 'vinyl/oh.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num5',
       color: 4,
       icon: 'oh',
@@ -346,9 +250,6 @@ export const vinyl = {
     {
       name: 'clp',
       path: 'vinyl/clp.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num6',
       color: 5,
       icon: 'clp',
@@ -356,9 +257,6 @@ export const vinyl = {
     {
       name: 'bass',
       path: 'vinyl/bass.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num7',
       color: 6,
       icon: 'voc',
@@ -366,9 +264,6 @@ export const vinyl = {
     {
       name: 'shk',
       path: 'vinyl/shk.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num8',
       color: 7,
       icon: 'shk',
@@ -376,9 +271,6 @@ export const vinyl = {
     {
       name: 'rim',
       path: 'vinyl/rim.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num9',
       color: 8,
       icon: 'sticks',
@@ -393,9 +285,6 @@ export const another = {
     {
       name: 'kick',
       path: 'vinyl/kick.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num1',
       color: 0,
       icon: 'kick',
@@ -403,9 +292,6 @@ export const another = {
     {
       name: 'kick 2',
       path: 'vinyl/kick2.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num2',
       color: 1,
       icon: 'kick2',
@@ -413,9 +299,6 @@ export const another = {
     {
       name: 'snr',
       path: 'vinyl/snr.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num3',
       color: 2,
       icon: 'snr',
@@ -423,9 +306,6 @@ export const another = {
     {
       name: 'ch',
       path: 'vinyl/ch.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num4',
       color: 3,
       icon: 'ch',
@@ -433,9 +313,6 @@ export const another = {
     {
       name: 'oh',
       path: 'vinyl/oh.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num5',
       color: 4,
       icon: 'oh',
@@ -443,9 +320,6 @@ export const another = {
     {
       name: 'clp',
       path: 'vinyl/clp.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num6',
       color: 5,
       icon: 'clp',
@@ -453,9 +327,6 @@ export const another = {
     {
       name: 'bass',
       path: 'vinyl/bass.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num7',
       color: 6,
       icon: 'voc',
@@ -463,9 +334,6 @@ export const another = {
     {
       name: 'shk',
       path: 'vinyl/shk.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num8',
       color: 7,
       icon: 'shk',
@@ -473,9 +341,6 @@ export const another = {
     {
       name: 'rim',
       path: 'vinyl/rim.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num9',
       color: 8,
       icon: 'sticks',
@@ -490,9 +355,6 @@ export const new2 = {
     {
       name: 'kick',
       path: 'vinyl/kick.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num1',
       color: 0,
       icon: 'kick',
@@ -500,9 +362,6 @@ export const new2 = {
     {
       name: 'kick 2',
       path: 'vinyl/kick2.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num2',
       color: 1,
       icon: 'kick2',
@@ -510,9 +369,6 @@ export const new2 = {
     {
       name: 'snr',
       path: 'vinyl/snr.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num3',
       color: 2,
       icon: 'snr',
@@ -520,9 +376,6 @@ export const new2 = {
     {
       name: 'ch',
       path: 'vinyl/ch.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num4',
       color: 3,
       icon: 'ch',
@@ -530,9 +383,6 @@ export const new2 = {
     {
       name: 'oh',
       path: 'vinyl/oh.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num5',
       color: 4,
       icon: 'oh',
@@ -540,9 +390,6 @@ export const new2 = {
     {
       name: 'clp',
       path: 'vinyl/clp.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num6',
       color: 5,
       icon: 'clp',
@@ -550,9 +397,6 @@ export const new2 = {
     {
       name: 'bass',
       path: 'vinyl/bass.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num7',
       color: 6,
       icon: 'voc',
@@ -560,9 +404,6 @@ export const new2 = {
     {
       name: 'shk',
       path: 'vinyl/shk.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num8',
       color: 7,
       icon: 'shk',
@@ -570,9 +411,6 @@ export const new2 = {
     {
       name: 'rim',
       path: 'vinyl/rim.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num9',
       color: 8,
       icon: 'sticks',
@@ -587,9 +425,6 @@ export const anotherKit = {
     {
       name: 'kick',
       path: 'vinyl/kick.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num1',
       color: 0,
       icon: 'kick',
@@ -597,9 +432,6 @@ export const anotherKit = {
     {
       name: 'kick 2',
       path: 'vinyl/kick2.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num2',
       color: 1,
       icon: 'kick2',
@@ -607,9 +439,6 @@ export const anotherKit = {
     {
       name: 'snr',
       path: 'vinyl/snr.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num3',
       color: 2,
       icon: 'snr',
@@ -617,9 +446,6 @@ export const anotherKit = {
     {
       name: 'ch',
       path: 'vinyl/ch.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num4',
       color: 3,
       icon: 'ch',
@@ -627,9 +453,6 @@ export const anotherKit = {
     {
       name: 'oh',
       path: 'vinyl/oh.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num5',
       color: 4,
       icon: 'oh',
@@ -637,9 +460,6 @@ export const anotherKit = {
     {
       name: 'clp',
       path: 'vinyl/clp.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num6',
       color: 5,
       icon: 'clp',
@@ -647,9 +467,6 @@ export const anotherKit = {
     {
       name: 'bass',
       path: 'vinyl/bass.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num7',
       color: 6,
       icon: 'voc',
@@ -657,9 +474,6 @@ export const anotherKit = {
     {
       name: 'shk',
       path: 'vinyl/shk.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num8',
       color: 7,
       icon: 'shk',
@@ -667,9 +481,6 @@ export const anotherKit = {
     {
       name: 'rim',
       path: 'vinyl/rim.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num9',
       color: 8,
       icon: 'sticks',
@@ -684,9 +495,6 @@ export const thumpy = {
     {
       name: 'kick',
       path: 'vinyl/kick.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num1',
       color: 0,
       icon: 'kick',
@@ -694,9 +502,6 @@ export const thumpy = {
     {
       name: 'kick 2',
       path: 'vinyl/kick2.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num2',
       color: 1,
       icon: 'kick2',
@@ -704,9 +509,6 @@ export const thumpy = {
     {
       name: 'snr',
       path: 'vinyl/snr.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num3',
       color: 2,
       icon: 'snr',
@@ -714,9 +516,6 @@ export const thumpy = {
     {
       name: 'ch',
       path: 'vinyl/ch.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num4',
       color: 3,
       icon: 'ch',
@@ -724,9 +523,6 @@ export const thumpy = {
     {
       name: 'oh',
       path: 'vinyl/oh.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num5',
       color: 4,
       icon: 'oh',
@@ -734,9 +530,6 @@ export const thumpy = {
     {
       name: 'clp',
       path: 'vinyl/clp.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num6',
       color: 5,
       icon: 'clp',
@@ -744,9 +537,6 @@ export const thumpy = {
     {
       name: 'bass',
       path: 'vinyl/bass.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num7',
       color: 6,
       icon: 'voc',
@@ -754,9 +544,6 @@ export const thumpy = {
     {
       name: 'shk',
       path: 'vinyl/shk.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num8',
       color: 7,
       icon: 'shk',
@@ -764,9 +551,6 @@ export const thumpy = {
     {
       name: 'rim',
       path: 'vinyl/rim.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num9',
       color: 8,
       icon: 'sticks',
@@ -781,9 +565,6 @@ export const dope = {
     {
       name: 'kick',
       path: 'vinyl/kick.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num1',
       color: 0,
       icon: 'kick',
@@ -791,9 +572,6 @@ export const dope = {
     {
       name: 'kick 2',
       path: 'vinyl/kick2.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num2',
       color: 1,
       icon: 'kick2',
@@ -801,9 +579,6 @@ export const dope = {
     {
       name: 'snr',
       path: 'vinyl/snr.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num3',
       color: 2,
       icon: 'snr',
@@ -811,9 +586,6 @@ export const dope = {
     {
       name: 'ch',
       path: 'vinyl/ch.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num4',
       color: 3,
       icon: 'ch',
@@ -821,9 +593,6 @@ export const dope = {
     {
       name: 'oh',
       path: 'vinyl/oh.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num5',
       color: 4,
       icon: 'oh',
@@ -831,9 +600,6 @@ export const dope = {
     {
       name: 'clp',
       path: 'vinyl/clp.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num6',
       color: 5,
       icon: 'clp',
@@ -841,9 +607,6 @@ export const dope = {
     {
       name: 'bass',
       path: 'vinyl/bass.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num7',
       color: 6,
       icon: 'voc',
@@ -851,9 +614,6 @@ export const dope = {
     {
       name: 'shk',
       path: 'vinyl/shk.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num8',
       color: 7,
       icon: 'shk',
@@ -861,9 +621,6 @@ export const dope = {
     {
       name: 'rim',
       path: 'vinyl/rim.mp3',
-      pitchMod: 0,
-      lengthMod: 1,
-      velocityMod: 1,
       key: 'num9',
       color: 8,
       icon: 'sticks',
