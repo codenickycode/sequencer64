@@ -1,4 +1,4 @@
-import { useEffect, useRef, useContext } from 'react';
+import { useEffect, useRef, useContext, useState } from 'react';
 import * as Tone from 'tone';
 import { PatternRef } from '../providers/PatternRef';
 import { Kit } from '../providers/Kit';
@@ -35,6 +35,24 @@ export const Transport = () => {
   }, [bpm]);
 
   const restarting = useSelector((state) => state.tone.restarting);
+  const [restartTimer, setRestartTimer] = useState(0);
+
+  const retryCountRef = useRef(0);
+  useEffect(() => {
+    let timeout;
+    if (restarting) {
+      console.log(restartTimer);
+      if (restartTimer > 4) {
+        retryCountRef.current = 0;
+        setRestartTimer(0);
+        dispatch(setBufferError(true));
+      } else {
+        timeout = setTimeout(() => setRestartTimer((prev) => prev + 1), 1000);
+      }
+    }
+    return () => clearTimeout(timeout);
+  }, [dispatch, restartTimer, restarting]);
+
   useEffect(() => {
     if (restarting) {
       if (buffersLoaded) {
@@ -44,7 +62,6 @@ export const Transport = () => {
     }
   }, [buffersLoaded, dispatch, restarting]);
 
-  const retryCountRef = useRef(0);
   useEffect(() => {
     const schedulePattern = () => {
       Tone.Transport.scheduleRepeat((time) => {
@@ -72,14 +89,15 @@ export const Transport = () => {
         pauseFlashing();
         if (prevTransportStateRef.current === 'stopped') schedulePattern();
         if (!buffersLoaded) {
-          if (retryCountRef > 3) {
+          if (retryCountRef.current > 3) {
             console.log('buffer error');
             return dispatch(setBufferError(true));
+          } else {
+            console.log('retrying restart due to buffers not loaded');
+            retryCountRef.current++;
+            dispatch(prepRestart());
+            return dispatch(setReloadSamples(true));
           }
-          console.log('retrying restart due to buffers not loaded');
-          retryCountRef.current++;
-          dispatch(prepRestart());
-          return dispatch(setReloadSamples(true));
         } else {
           Tone.Transport.start();
         }

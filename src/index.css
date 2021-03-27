@@ -1169,6 +1169,15 @@ div[data-cursor='true'] .cursor {
   }
 }
 
+@keyframes dim-flashing {
+  0% {
+    opacity: 0.25;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
 .cell-mods {
   pointer-events: none;
   position: absolute;
@@ -1366,6 +1375,10 @@ div[data-cursor='true'] .cursor {
 
 #start {
   background: var(--lime-3q);
+}
+
+#start.flashing {
+  animation: dim-flashing 300ms alternate infinite;
 }
 
 #stop,

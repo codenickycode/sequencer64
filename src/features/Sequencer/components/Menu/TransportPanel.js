@@ -3,12 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../../../components/Button';
 import { StopIcon, StartIcon, PauseIcon } from '../../../../icons';
 import { changeBpm } from '../../reducers/sequenceSlice';
-import { setTransportState } from '../../reducers/toneSlice';
+import { setBufferError, setTransportState } from '../../reducers/toneSlice';
 
 export const TransportPanel = () => {
   const dispatch = useDispatch();
 
   const transportState = useSelector((state) => state.tone.transportState);
+  const buffersLoaded = useSelector((state) => state.tone.buffersLoaded);
+  const bufferError = useSelector((state) => state.tone.bufferError);
+
   const bpm = useSelector((state) => state.sequence.present.bpm);
   useEffect(() => {
     setTempBpm(bpm);
@@ -17,6 +20,21 @@ export const TransportPanel = () => {
   const [tempBpm, setTempBpm] = useState(bpm);
 
   let timerRef = useRef(null);
+
+  const [ready, setReady] = useState(true);
+  useEffect(() => {
+    if (!ready && buffersLoaded) {
+      setReady(true);
+    }
+  }, [ready, buffersLoaded]);
+
+  useEffect(() => {
+    if (bufferError) {
+      console.log('setting ture');
+      setReady(true);
+      dispatch(setBufferError(false));
+    }
+  }, [bufferError, dispatch]);
 
   const transportMemo = useMemo(() => {
     // console.log('rendering: TransportPanel');
@@ -37,8 +55,13 @@ export const TransportPanel = () => {
       if (transportState !== 'stopped') dispatch(setTransportState('stopped'));
     };
     const onStart = () => {
-      if (transportState === 'started') dispatch(setTransportState('paused'));
-      else dispatch(setTransportState('started'));
+      if (bufferError) dispatch(setBufferError(false));
+      if (transportState === 'started') {
+        dispatch(setTransportState('paused'));
+      } else {
+        setReady(false);
+        dispatch(setTransportState('started'));
+      }
     };
 
     return (
@@ -48,7 +71,12 @@ export const TransportPanel = () => {
             <StopIcon />
             <label htmlFor='stop'>stop</label>
           </Button>
-          <Button id='start' classes='menu-btn' onClick={onStart}>
+          <Button
+            id='start'
+            classes={!ready ? 'menu-btn flashing' : 'menu-btn'}
+            disabled={!ready}
+            onClick={onStart}
+          >
             {transportState === 'started' ? <PauseIcon /> : <StartIcon />}
             <label htmlFor='start'>start</label>
           </Button>
@@ -61,6 +89,6 @@ export const TransportPanel = () => {
         </div>
       </div>
     );
-  }, [dispatch, tempBpm, transportState]);
+  }, [bufferError, dispatch, ready, tempBpm, transportState]);
   return transportMemo;
 };

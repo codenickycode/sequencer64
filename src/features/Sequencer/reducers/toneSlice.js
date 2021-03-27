@@ -42,6 +42,13 @@ export const toneSlice = createSlice({
     },
     setBufferError: (state, { payload }) => {
       state.bufferError = payload;
+      if (payload) {
+        console.log('catastrophic buffer error');
+        stopAndCancelEvents();
+        state.transportState = 'stopped';
+        state.buffersLoaded = false;
+        state.restarting = false;
+      }
     },
   },
 });
