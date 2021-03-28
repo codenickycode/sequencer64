@@ -12,7 +12,6 @@ export const LoadSequence = ({ handleStopSequence }) => {
   const dispatch = useDispatch();
 
   const sequences = useSelector((state) => state.app.user.sequences);
-  console.log(sequences);
 
   const [selectedId, setSelectedId] = useState(null);
 

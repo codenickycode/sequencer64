@@ -2,6 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { getSS, setSS } from '../utils/storage';
 import { HOST } from '../network';
+import {
+  getUserFromCloud,
+  getUserFromIDB,
+  idbDelSeq,
+  idbSaveSeqs,
+  mergeSequences,
+} from './functions/user';
 
 export const INITIAL_USER = {
   googleId: '',
@@ -78,42 +85,14 @@ export const appSlice = createSlice({
       if (error) state.error = error;
       state.fetching = false;
     },
+    getUserFinally: (state, { payload: user, message }) => {
+      state.user = user;
+      state.status.count++;
+      state.status.message = message;
+      state.fetching = false;
+    },
   },
 });
-
-export const updateSequences = (type, data) => async (dispatch, getState) => {
-  dispatch(appSlice.actions.setFetching(true));
-  let user = getState().app.user;
-  let message = '',
-    confirmation = '',
-    error = '';
-  try {
-    const res = await axios({
-      url: `${HOST}/user/sequence/${type}`,
-      method: 'POST',
-      data,
-      withCredentials: true,
-    });
-    user = res.data;
-    message = 'success!';
-    confirmation = `succesfully ${
-      type === 'add' ? 'saved' : 'deleted'
-    } sequence: ${data.name}`;
-  } catch (e) {
-    console.log(e);
-    message = 'unsuccessful :(';
-    error = 'network error: Please try again later';
-  } finally {
-    dispatch(
-      appSlice.actions.updateSequencesFinally({
-        user,
-        message,
-        error,
-        confirmation,
-      })
-    );
-  }
-};
 
 export const changeNetworkError = (val) => (dispatch) => {
   let timer;
@@ -124,20 +103,62 @@ export const changeNetworkError = (val) => (dispatch) => {
     );
 };
 
-export const getUser = () => async (dispatch) => {
+export const updateSequences = (type, data) => async (dispatch, getState) => {
+  const sequences = getState().user.sequences;
+  dispatch(appSlice.actions.setFetching(true));
+  let message = '',
+    confirmation = '',
+    error = '';
   try {
-    dispatch(appSlice.actions.setFetching(true));
-    const res = await axios.get(`${HOST}/user`, {
+    if (type === 'save') await idbSaveSeqs(data, sequences);
+    if (type === 'delete') await idbDelSeq(data._id, sequences);
+    message = 'success!';
+    confirmation = `succesfully ${
+      type === 'save' ? 'saved' : 'deleted'
+    } sequence: ${data.name}`;
+    await axios({
+      url: `${HOST}/user/sequence/${type}`,
+      method: 'POST',
+      data,
       withCredentials: true,
     });
-    if (res.data) {
-      dispatch(setUser({ user: res.data, message: 'User logged in' }));
-    }
   } catch (e) {
-    console.log('Get User ERROR ->\n', e);
-    dispatch(appSlice.actions.setStatus('User not logged in'));
+    if (!message) {
+      message = 'unsuccessful :(';
+      error = 'Error: Please try again later';
+    } else {
+      message = 'updated local database';
+    }
   } finally {
-    dispatch(appSlice.actions.setFetching(false));
+    dispatch(
+      appSlice.actions.updateSequencesFinally({
+        message,
+        error,
+        confirmation,
+      })
+    );
+  }
+};
+
+export const getUser = () => async (dispatch) => {
+  dispatch(appSlice.actions.setFetching(true));
+  let payload = { user: { username: '', sequences: [] }, message: '' };
+  let promises;
+  try {
+    const cloudSeqs = await getUserFromCloud(payload);
+    const idbSeqs = await getUserFromIDB(payload);
+    promises = mergeSequences(payload, cloudSeqs, idbSeqs);
+  } catch (e) {
+    console.error('getUser ->\n', e);
+    payload.message = 'no user data';
+  } finally {
+    dispatch(appSlice.actions.getUserFinally(payload));
+    try {
+      Promise.all(promises);
+      dispatch(appSlice.actions.setStatus('user data refreshed'));
+    } catch (e) {
+      console.error('getUser | promises ->:\n', e);
+    }
   }
 };
 
@@ -153,8 +174,8 @@ export const logout = () => async (dispatch) => {
       setUser({ user: INITIAL_USER, message: 'Successfully logged out' })
     );
   } catch (e) {
-    console.log('Logout ERROR ->\n', e);
-    dispatch(appSlice.actions.setStatus('Error logging out'));
+    console.error('logout ->\n', e);
+    dispatch(appSlice.actions.setStatus('error logging out'));
   } finally {
     dispatch(appSlice.actions.setFetching(false));
   }

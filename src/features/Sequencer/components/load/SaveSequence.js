@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button } from '../../../../components/Button';
 import { updateSequences } from '../../../../reducers/appSlice';
+import ObjectID from 'bson-objectid';
 
 export const SaveSequence = ({ handleStopSequence }) => {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ export const SaveSequence = ({ handleStopSequence }) => {
     if (!newName) return setUserError('name required');
     const cleanName = newName.replace(/[^a-zA-Z0-9 ]/g, '');
     const newSequence = {
+      _id: ObjectID,
       name: cleanName,
       kit,
       bpm,
@@ -36,13 +38,13 @@ export const SaveSequence = ({ handleStopSequence }) => {
       pattern,
     };
     setNewName('');
-    dispatch(updateSequences('add', newSequence));
+    dispatch(updateSequences('save', newSequence));
   };
 
   // console.log('rendering: SaveSequence');
   return (
     <div className='save-sequence'>
-      {!user.username ? (
+      {/* {!user.username ? (
         <div className='sequence-select-group'>
           <div className='login-div'>
             <p className='sequence-select-sub'>
@@ -58,24 +60,24 @@ export const SaveSequence = ({ handleStopSequence }) => {
             </Link>
           </div>
         </div>
-      ) : (
-        <form id='save-form' onSubmit={save}>
-          <h1 className='sequence-title'>Save Sequence</h1>
+      ) : ( */}
+      <form id='save-form' onSubmit={save}>
+        <h1 className='sequence-title'>Save Sequence</h1>
 
-          <div className='save-sequence-input'>
-            <input
-              type='text'
-              value={newName}
-              onChange={(e) => setNewName(e.target.value)}
-              disabled={fetching}
-              placeholder={fetching ? 'saving...' : 'Enter sequence name'}
-            />
-            <Button type='submit' disabled={!newName}>
-              Save
-            </Button>
-          </div>
-        </form>
-      )}
+        <div className='save-sequence-input'>
+          <input
+            type='text'
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+            disabled={fetching}
+            placeholder={fetching ? 'saving...' : 'Enter sequence name'}
+          />
+          <Button type='submit' disabled={!newName}>
+            Save
+          </Button>
+        </div>
+      </form>
+      {/* )} */}
       {user.username && (
         <p className={userError ? 'error' : 'confirmation'}>
           {userError ? userError : confirmation}
