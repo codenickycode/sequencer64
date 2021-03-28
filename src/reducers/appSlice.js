@@ -16,11 +16,12 @@ export const INITIAL_USER = {
   facebookId: '',
   githubId: '',
   username: '',
-  sequences: [],
+  loggedIn: false,
 };
 
 const INITIAL_STATE = {
-  user: INITIAL_USER,
+  user: { ...INITIAL_USER },
+  sequences: [],
   status: { count: 0, message: 'loading' },
   show: getSS('show') || '',
   fetching: false,
@@ -41,11 +42,7 @@ export const appSlice = createSlice({
       setSS('show', payload);
     },
     setUser: (state, { payload: { user, message } }) => {
-      state.user = {
-        username: user.username,
-        sequences: user.sequences,
-        __v: user.__v,
-      };
+      state.user = user;
       state.status.count++;
       state.status.message = message;
     },
@@ -75,18 +72,22 @@ export const appSlice = createSlice({
     },
     updateSequencesFinally: (
       state,
-      { payload: { user, message, error, confirmation } }
+      { payload: { newSequences, message, error, confirmation } }
     ) => {
-      state.user.sequences = user.sequences;
-      state.user.__v = user.__v;
+      state.userSequences = newSequences;
       state.status.count++;
       state.status.message = message;
       if (confirmation) state.confirmation = confirmation;
       if (error) state.error = error;
       state.fetching = false;
     },
-    getUserFinally: (state, { payload: user, message }) => {
-      state.user = user;
+    getUserFinally: (
+      state,
+      { payload: { loggedIn, username, sequences, message } }
+    ) => {
+      state.user.loggedIn = loggedIn;
+      state.user.username = username;
+      state.userSequences = sequences;
       state.status.count++;
       state.status.message = message;
       state.fetching = false;
@@ -104,14 +105,14 @@ export const changeNetworkError = (val) => (dispatch) => {
 };
 
 export const updateSequences = (type, data) => async (dispatch, getState) => {
-  const sequences = getState().user.sequences;
+  let newSequences = [...getState().app.userSequences];
   dispatch(appSlice.actions.setFetching(true));
   let message = '',
     confirmation = '',
     error = '';
   try {
-    if (type === 'save') await idbSaveSeqs(data, sequences);
-    if (type === 'delete') await idbDelSeq(data._id, sequences);
+    if (type === 'save') await idbSaveSeqs(data, newSequences);
+    if (type === 'delete') await idbDelSeq(data._id, newSequences);
     message = 'success!';
     confirmation = `succesfully ${
       type === 'save' ? 'saved' : 'deleted'
@@ -135,6 +136,7 @@ export const updateSequences = (type, data) => async (dispatch, getState) => {
         message,
         error,
         confirmation,
+        newSequences,
       })
     );
   }
@@ -142,22 +144,29 @@ export const updateSequences = (type, data) => async (dispatch, getState) => {
 
 export const getUser = () => async (dispatch) => {
   dispatch(appSlice.actions.setFetching(true));
-  let payload = { user: { username: '', sequences: [] }, message: '' };
+  let payload = {
+    loggedIn: false,
+    username: '',
+    sequences: [],
+    message: '',
+  };
   let promises;
   try {
     const cloudSeqs = await getUserFromCloud(payload);
     const idbSeqs = await getUserFromIDB(payload);
-    promises = mergeSequences(payload, cloudSeqs, idbSeqs);
+    promises = await mergeSequences(payload, cloudSeqs, idbSeqs);
   } catch (e) {
     console.error('getUser ->\n', e);
     payload.message = 'no user data';
   } finally {
     dispatch(appSlice.actions.getUserFinally(payload));
-    try {
-      Promise.all(promises);
-      dispatch(appSlice.actions.setStatus('user data refreshed'));
-    } catch (e) {
-      console.error('getUser | promises ->:\n', e);
+    if (payload.loggedIn && promises && promises.length > 0) {
+      try {
+        Promise.all(promises);
+        dispatch(appSlice.actions.setStatus('user data refreshed'));
+      } catch (e) {
+        console.error('getUser | promises ->:\n', e);
+      }
     }
   }
 };
@@ -171,7 +180,7 @@ export const logout = () => async (dispatch) => {
       withCredentials: true,
     });
     dispatch(
-      setUser({ user: INITIAL_USER, message: 'Successfully logged out' })
+      setUser({ user: { ...INITIAL_USER }, message: 'Successfully logged out' })
     );
   } catch (e) {
     console.error('logout ->\n', e);

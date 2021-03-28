@@ -11,7 +11,7 @@ import cuid from 'cuid';
 export const LoadSequence = ({ handleStopSequence }) => {
   const dispatch = useDispatch();
 
-  const sequences = useSelector((state) => state.app.user.sequences);
+  const userSequences = useSelector((state) => state.app.userSequences);
 
   const [selectedId, setSelectedId] = useState(null);
 
@@ -24,7 +24,7 @@ export const LoadSequence = ({ handleStopSequence }) => {
           (sequence) => sequence._id === id
         );
       if (type === 'us')
-        sequence = sequences.find((sequence) => sequence._id === id);
+        sequence = userSequences.find((sequence) => sequence._id === id);
       dispatch(loadSequence({ sequence }));
       setSelectedId(id);
     };
@@ -45,7 +45,7 @@ export const LoadSequence = ({ handleStopSequence }) => {
         </div>
       </div>
     );
-  }, [handleStopSequence, selectedId, sequences, dispatch]);
+  }, [handleStopSequence, selectedId, userSequences, dispatch]);
   return loadSequenceMemo;
 };
 
@@ -89,7 +89,7 @@ const UserSection = ({ handleStopSequence, selectSequence, selectedId }) => {
   const userSectionMemo = useMemo(() => {
     return (
       <div className='sequence-select-group'>
-        {!username ? (
+        {/* {!username ? (
           <div className='login-div'>
             <p className='sequence-select-sub'>
               {fetching ? 'please wait...' : 'Login to load user sequences'}
@@ -103,12 +103,12 @@ const UserSection = ({ handleStopSequence, selectSequence, selectedId }) => {
               {fetching ? 'loading...' : 'Login'}
             </Link>
           </div>
-        ) : (
-          <UserSequences
-            selectSequence={selectSequence}
-            selectedId={selectedId}
-          />
-        )}
+        ) : ( */}
+        <UserSequences
+          selectSequence={selectSequence}
+          selectedId={selectedId}
+        />
+        {/* )} */}
       </div>
     );
   }, [fetching, selectSequence, selectedId, handleStopSequence, username]);
@@ -116,13 +116,13 @@ const UserSection = ({ handleStopSequence, selectSequence, selectedId }) => {
 };
 
 const UserSequences = ({ selectSequence, selectedId }) => {
-  const sequences = useSelector((state) => state.app.user.sequences);
+  const userSequences = useSelector((state) => state.app.userSequences);
 
   const userSequencesMemo = useMemo(() => {
     return (
       <>
         <p className='sequence-select-sub'>User Sequences</p>
-        {sequences.length === 0 ? (
+        {!userSequences || userSequences.length === 0 ? (
           <p>No user sequences</p>
         ) : (
           <>
@@ -132,7 +132,7 @@ const UserSequences = ({ selectSequence, selectedId }) => {
               <p>Bpm</p>
               <p>Delete</p>
             </div>
-            {sequences.map((sequence) => {
+            {userSequences?.map((sequence) => {
               const selected = sequence._id === selectedId;
               return (
                 <UserSequence
@@ -150,7 +150,7 @@ const UserSequences = ({ selectSequence, selectedId }) => {
         )}
       </>
     );
-  }, [selectSequence, selectedId, sequences]);
+  }, [selectSequence, selectedId, userSequences]);
   return userSequencesMemo;
 };
 

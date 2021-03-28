@@ -13,7 +13,7 @@ export const SaveSequence = ({ handleStopSequence }) => {
   const pattern = useSelector((state) => state.sequence.present.pattern);
   const kit = useSelector((state) => state.sequence.present.kit);
 
-  const user = useSelector((state) => state.app.user);
+  const loggedIn = useSelector((state) => state.app.user.loggedIn);
   const fetching = useSelector((state) => state.app.fetching);
 
   const [newName, setNewName] = useState('');
@@ -30,7 +30,7 @@ export const SaveSequence = ({ handleStopSequence }) => {
     if (!newName) return setUserError('name required');
     const cleanName = newName.replace(/[^a-zA-Z0-9 ]/g, '');
     const newSequence = {
-      _id: ObjectID,
+      _id: ObjectID().toHexString(),
       name: cleanName,
       kit,
       bpm,
@@ -44,23 +44,13 @@ export const SaveSequence = ({ handleStopSequence }) => {
   // console.log('rendering: SaveSequence');
   return (
     <div className='save-sequence'>
-      {/* {!user.username ? (
-        <div className='sequence-select-group'>
-          <div className='login-div'>
-            <p className='sequence-select-sub'>
-              {fetching ? 'Logging in...' : 'Login to save user sequences'}
-            </p>
-            <Link
-              className='login-btn'
-              onTouchStart={handleStopSequence}
-              to='/login'
-              disabled={fetching}
-            >
-              {fetching ? 'x' : 'Login'}
-            </Link>
+      <div className='sequence-select-group'>
+        {loggedIn && (
+          <div className='share-div'>
+            <p>share your sequence</p>
           </div>
-        </div>
-      ) : ( */}
+        )}
+      </div>
       <form id='save-form' onSubmit={save}>
         <h1 className='sequence-title'>Save Sequence</h1>
 
@@ -77,12 +67,9 @@ export const SaveSequence = ({ handleStopSequence }) => {
           </Button>
         </div>
       </form>
-      {/* )} */}
-      {user.username && (
-        <p className={userError ? 'error' : 'confirmation'}>
-          {userError ? userError : confirmation}
-        </p>
-      )}
+      <p className={userError ? 'error' : 'confirmation'}>
+        {userError ? userError : confirmation}
+      </p>
     </div>
   );
 };

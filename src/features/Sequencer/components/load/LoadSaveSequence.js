@@ -5,27 +5,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout, setShow } from '../../../../reducers/appSlice';
 import { stopSequence } from '../../reducers/toneSlice';
 import { Button } from '../../../../components/Button';
+import { Link } from 'react-router-dom';
 
 export const LoadSaveSequence = () => {
   const dispatch = useDispatch();
 
-  const username = useSelector((state) => state.app.user.username);
-
   const show = useSelector((state) => state.app.show);
-  const fetching = useSelector((state) => state.app.fetching);
 
   const loadSaveSequenceMemo = useMemo(() => {
     const changeTab = (type) => {
       dispatch(setShow(type));
     };
 
-    const onLogout = () => dispatch(logout());
-
     const onClose = () => dispatch(setShow(''));
-
-    const handleStopSequence = () => {
-      dispatch(stopSequence());
-    };
 
     let loadStyle = 'load-save-tab';
     let saveStyle = loadStyle;
@@ -54,26 +46,9 @@ export const LoadSaveSequence = () => {
               <label htmlFor='save-tab'>Save</label>
             </button>
           </div>
-          {username && (
-            <>
-              <div className='login-status'>
-                {fetching ? (
-                  <p>please wait...</p>
-                ) : (
-                  <p>Logged in as: {username}</p>
-                )}
-                <button disabled={fetching} onClick={onLogout}>
-                  logout
-                </button>
-              </div>
-            </>
-          )}
-          {show === 'save' && (
-            <SaveSequence handleStopSequence={handleStopSequence} />
-          )}
-          {show === 'load' && (
-            <LoadSequence handleStopSequence={handleStopSequence} />
-          )}
+          <LoginSection />
+          {show === 'save' && <SaveSequence />}
+          {show === 'load' && <LoadSequence />}
         </div>
         <div className={show ? 'bottom-btn show' : 'bottom-btn'}>
           <Button classes='load-save-sequence-close' onClick={onClose}>
@@ -82,6 +57,51 @@ export const LoadSaveSequence = () => {
         </div>
       </>
     );
-  }, [dispatch, fetching, show, username]);
+  }, [dispatch, show]);
   return loadSaveSequenceMemo;
+};
+
+const LoginSection = () => {
+  const dispatch = useDispatch();
+  const username = useSelector((state) => state.app.user.username);
+  const loggedIn = useSelector((state) => state.app.user.loggedIn);
+  const fetching = useSelector((state) => state.app.fetching);
+
+  const onLogout = () => dispatch(logout());
+
+  const handleStopSequence = () => {
+    dispatch(stopSequence());
+  };
+
+  return loggedIn ? (
+    <div className='login-status'>
+      {fetching ? (
+        <p>please wait...</p>
+      ) : (
+        <div className='login-status-text'>
+          <p className='login-status-title'>Logged in as: {username}</p>
+          <p className='login-status-sub'>cloud sync</p>
+        </div>
+      )}
+      <button disabled={fetching} onClick={onLogout}>
+        logout
+      </button>
+    </div>
+  ) : (
+    <div className='login-div'>
+      <p className='sequence-select-sub'>
+        {fetching
+          ? 'Logging in...'
+          : 'Login to sync your sequences with your account and share to social media'}
+      </p>
+      <Link
+        className='login-btn'
+        onTouchStart={handleStopSequence}
+        to='/login'
+        disabled={fetching}
+      >
+        {fetching ? 'x' : 'Login'}
+      </Link>
+    </div>
+  );
 };

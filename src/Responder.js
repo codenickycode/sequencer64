@@ -11,7 +11,7 @@ export const Responder = () => {
 
   // App Reducer
   const username = useSelector((state) => state.app.user.username);
-  const userSequences = useSelector((state) => state.app.user.sequences);
+  const userSequences = useSelector((state) => state.app.userSequences);
   const statusMessage = useSelector((state) => state.app.status.message);
   const statusCount = useSelector((state) => state.app.status.count);
   const show = useSelector((state) => state.app.show);
