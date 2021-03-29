@@ -40,20 +40,51 @@ export const dec = (noteTally, sample) => {
 export const initSampleStep = (sample) => {
   sample.noteOn = false;
   sample.notes.length = 0;
-  sample.notes.push({ pitch: 'C2', velocity: 1, length: 1 });
+  sample.notes.push(INIT_NOTE());
 };
 
-export const INIT_PATTERN = () => {
+const INIT_NOTE = () =>
+  Object.assign({}, { pitch: 'C2', velocity: 1, length: 1 });
+
+const INIT_SAMPLE = () =>
+  Object.assign(
+    {},
+    {
+      noteOn: false,
+      notes: [INIT_NOTE()],
+    }
+  );
+
+const INIT_PATTERN = () => {
   let pattern = [];
   let samples = [];
   for (let i = 0; i < 9; i++) {
-    samples.push({
-      noteOn: true,
-      notes: [{ pitch: 'C2', velocity: 1, length: 1 }],
-    });
+    samples.push(INIT_SAMPLE());
   }
   for (let i = 0; i < 64; i++) {
-    pattern.push(samples);
+    pattern.push(Object.assign([], samples));
   }
-  return pattern;
+  return Object.assign([], pattern);
 };
+
+export const deepCopyPattern = (pattern) =>
+  Object.assign(
+    [],
+    pattern.map((step) =>
+      Object.assign(
+        [],
+        step.map((sample) =>
+          Object.assign(
+            {},
+            {
+              noteOn: sample.noteOn,
+              notes: Object.assign(
+                [],
+                sample.notes.map((note) => Object.assign({}, note))
+              ),
+            }
+          )
+        )
+      )
+    )
+  );

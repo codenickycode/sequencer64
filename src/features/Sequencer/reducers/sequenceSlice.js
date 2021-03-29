@@ -2,11 +2,17 @@ import { createSlice } from '@reduxjs/toolkit';
 import undoable, { groupByActionTypes } from 'redux-undo';
 import { analog } from '../defaults/defaultSequences';
 import { getLS } from '../../../utils/storage';
-import { getNoteTally, inc, dec, initSampleStep } from './functions/sequence';
+import {
+  getNoteTally,
+  inc,
+  dec,
+  initSampleStep,
+  deepCopyPattern,
+} from './functions/sequence';
 import { INITIAL_MODS, MODES, setSpAlert } from './editorSlice';
 
-// const INITIAL_PATTERN = getLS('pattern') || analog.pattern;
-const INITIAL_PATTERN = getLS('sequencePattern') || analog.pattern;
+const INITIAL_PATTERN =
+  getLS('sequencePattern') || deepCopyPattern(analog.pattern);
 
 const INITIAL_STATE = {
   _id: getLS('sequenceId') || analog._id,
@@ -40,7 +46,7 @@ export const sequenceSlice = createSlice({
     resetSlice: (state, { payload }) => {
       state.pattern.forEach((step) => {
         const note = step[payload].notes[0];
-        step[payload].notes = [];
+        step[payload].notes.length = 0;
         step[payload].notes.push(note);
       });
     },
