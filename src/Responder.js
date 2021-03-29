@@ -11,6 +11,8 @@ export const Responder = () => {
 
   // App Reducer
   const username = useSelector((state) => state.app.user.username);
+  const loggedIn = useSelector((state) => state.app.user.loggedIn);
+  const online = useSelector((state) => state.app.online);
   const userSequences = useSelector((state) => state.app.userSequences);
   const statusMessage = useSelector((state) => state.app.status.message);
   const statusCount = useSelector((state) => state.app.status.count);
@@ -25,10 +27,23 @@ export const Responder = () => {
 
   // App effects
   useEffect(() => {
-    console.log('getting user');
     dispatch(getUser());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const onlineRef = useRef(online);
+  useEffect(() => {
+    if (online) {
+      if (!onlineRef.current) {
+        console.log('back online');
+        dispatch(getUser());
+      }
+      onlineRef.current = true;
+    } else {
+      console.log('offline');
+      onlineRef.current = false;
+    }
+  }, [dispatch, online]);
 
   // Tone Reducer
   const bufferedKit = useSelector((state) => state.tone.bufferedKit);
