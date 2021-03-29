@@ -5,7 +5,7 @@ import { updateSequences } from '../../../../reducers/appSlice';
 import ObjectID from 'bson-objectid';
 import { getStrFromPattern } from '../../reducers/functions/sequence';
 
-export const SaveSequence = ({ handleStopSequence }) => {
+export const SaveSequence = () => {
   const dispatch = useDispatch();
 
   const bpm = useSelector((state) => state.sequence.present.bpm);

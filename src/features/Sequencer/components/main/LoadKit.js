@@ -6,7 +6,6 @@ import { setStatus } from '../../../../reducers/appSlice';
 import * as defaultKits from '../../defaults/defaultKits';
 import { MODES, setMode } from '../../reducers/editorSlice';
 import { changeKit } from '../../reducers/sequenceSlice';
-import { HOST } from '../../../../network';
 import { Button } from '../../../../components/Button';
 
 const kits = Object.values(defaultKits);
@@ -14,7 +13,6 @@ const kits = Object.values(defaultKits);
 export const LoadKit = () => {
   const mode = useSelector((state) => state.editor.mode);
   const showLoadKit = mode === MODES.LOAD_KIT;
-  const counterRef = useRef(0);
 
   const loadKitMemo = useMemo(() => {
     // console.log('rendering: LoadKit');
@@ -31,12 +29,7 @@ export const LoadKit = () => {
               const available = kits[i].available;
               const kitName = kits[i].name;
               return (
-                <KitBtn
-                  key={cuid()}
-                  counterRef={counterRef}
-                  kitName={kitName}
-                  available={available}
-                />
+                <KitBtn key={cuid()} kitName={kitName} available={available} />
               );
             })}
           </div>
@@ -47,11 +40,8 @@ export const LoadKit = () => {
   return loadKitMemo;
 };
 
-export const KitBtn = ({ counterRef, kitName, available }) => {
+export const KitBtn = ({ kitName, available }) => {
   const dispatch = useDispatch();
-  // const serviceWorkerActive = useSelector(
-  //   (state) => state.app.serviceWorkerActive
-  // );
   const kit = useSelector((state) => state.sequence.present.kit);
   const networkError = useSelector((state) => state.app.networkError);
   const selected = kitName === kit;
@@ -76,20 +66,8 @@ export const KitBtn = ({ counterRef, kitName, available }) => {
 
   const onClick = async () => {
     setDisabled(true);
-    counterRef.current++;
-    const thisClick = counterRef.current;
     try {
-      // if (!ready && serviceWorkerActive) {
-      //   setFetching(true);
-      //   const received = await fetchSamples(kitName);
-      //   if (received) {
-      //     if (thisClick === counterRef.current) {
-      //       dispatch(changeKit(kitName));
-      //     }
-      //   }
-      // } else {
       dispatch(changeKit(kitName));
-      // }
       setReady(true);
     } catch (e) {
       if (!ready) {
@@ -167,18 +145,4 @@ export const LoadKitInfo = () => {
     );
   }, [bufferError, dispatch, showLoadInfo]);
   return loadKitInfoMemo;
-};
-
-const fetchSamples = async (kitName) => {
-  const samples = defaultKits[kitName].samples;
-  const promises = [];
-  samples.forEach((sample) => {
-    const url = HOST + '/kits/' + sample.path;
-    promises.push(fetch(url));
-  });
-  //   //   mock serve wait
-  //   await new Promise((resolve) => {
-  //     setTimeout(resolve, 3000);
-  //   });
-  return await Promise.all(promises);
 };

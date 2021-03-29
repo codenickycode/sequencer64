@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import * as defaultSequences from '../../defaults/defaultSequences';
 import { updateSequences } from '../../../../reducers/appSlice';
 import { loadSequence } from '../../reducers/sequenceSlice';
@@ -82,36 +81,17 @@ const DefaultSection = ({ selectSequence, selectedId }) => {
   return defaultSectionMemo;
 };
 
-const UserSection = ({ handleStopSequence, selectSequence, selectedId }) => {
-  const fetching = useSelector((state) => state.app.fetching);
-  const username = useSelector((state) => state.app.user.username);
-
+const UserSection = ({ selectSequence, selectedId }) => {
   const userSectionMemo = useMemo(() => {
     return (
       <div className='sequence-select-group'>
-        {/* {!username ? (
-          <div className='login-div'>
-            <p className='sequence-select-sub'>
-              {fetching ? 'please wait...' : 'Login to load user sequences'}
-            </p>
-            <Link
-              className='login-btn'
-              onTouchStart={handleStopSequence}
-              to='/login'
-              disabled={fetching}
-            >
-              {fetching ? 'loading...' : 'Login'}
-            </Link>
-          </div>
-        ) : ( */}
         <UserSequences
           selectSequence={selectSequence}
           selectedId={selectedId}
         />
-        {/* )} */}
       </div>
     );
-  }, [fetching, selectSequence, selectedId, handleStopSequence, username]);
+  }, [selectSequence, selectedId]);
   return userSectionMemo;
 };
 

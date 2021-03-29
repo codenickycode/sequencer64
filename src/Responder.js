@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import * as Tone from 'tone';
 import { useDispatch, useSelector } from 'react-redux';
-import { getLS, setLS } from './utils/storage';
+import { setLS } from './utils/storage';
 import { loadSamples } from './features/Sequencer/reducers/toneSlice';
 import { Kit } from './features/Sequencer/providers/Kit';
 import { getUser } from './reducers/appSlice';

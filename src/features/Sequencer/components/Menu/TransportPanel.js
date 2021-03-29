@@ -1,10 +1,8 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../../../components/Button';
 import { StopIcon, StartIcon, PauseIcon, CheckIcon } from '../../../../icons';
-import { setStatus } from '../../../../reducers/appSlice';
 import { changeBpm } from '../../reducers/sequenceSlice';
-import * as Tone from 'tone';
 import {
   pauseSequence,
   startSequence,
@@ -106,6 +104,6 @@ export const TransportPanel = () => {
         </div>
       </div>
     );
-  }, [bpmEdited, dispatch, kitRef, ready, tempBpm, transportState]);
+  }, [bpm, bpmEdited, dispatch, kitRef, ready, tempBpm, transportState]);
   return transportMemo;
 };
