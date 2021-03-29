@@ -11,17 +11,14 @@ import {
 } from './functions/user';
 
 export const INITIAL_USER = {
-  googleId: '',
-  twitterId: '',
-  facebookId: '',
-  githubId: '',
+  _id: '',
   username: '',
   loggedIn: false,
 };
 
 const INITIAL_STATE = {
   user: { ...INITIAL_USER },
-  sequences: [],
+  userSequences: [],
   status: { count: 0, message: 'loading' },
   show: getSS('show') || '',
   fetching: false,
@@ -150,6 +147,7 @@ export const getUser = () => async (dispatch) => {
   dispatch(appSlice.actions.setFetching(true));
   let payload = {
     loggedIn: false,
+    _id: '',
     username: '',
     sequences: [],
     message: '',

@@ -10,6 +10,7 @@ export const getUserFromCloud = async (payload) => {
     });
     if (cloudUser?.data) {
       payload.loggedIn = true;
+      payload._id = cloudUser.data._id;
       payload.username = cloudUser.data.username;
       payload.message = 'user data loaded';
       cloudSeqs = cloudUser.data.sequences;
@@ -25,7 +26,7 @@ export const getUserFromIDB = async (payload) => {
   let seqs = [];
   try {
     const idbUsername = await get('username');
-    if (!payload.username) payload.username = idbUsername;
+    if (!payload.username) payload.username = idbUsername || '';
     const idbSeqs = await get('sequences');
     if (idbSeqs) seqs = idbSeqs;
     if (!payload.message) payload.message = 'user data loaded from local';
