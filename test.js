@@ -3,1073 +3,26 @@ const sampleRegexp = /s(\d+)/g;
 const valsRegexp = /p\w\d|v\d+(?:\.\d+)?|l\d+(?:\.\d+)?/g;
 const slicesRegexp = /(n1.*)(n2.*)|n1.*$|n2.*$/;
 
-const INIT_NOTE = () =>
-  Object.assign({}, { pitch: 'C2', velocity: 1, length: 1 });
+const INIT_NOTE = () => ({ pitch: 'C2', velocity: 1, length: 1 });
 
-const INIT_SAMPLE = () =>
-  Object.assign(
-    {},
-    {
-      noteOn: false,
-      notes: [INIT_NOTE()],
-    }
-  );
+const INIT_SAMPLE = () => ({
+  noteOn: false,
+  notes: [INIT_NOTE()],
+});
 
 const INIT_PATTERN = () => {
   let pattern = [];
-  let samples = [];
+  let step = [];
   for (let i = 0; i < 9; i++) {
-    samples.push(INIT_SAMPLE());
+    step.push(INIT_SAMPLE());
   }
   for (let i = 0; i < 64; i++) {
-    pattern.push(Object.assign([], samples));
+    // Object.assign req'd to not mutate previous edits in loop
+    pattern.push(Object.assign([], step));
+    // pattern.push(step);
   }
-  return Object.assign([], pattern);
+  return pattern;
 };
-
-const pattern = [
-  [
-    { noteOn: true, notes: [{ pitch: 'C1', velocity: 0.5, length: 0.25 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        { pitch: 'C1', velocity: 0.5, length: 0.35 },
-        { pitch: 'C2', velocity: 1, length: 2 },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        { pitch: 'C2', velocity: 1, length: 1 },
-        { pitch: 'C2', velocity: 1, length: 1 },
-        { pitch: 'C2', velocity: 1, length: 1 },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-  [
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-  ],
-  [
-    {
-      noteOn: true,
-      notes: [
-        {
-          pitch: 'C2',
-          velocity: 1,
-          length: 1,
-        },
-      ],
-    },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
-  ],
-];
 
 const getEditString = (editedPattern) => {
   const initialPattern = INIT_PATTERN();
@@ -1093,10 +46,10 @@ const getEditString = (editedPattern) => {
         sampleEdits.push('l' + sample.notes[0].length);
       }
       if (sample.notes[1]) {
-        sampleEdits.push('n1' + getNoteValsShort(sample.notes[1]));
+        sampleEdits.push('n1' + getNoteStrFromObj(sample.notes[1]));
       }
       if (sample.notes[2]) {
-        sampleEdits.push('n2' + getNoteValsShort(sample.notes[2]));
+        sampleEdits.push('n2' + getNoteStrFromObj(sample.notes[2]));
       }
       if (sampleEdits.length > 0) {
         stepEdited = true;
@@ -1111,10 +64,10 @@ const getEditString = (editedPattern) => {
   return string || 'init';
 };
 
-const getNoteValsShort = (note) =>
+const getNoteStrFromObj = (note) =>
   `p${note.pitch}v${note.velocity}l${note.length}`;
 
-const getNoteValsLong = (string) => {
+const getNoteObjFromStr = (string) => {
   const noteVals = INIT_NOTE();
   const edits = string.match(valsRegexp);
   if (edits) {
@@ -1138,30 +91,42 @@ const getNoteValsLong = (string) => {
 };
 
 const getVals = (string) => {
-  let sample = Object.assign({}, { noteOn: false, notes: [] });
+  let sample = { noteOn: false, notes: [] };
   const slices = string.match(slicesRegexp);
   if (slices) {
     let note1, note2;
     if (slices[1]) {
-      note1 = getNoteValsLong(slices[1]);
+      note1 = getNoteObjFromStr(slices[1]);
     } else {
-      note1 = getNoteValsLong(slices[0]);
+      note1 = getNoteObjFromStr(slices[0]);
     }
     if (slices[2]) {
-      note2 = getNoteValsLong(slices[2]);
+      note2 = getNoteObjFromStr(slices[2]);
     }
     const n = string.indexOf('n');
     const note0String = string.substr(0, n);
-    const note0 = getNoteValsLong(note0String);
+    const note0 = getNoteObjFromStr(note0String);
     sample.notes.push(note0, note1);
     if (note2) sample.notes.push(note2);
   } else {
-    const note0 = getNoteValsLong(string);
+    const note0 = getNoteObjFromStr(string);
     sample.notes.push(note0);
   }
   if (string[0] === 't') sample.noteOn = true;
   if (string[0] === 'f') sample.noteOn = false;
   return sample;
+};
+
+const getEntries = (string, regexp) => {
+  const array = string.split(regexp);
+  const entries = [];
+  for (let i = 1, len = array.length; i < len; i += 2) {
+    let key = array[i];
+    let val = array[i + 1];
+    let entry = [key, val];
+    entries.push(entry);
+  }
+  return entries;
 };
 
 const getPattern = (editString) => {
@@ -1177,20 +142,712 @@ const getPattern = (editString) => {
   return pattern;
 };
 
-const getEntries = (string, regexp) => {
-  const array = string.split(regexp);
-  const entries = Object.assign([]);
-  for (let i = 1, len = array.length; i < len; i += 2) {
-    let key = array[i];
-    let val = array[i + 1];
-    let entry = [key, val];
-    entries.push(entry);
-  }
-  return entries;
-};
+const copyThisPattern = [
+  [
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 0.5, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 0.5, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 0.5, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 0.5, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 0.5, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 0.5, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 0.5, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 0.5, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 0.5, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 0.5, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 0.5, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 0.5, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 0.5, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 0.5, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 0.5, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 0.5, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: true, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+  [
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+    { noteOn: false, notes: [{ pitch: 'C2', velocity: 1, length: 1 }] },
+  ],
+];
 
-const editString = getEditString(pattern);
-const newPattern = getPattern(editString);
-console.log(newPattern);
-console.log('ZEROZERO\n', newPattern[0][0]);
-console.log('ZEROTHREE\n', newPattern[0][3]);
+const editString = getEditString(copyThisPattern);
+console.log(editString);

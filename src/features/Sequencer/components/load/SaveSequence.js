@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Button } from '../../../../components/Button';
 import { updateSequences } from '../../../../reducers/appSlice';
 import ObjectID from 'bson-objectid';
+import { getStrFromPattern } from '../../reducers/functions/sequence';
 
 export const SaveSequence = ({ handleStopSequence }) => {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ export const SaveSequence = ({ handleStopSequence }) => {
       kit,
       bpm,
       length,
-      pattern,
+      pattern: getStrFromPattern(pattern),
     };
     setNewName('');
     dispatch(updateSequences('save', newSequence));

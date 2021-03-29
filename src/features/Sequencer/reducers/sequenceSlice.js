@@ -7,12 +7,12 @@ import {
   inc,
   dec,
   initSampleStep,
-  deepCopyPattern,
+  getPatternFromStr,
 } from './functions/sequence';
 import { INITIAL_MODS, MODES, setSpAlert } from './editorSlice';
 
 const INITIAL_PATTERN =
-  getLS('sequencePattern') || deepCopyPattern(analog.pattern);
+  getLS('sequencePattern') || getPatternFromStr(analog.pattern);
 
 const INITIAL_STATE = {
   _id: getLS('sequenceId') || analog._id,
@@ -121,7 +121,7 @@ export const sequenceSlice = createSlice({
       state.kit = sequence.kit;
       state.bpm = sequence.bpm;
       state.length = sequence.length;
-      state.pattern = sequence.pattern;
+      state.pattern = getPatternFromStr(sequence.pattern);
       state.noteTally = getNoteTally(state.pattern);
       state.undoStatus = `load sequence: ${sequence.name}`;
     },
