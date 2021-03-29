@@ -19,7 +19,11 @@ export const PitchVelocityLength = ({
   const [editAll, setEditAll] = useState(true);
 
   const onChange = ({ target: { value } }) => {
-    dispatch(setModVal(value));
+    if (mode === MODES.MOD_PITCH) {
+      dispatch(setModVal(value));
+    } else {
+      dispatch(setModVal(Math.round(value * 100) / 100));
+    }
   };
 
   const dispatchModAll = () => {
