@@ -29,6 +29,7 @@ const INITIAL_STATE = {
   error: '',
   networkError: false,
   serviceWorkerActive: false,
+  online: window.navigator.onLine,
 };
 
 export const appSlice = createSlice({
@@ -69,6 +70,9 @@ export const appSlice = createSlice({
       } else {
         console.log('service worker is not active');
       }
+    },
+    setOnline: (state, { payload }) => {
+      state.online = payload;
     },
     updateSequencesFinally: (
       state,
@@ -198,6 +202,7 @@ export const {
   setServiceWorkerActive,
   saveSuccess,
   saveFail,
+  setOnline,
 } = appSlice.actions;
 
 export default appSlice.reducer;

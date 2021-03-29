@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { KitProvider } from './features/Sequencer/providers/Kit';
+import { setOnline } from './reducers/appSlice';
 
 ReactDOM.render(
   <Provider store={store}>
@@ -28,3 +29,6 @@ serviceWorkerRegistration.register();
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+window.addEventListener('online', () => store.dispatch(setOnline(true)));
+window.addEventListener('offline', () => store.dispatch(setOnline(false)));

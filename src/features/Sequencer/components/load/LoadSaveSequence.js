@@ -65,6 +65,7 @@ const LoginSection = () => {
   const dispatch = useDispatch();
   const username = useSelector((state) => state.app.user.username);
   const loggedIn = useSelector((state) => state.app.user.loggedIn);
+  const online = useSelector((state) => state.app.online);
   const fetching = useSelector((state) => state.app.fetching);
 
   const onLogout = () => dispatch(logout());
@@ -80,7 +81,9 @@ const LoginSection = () => {
       ) : (
         <div className='login-status-text'>
           <p className='login-status-title'>Logged in as: {username}</p>
-          <p className='login-status-sub'>cloud sync</p>
+          <p className={online ? 'login-status-sub' : 'login-status-sub error'}>
+            {online ? 'online sync' : 'offline'}
+          </p>
         </div>
       )}
       <button disabled={fetching} onClick={onLogout}>
