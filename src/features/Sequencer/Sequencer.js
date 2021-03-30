@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid } from './components/main/Grid';
 import { PastePattern } from './components/main/PastePattern';
 import { LoadKit, LoadKitInfo } from './components/main/LoadKit';
@@ -18,10 +18,12 @@ export const SequencerPage = () => {
     (state) => state.sequence.present.initialLoad
   );
 
-  if (initialLoad) {
-    const clearUrl = () => history.replace('/');
-    dispatch(loadInitialSequence(shared, clearUrl));
-  }
+  useEffect(() => {
+    if (initialLoad) {
+      const clearUrl = () => history.replace('/');
+      dispatch(loadInitialSequence(shared, clearUrl));
+    }
+  }, [dispatch, history, initialLoad, shared]);
 
   return initialLoad ? (
     <Preparing />
