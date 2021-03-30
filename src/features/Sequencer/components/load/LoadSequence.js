@@ -6,6 +6,7 @@ import { loadSequence } from '../../reducers/sequenceSlice';
 import { DeleteIcon } from '../../../../icons';
 import { Button } from '../../../../components/Button';
 import cuid from 'cuid';
+import { getPatternFromStr } from '../../reducers/functions/sequence';
 
 export const LoadSequence = ({ handleStopSequence }) => {
   const dispatch = useDispatch();
@@ -24,7 +25,12 @@ export const LoadSequence = ({ handleStopSequence }) => {
         );
       if (type === 'us')
         sequence = userSequences.find((sequence) => sequence._id === id);
-      dispatch(loadSequence({ sequence }));
+      dispatch(
+        loadSequence({
+          ...sequence,
+          pattern: getPatternFromStr(sequence.pattern),
+        })
+      );
       setSelectedId(id);
     };
 

@@ -10,19 +10,27 @@ import {
   getPatternFromStr,
 } from './functions/sequence';
 import { INITIAL_MODS, MODES, setSpAlert } from './editorSlice';
+import { setFetching } from '../../../reducers/appSlice';
+import axios from 'axios';
+import { HOST } from '../../../network';
 
 const INITIAL_PATTERN =
   getLS('sequencePattern') || getPatternFromStr(analog.pattern);
 
-const INITIAL_STATE = {
+const INITIAL_SEQUENCE = {
   _id: getLS('sequenceId') || analog._id,
   name: getLS('sequenceName') || analog.name,
   kit: getLS('sequenceKitName') || analog.kit,
   bpm: getLS('sequenceBpm') || analog.bpm,
   length: getLS('sequenceLength') || analog.length,
   pattern: INITIAL_PATTERN,
+};
+
+export const INITIAL_STATE = {
+  ...INITIAL_SEQUENCE,
   noteTally: getNoteTally(INITIAL_PATTERN),
   undoStatus: '',
+  initialLoad: true,
 };
 
 export const sequenceSlice = createSlice({
@@ -115,15 +123,16 @@ export const sequenceSlice = createSlice({
       });
       state.undoStatus = `reset cell mods | sample: ${selectedSample}`;
     },
-    loadSequence: (state, { payload: { sequence } }) => {
-      state._id = sequence._id;
-      state.name = sequence.name;
-      state.kit = sequence.kit;
-      state.bpm = sequence.bpm;
-      state.length = sequence.length;
-      state.pattern = getPatternFromStr(sequence.pattern);
+    loadSequence: (state, { payload }) => {
+      state._id = payload._id;
+      state.name = payload.name;
+      state.kit = payload.kit;
+      state.bpm = payload.bpm;
+      state.length = payload.length;
+      state.pattern = payload.pattern;
       state.noteTally = getNoteTally(state.pattern);
-      state.undoStatus = `load sequence: ${sequence.name}`;
+      state.undoStatus = `load sequence: ${payload.name}`;
+      state.initialLoad = false;
     },
     changeKit: (state, { payload }) => {
       state.undoStatus = `load kit: ${state.kit}`;
@@ -135,6 +144,31 @@ export const sequenceSlice = createSlice({
     },
   },
 });
+
+export const loadInitialSequence = (_id) => async (dispatch) => {
+  console.log('called');
+  dispatch(setFetching(true));
+  if (_id === 'default') {
+    dispatch(sequenceSlice.actions.loadSequence(INITIAL_SEQUENCE));
+  } else {
+    try {
+      const res = await axios({
+        url: `${HOST}/user/sequence`,
+        method: 'POST',
+        data: { _id },
+        withCredentials: true,
+      });
+      console.log('res.data: ', res.data);
+      const sequence = res.data;
+      sequence.pattern = getPatternFromStr(sequence.pattern);
+      dispatch(sequenceSlice.actions.loadSequence(sequence));
+    } catch (e) {
+      console.log(e);
+    } finally {
+    }
+  }
+  dispatch(setFetching(false));
+};
 
 export const modCell = (step, noteOn) => (dispatch, getState) => {
   const selectedSample = getState().editor.selectedSample;
@@ -197,6 +231,7 @@ export const {
   loadSequenceFinally,
   changeKit,
   changeBpm,
+  setInitialLoad,
 } = sequenceSlice.actions;
 
 const reducer = undoable(sequenceSlice.reducer, {

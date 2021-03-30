@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Tone from 'tone';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { LoginPage } from './features/Login/LoginPage';
 import { SequencerPage } from './features/Sequencer/Sequencer';
 import { StatusBar } from './features/StatusBar/StatusBar';
@@ -10,16 +10,21 @@ import ErrorHandler from './features/ErrorHandler';
 export default function App() {
   // console.log('rendering: App');
   return (
-    <Router>
+    <BrowserRouter basename='/'>
       <ErrorBoundary>
         <Switch>
-          <Route path='/' exact component={SequencerPage} />
+          <Route
+            path='/'
+            exact
+            render={() => <Redirect to='/sequencer/default' />}
+          />
+          <Route path='/sequencer/:shared' render={() => <SequencerPage />} />
           <Route path='/login' component={LoginPage} />
           <Route path='/error/' component={ErrorHandler} />
         </Switch>
         <StatusBar />
       </ErrorBoundary>
-    </Router>
+    </BrowserRouter>
   );
 }
 
