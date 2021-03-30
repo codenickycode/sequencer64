@@ -145,7 +145,7 @@ body {
   overflow: hidden;
   color: var(--white);
   font-family: 'Roboto', sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   font-style: italic;
 }
 
@@ -305,12 +305,46 @@ body {
   color: var(--white);
 }
 
-.sequence-title {
+.save-header {
   width: 100%;
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
-  text-align: center;
+  text-align: left;
   font-size: 1.25rem;
+}
+
+.share-p {
+  margin-top: 1rem;
+}
+
+.share-link {
+  padding: 1rem;
+  display: flex;
+  border: 1px solid red;
+}
+
+#sequence-link {
+  width: 100%;
+  padding: 0.5rem;
+  background: none;
+  color: var(--white);
+  border-radius: 0.5rem;
+  border: none;
+}
+
+#copy-link {
+  margin-left: 0.25rem;
+  max-width: 5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--white);
+  background-color: var(--black);
+  color: var(--white);
+  outline: none;
+}
+
+.save-location {
+  font-size: 0.8rem;
+  font-weight: lighter;
+  color: var(--white-half);
 }
 
 .load-sequence {
@@ -396,9 +430,15 @@ body {
   padding: 0 0.5rem;
 }
 
+.save-sequence-group {
+  border: 1px solid var(--purple-half);
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
 .save-sequence-input {
   width: 100%;
-  margin: 0.5rem 0;
+  margin-bottom: 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -432,6 +472,17 @@ body {
 
 .save-sequence .error,
 .save-sequence .confirmation {
+}
+
+.file-limit-p,
+.file-limit-instructions {
+  padding-top: 0.5rem;
+}
+
+.file-limit-span {
+  margin-left: 0.5rem;
+  font-size: 1.25rem;
+  color: var(--green);
 }
 
 .bottom-btn {
@@ -1725,6 +1776,10 @@ p.dim {
   color: var(--white-quarter);
 }
 
+p.dim-2 {
+  color: var(--white-half);
+}
+
 .off {
   opacity: 0;
 }
@@ -2082,4 +2137,10 @@ button.scroll-left:disabled {
 
 h1 {
   font-weight: normal;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

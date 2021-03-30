@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setLS } from './utils/storage';
 import { loadSamples } from './features/Sequencer/reducers/toneSlice';
 import { Kit } from './features/Sequencer/providers/Kit';
-import { getUser } from './reducers/appSlice';
+import { getUser, setConfirmation, setError } from './reducers/appSlice';
 
 export const Responder = () => {
   const dispatch = useDispatch();
@@ -18,8 +18,8 @@ export const Responder = () => {
   // const statusCount = useSelector((state) => state.app.status.count);
   // const show = useSelector((state) => state.app.show);
   // const fetching = useSelector((state) => state.app.fetching);
-  // const confirmation = useSelector((state) => state.app.confirmation);
-  // const error = useSelector((state) => state.app.error);
+  const confirmation = useSelector((state) => state.app.confirmation);
+  const error = useSelector((state) => state.app.error);
   // const networkError = useSelector((state) => state.app.networkError);
   // const serviceWorkerActive = useSelector(
   //   (state) => state.app.serviceWorkerActive
@@ -30,6 +30,19 @@ export const Responder = () => {
     dispatch(getUser());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    let timer;
+    if (confirmation)
+      timer = setTimeout(() => dispatch(setConfirmation('')), 5000);
+    return () => clearTimeout(timer);
+  }, [confirmation, dispatch]);
+
+  useEffect(() => {
+    let timer;
+    if (error) timer = setTimeout(() => dispatch(setError('')), 5000);
+    return () => clearTimeout(timer);
+  }, [dispatch, error]);
 
   const onlineRef = useRef(online);
   useEffect(() => {

@@ -30,7 +30,6 @@ export const LoadSequence = ({ handleStopSequence }) => {
 
     return (
       <div className='load-sequence'>
-        <h1 className='sequence-title'>Load Sequences</h1>
         <div className='sequence-select'>
           <UserSection
             handleStopSequence={handleStopSequence}

@@ -4,7 +4,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from '../icons';
 export const Button = ({
   fwdRef,
   id,
-  classes,
+  classes = '',
   disabled = false,
   onClick,
   type,

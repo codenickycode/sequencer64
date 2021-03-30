@@ -112,13 +112,14 @@ export const idbDelSeq = async (_id, sequences) => {
     }
   });
   if (deleted) await set('sequences', sequences);
+};
+
+export const flagDeleted = async (_id) => {
   const deletedIds = await get('deleted');
-  console.log(deletedIds);
   if (!deletedIds) {
     await set('deleted', [_id]);
   } else {
     deletedIds.push(_id);
     await set('deleted', deletedIds);
   }
-  console.log(deletedIds);
 };

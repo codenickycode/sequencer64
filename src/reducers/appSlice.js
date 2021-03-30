@@ -3,6 +3,7 @@ import axios from 'axios';
 import { getSS, setSS } from '../utils/storage';
 import { HOST } from '../network';
 import {
+  flagDeleted,
   getUserFromCloud,
   getUserFromIDB,
   idbDelSeq,
@@ -50,6 +51,12 @@ export const appSlice = createSlice({
     },
     setFetching: (state, { payload }) => {
       state.fetching = payload;
+    },
+    setConfirmation: (state, { payload }) => {
+      state.confirmation = payload;
+    },
+    setError: (state, { payload }) => {
+      state.error = payload;
     },
     setNetworkError: (state, { payload: { val, timeout } }) => {
       state.networkError = val;
@@ -131,6 +138,7 @@ export const updateSequences = (type, data) => async (dispatch, getState) => {
       error = 'Error: Please try again later';
     } else {
       message = 'updated local database';
+      if (type === 'delete') flagDeleted(data._id);
     }
   } finally {
     dispatch(
@@ -198,6 +206,8 @@ export const {
   setUser,
   setStatus,
   setFetching,
+  setConfirmation,
+  setError,
   setServiceWorkerActive,
   saveSuccess,
   saveFail,

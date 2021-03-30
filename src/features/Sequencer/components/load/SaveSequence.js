@@ -9,7 +9,6 @@ import { HOST } from '../../../../network';
 export const SaveSequence = () => {
   const dispatch = useDispatch();
 
-  //! ? Does this cause a bunch of re-renders or just one ????????????????????????????????
   const bpm = useSelector((state) => state.sequence.present.bpm);
   const length = useSelector((state) => state.sequence.present.length);
   const pattern = useSelector((state) => state.sequence.present.pattern);
@@ -18,6 +17,7 @@ export const SaveSequence = () => {
   const online = useSelector((state) => state.app.online);
   const loggedIn = useSelector((state) => state.app.user.loggedIn);
   const fetching = useSelector((state) => state.app.fetching);
+  const userSequences = useSelector((state) => state.app.userSequences);
 
   const [newName, setNewName] = useState('');
   const [newId, setNewId] = useState('');
@@ -70,39 +70,79 @@ export const SaveSequence = () => {
     dispatch(updateSequences('save', newSequence));
   };
 
+  const fileLimit = 20 - userSequences.length;
   // console.log('rendering: SaveSequence');
   return (
     <div className='save-sequence'>
-      <div className='sequence-select-group'>
-        {loggedIn && online && confirmation && (
-          <div className='share-div'>
-            <p>share your sequence:</p>
-            <input type='text' value={link} id='sequence-link' />
-            <Button id='copy-link' onClick={copyLink}>
-              <label htmlFor='copy-link'>copy</label>
+      <div className='save-sequence-group'>
+        <h1 className='save-header'>Share:</h1>
+        <div className='share-div'>
+          {!online ? (
+            <p className='share-p dim-2'>Share unavailable while offline</p>
+          ) : !loggedIn ? (
+            <p className='share-p dim-2'>Share unavailable until logged in</p>
+          ) : !link ? (
+            <p className='share-p dim-2'>
+              Save your sequence to generate a shareable link
+            </p>
+          ) : (
+            <div className='share-link'>
+              <input
+                type='text'
+                value={link}
+                id='sequence-link'
+                readOnly={true}
+              />
+              <Button id='copy-link' onClick={copyLink}>
+                <label htmlFor='copy-link'>copy</label>
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+      <div className='save-sequence-group'>
+        <form id='save-form' onSubmit={save}>
+          <h1 className='save-header flex-between'>
+            Save:{' '}
+            <span className='save-location'>{`(saving to ${
+              online && loggedIn ? 'cloud and device' : 'device'
+            })`}</span>
+          </h1>
+
+          <div className='save-sequence-input'>
+            <input
+              type='text'
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+              disabled={fetching || fileLimit <= 0}
+              placeholder={fetching ? 'saving...' : 'Enter sequence name'}
+            />
+            <Button type='submit' disabled={!newName}>
+              Save
             </Button>
           </div>
-        )}
-      </div>
-      <form id='save-form' onSubmit={save}>
-        <h1 className='sequence-title'>Save & Share</h1>
-
-        <div className='save-sequence-input'>
-          <input
-            type='text'
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
-            disabled={fetching}
-            placeholder={fetching ? 'saving...' : 'Enter sequence name'}
-          />
-          <Button type='submit' disabled={!newName}>
-            Save
-          </Button>
+        </form>
+        <p className={userError ? 'error' : 'confirmation'}>
+          {userError ? userError : confirmation}
+        </p>
+        <div className='file-limit'>
+          <p className='file-limit-p'>
+            File limit:{' '}
+            <span
+              className={
+                fileLimit <= 0 ? 'file-limit-span error' : 'file-limit-span'
+              }
+            >
+              {fileLimit}
+            </span>
+          </p>
+          {fileLimit <= 0 && (
+            <p className='file-limit-instructions error'>
+              Delete some old sequences to save
+            </p>
+          )}
         </div>
-      </form>
-      <p className={userError ? 'error' : 'confirmation'}>
-        {userError ? userError : confirmation}
-      </p>
+      </div>
     </div>
   );
 };
