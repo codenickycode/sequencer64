@@ -35,7 +35,6 @@ import { ReactComponent as CloudDownload } from './cloud-download.svg';
 import { ReactComponent as Check } from './check-bold.svg';
 import { ReactComponent as Twitter } from './twitter.svg';
 import { ReactComponent as Facebook } from './facebook.svg';
-import { ReactComponent as Instagram } from './instagram.svg';
 
 export const ChevronDownIcon = ({ addClass = '' }) => (
   <ChevronDown className={addClass + ' chevron-down'} />
@@ -152,10 +151,6 @@ export const TwitterIcon = ({ addClass = '' }) => (
 
 export const FacebookIcon = ({ addClass = '' }) => (
   <Facebook className={addClass + ' icon'} />
-);
-
-export const InstagramIcon = ({ addClass = '' }) => (
-  <Instagram className={addClass + ' icon'} />
 );
 
 export const PointDownIcon = ({ addClass = '' }) => (
