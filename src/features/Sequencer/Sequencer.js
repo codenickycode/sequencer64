@@ -12,12 +12,14 @@ import { loadInitialSequence } from './reducers/sequenceSlice';
 
 export const SequencerPage = () => {
   const dispatch = useDispatch();
+  const { shared } = useParams();
   const initialLoad = useSelector(
     (state) => state.sequence.present.initialLoad
   );
 
-  const { shared } = useParams();
-  dispatch(loadInitialSequence(shared));
+  if (initialLoad) {
+    dispatch(loadInitialSequence(shared));
+  }
 
   return initialLoad ? (
     <Preparing />

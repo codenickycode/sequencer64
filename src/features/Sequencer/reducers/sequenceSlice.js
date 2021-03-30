@@ -10,7 +10,7 @@ import {
   getPatternFromStr,
 } from './functions/sequence';
 import { INITIAL_MODS, MODES, setSpAlert } from './editorSlice';
-import { setFetching } from '../../../reducers/appSlice';
+import { setFetching, setStatus } from '../../../reducers/appSlice';
 import axios from 'axios';
 import { HOST } from '../../../network';
 
@@ -146,7 +146,6 @@ export const sequenceSlice = createSlice({
 });
 
 export const loadInitialSequence = (_id) => async (dispatch) => {
-  console.log('called');
   dispatch(setFetching(true));
   if (_id === 'default') {
     dispatch(sequenceSlice.actions.loadSequence(INITIAL_SEQUENCE));
@@ -158,13 +157,11 @@ export const loadInitialSequence = (_id) => async (dispatch) => {
         data: { _id },
         withCredentials: true,
       });
-      console.log('res.data: ', res.data);
       const sequence = res.data;
       sequence.pattern = getPatternFromStr(sequence.pattern);
       dispatch(sequenceSlice.actions.loadSequence(sequence));
     } catch (e) {
-      console.log(e);
-    } finally {
+      dispatch(sequenceSlice.actions.loadSequence(INITIAL_SEQUENCE));
     }
   }
   dispatch(setFetching(false));
