@@ -197,7 +197,6 @@ const getEntries = (string, regexp) => {
 };
 
 export const getPatternFromStr = (editString) => {
-  console.time('getPatternFromStr');
   const pattern = INIT_PATTERN();
   if (editString === 'init') return pattern;
   const stepEntries = getEntries(editString, stepRegexp);
@@ -207,6 +206,5 @@ export const getPatternFromStr = (editString) => {
       pattern[step][sample] = getVals(edits);
     });
   });
-  console.timeEnd('getPatternFromStr');
   return pattern;
 };

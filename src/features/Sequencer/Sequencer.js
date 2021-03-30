@@ -20,7 +20,6 @@ export const SequencerPage = () => {
 
   if (initialLoad) {
     const clearUrl = () => history.replace('/');
-    // const clearUrl = () => {};
     dispatch(loadInitialSequence(shared, clearUrl));
   }
 

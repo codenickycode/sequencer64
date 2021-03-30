@@ -161,12 +161,13 @@ export const loadInitialSequence = (_id, clearUrl) => async (dispatch) => {
       sequence.pattern = getPatternFromStr(sequence.pattern);
       dispatch(sequenceSlice.actions.loadSequence(sequence));
     } catch (e) {
-      console.error(e);
+      console.log(
+        'Failed to load sequence from url path.  Loading default session.'
+      );
       dispatch(sequenceSlice.actions.loadSequence(INITIAL_SEQUENCE));
     }
   }
   dispatch(setFetching(false));
-  console.log('callback!');
   clearUrl();
 };
 
