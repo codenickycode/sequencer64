@@ -200,6 +200,95 @@ body {
 }
 
 /*************************************/
+/************* Preparing *************/
+/*************************************/
+
+.preparing {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+}
+
+.preparing-grid {
+  width: 50%;
+  height: 50vw;
+  padding: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--purple);
+}
+
+.preparing-cell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.25rem;
+  border: 1px dotted var(--white-dim);
+}
+
+.preparing .bg-color {
+  animation: color-scroll 2s infinite;
+}
+
+.preparing .bg0 {
+  animation-delay: 0;
+}
+
+.preparing .bg1 {
+  animation-delay: 150ms;
+}
+
+.preparing .bg2 {
+  animation-delay: 300ms;
+}
+
+.preparing .bg3 {
+  animation-delay: 450ms;
+}
+
+.preparing .bg4 {
+  animation-delay: 600ms;
+}
+
+.preparing .bg5 {
+  animation-delay: 750ms;
+}
+
+.preparing .bg6 {
+  animation-delay: 900ms;
+}
+
+.preparing .bg7 {
+  animation-delay: 1050ms;
+}
+
+.preparing .bg8 {
+  animation-delay: 1200ms;
+}
+
+.preparing .bg9 {
+  animation-delay: 1350ms;
+}
+
+@keyframes color-scroll {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0;
+  }
+}
+
+/*************************************/
 /*********** Load Sequence ***********/
 /*************************************/
 

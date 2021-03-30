@@ -5,12 +5,13 @@ import { LoadKit, LoadKitInfo } from './components/main/LoadKit';
 import { SamplePanel } from './components/sample-panel/SamplePanel';
 import { LoadSaveSequence } from './components/load/LoadSaveSequence';
 import { Menu } from './components/Menu';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Preparing } from './Preparing';
 import { loadInitialSequence } from './reducers/sequenceSlice';
 
 export const SequencerPage = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const { shared } = useParams();
   const initialLoad = useSelector(
