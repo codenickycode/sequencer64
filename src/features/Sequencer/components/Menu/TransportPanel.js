@@ -9,6 +9,7 @@ import {
   stopSequence,
 } from '../../reducers/toneSlice';
 import { Kit } from '../../providers/Kit';
+import { setStatus } from '../../../../reducers/appSlice';
 
 export const TransportPanel = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ export const TransportPanel = () => {
 
     const handleBpm = () => {
       dispatch(changeBpm(tempBpm));
+      dispatch(setStatus(`bpm set to ${tempBpm}`));
       setBpmEdited(false);
     };
 
