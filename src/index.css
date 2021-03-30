@@ -316,9 +316,8 @@ body {
 }
 
 .share-link {
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
-  border: 1px solid red;
 }
 
 #sequence-link {
@@ -327,7 +326,7 @@ body {
   background: none;
   color: var(--white);
   border-radius: 0.5rem;
-  border: none;
+  border: 1px solid var(--white);
 }
 
 #copy-link {
@@ -339,6 +338,49 @@ body {
   background-color: var(--black);
   color: var(--white);
   outline: none;
+}
+
+.share-link-wrapper {
+}
+
+.social-links {
+  margin-top: 0.25rem;
+  width: 100%;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.social-links a {
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+}
+
+.social-btn {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  background: none;
+  border: none;
+}
+
+button.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.social-btn span {
+  color: var(--white);
+  margin-left: 0.5rem;
+}
+
+.social-btn .icon {
+  height: 2rem;
+  width: 2rem;
+  fill: var(--white);
 }
 
 .save-location {

@@ -4,7 +4,8 @@ import { Button } from '../../../../components/Button';
 import { setStatus, updateSequences } from '../../../../reducers/appSlice';
 import ObjectID from 'bson-objectid';
 import { getStrFromPattern } from '../../reducers/functions/sequence';
-import { HOST } from '../../../../network';
+import { ORIGIN, TWITTER_URL, FACEBOOK_URL } from '../../../../network';
+import { FacebookIcon, TwitterIcon } from '../../../../icons';
 
 export const SaveSequence = () => {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ export const SaveSequence = () => {
 
   useEffect(() => {
     if (confirmation.match(/cloud/)) {
-      setLink(`${HOST}/sequence/${newId}`);
+      setLink(`${ORIGIN}/sequence/${newId}`);
     }
   }, [newId, confirmation]);
 
@@ -86,16 +87,40 @@ export const SaveSequence = () => {
               Save your sequence to generate a shareable link
             </p>
           ) : (
-            <div className='share-link'>
-              <input
-                type='text'
-                value={link}
-                id='sequence-link'
-                readOnly={true}
-              />
-              <Button id='copy-link' onClick={copyLink}>
-                <label htmlFor='copy-link'>copy</label>
-              </Button>
+            <div className='share-link-wrapper'>
+              <div className='share-link'>
+                <input
+                  type='text'
+                  value={link}
+                  id='sequence-link'
+                  readOnly={true}
+                />
+                <Button id='copy-link' onClick={copyLink}>
+                  <label htmlFor='copy-link'>copy</label>
+                </Button>
+              </div>
+              <div className='social-links'>
+                <a
+                  href={`${TWITTER_URL}${link}`}
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  <Button classes='social-btn' aria-label='Tweet'>
+                    <TwitterIcon />
+                    <span>Tweet</span>
+                  </Button>
+                </a>
+                <a
+                  href={`${FACEBOOK_URL}${link}`}
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  <Button classes='social-btn' aria-label='Share to Facebook'>
+                    <FacebookIcon />
+                    <span>Share</span>
+                  </Button>
+                </a>
+              </div>
             </div>
           )}
         </div>
