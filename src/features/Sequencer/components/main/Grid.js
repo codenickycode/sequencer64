@@ -13,19 +13,22 @@ export const Grid = () => {
 
   const prevCellRef = useRef(null);
 
-  const onTouchMove = (e) => {
-    if (selectedSample === -1) return;
-    const touch = e.touches[0];
-    const cell = document.elementFromPoint(touch.clientX, touch.clientY);
-    if (cell) {
-      const id = cell.id;
-      if (!id.match(/cell/)) return;
-      if (prevCellRef.current !== id) {
-        dispatch(setTapCellById({ id, val: true }));
-        prevCellRef.current = id;
+  const onTouchMove = useCallback(
+    (e) => {
+      if (selectedSample === -1) return;
+      const touch = e.touches[0];
+      const cell = document.elementFromPoint(touch.clientX, touch.clientY);
+      if (cell) {
+        const id = cell.id;
+        if (!id.match(/cell/)) return;
+        if (prevCellRef.current !== id) {
+          dispatch(setTapCellById({ id, val: true }));
+          prevCellRef.current = id;
+        }
       }
-    }
-  };
+    },
+    [dispatch, selectedSample]
+  );
 
   let grid = useMemo(() => {
     let grid = [];
@@ -35,25 +38,24 @@ export const Grid = () => {
     return grid;
   }, [length]);
 
-  // console.log('rendering: Grid');
-  return (
-    <div
-      id='grid'
-      className={selectedSample === -1 ? '' : 'no-drag'}
-      onTouchMove={onTouchMove}
-    >
-      {grid.map((step) => {
-        const id = `cell-${step}`;
-        return (
-          <Cell key={id} id={id} step={step} selectedSample={selectedSample} />
-        );
-      })}
-    </div>
-  );
+  const gridMemo = useMemo(() => {
+    // console.log('rendering: Grid');
+    return (
+      <div id='grid' onTouchMove={onTouchMove}>
+        {grid.map((step) => {
+          const id = `cell-${step}`;
+          return <Cell key={id} id={id} step={step} />;
+        })}
+      </div>
+    );
+  }, [grid, onTouchMove]);
+  return gridMemo;
 };
 
-const Cell = ({ id, step, selectedSample }) => {
+const Cell = ({ id, step }) => {
   const dispatch = useDispatch();
+
+  const selectedSample = useSelector((state) => state.editor.selectedSample);
 
   const noteOn = useSelector((state) =>
     selectedSample !== -1
