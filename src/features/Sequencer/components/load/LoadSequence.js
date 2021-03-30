@@ -55,7 +55,7 @@ const DefaultSection = ({ selectSequence, selectedId }) => {
         <p className='sequence-select-sub'>Default Sequences</p>
         <div className='load-sequence-sub'>
           <p>Name</p>
-          <p>Kit</p>
+          <p className='p-left-25'>Kit</p>
           <p>Bpm</p>
           <p></p>
         </div>
@@ -69,7 +69,7 @@ const DefaultSection = ({ selectSequence, selectedId }) => {
               onClick={(e) => selectSequence(e, 'ds', id)}
             >
               <p>{sequence}</p>
-              <p>{defaultSequences[sequence].kit}</p>
+              <p className='p-left-25'>{defaultSequences[sequence].kit}</p>
               <p>{defaultSequences[sequence].bpm}</p>
               <p></p>
             </div>
@@ -108,9 +108,9 @@ const UserSequences = ({ selectSequence, selectedId }) => {
           <>
             <div className='load-sequence-sub'>
               <p>Name</p>
-              <p>Kit</p>
+              <p className='p-left-25'>Kit</p>
               <p>Bpm</p>
-              <p>Delete</p>
+              <p></p>
             </div>
             {userSequences?.map((sequence) => {
               const selected = sequence._id === selectedId;
@@ -183,7 +183,7 @@ const UserSequence = ({ _id, name, kit, bpm, selected, selectSequence }) => {
           {deleting && 'deleting '}
           {name}
         </p>
-        <p>{kit}</p>
+        <p className='p-left-25'>{kit}</p>
         <p>{bpm}</p>
         <Button
           classes='delete-btn'

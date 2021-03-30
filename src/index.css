@@ -321,7 +321,7 @@ body {
   width: 100%;
   padding: 0.5rem;
   display: grid;
-  grid-template-columns: 1fr 1fr 0.5fr 0.5fr;
+  grid-template-columns: 0.5fr 0.25fr 0.15fr 0.1fr;
   align-items: center;
   border: 1px solid var(--purple-half);
   border-right: none;
@@ -349,7 +349,7 @@ body {
   width: 100%;
   padding: 0.25rem 0.5rem;
   display: grid;
-  grid-template-columns: 1fr 1fr 0.5fr 0.5fr;
+  grid-template-columns: 0.5fr 0.25fr 0.15fr 0.1fr;
   align-items: center;
   background: var(--purple-quarter);
   border-radius: 0.5rem;
@@ -2074,4 +2074,12 @@ button.scroll-right:disabled,
 button.scroll-left:disabled {
   pointer-events: none;
   opacity: 0;
+}
+
+.p-left-25 {
+  padding-left: 0.25rem;
+}
+
+h1 {
+  font-weight: normal;
 }

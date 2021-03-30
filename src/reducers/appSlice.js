@@ -124,6 +124,7 @@ export const updateSequences = (type, data) => async (dispatch, getState) => {
       data,
       withCredentials: true,
     });
+    if (type === 'save') confirmation += ' to cloud';
   } catch (e) {
     if (!message) {
       message = 'unsuccessful :(';
