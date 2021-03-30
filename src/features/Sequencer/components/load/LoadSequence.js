@@ -65,7 +65,7 @@ const DefaultSection = ({ selectSequence, selectedId }) => {
             <div
               key={cuid()}
               className={selected ? 'sequence selected' : 'sequence'}
-              onClick={(e) => selectSequence(e, 'ds', id)}
+              onClick={selected ? null : (e) => selectSequence(e, 'ds', id)}
             >
               <p>{sequence}</p>
               <p className='p-left-25'>{defaultSequences[sequence].kit}</p>
@@ -178,7 +178,7 @@ const UserSequence = ({ _id, name, kit, bpm, selected, selectSequence }) => {
             : 'sequence select'
         }
         disabled={deleting}
-        onClick={(e) => selectSequence(e, 'us', _id)}
+        onClick={selected ? null : (e) => selectSequence(e, 'us', _id)}
       >
         <p>
           {deleting && 'deleting '}
