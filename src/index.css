@@ -233,7 +233,7 @@ body {
 }
 
 .preparing .bg-color {
-  animation: color-scroll 2s infinite;
+  animation: color-scroll 1.5s infinite;
 }
 
 .preparing .bg0 {

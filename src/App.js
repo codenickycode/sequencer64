@@ -16,7 +16,7 @@ export default function App() {
           <Route
             path='/'
             exact
-            render={() => <Redirect to='/sequencer/default' />}
+            render={() => <Redirect to='/sequencer/session' />}
           />
           <Route path='/sequencer/:shared' render={() => <SequencerPage />} />
           <Route path='/login' component={LoginPage} />

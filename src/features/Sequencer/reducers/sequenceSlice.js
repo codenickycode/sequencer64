@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import undoable, { groupByActionTypes } from 'redux-undo';
 import { analog } from '../defaults/defaultSequences';
-import { getLS } from '../../../utils/storage';
+import { getLS, getSS } from '../../../utils/storage';
 import {
   getNoteTally,
   inc,
@@ -10,7 +10,7 @@ import {
   getPatternFromStr,
 } from './functions/sequence';
 import { INITIAL_MODS, MODES, setSpAlert } from './editorSlice';
-import { setFetching, setStatus } from '../../../reducers/appSlice';
+import { setFetching } from '../../../reducers/appSlice';
 import axios from 'axios';
 import { HOST } from '../../../network';
 
@@ -30,7 +30,7 @@ export const INITIAL_STATE = {
   ...INITIAL_SEQUENCE,
   noteTally: getNoteTally(INITIAL_PATTERN),
   undoStatus: '',
-  initialLoad: true,
+  initialLoad: getSS('initialLoad') === false ? false : true,
 };
 
 export const sequenceSlice = createSlice({
@@ -145,9 +145,9 @@ export const sequenceSlice = createSlice({
   },
 });
 
-export const loadInitialSequence = (_id) => async (dispatch) => {
+export const loadInitialSequence = (_id, clearUrl) => async (dispatch) => {
   dispatch(setFetching(true));
-  if (_id === 'default') {
+  if (_id === 'session') {
     dispatch(sequenceSlice.actions.loadSequence(INITIAL_SEQUENCE));
   } else {
     try {
@@ -161,10 +161,13 @@ export const loadInitialSequence = (_id) => async (dispatch) => {
       sequence.pattern = getPatternFromStr(sequence.pattern);
       dispatch(sequenceSlice.actions.loadSequence(sequence));
     } catch (e) {
+      console.error(e);
       dispatch(sequenceSlice.actions.loadSequence(INITIAL_SEQUENCE));
     }
   }
   dispatch(setFetching(false));
+  console.log('callback!');
+  clearUrl();
 };
 
 export const modCell = (step, noteOn) => (dispatch, getState) => {

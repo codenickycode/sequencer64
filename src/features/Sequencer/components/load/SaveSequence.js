@@ -37,7 +37,7 @@ export const SaveSequence = () => {
 
   useEffect(() => {
     if (confirmation.match(/cloud/)) {
-      setLink(`${ORIGIN}/sequence/${newId}`);
+      setLink(`${ORIGIN}/sequencer/${newId}`);
     }
   }, [newId, confirmation]);
 
