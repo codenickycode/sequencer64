@@ -120,7 +120,7 @@ const Cell = ({ id, step, selectedSample }) => {
     const slice2Classes = noteOn && slice > 2 ? 'slice slice-2' : 'slice';
     const bgColorStyle = {
       opacity: noteOn ? velocity : 0,
-      width: length >= 1 ? '100%' : `${100 * length * 3}%`,
+      transform: length >= 1 ? 'scaleX(1)' : `scaleX(${length * 3})`,
     };
     return (
       <div className='cell-wrapper'>

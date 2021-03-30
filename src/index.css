@@ -210,7 +210,7 @@ body {
 
 .load-save-tab {
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.75rem;
   background: var(--purple-half);
   color: var(--white);
   outline: none;
@@ -250,6 +250,7 @@ body {
 
 .login-div {
   width: 100%;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -269,7 +270,7 @@ body {
 .login-status {
   width: 100%;
   margin-top: 0.25rem;
-  padding: 0.5rem 0.5rem 1rem;
+  padding: 1rem;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -840,7 +841,7 @@ body {
   position: absolute;
   z-index: 6;
   width: 100%;
-  height: 95%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   background: var(--black-90);
@@ -1137,6 +1138,11 @@ body {
 .border-flashing,
 .bg-color {
   opacity: 0;
+}
+
+.bg-color {
+  left: 0;
+  transform: scaleX(1);
 }
 
 .bg-color.show {
