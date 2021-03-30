@@ -112,20 +112,22 @@ const UserSequences = ({ selectSequence, selectedId }) => {
               <p>Bpm</p>
               <p></p>
             </div>
-            {userSequences?.map((sequence) => {
-              const selected = sequence._id === selectedId;
-              return (
-                <UserSequence
-                  key={sequence._id}
-                  _id={sequence._id}
-                  name={sequence.name}
-                  kit={sequence.kit}
-                  bpm={sequence.bpm}
-                  selected={selected}
-                  selectSequence={selectSequence}
-                />
-              );
-            })}
+            {userSequences
+              ?.map((sequence) => {
+                const selected = sequence._id === selectedId;
+                return (
+                  <UserSequence
+                    key={sequence._id}
+                    _id={sequence._id}
+                    name={sequence.name}
+                    kit={sequence.kit}
+                    bpm={sequence.bpm}
+                    selected={selected}
+                    selectSequence={selectSequence}
+                  />
+                );
+              })
+              .reverse()}
           </>
         )}
       </>
