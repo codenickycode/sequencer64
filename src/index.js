@@ -1,21 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { Responder } from './Responder';
-import store from './store';
+import 'index.css';
+import App from 'App/App';
+import store from 'App/store';
 import { Provider } from 'react-redux';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
-import { KitProvider } from './features/Sequencer/providers/Kit';
-import { setOnline } from './reducers/appSlice';
+import * as serviceWorkerRegistration from 'serviceWorkerRegistration';
+import reportWebVitals from 'reportWebVitals';
+import { setOnline } from 'App/reducers/appSlice';
 
 ReactDOM.render(
   <Provider store={store}>
-    <KitProvider>
-      <App />
-      <Responder />
-    </KitProvider>
+    <App />
   </Provider>,
   document.getElementById('root')
 );

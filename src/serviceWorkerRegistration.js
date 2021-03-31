@@ -1,5 +1,5 @@
-import store from './store';
-import { setServiceWorkerActive } from './reducers/appSlice';
+import store from 'App/store';
+import { setServiceWorkerActive } from 'App/reducers/appSlice';
 
 // This optional code is used to register a service worker.
 // register() is not called by default.
