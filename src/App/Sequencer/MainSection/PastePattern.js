@@ -19,7 +19,6 @@ export const PastePattern = () => {
     for (let i = 0, len = samples.length; i < len; i++) {
       grid.push(i);
     }
-
     return (
       <div id='paste-pattern' className={pasting ? 'show' : ''}>
         {pasting && (

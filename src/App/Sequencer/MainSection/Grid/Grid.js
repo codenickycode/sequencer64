@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTapCellById } from 'App/reducers/editorSlice';
-import { Cell } from 'App/Sequencer/MainSection/Cell';
+import { Cell } from './Cell';
 
 export const Grid = () => {
   const dispatch = useDispatch();
