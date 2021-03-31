@@ -1,44 +1,43 @@
 import React, { useMemo, useState } from 'react';
+import ReactDOM from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import * as defaultKits from 'utils/defaultKits';
 import * as icons from 'assets/icons/kit';
-import { MODES } from 'App/reducers/editorSlice';
 import { paste } from 'App/reducers/sequenceSlice';
 import { Button } from 'App/shared/Button';
-import { useFadeIn } from 'utils/useFadeIn';
 
 export const PastePattern = () => {
   const kit = useSelector((state) => state.sequence.present.kit);
   const samples = defaultKits[kit].samples;
 
-  const mode = useSelector((state) => state.editor.mode);
-  const pasting = mode === MODES.COPYING;
-  const { fadeInClass } = useFadeIn(pasting);
-
   const pastePatternMemo = useMemo(() => {
+    const portal = document.getElementById('paste-pattern-portal');
     // console.log('rendering: PastePattern');
     let grid = [];
     for (let i = 0, len = samples.length; i < len; i++) {
       grid.push(i);
     }
-    return (
-      <div id='paste-pattern' className={'paste-pattern' + fadeInClass}>
-        <div id='paste-pattern-samples'>
-          {grid.map((i) => {
-            return (
-              <SampleBtn
-                key={`paste-pattern-${samples[i].name}`}
-                i={i}
-                icon={samples[i].icon}
-                color={samples[i].color}
-              />
-            );
-          })}
-        </div>
-      </div>
-    );
-  }, [fadeInClass, samples]);
-  return pasting ? pastePatternMemo : null;
+    return portal
+      ? ReactDOM.createPortal(
+          <div id='paste-pattern' className={'paste-pattern'}>
+            <div id='paste-pattern-samples'>
+              {grid.map((i) => {
+                return (
+                  <SampleBtn
+                    key={`paste-pattern-${samples[i].name}`}
+                    i={i}
+                    icon={samples[i].icon}
+                    color={samples[i].color}
+                  />
+                );
+              })}
+            </div>
+          </div>,
+          portal
+        )
+      : null;
+  }, [samples]);
+  return pastePatternMemo;
 };
 
 const SampleBtn = ({ i, icon, color }) => {

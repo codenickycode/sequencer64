@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid } from 'App/Sequencer/MainSection/Grid/Grid';
-import { PastePattern } from 'App/Sequencer/MainSection/PastePattern';
-import { LoadKit, LoadKitInfo } from 'App/Sequencer/MainSection/LoadKit';
+import { LoadKit } from 'App/Sequencer/MainSection/LoadKit';
 import { SamplePanel } from 'App/Sequencer/SamplePanel/SamplePanel';
 import { LoadSaveSequence } from 'App/Sequencer/LoadSave/LoadSaveSequence';
 import { Menu } from 'App/Sequencer/MenuBar/MenuBar';
 import { Preparing } from 'App/shared/Preparing';
 import { loadInitialSequence } from 'App/reducers/sequenceSlice';
+import { SpAlert } from 'App/Sequencer/SamplePanel/SpAlert';
 
 export const SequencerPage = () => {
   const history = useHistory();
@@ -32,10 +32,11 @@ export const SequencerPage = () => {
       <div id='sequencer'>
         <div id='main'>
           <Grid />
-          <PastePattern />
           <LoadKit />
+          <div id='paste-pattern-portal' />
         </div>
         <div id='sample-panel'>
+          <SpAlert />
           <SamplePanel />
           <div id='kit-info-portal' />
         </div>

@@ -5,13 +5,9 @@ import { Button } from 'App/shared/Button';
 import { ChevronLeftIcon, ChevronDownIcon } from 'assets/icons';
 import { modAll, resetMods } from 'App/reducers/sequenceSlice';
 import { MIDI_NOTES } from 'utils/MIDI_NOTES';
+import { showEditable, hideEditable } from 'utils/toggleClasses';
 
-export const PitchVelocityLength = ({
-  onReturn,
-  mode,
-  showEditable,
-  hideEditable,
-}) => {
+export const PitchVelocityLength = ({ onReturn, mode }) => {
   const dispatch = useDispatch();
   const selectedSample = useSelector((state) => state.editor.selectedSample);
   const value = useSelector((state) => state.editor.mods[mode]);

@@ -8,7 +8,6 @@ export const MODES = {
   MOD_VELOCITY: 'velocity',
   MOD_LENGTH: 'length',
   MOD_PITCH: 'pitch',
-  LOAD_KIT: 'LOAD_KIT',
 };
 
 export const INITIAL_MODS = {

@@ -43,8 +43,10 @@ export const animateSample = (time, step) => {
   Tone.Draw.schedule(() => {
     step.forEach((sample, i) => {
       if (sample.noteOn) {
-        sampleBtns[i].classList.add('pulse');
-        setTimeout(() => sampleBtns[i].classList.remove('pulse'), 0);
+        sampleBtns && sampleBtns[i]?.classList.add('pulse');
+        setTimeout(() => {
+          sampleBtns && sampleBtns[i]?.classList.remove('pulse');
+        }, 0);
       }
     });
   }, time);

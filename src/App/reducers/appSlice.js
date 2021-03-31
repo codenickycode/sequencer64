@@ -11,6 +11,12 @@ import {
   mergeSequences,
 } from 'App/reducers/functions/user';
 
+export const VIEWS = {
+  SAVE: 'save',
+  LOAD: 'load',
+  LOAD_KIT: 'LOAD_KIT',
+};
+
 export const INITIAL_USER = {
   _id: '',
   username: '',

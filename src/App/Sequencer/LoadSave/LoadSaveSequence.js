@@ -23,7 +23,7 @@ export const LoadSaveSequence = () => {
           {show === 'save' && <SaveSequence />}
           {show === 'load' && <LoadSequence />}
         </div>
-        <div className={show ? 'bottom-btn show' : 'bottom-btn'}>
+        <div className={'bottom-btn' + fadeInClass}>
           <Button classes='load-save-sequence-close' onClick={onClose}>
             Close
           </Button>

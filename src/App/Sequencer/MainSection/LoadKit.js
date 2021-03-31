@@ -3,24 +3,24 @@ import React, { useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as defaultKits from 'utils/defaultKits';
-import { MODES, setMode } from 'App/reducers/editorSlice';
 import { Button } from 'App/shared/Button';
 import { useFadeIn } from 'utils/useFadeIn';
 import { CloudDownloadIcon } from 'assets/icons';
 import { useKitBtnStateAndFunctions } from './useKitBtnStateAndFunctions';
+import { setShow, VIEWS } from '../../reducers/appSlice';
 
 const kits = Object.values(defaultKits);
 
 export const LoadKit = () => {
   const dispatch = useDispatch();
-  const mode = useSelector((state) => state.editor.mode);
-  const showLoadKit = mode === MODES.LOAD_KIT;
+  const show = useSelector((state) => state.app.show);
+  const showLoadKit = show === VIEWS.LOAD_KIT;
   const { fadeInClass, fadeOutThen } = useFadeIn(showLoadKit);
 
   const onClick = useCallback(
     () =>
       fadeOutThen(() => {
-        dispatch(setMode(null));
+        dispatch(setShow(''));
       }),
     [dispatch, fadeOutThen]
   );
@@ -73,12 +73,15 @@ const KitBtn = ({ kitName, available }) => {
 };
 
 export const LoadKitInfo = ({ fadeInClass, onClick }) => {
-  return ReactDOM.createPortal(
-    <div className={'kit-info' + fadeInClass}>
-      <Button classes='kit-info-close' onClick={onClick}>
-        close
-      </Button>
-    </div>,
-    document.getElementById('kit-info-portal')
-  );
+  const portal = document.getElementById('kit-info-portal');
+  return portal
+    ? ReactDOM.createPortal(
+        <div className={'kit-info' + fadeInClass}>
+          <Button classes='kit-info-close' onClick={onClick}>
+            close
+          </Button>
+        </div>,
+        portal
+      )
+    : null;
 };

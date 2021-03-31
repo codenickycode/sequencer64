@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { eraseSample, resetSlice } from 'App/reducers/sequenceSlice';
 import { Button } from 'App/shared/Button';
 import { ChevronLeftIcon, CopyIcon, EraserIcon, SawIcon } from 'assets/icons';
+import { PastePattern } from 'App/Sequencer/MainSection/PastePattern';
 
 export const Erase = ({ onReturn }) => {
   const dispatch = useDispatch();
@@ -69,9 +70,8 @@ export const Slice = ({ onReturn }) => {
 };
 
 export const Copy = ({ onReturn }) => {
-  // console.log('rendering: Copy');
   return (
-    <div className='sample-edit-detail'>
+    <div className={'sample-edit-detail'}>
       <Button classes='sample-edit-close' onClick={onReturn}>
         <ChevronLeftIcon />
       </Button>
@@ -80,6 +80,7 @@ export const Copy = ({ onReturn }) => {
         Click to paste current sample's pattern
       </p>
       <CopyIcon />
+      <PastePattern />
     </div>
   );
 };

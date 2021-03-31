@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button } from 'App/shared/Button';
 import { KitIcon } from 'assets/icons';
-import { MODES, setMode } from 'App/reducers/editorSlice';
+import { setShow, VIEWS } from '../../reducers/appSlice';
 
 export const ChangeKit = () => {
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ export const ChangeKit = () => {
     // console.log('rendering: ChangeKit');
 
     const onClick = () => {
-      dispatch(setMode(MODES.LOAD_KIT));
+      dispatch(setShow(VIEWS.LOAD_KIT));
     };
 
     return (
