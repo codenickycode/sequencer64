@@ -5,46 +5,20 @@ import { SaveSequence } from 'App/Sequencer/LoadSave/SaveSequence';
 import { setShow } from 'App/reducers/appSlice';
 import { Button } from 'App/shared/Button';
 import { LoginSection } from './LoginSection';
+import { useFadeIn } from 'utils/useFadeIn';
 
 export const LoadSaveSequence = () => {
   const dispatch = useDispatch();
-
   const show = useSelector((state) => state.app.show);
+  const showLoadSave = show === 'save' || show === 'load';
+  const { fadeInClass, fadeOutThen } = useFadeIn(showLoadSave);
 
   const loadSaveSequenceMemo = useMemo(() => {
-    const changeTab = (type) => {
-      dispatch(setShow(type));
-    };
-
-    const onClose = () => dispatch(setShow(''));
-
-    let loadStyle = 'load-save-tab';
-    let saveStyle = loadStyle;
-    if (show === 'load') loadStyle += ' selected';
-    if (show === 'save') saveStyle += ' selected';
-
-    // console.log('rendering: LoadSaveSequence');
+    const onClose = () => fadeOutThen(() => dispatch(setShow('')));
     return (
       <>
-        <div
-          className={show ? 'load-save-sequence show' : 'load-save-sequence'}
-        >
-          <div className='load-save-tabs'>
-            <button
-              id='load-tab'
-              className={loadStyle}
-              onClick={() => changeTab('load')}
-            >
-              <label htmlFor='load-tab'>Load</label>
-            </button>
-            <button
-              id='save-tab'
-              className={saveStyle}
-              onClick={() => changeTab('save')}
-            >
-              <label htmlFor='save-tab'>Save</label>
-            </button>
-          </div>
+        <div className={'load-save-sequence' + fadeInClass}>
+          <Tabs show={show} />
           <LoginSection />
           {show === 'save' && <SaveSequence />}
           {show === 'load' && <LoadSequence />}
@@ -56,6 +30,37 @@ export const LoadSaveSequence = () => {
         </div>
       </>
     );
-  }, [dispatch, show]);
-  return loadSaveSequenceMemo;
+  }, [dispatch, fadeInClass, fadeOutThen, show]);
+  return showLoadSave ? loadSaveSequenceMemo : null;
+};
+
+const Tabs = ({ show }) => {
+  const dispatch = useDispatch();
+  const changeTab = ({ target: { value } }) => {
+    dispatch(setShow(value));
+  };
+  let loadClasses = 'load-save-tab';
+  let saveClasses = loadClasses;
+  if (show === 'load') loadClasses += ' selected';
+  if (show === 'save') saveClasses += ' selected';
+  return (
+    <div className='load-save-tabs'>
+      <input
+        type='button'
+        id='load-tab'
+        className={loadClasses}
+        value='load'
+        aria-label='load'
+        onClick={changeTab}
+      ></input>
+      <input
+        type='button'
+        id='save-tab'
+        className={saveClasses}
+        value='save'
+        aria-label='save'
+        onClick={changeTab}
+      ></input>
+    </div>
+  );
 };

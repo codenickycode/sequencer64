@@ -14,7 +14,6 @@ export const LoginSection = () => {
 const LoggedIn = ({ fetching, classes, values }) => {
   const dispatch = useDispatch();
   const onLogout = () => dispatch(logout());
-
   return (
     <div className='login-status'>
       {fetching ? (
@@ -34,11 +33,9 @@ const LoggedIn = ({ fetching, classes, values }) => {
 
 const NotLoggedIn = ({ values, fetching }) => {
   const dispatch = useDispatch();
-
   const handleStopSequence = () => {
     dispatch(stopSequence());
   };
-
   return (
     <div className='login-div'>
       <p className='sequence-select-sub'>{values.sub}</p>

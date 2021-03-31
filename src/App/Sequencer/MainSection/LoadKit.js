@@ -1,5 +1,6 @@
 import cuid from 'cuid';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
+import ReactDOM from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as defaultKits from 'utils/defaultKits';
 import { MODES, setMode } from 'App/reducers/editorSlice';
@@ -11,9 +12,18 @@ import { useKitBtnStateAndFunctions } from './useKitBtnStateAndFunctions';
 const kits = Object.values(defaultKits);
 
 export const LoadKit = () => {
+  const dispatch = useDispatch();
   const mode = useSelector((state) => state.editor.mode);
   const showLoadKit = mode === MODES.LOAD_KIT;
-  const { fadeInClass } = useFadeIn(showLoadKit);
+  const { fadeInClass, fadeOutThen } = useFadeIn(showLoadKit);
+
+  const onClick = useCallback(
+    () =>
+      fadeOutThen(() => {
+        dispatch(setMode(null));
+      }),
+    [dispatch, fadeOutThen]
+  );
 
   const loadKitMemo = useMemo(() => {
     // console.log('rendering: LoadKit');
@@ -32,9 +42,11 @@ export const LoadKit = () => {
             );
           })}
         </div>
+        <LoadKitInfo fadeInClass={fadeInClass} onClick={onClick} />
       </div>
     );
-  }, [fadeInClass]);
+  }, [fadeInClass, onClick]);
+
   return showLoadKit ? loadKitMemo : null;
 };
 
@@ -60,23 +72,13 @@ const KitBtn = ({ kitName, available }) => {
   );
 };
 
-export const LoadKitInfo = () => {
-  const dispatch = useDispatch();
-  const mode = useSelector((state) => state.editor.mode);
-  const showLoadInfo = mode === MODES.LOAD_KIT;
-  const { fadeInClass } = useFadeIn(showLoadInfo);
-
-  const loadKitInfoMemo = useMemo(() => {
-    const onClick = () => {
-      dispatch(setMode(null));
-    };
-    return (
-      <div className={'kit-info' + fadeInClass}>
-        <Button classes='kit-info-close' onClick={onClick}>
-          close
-        </Button>
-      </div>
-    );
-  }, [dispatch, fadeInClass]);
-  return loadKitInfoMemo;
+export const LoadKitInfo = ({ fadeInClass, onClick }) => {
+  return ReactDOM.createPortal(
+    <div className={'kit-info' + fadeInClass}>
+      <Button classes='kit-info-close' onClick={onClick}>
+        close
+      </Button>
+    </div>,
+    document.getElementById('kit-info-portal')
+  );
 };

@@ -37,7 +37,7 @@ export const SequencerPage = () => {
         </div>
         <div id='sample-panel'>
           <SamplePanel />
-          <LoadKitInfo />
+          <div id='kit-info-portal' />
         </div>
         <Menu />
       </div>

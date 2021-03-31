@@ -298,6 +298,7 @@ body {
 }
 
 .load-save-tab {
+  -webkit-appearance: none;
   width: 100%;
   padding: 0.75rem;
   background: var(--purple-half);
@@ -305,6 +306,10 @@ body {
   outline: none;
   border: none;
   opacity: 0.5;
+  font-family: inherit;
+  font-style: inherit;
+  font-size: 1rem;
+  text-transform: capitalize;
 }
 
 .load-save-tab.selected {
@@ -320,14 +325,6 @@ body {
   padding: 0.5rem;
   padding-bottom: 2.5rem;
   background: var(--black);
-  opacity: 0;
-  pointer-events: none;
-  transition: 150ms;
-}
-
-.load-save-sequence.show {
-  opacity: 1;
-  pointer-events: initial;
 }
 
 .load-sequence,
@@ -662,13 +659,6 @@ button.social-btn {
   height: 100%;
   width: 100%;
   background: var(--black-3q);
-  opacity: 1;
-  transition: 1000ms;
-}
-
-#load-kit.fade-in {
-  transition: none;
-  opacity: 0;
 }
 
 #load-kit-kits {
@@ -767,14 +757,6 @@ button.social-btn {
   padding: 0.5rem 0.5rem;
   overflow: hidden;
   background: var(--black-half);
-  opacity: 0;
-  pointer-events: none;
-  transition: 150ms;
-}
-
-.kit-info.show {
-  opacity: 1;
-  pointer-events: initial;
 }
 
 .kit-info-p {
@@ -2277,4 +2259,14 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.fade-in {
+  transition: 250ms;
+  opacity: 1;
+}
+
+.fade-out {
+  transition: 250ms;
+  opacity: 0;
 }
