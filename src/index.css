@@ -805,18 +805,18 @@ button.social-btn {
 /*************************************/
 
 #paste-pattern {
-  pointer-events: none;
+  /* pointer-events: none; */
   position: absolute;
   height: 100%;
   width: 100%;
   background: var(--black-90);
-  opacity: 0;
-  transition: 150ms;
+  opacity: 1;
+  transition: 300ms;
 }
 
-#paste-pattern.show {
-  pointer-events: initial;
-  opacity: 1;
+#paste-pattern.fade-in {
+  transition: none;
+  opacity: 0;
 }
 
 #paste-pattern-samples {

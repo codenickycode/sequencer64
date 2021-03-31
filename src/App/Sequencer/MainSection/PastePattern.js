@@ -1,10 +1,11 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as defaultKits from 'utils/defaultKits';
 import * as icons from 'assets/icons/kit';
 import { MODES } from 'App/reducers/editorSlice';
 import { paste } from 'App/reducers/sequenceSlice';
 import { Button } from 'App/shared/Button';
+import { useFadeIn } from 'utils/useFadeIn';
 
 export const PastePattern = () => {
   const kit = useSelector((state) => state.sequence.present.kit);
@@ -12,6 +13,7 @@ export const PastePattern = () => {
 
   const mode = useSelector((state) => state.editor.mode);
   const pasting = mode === MODES.COPYING;
+  const { fadeInClass } = useFadeIn(pasting);
 
   const pastePatternMemo = useMemo(() => {
     // console.log('rendering: PastePattern');
@@ -20,25 +22,23 @@ export const PastePattern = () => {
       grid.push(i);
     }
     return (
-      <div id='paste-pattern' className={pasting ? 'show' : ''}>
-        {pasting && (
-          <div id='paste-pattern-samples'>
-            {grid.map((i) => {
-              return (
-                <SampleBtn
-                  key={`paste-pattern-${samples[i].name}`}
-                  i={i}
-                  icon={samples[i].icon}
-                  color={samples[i].color}
-                />
-              );
-            })}
-          </div>
-        )}
+      <div id='paste-pattern' className={'paste-pattern' + fadeInClass}>
+        <div id='paste-pattern-samples'>
+          {grid.map((i) => {
+            return (
+              <SampleBtn
+                key={`paste-pattern-${samples[i].name}`}
+                i={i}
+                icon={samples[i].icon}
+                color={samples[i].color}
+              />
+            );
+          })}
+        </div>
       </div>
     );
-  }, [pasting, samples]);
-  return pastePatternMemo;
+  }, [fadeInClass, samples]);
+  return pasting ? pastePatternMemo : null;
 };
 
 const SampleBtn = ({ i, icon, color }) => {
