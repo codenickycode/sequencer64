@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadSequence } from 'App/Sequencer/LoadSave/LoadSequence';
 import { SaveSequence } from 'App/Sequencer/LoadSave/SaveSequence';
-import { logout, setShow } from 'App/reducers/appSlice';
-import { stopSequence } from 'App/reducers/toneSlice';
+import { setShow } from 'App/reducers/appSlice';
 import { Button } from 'App/shared/Button';
+import { LoginSection } from './LoginSection';
 
 export const LoadSaveSequence = () => {
   const dispatch = useDispatch();
@@ -59,52 +58,4 @@ export const LoadSaveSequence = () => {
     );
   }, [dispatch, show]);
   return loadSaveSequenceMemo;
-};
-
-const LoginSection = () => {
-  const dispatch = useDispatch();
-  const username = useSelector((state) => state.app.user.username);
-  const loggedIn = useSelector((state) => state.app.user.loggedIn);
-  const online = useSelector((state) => state.app.online);
-  const fetching = useSelector((state) => state.app.fetching);
-
-  const onLogout = () => dispatch(logout());
-
-  const handleStopSequence = () => {
-    dispatch(stopSequence());
-  };
-
-  return loggedIn ? (
-    <div className='login-status'>
-      {fetching ? (
-        <p>please wait...</p>
-      ) : (
-        <div className='login-status-text'>
-          <p className='login-status-title'>Logged in as: {username}</p>
-          <p className={online ? 'login-status-sub' : 'login-status-sub error'}>
-            {online ? 'online sync' : 'offline'}
-          </p>
-        </div>
-      )}
-      <button disabled={fetching} onClick={onLogout}>
-        logout
-      </button>
-    </div>
-  ) : (
-    <div className='login-div'>
-      <p className='sequence-select-sub'>
-        {fetching
-          ? 'Logging in...'
-          : 'Login to sync your sequences with your account and share to social media'}
-      </p>
-      <Link
-        className='login-btn'
-        onTouchStart={handleStopSequence}
-        to='/login'
-        disabled={fetching}
-      >
-        {fetching ? 'x' : 'Login'}
-      </Link>
-    </div>
-  );
 };
