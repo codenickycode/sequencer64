@@ -1,18 +1,19 @@
 import cuid from 'cuid';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CloudDownloadIcon } from 'assets/icons';
-import { setStatus } from 'App/reducers/appSlice';
 import * as defaultKits from 'utils/defaultKits';
 import { MODES, setMode } from 'App/reducers/editorSlice';
-import { changeKit } from 'App/reducers/sequenceSlice';
 import { Button } from 'App/shared/Button';
+import { useFadeIn } from 'utils/useFadeIn';
+import { CloudDownloadIcon } from 'assets/icons';
+import { useKitBtnStateAndFunctions } from './useKitBtnStateAndFunctions';
 
 const kits = Object.values(defaultKits);
 
 export const LoadKit = () => {
   const mode = useSelector((state) => state.editor.mode);
   const showLoadKit = mode === MODES.LOAD_KIT;
+  const { fadeInClass } = useFadeIn(showLoadKit);
 
   const loadKitMemo = useMemo(() => {
     // console.log('rendering: LoadKit');
@@ -20,96 +21,37 @@ export const LoadKit = () => {
     for (let i = 0, len = kits.length; i < len; i++) {
       grid.push(i);
     }
-
     return (
-      <div id='load-kit' className={showLoadKit ? 'show' : ''}>
-        {showLoadKit && (
-          <div id='load-kit-kits'>
-            {grid.map((i) => {
-              const available = kits[i].available;
-              const kitName = kits[i].name;
-              return (
-                <KitBtn key={cuid()} kitName={kitName} available={available} />
-              );
-            })}
-          </div>
-        )}
+      <div id='load-kit' className={'load-kit' + fadeInClass}>
+        <div id='load-kit-kits'>
+          {grid.map((i) => {
+            const available = kits[i].available;
+            const kitName = kits[i].name;
+            return (
+              <KitBtn key={cuid()} kitName={kitName} available={available} />
+            );
+          })}
+        </div>
       </div>
     );
-  }, [showLoadKit]);
-  return loadKitMemo;
+  }, [fadeInClass]);
+  return showLoadKit ? loadKitMemo : null;
 };
 
-export const KitBtn = ({ kitName, available }) => {
-  const dispatch = useDispatch();
-  const kit = useSelector((state) => state.sequence.present.kit);
-  const networkError = useSelector((state) => state.app.networkError);
-  const selected = kitName === kit;
-
-  const [ready, setReady] = useState(available);
-  const [showReady, setShowReady] = useState(false);
-  const prevReadyRef = useRef(ready);
-  useEffect(() => {
-    let timer;
-    if (ready) {
-      if (!showReady && !prevReadyRef.current) {
-        setShowReady(true);
-        prevReadyRef.current = true;
-      }
-      timer = setTimeout(() => setShowReady(false), 1500);
-    }
-    return () => clearTimeout(timer);
-  }, [ready, showReady]);
-
-  const [fetching, setFetching] = useState(false);
-  const [disabled, setDisabled] = useState(false);
-
-  const onClick = async () => {
-    setDisabled(true);
-    try {
-      dispatch(changeKit(kitName));
-      setReady(true);
-    } catch (e) {
-      if (!ready) {
-        dispatch(setStatus('Error downloading kit: ', kitName));
-      } else {
-        dispatch(setStatus('Error loading kit: ', kitName));
-      }
-    } finally {
-      setDisabled(false);
-      setFetching(false);
-    }
-  };
-
+const KitBtn = ({ kitName, available }) => {
+  const { state, functions } = useKitBtnStateAndFunctions(kitName, available);
+  const { classes } = state;
   return (
     <Button
-      classes={
-        selected
-          ? 'kit-btn selected'
-          : !ready
-          ? 'kit-btn dim-border'
-          : 'kit-btn'
-      }
-      disabled={disabled || (!ready && networkError) || fetching}
-      onClick={onClick}
+      classes={classes.btn}
+      disabled={state.btnDisabled}
+      onClick={functions.onClick}
     >
-      <p className={showReady ? 'kit-btn-ready show' : 'kit-btn-ready'}>
-        ready!
-      </p>
-      <p
-        className={
-          fetching
-            ? 'kit-btn-p flashing'
-            : !ready
-            ? 'kit-btn-p dim'
-            : 'kit-btn-p'
-        }
-      >
-        {kitName}
-      </p>
-      {!ready ? (
-        <CloudDownloadIcon addClass={fetching ? 'flashing' : ''} />
-      ) : selected ? (
+      <p className={classes.ready}>ready!</p>
+      <p className={classes.name}>{kitName}</p>
+      {!state.ready ? (
+        <CloudDownloadIcon addClass={classes.icon} />
+      ) : state.selected ? (
         <p className='kit-btn-p small'>{'(selected)'}</p>
       ) : (
         <div className='kit-btn-dummy' />
@@ -120,29 +62,21 @@ export const KitBtn = ({ kitName, available }) => {
 
 export const LoadKitInfo = () => {
   const dispatch = useDispatch();
-  const bufferError = useSelector((state) => state.tone.bufferError);
   const mode = useSelector((state) => state.editor.mode);
   const showLoadInfo = mode === MODES.LOAD_KIT;
+  const { fadeInClass } = useFadeIn(showLoadInfo);
+
   const loadKitInfoMemo = useMemo(() => {
     const onClick = () => {
       dispatch(setMode(null));
     };
     return (
-      <div
-        className={showLoadInfo || bufferError ? 'kit-info show' : 'kit-info'}
-      >
-        {bufferError && (
-          <p className='error'>
-            There was an error loading the samples. You may be offline and
-            requesting a kit from the cloud. Please check your internet
-            connection or try again later.
-          </p>
-        )}
+      <div className={'kit-info' + fadeInClass}>
         <Button classes='kit-info-close' onClick={onClick}>
           close
         </Button>
       </div>
     );
-  }, [bufferError, dispatch, showLoadInfo]);
+  }, [dispatch, fadeInClass]);
   return loadKitInfoMemo;
 };

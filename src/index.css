@@ -658,18 +658,17 @@ button.social-btn {
 /*************************************/
 
 #load-kit {
-  pointer-events: none;
   position: absolute;
   height: 100%;
   width: 100%;
   background: var(--black-3q);
-  opacity: 0;
-  transition: 150ms;
+  opacity: 1;
+  transition: 1000ms;
 }
 
-#load-kit.show {
-  pointer-events: initial;
-  opacity: 1;
+#load-kit.fade-in {
+  transition: none;
+  opacity: 0;
 }
 
 #load-kit-kits {
@@ -805,7 +804,6 @@ button.social-btn {
 /*************************************/
 
 #paste-pattern {
-  /* pointer-events: none; */
   position: absolute;
   height: 100%;
   width: 100%;

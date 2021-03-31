@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as defaultKits from 'utils/defaultKits';
 import * as icons from 'assets/icons/kit';
