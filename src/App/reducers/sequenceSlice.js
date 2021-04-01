@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import undoable, { groupByActionTypes, ActionCreators } from 'redux-undo';
+import undoable, { groupByActionTypes } from 'redux-undo';
 import { analog } from 'utils/defaultSequences';
 import { getLS } from 'utils/storage';
 import {
@@ -9,14 +9,13 @@ import {
   initSampleStep,
   getPatternFromStr,
 } from 'App/reducers/functions/sequence';
-import { INITIAL_MODS, MODES, setSpAlert } from 'App/reducers/editorSlice';
-import { setFetching } from 'App/reducers/appSlice';
-import { apiGetSequence } from 'api';
+import { INITIAL_MODS, MODES } from 'App/reducers/editorSlice';
+import * as sequenceThunks from './thunks/sequenceThunks';
 
 const INITIAL_PATTERN =
   getLS('sequencePattern') || getPatternFromStr(analog.patternStr);
 
-const INITIAL_SEQUENCE = {
+export const INITIAL_SEQUENCE = {
   _id: getLS('sequenceId') || analog._id,
   name: getLS('sequenceName') || analog.name,
   kit: getLS('sequenceKitName') || analog.kit,
@@ -147,75 +146,6 @@ export const sequenceSlice = createSlice({
   },
 });
 
-export const loadInitialSequence = (_id, clearUrl) => async (dispatch) => {
-  dispatch(setFetching(true));
-  if (_id === 'session') {
-    dispatch(sequenceSlice.actions.loadSequence(INITIAL_SEQUENCE));
-  } else {
-    try {
-      const res = await apiGetSequence(_id);
-      const sequence = res.data;
-      sequence.pattern = getPatternFromStr(sequence.patternStr);
-      dispatch(sequenceSlice.actions.loadSequence(sequence));
-    } catch (e) {
-      console.log(
-        'Failed to load sequence from url path.  Loading default session.'
-      );
-      dispatch(sequenceSlice.actions.loadSequence(INITIAL_SEQUENCE));
-    }
-  }
-  dispatch(setFetching(false));
-  dispatch(ActionCreators.clearHistory());
-  clearUrl();
-};
-
-export const modCell = (step, noteOn) => (dispatch, getState) => {
-  const selectedSample = getState().editor.selectedSample;
-  if (selectedSample === -1) {
-    dispatch(setSpAlert('select a sample to edit'));
-    return;
-  }
-  const mode = getState().editor.mode;
-  switch (mode) {
-    case MODES.PAINTING:
-      const toggleOn = getState().editor.toggleOn;
-      if ((toggleOn && !noteOn) || (!toggleOn && noteOn))
-        dispatch(
-          sequenceSlice.actions.paintCell({
-            step,
-            selectedSample,
-            noteOn: toggleOn,
-          })
-        );
-      break;
-    case MODES.ERASING:
-      if (noteOn)
-        dispatch(sequenceSlice.actions.eraseCell({ step, selectedSample }));
-      break;
-    case MODES.SLICING:
-      if (noteOn)
-        dispatch(sequenceSlice.actions.sliceCell({ step, selectedSample }));
-      break;
-    case MODES.MOD_LENGTH:
-    case MODES.MOD_PITCH:
-    case MODES.MOD_VELOCITY:
-      if (noteOn) {
-        const value = getState().editor.mods[mode];
-        dispatch(
-          sequenceSlice.actions.modCell({
-            step,
-            selectedSample,
-            type: mode,
-            value,
-          })
-        );
-      }
-      break;
-    default:
-      return null;
-  }
-};
-
 export const {
   paintCell,
   sliceCell,
@@ -233,6 +163,8 @@ export const {
   setInitialLoad,
   setStart,
 } = sequenceSlice.actions;
+
+export const { loadInitialSequence, modCell } = sequenceThunks;
 
 const reducer = undoable(sequenceSlice.reducer, {
   groupBy: groupByActionTypes([
