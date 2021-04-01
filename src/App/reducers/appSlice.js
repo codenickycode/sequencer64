@@ -1,15 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getSS } from 'utils/storage';
 import { defaultSequences } from 'utils/defaultSequences';
-import {
-  flagDeleted,
-  addCloudUserToPayload,
-  addIDBUserToPayload,
-  idbDelSeq,
-  idbSaveSeqs,
-  mergeSequences,
-} from 'App/reducers/functions/user';
-import { apiDeleteSequence, apiLogout, apiSaveSequence } from 'api';
+import * as appThunks from './thunks/appThunks';
 
 export const VIEWS = {
   SAVE: 'save',
@@ -33,6 +25,7 @@ const INITIAL_STATE = {
   confirmation: '',
   error: '',
   online: window.navigator.onLine,
+  serviceWorkerActive: false,
 };
 
 export const appSlice = createSlice({
@@ -62,6 +55,12 @@ export const appSlice = createSlice({
     setError: (state, { payload }) => {
       state.error = payload;
     },
+    setOnline: (state, { payload }) => {
+      state.online = payload;
+    },
+    setServiceWorkerActive: (state, { payload }) => {
+      state.serviceWorkerActive = payload;
+    },
     updateSequencesFinally: (
       state,
       { payload: { newSequences, message, error, confirmation } }
@@ -88,101 +87,6 @@ export const appSlice = createSlice({
   },
 });
 
-export const saveSequence = (sequence) => async (dispatch, getState) => {
-  dispatch(appSlice.actions.setFetching(true));
-  const payload = {
-    message: '',
-    confirmation: '',
-    error: '',
-    newSequences: [...getState().app.userSequences],
-  };
-  try {
-    await idbSaveSeqs(sequence, payload.newSequences);
-    payload.message = 'success!';
-    payload.confirmation = `succesfully saved ${sequence.name} to device`;
-    await apiSaveSequence(sequence);
-    payload.confirmation += ' and cloud';
-  } catch (e) {
-    if (!payload.message) {
-      payload.message = 'unsuccessful :(';
-      payload.error = 'Error: Please try again later';
-    } else {
-      payload.message = 'updated local database';
-    }
-  } finally {
-    dispatch(appSlice.actions.updateSequencesFinally(payload));
-  }
-};
-
-export const deleteSequence = (_id) => async (dispatch, getState) => {
-  dispatch(appSlice.actions.setFetching(true));
-  const payload = {
-    message: '',
-    error: '',
-    newSequences: [...getState().app.userSequences],
-  };
-  try {
-    await idbDelSeq(_id, payload.newSequences);
-    payload.message = 'success!';
-    await apiDeleteSequence(_id);
-  } catch (e) {
-    if (!payload.message) {
-      payload.message = 'unsuccessful :(';
-      payload.error = 'Error: Please try again later';
-    } else {
-      payload.message = 'updated local database';
-      flagDeleted(_id);
-    }
-  } finally {
-    dispatch(appSlice.actions.updateSequencesFinally(payload));
-  }
-};
-
-export const getUser = () => async (dispatch) => {
-  dispatch(appSlice.actions.setFetching(true));
-  let payload = {
-    loggedIn: false,
-    _id: '',
-    username: '',
-    userSequences: [],
-    message: '',
-    promises: [],
-  };
-  try {
-    await addCloudUserToPayload(payload);
-    await addIDBUserToPayload(payload);
-    await mergeSequences(payload);
-  } catch (e) {
-    console.error('getUser ->\n', e);
-    payload.message = 'no user data';
-  } finally {
-    dispatch(appSlice.actions.getUserFinally(payload));
-    if (payload.loggedIn && payload.promises.length > 0) {
-      try {
-        Promise.all(payload.promises);
-        dispatch(appSlice.actions.setStatus('user data refreshed'));
-      } catch (e) {
-        console.error('getUser | promises ->:\n', e);
-      }
-    }
-  }
-};
-
-export const logout = () => async (dispatch) => {
-  try {
-    dispatch(appSlice.actions.setFetching(true));
-    await apiLogout();
-    dispatch(
-      setUser({ user: { ...INITIAL_USER }, message: 'Successfully logged out' })
-    );
-  } catch (e) {
-    console.error('logout ->\n', e);
-    dispatch(appSlice.actions.setStatus('error logging out'));
-  } finally {
-    dispatch(appSlice.actions.setFetching(false));
-  }
-};
-
 export const {
   setShow,
   setUser,
@@ -190,10 +94,12 @@ export const {
   setFetching,
   setConfirmation,
   setError,
-  setServiceWorkerActive,
-  saveSuccess,
-  saveFail,
   setOnline,
+  setServiceWorkerActive,
+  updateSequencesFinally,
+  getUserFinally,
 } = appSlice.actions;
+
+export const { saveSequence, deleteSequence, getUser, logout } = appThunks;
 
 export default appSlice.reducer;
