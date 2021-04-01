@@ -29,6 +29,18 @@ export const StatusBar = () => {
     index = message.indexOf('#');
     status = message.substr(index + 1);
   }
+
+  const bpm = useSelector((state) => state.sequence.present.bpm);
+  const kitName = useSelector((state) => state.sequence.present.kit);
+  const sequenceName = useSelector((state) => state.sequence.present.name);
+
+  if (status.match(/bpm/)) {
+    status = status.substr(6) + bpm;
+  } else if (status.match(/kit/)) {
+    status += kitName;
+  } else if (status.match(/sequence/)) {
+    status += sequenceName;
+  }
   // console.log('rendering: StatusBar');
   return (
     <div className='status-bar'>

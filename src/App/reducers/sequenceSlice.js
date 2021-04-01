@@ -131,16 +131,16 @@ export const sequenceSlice = createSlice({
       state.length = payload.length;
       state.pattern = payload.pattern;
       state.noteTally = getNoteTally(state.pattern);
-      state.undoStatus = `load sequence: ${payload.name}`;
+      state.undoStatus = `load sequence: `;
       state.initialLoad = false;
     },
     changeKit: (state, { payload }) => {
-      state.undoStatus = `load kit: ${state.kit}`;
       state.kit = payload;
+      state.undoStatus = `load kit: `;
     },
     changeBpm: (state, { payload }) => {
-      state.undoStatus = `change bpm: ${state.bpm}`;
       state.bpm = payload;
+      state.undoStatus = `change bpm: `;
     },
     setStart: (state, { payload }) => {
       state.start = payload;

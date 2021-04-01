@@ -63,8 +63,13 @@ export const TransportPanel = () => {
 
     const handleBpm = () => {
       dispatch(changeBpm(tempBpm));
-      dispatch(setStatus(`bpm set to ${tempBpm}`));
       setBpmEdited(false);
+    };
+
+    const onKeyPress = (e) => {
+      if (e.key === 'Enter') {
+        if (bpmEdited) handleBpm();
+      }
     };
 
     return (
@@ -90,6 +95,7 @@ export const TransportPanel = () => {
               type='tel'
               value={tempBpm}
               onChange={onChange}
+              onKeyPress={onKeyPress}
             ></input>
             <div className='bpm-or-btn'>
               {bpmEdited ? (

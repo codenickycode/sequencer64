@@ -11,19 +11,8 @@ export const Responder = () => {
 
   // App Reducer
   const online = useSelector((state) => state.app.online);
-  // const username = useSelector((state) => state.app.user.username);
-  // const loggedIn = useSelector((state) => state.app.user.loggedIn);
-  // const userSequences = useSelector((state) => state.app.userSequences);
-  // const statusMessage = useSelector((state) => state.app.status.message);
-  // const statusCount = useSelector((state) => state.app.status.count);
-  // const show = useSelector((state) => state.app.show);
-  // const fetching = useSelector((state) => state.app.fetching);
   const confirmation = useSelector((state) => state.app.confirmation);
   const error = useSelector((state) => state.app.error);
-  // const networkError = useSelector((state) => state.app.networkError);
-  // const serviceWorkerActive = useSelector(
-  //   (state) => state.app.serviceWorkerActive
-  // );
 
   // App effects
   useEffect(() => {
@@ -61,27 +50,8 @@ export const Responder = () => {
   // Tone Reducer
   const bufferedKit = useSelector((state) => state.tone.bufferedKit);
   const loadingBuffers = useSelector((state) => state.tone.buffersLoading);
-  // const buffersLoaded = useSelector((state) => state.tone.buffersLoaded);
-  // const bufferError = useSelector((state) => state.tone.bufferError);
-  // const transportState = useSelector((state) => state.tone.transportState);
-  // const restarting = useSelector((state) => state.tone.restarting);
-  // const reloadSamples = useSelector((state) => state.tone.reloadSamples);
-
-  // Editor Reducer
-  // const selectedSample = useSelector((state) => state.editor.selectedSample);
-  // const mode = useSelector((state) => state.editor.mode);
-  // const spAlertCount = useSelector((state) => state.editor.spAlert.count);
-  // const spAlertMessage = useSelector((state) => state.editor.spAlert.message);
-  // const modVelocity = useSelector((state) => state.editor.mods.velocity);
-  // const modPitch = useSelector((state) => state.editor.mods.pitch);
-  // const modLength = useSelector((state) => state.editor.mods.length);
-  // const tapCellById = useSelector((state) => state.editor.tapCellById);
-  // const toggleOn = useSelector((state) => state.editor.toggleOn);
 
   // Sequence Reducer
-  // const initialLoad = useSelector(
-  //   (state) => state.sequence.present.initialLoad
-  // );
   const sequenceId = useSelector((state) => state.sequence.present._id);
   const sequenceName = useSelector((state) => state.sequence.present.name);
   const sequenceBpm = useSelector((state) => state.sequence.present.bpm);
@@ -90,14 +60,8 @@ export const Responder = () => {
     (state) => state.sequence.present.pattern
   );
   const sequenceKitName = useSelector((state) => state.sequence.present.kit);
-  // const noteTally = useSelector((state) => state.sequence.present.noteTally);
-  // const undoStatus = useSelector((state) => state.sequence.present.undoStatus);
 
   // Sequence effects
-  // useEffect(() => {
-  //   setSS('initialLoad', initialLoad);
-  // }, [initialLoad]);
-
   useEffect(() => {
     setLS('sequenceId', sequenceId);
   }, [sequenceId]);
