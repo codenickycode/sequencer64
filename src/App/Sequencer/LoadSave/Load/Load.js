@@ -1,7 +1,6 @@
 import cuid from 'cuid';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { defaultSequences } from 'utils/defaultSequences';
 import { DefaultSequence } from './DefaultSequence';
 import { UserSequence } from './UserSequence';
 import { useSelectSequence } from './useSelectSequence';
@@ -41,6 +40,7 @@ const UserSection = (props) => {
 };
 
 const DefaultSection = (props) => {
+  const defaultSequences = useSelector((state) => state.app.defaultSequences);
   return (
     <div className='sequence-select-group'>
       <p className='sequence-select-sub'>Default Sequences</p>

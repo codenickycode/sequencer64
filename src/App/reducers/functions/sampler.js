@@ -14,39 +14,13 @@ export const disposeSamplers = (kit) => {
 
 export const buildSamplers = (kit, sequenceKitName) =>
   new Promise(async (resolve, reject) => {
-    const promises = [];
-    const defaultKit = defaultKits[sequenceKitName];
-    for (let [i, sample] of defaultKit.samples.entries()) {
-      kit.samples[i] = {
-        ...defaultKit.samples,
-        samples: defaultKit.samples.map((sample) => ({ ...sample })),
-      };
-      const sampleUrl = HOST + '/kits/' + sample.path;
-      promises.push(
-        new Promise((resolveSample) => {
-          kit.samples[i].sampler = new Tone.Sampler({
-            urls: {
-              C2: sampleUrl,
-            },
-            onload: () => {
-              kit.samples[i].channel = new Tone.Channel({
-                volume: 0,
-                pan: 0,
-                channelCount: 2,
-              }).toDestination();
-              kit.samples[i].sampler.connect(kit.samples[i].channel);
-              resolveSample();
-            },
-          });
-        })
-      );
-    }
+    const addSamplersPromises = addSamplersToKit(kit, sequenceKitName);
     try {
       let rejectTimer = setTimeout(
         () => reject('error loading samples'),
         NETWORK_TIMEOUT
       );
-      await Promise.all(promises);
+      await Promise.all(addSamplersPromises);
       clearTimeout(rejectTimer);
       kit.name = sequenceKitName;
       console.log(`${kit.name} buffers loaded!`);
@@ -55,6 +29,39 @@ export const buildSamplers = (kit, sequenceKitName) =>
       reject('error loading samples');
     }
   });
+
+const addSamplersToKit = (kit, sequenceKitName) => {
+  const promises = [];
+  const defaultKit = defaultKits[sequenceKitName];
+  for (let [i, sample] of defaultKit.samples.entries()) {
+    kit.samples[i] = {
+      ...defaultKit.samples,
+      samples: defaultKit.samples.map((sample) => ({ ...sample })),
+    };
+    const sampleUrl = HOST + '/kits/' + sample.path;
+    promises.push(connectSample(kit.samples[i], sampleUrl));
+  }
+  return promises;
+};
+
+const connectSample = (sample, url) => {
+  return new Promise((resolve) => {
+    sample.sampler = new Tone.Sampler({
+      urls: {
+        C2: url,
+      },
+      onload: () => {
+        sample.channel = new Tone.Channel({
+          volume: 0,
+          pan: 0,
+          channelCount: 2,
+        }).toDestination();
+        sample.sampler.connect(sample.channel);
+        resolve();
+      },
+    });
+  });
+};
 
 export const triggerStep = (time, step, samples) => {
   for (const [sample, { noteOn, notes }] of Object.entries(step)) {

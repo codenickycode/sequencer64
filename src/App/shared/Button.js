@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from 'assets/icons';
+import cuid from 'cuid';
 
 export const Button = ({
   fwdRef,
@@ -23,7 +24,7 @@ export const Button = ({
     <button
       ref={fwdRef || ref}
       type={type || 'button'}
-      id={id}
+      id={id || cuid()}
       className={classes + (pressed ? ' pressed btn' : ' btn')}
       disabled={disabled}
       onTouchStart={onTouchStart}

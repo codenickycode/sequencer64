@@ -3,10 +3,10 @@ import { loadSequence } from 'App/reducers/sequenceSlice';
 import { setRestarting } from 'App/reducers/toneSlice';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { defaultSequences } from 'utils/defaultSequences';
 
 export const useSelectSequence = () => {
   const dispatch = useDispatch();
+  const defaultSequences = useSelector((state) => state.app.defaultSequences);
   const userSequences = useSelector((state) => state.app.userSequences);
   const [selectedId, setSelectedId] = useState(null);
 
