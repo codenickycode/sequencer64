@@ -94,9 +94,9 @@ export const Responder = () => {
   // const undoStatus = useSelector((state) => state.sequence.present.undoStatus);
 
   // Sequence effects
-  useEffect(() => {
-    setSS('initialLoad', initialLoad);
-  }, [initialLoad]);
+  // useEffect(() => {
+  //   setSS('initialLoad', initialLoad);
+  // }, [initialLoad]);
 
   useEffect(() => {
     setLS('sequenceId', sequenceId);

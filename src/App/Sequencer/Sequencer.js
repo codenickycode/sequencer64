@@ -20,6 +20,7 @@ export const SequencerPage = () => {
 
   useEffect(() => {
     if (initialLoad) {
+      console.log(shared);
       const clearUrl = () => history.replace('/');
       dispatch(loadInitialSequence(shared, clearUrl));
     }

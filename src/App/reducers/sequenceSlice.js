@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import undoable, { groupByActionTypes } from 'redux-undo';
 import axios from 'axios';
 import { analog } from 'utils/defaultSequences';
-import { getLS, getSS } from 'utils/storage';
+import { getLS } from 'utils/storage';
 import {
   getNoteTally,
   inc,
@@ -30,7 +30,7 @@ export const INITIAL_STATE = {
   ...INITIAL_SEQUENCE,
   noteTally: getNoteTally(INITIAL_PATTERN),
   undoStatus: '',
-  initialLoad: getSS('initialLoad') === false ? false : true,
+  initialLoad: true,
 };
 
 export const sequenceSlice = createSlice({
