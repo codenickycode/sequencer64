@@ -1,4 +1,8 @@
 export const getNoteTally = (pattern) => {
+  if (!Array.isArray(pattern)) {
+    console.log('pattern is not an array');
+    return;
+  }
   let noteTally = {
     '-1': { count: 0, empty: true },
     total: { count: 0, empty: true },
@@ -81,7 +85,6 @@ export const INIT_PATTERN = () => {
   for (let i = 0; i < 64; i++) {
     // Object.assign req'd to not mutate previous edits in loop
     pattern.push(Object.assign([], step));
-    // pattern.push(step);
   }
   return pattern;
 };

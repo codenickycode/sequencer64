@@ -38,48 +38,46 @@ export const getUserFromIDB = async (payload) => {
 };
 
 export const mergeSequences = async (payload, cloudSeqs, idbSeqs) => {
-  let newSeqs = {};
-  let promises = [];
+  const mergePackage = {
+    cloudSeqs,
+    idbSeqs,
+    mergedSeqs: {},
+    promises: [],
+    loggedIn: payload.loggedIn,
+  };
+  await syncCloudSeqs(mergePackage);
+  await syncIDBSeqs(mergePackage);
+  const { idbUpdate, promises, mergedSeqs } = mergePackage;
+  const mergedSeqsArray = Object.values(mergedSeqs);
+  if (idbUpdate) promises.push(set('sequences', mergedSeqsArray));
+  payload.sequences = mergedSeqsArray;
+  return promises;
+};
 
-  let idbUpdate = false;
+const syncCloudSeqs = async (mergePackage) => {
+  const { cloudSeqs, idbSeqs, mergedSeqs, promises } = mergePackage;
+  mergePackage.idbUpdate = false;
   const deletedIds = await get('deleted');
   for (let cloudSeq of cloudSeqs) {
     const _id = cloudSeq._id.toString();
     if (deletedIds && deletedIds.find((deletedId) => deletedId === _id)) {
-      promises.push(
-        new Promise(async (resolve, reject) => {
-          const res = await axios({
-            url: `${HOST}/user/sequence/delete`,
-            method: 'POST',
-            data: { _id },
-            withCredentials: true,
-          });
-          if (res.status < 400) {
-            const deletedIds = await get('deleted');
-            if (deletedIds) {
-              const index = deletedIds.indexOf(_id);
-              if (index !== -1) deletedIds.splice(index, 1);
-              await set('deleted', deletedIds);
-            }
-            resolve();
-          } else {
-            reject('failed to update cloud');
-          }
-        })
-      );
+      promises.push(deleteSeqFromCloud(_id));
     } else {
-      newSeqs[_id] = cloudSeq;
+      mergedSeqs[_id] = cloudSeq;
       if (!(_id in idbSeqs)) {
-        idbUpdate = true;
+        mergePackage.idbUpdate = true;
       }
     }
   }
+};
 
+const syncIDBSeqs = async (mergePackage) => {
+  const { idbSeqs, mergedSeqs, promises, loggedIn } = mergePackage;
   for (let idbSeq of idbSeqs) {
     const _id = idbSeq._id.toString();
-    if (!(_id in newSeqs)) {
-      newSeqs[_id] = idbSeq;
-      if (payload.loggedIn) {
+    if (!(_id in mergedSeqs)) {
+      mergedSeqs[_id] = idbSeq;
+      if (loggedIn) {
         promises.push(
           axios({
             url: `${HOST}/user/sequence/save`,
@@ -91,11 +89,28 @@ export const mergeSequences = async (payload, cloudSeqs, idbSeqs) => {
       }
     }
   }
+};
 
-  const newSequences = Object.values(newSeqs);
-  if (idbUpdate) promises.push(set('sequences', newSequences));
-  payload.sequences = newSequences;
-  return promises;
+const deleteSeqFromCloud = (_id) => {
+  return new Promise(async (resolve, reject) => {
+    const res = await axios({
+      url: `${HOST}/user/sequence/delete`,
+      method: 'POST',
+      data: { _id },
+      withCredentials: true,
+    });
+    if (res.status < 400) {
+      const deletedIds = await get('deleted');
+      if (deletedIds) {
+        const index = deletedIds.indexOf(_id);
+        if (index !== -1) deletedIds.splice(index, 1);
+        await set('deleted', deletedIds);
+      }
+      resolve();
+    } else {
+      reject('failed to update cloud');
+    }
+  });
 };
 
 export const idbSaveSeqs = async (seq, sequences) => {
