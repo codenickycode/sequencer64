@@ -51,7 +51,6 @@ export const TransportPanel = () => {
       if (transportState !== 'stopped') dispatch(stopSequence());
     };
     const onStart = () => {
-      // if (bufferError) dispatch(setBufferError(false));
       if (transportState === 'started') {
         dispatch(pauseSequence());
       } else {

@@ -31,7 +31,7 @@ export const Transport = () => {
     }
   }, [bufferedKit, dispatch, sequenceKitName, loadingBuffers, kitRef]);
 
-  // after loadSequence && loadSamples ^
+  // after loadSequence && loadSamples ↑
   useEffect(() => {
     if (loadingBuffers) return;
     if (bufferedKit === sequenceKitName && restarting) {
