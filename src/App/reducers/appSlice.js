@@ -33,8 +33,6 @@ const INITIAL_STATE = {
   fetching: false,
   confirmation: '',
   error: '',
-  networkError: false,
-  serviceWorkerActive: false,
   online: window.navigator.onLine,
 };
 
@@ -66,26 +64,6 @@ export const appSlice = createSlice({
     setError: (state, { payload }) => {
       state.error = payload;
     },
-    setNetworkError: (state, { payload: { val, timeout } }) => {
-      state.networkError = val;
-      if (val) {
-        state.networkTimeout = timeout;
-      } else {
-        console.log('clearing networkTimeout');
-        clearTimeout(state.networkTimeout);
-      }
-    },
-    setServiceWorkerActive: (state, { payload }) => {
-      state.serviceWorkerActive = payload;
-      if (payload) {
-        console.log('service worker is active');
-      } else {
-        console.log('service worker is not active');
-      }
-    },
-    setOnline: (state, { payload }) => {
-      state.online = payload;
-    },
     updateSequencesFinally: (
       state,
       { payload: { newSequences, message, error, confirmation } }
@@ -111,15 +89,6 @@ export const appSlice = createSlice({
     },
   },
 });
-
-export const changeNetworkError = (val) => (dispatch) => {
-  let timer;
-  dispatch(appSlice.actions.setNetworkError(val, timer));
-  if (val)
-    timer = setTimeout(() =>
-      dispatch(appSlice.actions.setNetworkError(false), 1000 * 60)
-    );
-};
 
 export const updateSequences = (type, data) => async (dispatch, getState) => {
   let newSequences = [...getState().app.userSequences];
