@@ -650,7 +650,7 @@ button.social-btn {
   position: absolute;
   height: 100%;
   width: 100%;
-  background: var(--black-3q);
+  background: var(--black-90);
 }
 
 #load-kit-kits {
@@ -1851,6 +1851,10 @@ div[data-cursor='true'] .cursor {
   background: var(--white);
 }
 
+.black {
+  background: var(--black);
+}
+
 .red {
   background: var(--color-red);
 }
@@ -1859,9 +1863,6 @@ div[data-cursor='true'] .cursor {
   background: var(--color-green);
 }
 
-.purple {
-  background: var(--black);
-}
 /*************************************/
 /*************** Global **************/
 /*************************************/

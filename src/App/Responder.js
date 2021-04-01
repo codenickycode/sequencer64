@@ -124,6 +124,7 @@ export const Responder = () => {
   }, [sequenceKitName]);
 
   const { kitRef } = useContext(Kit);
+
   useEffect(() => {
     if (bufferedKit !== sequenceKitName && !loadingBuffers) {
       dispatch(loadSamples(kitRef.current));

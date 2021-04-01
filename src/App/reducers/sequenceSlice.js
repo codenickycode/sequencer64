@@ -142,6 +142,9 @@ export const sequenceSlice = createSlice({
       state.undoStatus = `change bpm: ${state.bpm}`;
       state.bpm = payload;
     },
+    setStart: (state, { payload }) => {
+      state.start = payload;
+    },
   },
 });
 
@@ -233,6 +236,7 @@ export const {
   changeKit,
   changeBpm,
   setInitialLoad,
+  setStart,
 } = sequenceSlice.actions;
 
 const reducer = undoable(sequenceSlice.reducer, {

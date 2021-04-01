@@ -1,5 +1,5 @@
 export const analog = {
-  _id: 'analog',
+  _id: 'defaultAnalog',
   name: 'analog',
   kit: 'analog',
   bpm: 100,
@@ -36,3 +36,5 @@ export const vinyl = {
   pattern:
     'S0s0ts1ts7tS1s1tv0.5l1s8tS2s3ts7tS3s1tS4s2ts5ts8tS5s7tv0.5l1S6s0ts3tS7s1ts7tv0.5l1s8tS9s1ts7ts8tS10s0ts3tS11s7tS12s2ts5ts8tS13s7tv0.5l1S14s3ts7tS15s7tv0.5l1S16s0ts1ts7tS17s1tv0.5l1s8tS18s3ts7tS20s2ts5ts8tS21s7tv0.5l1S22s0ts3tS23s7tv0.5l1s8tS25s1ts7ts8tS26s0ts3tS27s7tS28s2ts5ts8tS29s7tv0.5l1S30s3ts7tS31s7tv0.5l1S32s0ts1tS33s1tv0.5l1s8tS34s3tS35s1tS36s2ts5ts8tS38s0ts3tS39s1ts3tv0.5l1s8tS41s3tv0.5l1s8tS42s3tS43s3tv0.5l1S44s2ts3ts5ts8tS46s3tS48s0tS50s3tS52s2ts5ts8tS54s3tS55s3tv0.5l1s8tS56s8tS57s3tv0.5l1s8tS58s0ts3tS60s2ts5ts8t',
 };
+
+export const defaultSequences = [analog, house, lush, vinyl];
