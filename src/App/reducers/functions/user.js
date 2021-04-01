@@ -2,7 +2,7 @@ import axios from 'axios';
 import { get, set } from 'idb-keyval';
 import { HOST } from 'utils/network';
 
-export const getUserFromCloud = async (payload) => {
+export const addCloudUserToPayload = async (payload) => {
   let cloudSeqs = [];
   try {
     const cloudUser = await axios.get(`${HOST}/user`, {
@@ -18,11 +18,11 @@ export const getUserFromCloud = async (payload) => {
   } catch (e) {
     console.log('getUserFromCloud ->\n', e);
   } finally {
-    return cloudSeqs;
+    payload.cloudSeqs = cloudSeqs;
   }
 };
 
-export const getUserFromIDB = async (payload) => {
+export const addIDBUserToPayload = async (payload) => {
   let seqs = [];
   try {
     const idbUsername = await get('username');
@@ -33,30 +33,22 @@ export const getUserFromIDB = async (payload) => {
   } catch (e) {
     console.log('getUserFromIDB ->\n', e);
   } finally {
-    return seqs;
+    payload.idbSeqs = seqs;
   }
 };
 
-export const mergeSequences = async (payload, cloudSeqs, idbSeqs) => {
-  const mergePackage = {
-    cloudSeqs,
-    idbSeqs,
-    mergedSeqs: {},
-    promises: [],
-    loggedIn: payload.loggedIn,
-  };
-  await syncCloudSeqs(mergePackage);
-  await syncIDBSeqs(mergePackage);
-  const { idbUpdate, promises, mergedSeqs } = mergePackage;
-  const mergedSeqsArray = Object.values(mergedSeqs);
-  if (idbUpdate) promises.push(set('sequences', mergedSeqsArray));
-  payload.sequences = mergedSeqsArray;
-  return promises;
+export const mergeSequences = async (payload) => {
+  payload.mergedSeqs = {};
+  await syncCloudSeqs(payload);
+  await syncIDBSeqs(payload);
+  payload.userSequences = Object.values(payload.mergedSeqs);
+  if (payload.idbUpdate)
+    payload.promises.push(set('sequences', payload.userSequences));
 };
 
-const syncCloudSeqs = async (mergePackage) => {
-  const { cloudSeqs, idbSeqs, mergedSeqs, promises } = mergePackage;
-  mergePackage.idbUpdate = false;
+const syncCloudSeqs = async (payload) => {
+  const { cloudSeqs, idbSeqs, mergedSeqs, promises } = payload;
+  payload.idbUpdate = false;
   const deletedIds = await get('deleted');
   for (let cloudSeq of cloudSeqs) {
     const _id = cloudSeq._id.toString();
@@ -65,14 +57,14 @@ const syncCloudSeqs = async (mergePackage) => {
     } else {
       mergedSeqs[_id] = cloudSeq;
       if (!(_id in idbSeqs)) {
-        mergePackage.idbUpdate = true;
+        payload.idbUpdate = true;
       }
     }
   }
 };
 
-const syncIDBSeqs = async (mergePackage) => {
-  const { idbSeqs, mergedSeqs, promises, loggedIn } = mergePackage;
+const syncIDBSeqs = async (payload) => {
+  const { idbSeqs, mergedSeqs, promises, loggedIn } = payload;
   for (let idbSeq of idbSeqs) {
     const _id = idbSeq._id.toString();
     if (!(_id in mergedSeqs)) {

@@ -5,8 +5,8 @@ import { HOST } from 'utils/network';
 import { defaultSequences } from 'utils/defaultSequences';
 import {
   flagDeleted,
-  getUserFromCloud,
-  getUserFromIDB,
+  addCloudUserToPayload,
+  addIDBUserToPayload,
   idbDelSeq,
   idbSaveSeqs,
   mergeSequences,
@@ -99,11 +99,12 @@ export const appSlice = createSlice({
     },
     getUserFinally: (
       state,
-      { payload: { loggedIn, username, sequences, message } }
+      { payload: { loggedIn, _id, username, userSequences, message } }
     ) => {
       state.user.loggedIn = loggedIn;
+      state.user._id = _id;
       state.user.username = username;
-      state.userSequences = sequences;
+      state.userSequences = userSequences;
       state.status.count++;
       state.status.message = message;
       state.fetching = false;
@@ -166,22 +167,22 @@ export const getUser = () => async (dispatch) => {
     loggedIn: false,
     _id: '',
     username: '',
-    sequences: [],
+    userSequences: [],
     message: '',
+    promises: [],
   };
-  let promises;
   try {
-    const cloudSeqs = await getUserFromCloud(payload);
-    const idbSeqs = await getUserFromIDB(payload);
-    promises = await mergeSequences(payload, cloudSeqs, idbSeqs);
+    await addCloudUserToPayload(payload);
+    await addIDBUserToPayload(payload);
+    await mergeSequences(payload);
   } catch (e) {
     console.error('getUser ->\n', e);
     payload.message = 'no user data';
   } finally {
     dispatch(appSlice.actions.getUserFinally(payload));
-    if (payload.loggedIn && promises && promises.length > 0) {
+    if (payload.loggedIn && payload.promises.length > 0) {
       try {
-        Promise.all(promises);
+        Promise.all(payload.promises);
         dispatch(appSlice.actions.setStatus('user data refreshed'));
       } catch (e) {
         console.error('getUser | promises ->:\n', e);
