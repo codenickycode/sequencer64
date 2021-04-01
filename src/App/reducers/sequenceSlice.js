@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import undoable, { groupByActionTypes, ActionCreators } from 'redux-undo';
-import axios from 'axios';
 import { analog } from 'utils/defaultSequences';
 import { getLS } from 'utils/storage';
 import {
@@ -12,7 +11,7 @@ import {
 } from 'App/reducers/functions/sequence';
 import { INITIAL_MODS, MODES, setSpAlert } from 'App/reducers/editorSlice';
 import { setFetching } from 'App/reducers/appSlice';
-import { HOST } from 'utils/network';
+import { apiGetSequence } from 'api';
 
 const INITIAL_PATTERN =
   getLS('sequencePattern') || getPatternFromStr(analog.patternStr);
@@ -154,12 +153,7 @@ export const loadInitialSequence = (_id, clearUrl) => async (dispatch) => {
     dispatch(sequenceSlice.actions.loadSequence(INITIAL_SEQUENCE));
   } else {
     try {
-      const res = await axios({
-        url: `${HOST}/user/sequence`,
-        method: 'POST',
-        data: { _id },
-        withCredentials: true,
-      });
+      const res = await apiGetSequence(_id);
       const sequence = res.data;
       sequence.pattern = getPatternFromStr(sequence.patternStr);
       dispatch(sequenceSlice.actions.loadSequence(sequence));

@@ -1,12 +1,16 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { setLS } from 'utils/storage';
+import { setLS, setSS } from 'utils/storage';
 
 export const Storage = () => {
-  // Sequence Reducer
+  const show = useSelector((state) => state.app.show);
+
+  useEffect(() => {
+    setSS('show', show);
+  }, [show]);
+
   const sequence = useSelector((state) => state.sequence.present);
 
-  // Sequence effects
   useEffect(() => {
     setLS('sequenceId', sequence._id);
   }, [sequence._id]);

@@ -1,13 +1,10 @@
-import axios from 'axios';
+import { apiSaveSequence, apiDeleteSequence, apiGetUser } from 'api';
 import { get, set } from 'idb-keyval';
-import { HOST } from 'utils/network';
 
 export const addCloudUserToPayload = async (payload) => {
   let cloudSeqs = [];
   try {
-    const cloudUser = await axios.get(`${HOST}/user`, {
-      withCredentials: true,
-    });
+    const cloudUser = await apiGetUser();
     if (cloudUser?.data) {
       payload.loggedIn = true;
       payload._id = cloudUser.data._id;
@@ -70,14 +67,7 @@ const syncIDBSeqs = async (payload) => {
     if (!(_id in mergedSeqs)) {
       mergedSeqs[_id] = idbSeq;
       if (loggedIn) {
-        promises.push(
-          axios({
-            url: `${HOST}/user/sequence/save`,
-            method: 'POST',
-            data: idbSeq,
-            withCredentials: true,
-          })
-        );
+        promises.push(apiSaveSequence(idbSeq));
       }
     }
   }
@@ -85,12 +75,7 @@ const syncIDBSeqs = async (payload) => {
 
 const deleteSeqFromCloud = (_id) => {
   return new Promise(async (resolve, reject) => {
-    const res = await axios({
-      url: `${HOST}/user/sequence/delete`,
-      method: 'POST',
-      data: { _id },
-      withCredentials: true,
-    });
+    const res = await apiDeleteSequence(_id);
     if (res.status < 400) {
       const deletedIds = await get('deleted');
       if (deletedIds) {

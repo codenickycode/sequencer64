@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { getSS, setSS } from 'utils/storage';
-import { HOST } from 'utils/network';
+import { getSS } from 'utils/storage';
 import { defaultSequences } from 'utils/defaultSequences';
 import {
   flagDeleted,
@@ -11,7 +9,7 @@ import {
   idbSaveSeqs,
   mergeSequences,
 } from 'App/reducers/functions/user';
-import { apiDeleteSequence, apiSaveSequence } from 'api';
+import { apiDeleteSequence, apiLogout, apiSaveSequence } from 'api';
 
 export const VIEWS = {
   SAVE: 'save',
@@ -45,7 +43,6 @@ export const appSlice = createSlice({
       state.show = payload;
       state.confirmation = '';
       state.error = '';
-      setSS('show', payload);
     },
     setUser: (state, { payload: { user, message } }) => {
       state.user = user;
@@ -174,11 +171,7 @@ export const getUser = () => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     dispatch(appSlice.actions.setFetching(true));
-    await axios({
-      url: `${HOST}/user/logout`,
-      method: 'GET',
-      withCredentials: true,
-    });
+    await apiLogout();
     dispatch(
       setUser({ user: { ...INITIAL_USER }, message: 'Successfully logged out' })
     );

@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 export const getLS = (field) => JSON.parse(localStorage.getItem(field));
 export const setLS = (field, value) =>
   localStorage.setItem(field, JSON.stringify(value));
