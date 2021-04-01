@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { LoadSequence } from 'App/Sequencer/LoadSave/LoadSequence';
-import { SaveSequence } from 'App/Sequencer/LoadSave/SaveSequence';
+import { Load } from 'App/Sequencer/LoadSave/Load/Load';
+import { Save } from 'App/Sequencer/LoadSave/Save/Save';
 import { setShow } from 'App/reducers/appSlice';
 import { Button } from 'App/shared/Button';
 import { LoginSection } from './LoginSection';
 import { useFadeIn } from 'utils/useFadeIn';
 
-export const LoadSaveSequence = () => {
+export const LoadSave = () => {
   const dispatch = useDispatch();
   const show = useSelector((state) => state.app.show);
   const showLoadSave = show === 'save' || show === 'load';
@@ -20,8 +20,8 @@ export const LoadSaveSequence = () => {
         <div className={'load-save-sequence' + fadeInClass}>
           <Tabs show={show} />
           <LoginSection />
-          {show === 'save' && <SaveSequence />}
-          {show === 'load' && <LoadSequence />}
+          {show === 'save' && <Save />}
+          {show === 'load' && <Load />}
         </div>
         <div className={'bottom-btn' + fadeInClass}>
           <Button classes='load-save-sequence-close' onClick={onClose}>

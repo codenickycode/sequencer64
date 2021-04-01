@@ -1,6 +1,6 @@
 import { Button } from 'App/shared/Button';
 
-export const Save = ({
+export const SaveJSX = ({
   online,
   loggedIn,
   save,

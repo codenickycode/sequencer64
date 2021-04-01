@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Grid } from 'App/Sequencer/MainSection/Grid/Grid';
 import { LoadKit } from 'App/Sequencer/MainSection/LoadKit';
 import { SamplePanel } from 'App/Sequencer/SamplePanel/SamplePanel';
-import { LoadSaveSequence } from 'App/Sequencer/LoadSave/LoadSaveSequence';
+import { LoadSave } from 'App/Sequencer/LoadSave/LoadSave';
 import { Menu } from 'App/Sequencer/MenuBar/MenuBar';
 import { Preparing } from 'App/shared/Preparing';
 import { loadInitialSequence } from 'App/reducers/sequenceSlice';
@@ -42,7 +42,7 @@ export const SequencerPage = () => {
         </div>
         <Menu />
       </div>
-      <LoadSaveSequence />
+      <LoadSave />
     </>
   );
 };

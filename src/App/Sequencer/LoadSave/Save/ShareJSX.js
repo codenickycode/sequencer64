@@ -3,7 +3,7 @@ import { Button } from 'App/shared/Button';
 import { TWITTER_URL, FACEBOOK_URL } from 'utils/network';
 import { FacebookIcon, TwitterIcon } from 'assets/icons';
 
-export const Share = ({ online, loggedIn, link, copyLink }) => {
+export const ShareJSX = ({ online, loggedIn, link, copyLink }) => {
   return (
     <div className='save-sequence-group'>
       <h1 className='save-header'>Share:</h1>

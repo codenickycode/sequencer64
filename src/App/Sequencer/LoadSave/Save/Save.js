@@ -4,10 +4,10 @@ import { setStatus, updateSequences } from 'App/reducers/appSlice';
 import { getStrFromPattern } from 'App/reducers/functions/sequence';
 import ObjectID from 'bson-objectid';
 import { ORIGIN } from 'utils/network';
-import { Share } from './Share';
-import { Save } from './Save';
+import { ShareJSX } from './ShareJSX';
+import { SaveJSX } from './SaveJSX';
 
-export const SaveSequence = () => {
+export const Save = () => {
   const dispatch = useDispatch();
   const app = useSelector((state) => state.app);
   const fileLimit = 20 - app.userSequences.length;
@@ -61,13 +61,13 @@ export const SaveSequence = () => {
   // console.log('rendering: SaveSequence');
   return (
     <div className='save-sequence'>
-      <Share
+      <ShareJSX
         link={link}
         copyLink={copyLink}
         online={app.online}
         loggedIn={app.user.loggedIn}
       />
-      <Save
+      <SaveJSX
         userError={userError}
         fileLimit={fileLimit}
         confirmation={app.confirmation}

@@ -6,7 +6,7 @@ import { DefaultSequence } from './DefaultSequence';
 import { UserSequence } from './UserSequence';
 import { useSelectSequence } from './useSelectSequence';
 
-export const LoadSequence = () => {
+export const Load = () => {
   const props = useSelectSequence();
 
   return (
