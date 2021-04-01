@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 export const StatusBar = () => {
   const count = useSelector((state) => state.app.status.count);
   const message = useSelector((state) => state.app.status.message);
-  const [classes, setClasses] = useState('status');
+  const bpm = useSelector((state) => state.sequence.present.bpm);
+  const kitName = useSelector((state) => state.sequence.present.kit);
+  const sequenceName = useSelector((state) => state.sequence.present.name);
 
+  const [classes, setClasses] = useState('status');
   useEffect(() => {
     let onTimer;
     let fadeTimer;
@@ -24,29 +27,28 @@ export const StatusBar = () => {
     };
   }, [message, count]);
 
-  let index, status;
-  if (message) {
-    index = message.indexOf('#');
-    status = message.substr(index + 1);
-  }
+  const memo = useMemo(() => {
+    let index, status;
+    if (message) {
+      index = message.indexOf('#');
+      status = message.substr(index + 1);
+    }
 
-  const bpm = useSelector((state) => state.sequence.present.bpm);
-  const kitName = useSelector((state) => state.sequence.present.kit);
-  const sequenceName = useSelector((state) => state.sequence.present.name);
-
-  if (status.match(/bpm/)) {
-    status = status.substr(6) + bpm;
-  } else if (status.match(/kit/)) {
-    status += kitName;
-  } else if (status.match(/sequence/)) {
-    status += sequenceName;
-  }
-  // console.log('rendering: StatusBar');
-  return (
-    <div className='status-bar'>
-      <p className={classes} id='status'>
-        {status}
-      </p>
-    </div>
-  );
+    if (status.match(/bpm/)) {
+      status = status.substr(6) + bpm;
+    } else if (status.match(/kit/)) {
+      status += kitName;
+    } else if (status.match(/sequence/)) {
+      status += sequenceName;
+    }
+    // console.log('rendering: StatusBar');
+    return (
+      <div className='status-bar'>
+        <p className={classes} id='status'>
+          {status}
+        </p>
+      </div>
+    );
+  }, [bpm, classes, kitName, message, sequenceName]);
+  return memo;
 };

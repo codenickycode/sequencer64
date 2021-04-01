@@ -1,5 +1,6 @@
 import { getPatternFromStr } from 'App/reducers/functions/sequence';
 import { loadSequence } from 'App/reducers/sequenceSlice';
+import { setRestarting } from 'App/reducers/toneSlice';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { defaultSequences } from 'utils/defaultSequences';
@@ -25,6 +26,7 @@ export const useSelectSequence = () => {
         pattern: getPatternFromStr(sequence.patternStr),
       })
     );
+    dispatch(setRestarting(true));
     setSelectedId(_id);
   };
   return { selectSequence, selectedId };

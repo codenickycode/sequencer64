@@ -49,11 +49,17 @@ export const toneSlice = createSlice({
     setTransportState: (state, { payload }) => {
       state.transportState = payload;
     },
+    setRestarting: (state, { payload }) => {
+      state.restarting = payload;
+    },
+    startSequenceFinally: (state) => {
+      state.restarting = false;
+      state.transportState = 'started';
+    },
   },
 });
 
 export const loadSamples = (kit) => async (dispatch, getState) => {
-  let restart = Tone.Transport.state === 'started';
   dispatch(stopSequence());
   const sequenceKitName = getState().sequence.present.kit;
   let payload = { bufferedKit: kit.name };
@@ -69,7 +75,6 @@ export const loadSamples = (kit) => async (dispatch, getState) => {
   } finally {
     payload.loadingBuffers = false;
     dispatch(toneSlice.actions.loadSamplesFinally(payload));
-    if (restart && payload.buffersLoaded) dispatch(startSequence(kit));
   }
 };
 
@@ -97,7 +102,7 @@ export const startSequence = (kit) => (dispatch, getState) => {
   if (Tone.Transport.state === 'stopped')
     schedulePattern(dispatch, getState, kit);
   Tone.Transport.start();
-  dispatch(toneSlice.actions.setTransportState('started'));
+  dispatch(toneSlice.actions.startSequenceFinally());
 };
 
 export const stopSequence = () => (dispatch, getState) => {
@@ -114,6 +119,6 @@ export const stopSequence = () => (dispatch, getState) => {
   dispatch(toneSlice.actions.setStep(0));
 };
 
-export const { pauseSequence } = toneSlice.actions;
+export const { pauseSequence, setRestarting } = toneSlice.actions;
 
 export default toneSlice.reducer;

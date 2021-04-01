@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Tone from 'tone';
 import { setLS } from 'utils/storage';
 import { getUser, setConfirmation, setError } from 'App/reducers/appSlice';
-import { loadSamples } from 'App/reducers/toneSlice';
+import {
+  loadSamples,
+  setRestarting,
+  startSequence,
+} from 'App/reducers/toneSlice';
 import { Kit } from 'App/shared/KitProvider';
 
 export const Responder = () => {
@@ -88,12 +92,31 @@ export const Responder = () => {
   }, [sequenceKitName]);
 
   const { kitRef } = useContext(Kit);
+  const restarting = useSelector((state) => state.tone.restarting);
 
+  // after changeKit
   useEffect(() => {
-    if (bufferedKit !== sequenceKitName && !loadingBuffers) {
+    if (loadingBuffers) return;
+    if (bufferedKit !== sequenceKitName) {
+      if (Tone.Transport.state === 'started') dispatch(setRestarting(true));
       dispatch(loadSamples(kitRef.current));
     }
   }, [bufferedKit, dispatch, sequenceKitName, loadingBuffers, kitRef]);
+
+  // after loadSequence
+  useEffect(() => {
+    if (loadingBuffers) return;
+    if (bufferedKit === sequenceKitName && restarting) {
+      dispatch(startSequence(kitRef.current));
+    }
+  }, [
+    bufferedKit,
+    dispatch,
+    kitRef,
+    loadingBuffers,
+    restarting,
+    sequenceKitName,
+  ]);
 
   return null;
 };

@@ -9,7 +9,6 @@ import {
   stopSequence,
 } from 'App/reducers/toneSlice';
 import { Kit } from 'App/shared/KitProvider';
-import { setStatus } from 'App/reducers/appSlice';
 
 export const TransportPanel = () => {
   const dispatch = useDispatch();
