@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import undoable, { groupByActionTypes } from 'redux-undo';
+import undoable, { groupByActionTypes, ActionCreators } from 'redux-undo';
 import axios from 'axios';
 import { analog } from 'utils/defaultSequences';
 import { getLS } from 'utils/storage';
@@ -171,6 +171,7 @@ export const loadInitialSequence = (_id, clearUrl) => async (dispatch) => {
     }
   }
   dispatch(setFetching(false));
+  dispatch(ActionCreators.clearHistory());
   clearUrl();
 };
 

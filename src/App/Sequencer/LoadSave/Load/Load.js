@@ -7,7 +7,7 @@ import { UserSequence } from './UserSequence';
 import { useSelectSequence } from './useSelectSequence';
 
 export const Load = () => {
-  const props = useSelectSequence();
+  const props = useSelectSequence(); // user/default sharing instance
 
   return (
     <div className='load-sequence'>
@@ -15,18 +15,6 @@ export const Load = () => {
         <UserSection {...props} />
         <DefaultSection {...props} />
       </div>
-    </div>
-  );
-};
-
-const DefaultSection = (props) => {
-  return (
-    <div className='sequence-select-group'>
-      <p className='sequence-select-sub'>Default Sequences</p>
-      <ColumnTitles />
-      {defaultSequences.map((sequence) => (
-        <DefaultSequence key={cuid()} sequence={sequence} {...props} />
-      ))}
     </div>
   );
 };
@@ -48,6 +36,18 @@ const UserSection = (props) => {
             .reverse()}
         </>
       )}
+    </div>
+  );
+};
+
+const DefaultSection = (props) => {
+  return (
+    <div className='sequence-select-group'>
+      <p className='sequence-select-sub'>Default Sequences</p>
+      <ColumnTitles />
+      {defaultSequences.map((sequence) => (
+        <DefaultSequence key={cuid()} sequence={sequence} {...props} />
+      ))}
     </div>
   );
 };

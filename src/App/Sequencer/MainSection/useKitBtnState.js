@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setStatus } from 'App/reducers/appSlice';
 import { changeKit } from 'App/reducers/sequenceSlice';
 
-export const useKitBtnStateAndFunctions = (kitName, available) => {
+export const useKitBtnState = (kitName, available) => {
   const dispatch = useDispatch();
 
   const sequenceKit = useSelector((state) => state.sequence.present.kit);

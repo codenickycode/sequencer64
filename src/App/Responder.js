@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Tone from 'tone';
-import { setLS, setSS } from 'utils/storage';
+import { setLS } from 'utils/storage';
 import { getUser, setConfirmation, setError } from 'App/reducers/appSlice';
 import { loadSamples } from 'App/reducers/toneSlice';
 import { Kit } from 'App/shared/KitProvider';
@@ -79,9 +79,9 @@ export const Responder = () => {
   // const toggleOn = useSelector((state) => state.editor.toggleOn);
 
   // Sequence Reducer
-  const initialLoad = useSelector(
-    (state) => state.sequence.present.initialLoad
-  );
+  // const initialLoad = useSelector(
+  //   (state) => state.sequence.present.initialLoad
+  // );
   const sequenceId = useSelector((state) => state.sequence.present._id);
   const sequenceName = useSelector((state) => state.sequence.present.name);
   const sequenceBpm = useSelector((state) => state.sequence.present.bpm);

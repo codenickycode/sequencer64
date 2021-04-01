@@ -6,7 +6,7 @@ import * as defaultKits from 'utils/defaultKits';
 import { Button } from 'App/shared/Button';
 import { useFadeIn } from 'utils/useFadeIn';
 import { CloudDownloadIcon } from 'assets/icons';
-import { useKitBtnStateAndFunctions } from './useKitBtnStateAndFunctions';
+import { useKitBtnState } from './useKitBtnState';
 import { setShow, VIEWS } from '../../reducers/appSlice';
 
 const kits = Object.values(defaultKits);
@@ -51,7 +51,7 @@ export const LoadKit = () => {
 };
 
 const KitBtn = ({ kitName, available }) => {
-  const { state, functions } = useKitBtnStateAndFunctions(kitName, available);
+  const { state, functions } = useKitBtnState(kitName, available);
   const { classes } = state;
   return (
     <Button
