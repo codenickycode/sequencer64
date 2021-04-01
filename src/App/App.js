@@ -6,32 +6,43 @@ import { SequencerPage } from 'App/Sequencer/Sequencer';
 import { StatusBar } from 'App/StatusBar/StatusBar';
 import ErrorBoundary from 'App/ErrorBoundary/ErrorBoundary';
 import ErrorHandler from 'App/ErrorBoundary/ErrorHandler';
-import { Responder } from 'App/Responder';
+import { Subscriptions } from 'App/Subscriptions';
 import { KitProvider } from 'App/shared/KitProvider';
+import { Provider } from 'react-redux';
+import store from 'App/store';
+import { setOnline } from 'App/reducers/appSlice';
 
 export default function App() {
   // console.log('rendering: App');
   return (
     <BrowserRouter basename='/'>
       <ErrorBoundary>
-        <KitProvider>
-          <Switch>
-            <Route
-              path='/'
-              exact
-              render={() => <Redirect to='/sequencer/session' />}
-            />
-            <Route path='/sequencer/:shared' render={() => <SequencerPage />} />
-            <Route path='/login' component={LoginPage} />
-            <Route path='/error/' component={ErrorHandler} />
-          </Switch>
-          <StatusBar />
-          <Responder />
-        </KitProvider>
+        <Provider store={store}>
+          <KitProvider>
+            <Switch>
+              <Route
+                path='/'
+                exact
+                render={() => <Redirect to='/sequencer/session' />}
+              />
+              <Route
+                path='/sequencer/:shared'
+                render={() => <SequencerPage />}
+              />
+              <Route path='/login' component={LoginPage} />
+              <Route path='/error/' component={ErrorHandler} />
+            </Switch>
+            <StatusBar />
+            <Subscriptions />
+          </KitProvider>
+        </Provider>
       </ErrorBoundary>
     </BrowserRouter>
   );
 }
+
+window.addEventListener('online', () => store.dispatch(setOnline(true)));
+window.addEventListener('offline', () => store.dispatch(setOnline(false)));
 
 const initialClick = async () => {
   await Tone.start();
