@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { getSS, setSS } from 'utils/storage';
 import { HOST } from 'utils/network';
+import { defaultSequences } from 'utils/defaultSequences';
 import {
   flagDeleted,
   getUserFromCloud,
@@ -26,6 +27,7 @@ export const INITIAL_USER = {
 const INITIAL_STATE = {
   user: { ...INITIAL_USER },
   userSequences: [],
+  defaultSequences,
   status: { count: 0, message: 'loading' },
   show: getSS('show') || '',
   fetching: false,

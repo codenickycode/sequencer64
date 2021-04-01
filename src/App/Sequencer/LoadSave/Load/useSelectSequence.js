@@ -22,7 +22,7 @@ export const useSelectSequence = () => {
     dispatch(
       loadSequence({
         ...sequence,
-        pattern: getPatternFromStr(sequence.pattern),
+        pattern: getPatternFromStr(sequence.patternStr),
       })
     );
     setSelectedId(_id);

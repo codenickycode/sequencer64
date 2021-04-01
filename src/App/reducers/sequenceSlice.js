@@ -15,7 +15,7 @@ import { setFetching } from 'App/reducers/appSlice';
 import { HOST } from 'utils/network';
 
 const INITIAL_PATTERN =
-  getLS('sequencePattern') || getPatternFromStr(analog.pattern);
+  getLS('sequencePattern') || getPatternFromStr(analog.patternStr);
 
 const INITIAL_SEQUENCE = {
   _id: getLS('sequenceId') || analog._id,
@@ -161,7 +161,7 @@ export const loadInitialSequence = (_id, clearUrl) => async (dispatch) => {
         withCredentials: true,
       });
       const sequence = res.data;
-      sequence.pattern = getPatternFromStr(sequence.pattern);
+      sequence.pattern = getPatternFromStr(sequence.patternStr);
       dispatch(sequenceSlice.actions.loadSequence(sequence));
     } catch (e) {
       console.log(

@@ -53,7 +53,7 @@ export const Save = () => {
       kit: sequence.kit,
       bpm: sequence.bpm,
       length: sequence.length,
-      pattern: getStrFromPattern(sequence.pattern),
+      patternStr: getStrFromPattern(sequence.pattern),
     };
     setNewName('');
     dispatch(updateSequences('save', newSequence));
