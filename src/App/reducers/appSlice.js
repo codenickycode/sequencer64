@@ -11,6 +11,7 @@ import {
   idbSaveSeqs,
   mergeSequences,
 } from 'App/reducers/functions/user';
+import { apiDeleteSequence, apiSaveSequence } from 'api';
 
 export const VIEWS = {
   SAVE: 'save',
@@ -90,43 +91,53 @@ export const appSlice = createSlice({
   },
 });
 
-export const updateSequences = (type, data) => async (dispatch, getState) => {
-  let newSequences = [...getState().app.userSequences];
+export const saveSequence = (sequence) => async (dispatch, getState) => {
   dispatch(appSlice.actions.setFetching(true));
-  let message = '',
-    confirmation = '',
-    error = '';
+  const payload = {
+    message: '',
+    confirmation: '',
+    error: '',
+    newSequences: [...getState().app.userSequences],
+  };
   try {
-    if (type === 'save') await idbSaveSeqs(data, newSequences);
-    if (type === 'delete') await idbDelSeq(data._id, newSequences);
-    message = 'success!';
-    confirmation = `succesfully ${
-      type === 'save' ? 'saved' : 'deleted'
-    } sequence: ${data.name}`;
-    await axios({
-      url: `${HOST}/user/sequence/${type}`,
-      method: 'POST',
-      data,
-      withCredentials: true,
-    });
-    if (type === 'save') confirmation += ' to cloud';
+    await idbSaveSeqs(sequence, payload.newSequences);
+    payload.message = 'success!';
+    payload.confirmation = `succesfully saved ${sequence.name} to device`;
+    await apiSaveSequence(sequence);
+    payload.confirmation += ' and cloud';
   } catch (e) {
-    if (!message) {
-      message = 'unsuccessful :(';
-      error = 'Error: Please try again later';
+    if (!payload.message) {
+      payload.message = 'unsuccessful :(';
+      payload.error = 'Error: Please try again later';
     } else {
-      message = 'updated local database';
-      if (type === 'delete') flagDeleted(data._id);
+      payload.message = 'updated local database';
     }
   } finally {
-    dispatch(
-      appSlice.actions.updateSequencesFinally({
-        message,
-        error,
-        confirmation,
-        newSequences,
-      })
-    );
+    dispatch(appSlice.actions.updateSequencesFinally(payload));
+  }
+};
+
+export const deleteSequence = (_id) => async (dispatch, getState) => {
+  dispatch(appSlice.actions.setFetching(true));
+  const payload = {
+    message: '',
+    error: '',
+    newSequences: [...getState().app.userSequences],
+  };
+  try {
+    await idbDelSeq(_id, payload.newSequences);
+    payload.message = 'success!';
+    await apiDeleteSequence(_id);
+  } catch (e) {
+    if (!payload.message) {
+      payload.message = 'unsuccessful :(';
+      payload.error = 'Error: Please try again later';
+    } else {
+      payload.message = 'updated local database';
+      flagDeleted(_id);
+    }
+  } finally {
+    dispatch(appSlice.actions.updateSequencesFinally(payload));
   }
 };
 

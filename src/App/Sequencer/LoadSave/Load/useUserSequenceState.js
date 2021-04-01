@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateSequences } from 'App/reducers/appSlice';
+import { deleteSequence } from 'App/reducers/appSlice';
 
-export const useUserSequenceState = (_id, name, selected) => {
+export const useUserSequenceState = (_id, selected) => {
   const dispatch = useDispatch();
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -16,7 +16,7 @@ export const useUserSequenceState = (_id, name, selected) => {
   const handleDelete = async (e) => {
     e.stopPropagation();
     setDeleting(true);
-    dispatch(updateSequences('delete', { _id, name }));
+    dispatch(deleteSequence(_id));
   };
 
   const classes = {};

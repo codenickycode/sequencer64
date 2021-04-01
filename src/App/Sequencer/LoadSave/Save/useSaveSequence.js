@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ObjectID from 'bson-objectid';
 import { getStrFromPattern } from 'App/reducers/functions/sequence';
-import { updateSequences } from 'App/reducers/appSlice';
+import { saveSequence } from 'App/reducers/appSlice';
 
 export const useSaveSequence = (idRef) => {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ export const useSaveSequence = (idRef) => {
       patternStr: getStrFromPattern(sequence.pattern),
     };
     setNewName('');
-    dispatch(updateSequences('save', newSequence));
+    dispatch(saveSequence(newSequence));
   };
 
   return { newName, handleNewName, userError, save };
