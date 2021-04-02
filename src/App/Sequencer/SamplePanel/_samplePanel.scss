@@ -89,3 +89,54 @@
     }
   }
 }
+
+.sp-alert-wrapper {
+  pointer-events: none;
+  position: absolute;
+  top: -3rem;
+  margin: 0 auto;
+  width: 100%;
+
+  .sp-alert {
+    position: fixed;
+    width: 100%;
+    height: 3rem;
+    @include flex(row, space-evenly);
+    background: $black-90;
+    transform: translateX(-0.25rem);
+    opacity: 0;
+    transition: 1500ms;
+
+    .alert {
+      text-align: center;
+    }
+
+    .icon {
+      width: auto;
+    }
+
+    .dummy {
+      width: 2rem;
+    }
+  }
+
+  .sp-alert.fade-out-2 {
+    opacity: 1;
+  }
+
+  .sp-alert.fade-out {
+    opacity: 1;
+    transition: none;
+  }
+
+  .sp-alert .icon {
+    height: 1.5rem;
+    fill: $white;
+    transform: translateY(0);
+    animation: none;
+  }
+
+  .sp-alert.fade-out-2 .icon {
+    animation: bounce 1s linear infinite;
+  }
+}

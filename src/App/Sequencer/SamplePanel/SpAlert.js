@@ -33,10 +33,10 @@ export const SpAlert = () => {
     return spAlert ? (
       <div className='sp-alert-wrapper'>
         <div id='sp-alert' className={classes}>
-          <span className='menu-dummy' />
+          <span className='dummy' />
           <p className='alert'>{spAlert}</p>
           <PointDownIcon />
-          <span className='menu-dummy' />
+          <span className='dummy' />
         </div>
       </div>
     ) : null;
