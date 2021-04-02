@@ -1,13 +1,13 @@
-import { setTapCellById, setToggleOn } from 'App/reducers/editorSlice';
+import { MODES, setTapCellById, setToggleOn } from 'App/reducers/editorSlice';
 import { modCell } from 'App/reducers/sequenceSlice';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { MIDI_NOTES } from 'utils/MIDI_NOTES';
 
 export const useCellState = (id, step) => {
   const dispatch = useDispatch();
 
   const selectedSample = useSelector((state) => state.editor.selectedSample);
+  const mode = useSelector((state) => state.editor.mode);
 
   const noteOn = useSelector((state) =>
     selectedSample !== -1
@@ -56,28 +56,30 @@ export const useCellState = (id, step) => {
     [dispatch, noteOn, tapCell]
   );
 
-  const classes = {};
-  const styles = {};
-  const values = {};
+  const state = useMemo(() => {
+    const classes = {};
+    const styles = {};
+    const values = {};
 
-  values.midiNote = MIDI_NOTES.indexOf(pitch);
-  values.pitchShift = values.midiNote - 24;
-  values.noteOn = noteOn;
+    values.midiNote = noteOn && mode === MODES.MOD_PITCH ? pitch : null;
 
-  classes.cell = noteOn ? 'cell on' : 'cell';
-  classes.bg = noteOn ? `bg bg${selectedSample}` : 'bg bgGreyHalf';
-  classes.slice1 =
-    noteOn && slice === 2
-      ? 'slice slice-2'
-      : noteOn && slice === 3
-      ? 'slice slice-3'
-      : 'slice';
-  classes.slice2 = noteOn && slice > 2 ? 'slice slice-2' : 'slice';
+    classes.cell = noteOn ? 'cell on' : 'cell';
+    classes.bg = noteOn ? `bg bg${selectedSample}` : 'bg bgGreyHalf';
+    classes.slice1 =
+      noteOn && slice === 2
+        ? 'slice slice-2'
+        : noteOn && slice === 3
+        ? 'slice slice-3'
+        : 'slice';
+    classes.slice2 = noteOn && slice > 2 ? 'slice slice-2' : 'slice';
 
-  styles.bg = {
-    transform: length >= 1 ? 'scaleX(1)' : `scaleX(${length * 3})`,
-  };
-  if (noteOn) styles.bg.opacity = velocity;
+    styles.bg = {
+      transform: length >= 1 ? 'scaleX(1)' : `scaleX(${length * 3})`,
+    };
+    if (noteOn) styles.bg.opacity = velocity;
 
-  return { classes, styles, values, onTouchStart };
+    return { classes, styles, values };
+  }, [length, mode, noteOn, pitch, selectedSample, slice, velocity]);
+
+  return { state, onTouchStart };
 };

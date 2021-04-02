@@ -1,7 +1,7 @@
 @use 'styles/mixins' as *;
 @use 'styles/colors' as *;
 @use 'styles/themes/purple' as *;
-@use 'App/Sequencer/MainSection/Grid/styles/cell';
+@use 'App/Sequencer/MainSection/Grid/grid';
 
 * {
   margin: 0;

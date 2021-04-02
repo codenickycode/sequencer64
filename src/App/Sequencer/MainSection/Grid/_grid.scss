@@ -32,6 +32,7 @@
 
   .bg,
   .border,
+  .pitch,
   .slice {
     @include noEventsLayer(absolute);
   }
@@ -39,16 +40,20 @@
   .bg {
     opacity: 0.2;
   }
-
-  .border {
-    opacity: 0;
-  }
   &.flash {
     .bg {
       @include turnOn;
     }
   }
+  &[data-cursor='true'] {
+    .bg {
+      animation: flashing 200ms alternate infinite;
+    }
+  }
 
+  .border {
+    opacity: 0;
+  }
   &.flashing {
     .border {
       animation: flashing 500ms alternate infinite;
@@ -60,10 +65,9 @@
     }
   }
 
-  &[data-cursor='true'] {
-    .bg {
-      animation: flashing 200ms alternate infinite;
-    }
+  .pitch {
+    z-index: 5;
+    font-size: 4vw;
   }
 }
 
