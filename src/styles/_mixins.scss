@@ -1,3 +1,5 @@
+@use 'styles/colors' as *;
+
 @mixin full($p: relative) {
   position: $p;
   width: 100%;
@@ -25,4 +27,16 @@
   flex-direction: $dir;
   justify-content: $j;
   align-items: $a;
+}
+
+@mixin btn($border: 1px solid $white) {
+  cursor: pointer;
+  width: auto;
+  height: 2rem;
+  padding: 0.5rem;
+  outline: none;
+  border: $border;
+  border-radius: 0.3rem;
+  color: $white;
+  background: $black;
 }

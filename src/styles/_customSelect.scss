@@ -1,0 +1,39 @@
+@use 'styles/colors' as *;
+
+.custom-select-wrapper {
+  cursor: pointer;
+  position: relative;
+  width: 50%;
+  padding: 0.5rem;
+  color: $white;
+  outline: none;
+  border: none;
+  border-radius: 0.3rem;
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .custom-select {
+    -webkit-appearance: none;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1.25rem;
+    @include borderDefault;
+    border-radius: 0.5rem;
+    background: $black;
+    color: $white;
+    overflow: hidden;
+  }
+
+  .chevron-down {
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    right: 0.5rem;
+    transform: translateY(-50%);
+    height: 2rem;
+    @include iconDefault;
+  }
+}

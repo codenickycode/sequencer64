@@ -72,7 +72,9 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
       <div className='mod-wrapper'>
         {mode === MODES.MOD_PITCH ? (
           <>
-            <label htmlFor='pitch-select'>Select Pitch: </label>
+            <label htmlFor='pitch-select' className='select-label'>
+              Select Pitch:
+            </label>
             <div className='custom-select-wrapper'>
               <select
                 id='pitch-select'
@@ -96,7 +98,7 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
           <>
             <input
               type='range'
-              id='mod-velocity-slider'
+              id='mod-slider'
               min={0.1}
               max={1}
               step={0.01}
@@ -105,7 +107,7 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
               onTouchEnd={onTouchEnd}
             />
             <div className='mod-value-wrapper'>
-              <label htmlFor='mod-velocity-slider' className='mod-label'>
+              <label htmlFor='mod-slider' className='mod-label'>
                 {mode && mode.substr(0, 1).toUpperCase() + mode.substr(1)}{' '}
                 Value:
               </label>
@@ -114,10 +116,8 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
           </>
         )}
         <div className='mod-btns'>
-          <Button classes='sample-edit-btn mod-all' onClick={onReset}>
-            Reset All
-          </Button>
-          <Button classes='sample-edit-btn mod-all' onClick={toggleAll}>
+          <Button onClick={onReset}>Reset All</Button>
+          <Button onClick={toggleAll}>
             {editAll ? 'Tap Cell' : 'Apply All'}
           </Button>
         </div>

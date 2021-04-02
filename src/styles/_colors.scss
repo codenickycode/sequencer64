@@ -109,7 +109,7 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 
 @mixin bgDefault {
   .themePurple & {
-    background: $purple-default-quarter;
+    background: $purple-default;
   }
 }
 .bgDefault {
