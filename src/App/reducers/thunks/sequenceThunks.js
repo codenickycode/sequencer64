@@ -7,6 +7,7 @@ import {
   paintCell,
   eraseCell,
   sliceCell,
+  modCellFinally,
   INITIAL_SEQUENCE,
 } from '../sequenceSlice';
 import { MODES, setSpAlert } from '../editorSlice';
@@ -64,7 +65,7 @@ export const modCell = (step, noteOn) => (dispatch, getState) => {
       if (noteOn) {
         const value = getState().editor.mods[mode];
         dispatch(
-          modCell({
+          modCellFinally({
             step,
             selectedSample,
             type: mode,

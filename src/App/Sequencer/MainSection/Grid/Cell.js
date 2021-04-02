@@ -5,8 +5,7 @@ import { SliceIcon } from 'assets/icons';
 import { useCellState } from './useCellState';
 
 export const Cell = ({ id, step }) => {
-  const { state, onTouchStart } = useCellState(id, step);
-  const { classes, styles, values } = state;
+  const { classes, styles, values, onTouchStart } = useCellState(id, step);
 
   const cellMemo = useMemo(() => {
     // console.log('rendering: Cell');

@@ -95,7 +95,10 @@ export const sequenceSlice = createSlice({
       state.noteTally.total.empty = true;
       state.undoStatus = `erase sequence`;
     },
-    modCell: (state, { payload: { selectedSample, type, value, step } }) => {
+    modCellFinally: (
+      state,
+      { payload: { selectedSample, type, value, step } }
+    ) => {
       if (type === MODES.MOD_LENGTH && value < 1) value *= 0.25;
       state.pattern[step][selectedSample].notes.forEach((note) => {
         note[type] = value;
@@ -154,6 +157,7 @@ export const {
   eraseCell,
   eraseSample,
   eraseAll,
+  modCellFinally,
   modAll,
   resetMods,
   loadSequence,
