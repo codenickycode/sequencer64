@@ -33,7 +33,7 @@ export const LoadKit = () => {
     }
     return (
       <div id='load-kit' className={'load-kit' + fadeInClass}>
-        <div id='load-kit-kits'>
+        <div className='kits'>
           {grid.map((i) => {
             const available = kits[i].available;
             const kitName = kits[i].name;
@@ -68,9 +68,9 @@ const KitBtn = ({ kitName, available }) => {
       {!state.ready ? (
         <CloudDownloadIcon addClass={classes.icon} />
       ) : state.selected ? (
-        <p className='kit-btn-p small'>{'(selected)'}</p>
+        <p className='selected'>{'(selected)'}</p>
       ) : (
-        <div className='kit-btn-dummy' />
+        <div className='dummy' />
       )}
     </Button>
   );
@@ -81,7 +81,7 @@ export const LoadKitInfo = ({ fadeInClass, onClick }) => {
   return portal
     ? ReactDOM.createPortal(
         <div className={'kit-info' + fadeInClass}>
-          <Button classes='kit-info-close' onClick={onClick}>
+          <Button classes='close' onClick={onClick}>
             close
           </Button>
         </div>,

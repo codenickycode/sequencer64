@@ -1,0 +1,90 @@
+@use 'styles/mixins' as *;
+@use 'styles/colors' as *;
+
+.load-kit {
+  @include full(absolute);
+  background: $black-90;
+
+  .kits {
+    @include full;
+    @include grid(3, 3, 0.2);
+    padding: 0.25rem;
+
+    .btn {
+      cursor: pointer;
+      padding: 0.5rem;
+      @include full;
+      @include flex(column);
+      @include borderDefault;
+      color: $white;
+      background: none;
+      font-size: 1rem;
+      transform: scale(1);
+
+      &:disabled {
+        opacity: 1;
+      }
+
+      &.selected {
+        border: 2px solid $white;
+      }
+
+      &.pressed {
+        transform: scale(0.9);
+      }
+
+      &.dim-border {
+        @include borderDefaultHalf;
+      }
+
+      .icon {
+        fill: $white;
+      }
+
+      p,
+      .dummy,
+      .icon {
+        height: 100%;
+      }
+
+      p {
+        @include flex;
+
+        &.selected,
+        &.ready {
+          font-size: 0.8rem;
+          font-weight: normal;
+        }
+
+        &.ready {
+          opacity: 0;
+          transition: 1500ms;
+          color: $green;
+
+          &.show {
+            @include turnOn;
+          }
+        }
+      }
+
+      p.flashing,
+      .icon.flashing {
+        animation: flashing 400ms alternate infinite;
+      }
+    }
+  }
+}
+
+.kit-info {
+  @include full(absolute);
+  @include flex(column, space-evenly);
+  top: 0;
+  padding: 0.5rem;
+  background: $black-90;
+
+  .btn.close {
+    @include btn;
+    width: 60%;
+    height: 2.5rem;
+  }
+}
