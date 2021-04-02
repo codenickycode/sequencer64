@@ -76,11 +76,16 @@
       width: 5rem;
       height: 100%;
       padding: 0.5rem;
-      display: inline-block;
+      display: inline-flex;
+      flex-direction: column;
       outline: none;
       color: $white;
       fill: $white;
       background: transparent;
+
+      .icon {
+        max-height: 5rem;
+      }
     }
   }
 }
