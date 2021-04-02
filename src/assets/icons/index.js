@@ -90,6 +90,13 @@ export const SwipeVerticalIcon = () => <Swipe className='deg90' />;
 export const SawIcon = ({ addClass = '' }) => (
   <Saw className={addClass + ' icon'} />
 );
+
+export const SliceIcon = ({ addClass = '' }) => (
+  <div className={addClass}>
+    <Saw className='icon' />
+  </div>
+);
+
 export const CopyIcon = ({ addClass = '' }) => (
   <Copy className={addClass + ' icon'} />
 );

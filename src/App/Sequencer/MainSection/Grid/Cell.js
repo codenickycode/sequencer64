@@ -1,27 +1,22 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import * as defaultKits from 'utils/defaultKits';
-import { SawIcon } from 'assets/icons';
+import { SliceIcon } from 'assets/icons';
 import { useCellState } from './useCellState';
 
 export const Cell = ({ id, step }) => {
-  const { classes, styles, values, onTouchStart } = useCellState(id, step);
+  const { state, onTouchStart } = useCellState(id, step);
+  const { classes, styles, values } = state;
 
   const cellMemo = useMemo(() => {
     // console.log('rendering: Cell');
     return (
       <div className='cellWrapper'>
         <div id={id} className={classes.cell} onTouchStart={onTouchStart}>
-          <div className={classes.slice1}>
-            <SawIcon />
-          </div>
-          <div className={classes.slice2}>
-            <SawIcon />
-          </div>
-          <div className='bg' />
-          <div style={styles.bgColor} className={classes.bgColor} />
+          <SliceIcon addClass={classes.slice1} />
+          <SliceIcon addClass={classes.slice2} />
+          <div style={styles.bg} className={classes.bg} />
           <div className='border' />
-          <div className='cursor' />
           <SampleCells id={id} step={step} />
         </div>
       </div>
@@ -31,9 +26,9 @@ export const Cell = ({ id, step }) => {
     classes.cell,
     classes.slice1,
     classes.slice2,
-    classes.bgColor,
+    classes.bg,
     onTouchStart,
-    styles.bgColor,
+    styles.bg,
     step,
   ]);
   return cellMemo;

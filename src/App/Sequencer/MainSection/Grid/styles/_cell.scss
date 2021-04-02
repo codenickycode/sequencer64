@@ -29,41 +29,40 @@
     @include turnOn;
     transform: scale(0.8) rotate(2deg);
   }
-}
 
-.bg,
-.bgColor,
-.border,
-.slice,
-.cursor {
-  @include noEventsLayer(absolute);
-}
-
-.bgColor,
-.border,
-.slice,
-.cursor {
-  opacity: 0;
-}
-
-.bg {
-  opacity: 1;
-  background: $grey-dim;
-}
-
-.bgColor {
-  left: 0;
-  transform: scaleX(1);
-  opacity: 0;
-}
-
-.cell.flashing {
-  .border {
-    animation: flashing 500ms alternate infinite;
+  .bg,
+  .border,
+  .slice {
+    @include noEventsLayer(absolute);
   }
-  &.pause {
+
+  .bg {
+    opacity: 0.2;
+  }
+
+  .border {
+    opacity: 0;
+  }
+  &.flash {
+    .bg {
+      @include turnOn;
+    }
+  }
+
+  &.flashing {
     .border {
-      animation: none;
+      animation: flashing 500ms alternate infinite;
+    }
+    &.pause {
+      .border {
+        animation: none;
+      }
+    }
+  }
+
+  &[data-cursor='true'] {
+    .bg {
+      animation: flashing 200ms alternate infinite;
     }
   }
 }
@@ -101,20 +100,6 @@
 .cell.pulse .slice svg {
   transition: none;
   transform: rotate(360deg);
-}
-
-.cursor {
-  background: $grey-half;
-}
-.cell.flash {
-  .cursor {
-    @include turnOn;
-  }
-}
-div[data-cursor='true'] {
-  .cursor {
-    animation: flashing 200ms alternate infinite;
-  }
 }
 
 .sample-cells {

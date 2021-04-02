@@ -66,7 +66,7 @@ export const useCellState = (id, step) => {
     values.noteOn = noteOn;
 
     classes.cell = noteOn ? 'cell on' : 'cell';
-    classes.bgColor = `bgColor bg${selectedSample}`;
+    classes.bg = noteOn ? `bg bg${selectedSample}` : 'bg bgGreyHalf';
     classes.slice1 =
       noteOn && slice === 2
         ? 'slice slice-2'
@@ -75,13 +75,13 @@ export const useCellState = (id, step) => {
         : 'slice';
     classes.slice2 = noteOn && slice > 2 ? 'slice slice-2' : 'slice';
 
-    styles.bgColor = {
-      opacity: noteOn ? velocity : 0,
+    styles.bg = {
       transform: length >= 1 ? 'scaleX(1)' : `scaleX(${length * 3})`,
     };
+    if (noteOn) styles.bg.opacity = velocity;
 
     return { classes, styles, values, onTouchStart };
   }, [length, noteOn, onTouchStart, pitch, selectedSample, slice, velocity]);
 
-  return state;
+  return { state, onTouchStart };
 };

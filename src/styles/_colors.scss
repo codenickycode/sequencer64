@@ -72,10 +72,30 @@ $red-quarter: rgba(232, 12, 48, 0.25);
   background: $green;
 }
 
+@mixin bgGreyDim {
+  .themePurple & {
+    background: $grey-dim;
+  }
+}
+.bgGreyDim {
+  @include bgGreyDim;
+}
+@mixin bgGreyHalf {
+  .themePurple & {
+    background: $grey-half;
+  }
+}
+.bgGreyHalf {
+  @include bgGreyHalf;
+}
+
 @mixin strokeDefaultDark {
   .themePurple & {
     stroke: $purple-default-dark;
   }
+}
+.strokeDefaultDark {
+  @include strokeDefaultDark();
 }
 
 @mixin colorDefault {
