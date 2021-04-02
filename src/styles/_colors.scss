@@ -80,6 +80,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 .bgWhite {
   @include bgWhite;
 }
+@mixin fillWhite {
+  .themePurple & {
+    fill: $white;
+  }
+}
+.fillWhite {
+  @include fillWhite;
+}
 
 @mixin bgGreyDim {
   .themePurple & {
@@ -134,13 +142,13 @@ $red-quarter: rgba(232, 12, 48, 0.25);
   @include borderDefault;
 }
 
-@mixin iconDefault {
+@mixin fillDefault {
   .themePurple & {
     fill: $purple-default-3q;
   }
 }
-.iconDefault {
-  @include iconDefault;
+.fillDefault {
+  @include fillDefault;
 }
 
 @mixin color0 {

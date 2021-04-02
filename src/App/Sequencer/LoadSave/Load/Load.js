@@ -30,7 +30,7 @@ const UserSection = (props) => {
           <ColumnTitles />
           {userSequences
             ?.map((sequence) => (
-              <UserSequence key={cuid()} sequence={sequence} {...props} />
+              <UserSequence key={cuid.slug()} sequence={sequence} {...props} />
             ))
             .reverse()}
         </>
@@ -46,7 +46,7 @@ const DefaultSection = (props) => {
       <p className='sequence-select-sub'>Default Sequences</p>
       <ColumnTitles />
       {defaultSequences.map((sequence) => (
-        <DefaultSequence key={cuid()} sequence={sequence} {...props} />
+        <DefaultSequence key={cuid.slug()} sequence={sequence} {...props} />
       ))}
     </div>
   );

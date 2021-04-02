@@ -61,3 +61,50 @@
 .icon.slicing {
   animation: slicing 2000ms infinite linear;
 }
+
+// PitchVelocityLength
+.mod-wrapper {
+  @include full;
+  @include flex(column, space-evenly);
+  color: $white;
+
+  #mod-slider {
+    width: 50%;
+  }
+
+  .select-label {
+    height: 100%;
+    @include flex;
+  }
+
+  .custom-select-wrapper {
+    width: 50%;
+    height: 100%;
+    @include flex;
+  }
+
+  .mod-value-wrapper {
+    @include full;
+    @include flex();
+  }
+
+  .mod-label {
+    display: inline-block;
+    text-align: right;
+  }
+
+  .mod-value {
+    min-width: 20%;
+    display: inline-block;
+    text-align: center;
+  }
+}
+
+.mod-btns {
+  @include full;
+  @include flex(row, space-evenly);
+
+  .btn {
+    @include btn();
+  }
+}

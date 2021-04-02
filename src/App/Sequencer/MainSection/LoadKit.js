@@ -38,7 +38,11 @@ export const LoadKit = () => {
             const available = kits[i].available;
             const kitName = kits[i].name;
             return (
-              <KitBtn key={cuid()} kitName={kitName} available={available} />
+              <KitBtn
+                key={cuid.slug()}
+                kitName={kitName}
+                available={available}
+              />
             );
           })}
         </div>

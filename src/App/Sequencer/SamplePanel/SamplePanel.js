@@ -147,11 +147,9 @@ const SampleBtns = () => {
 
   const sampleBtnsMemo = useMemo(() => {
     // console.log('rendering: SampleBtns');
-
     const selectSample = (i) => {
       dispatch(edit({ sample: i }));
     };
-
     return (
       <div className='sample-menu'>
         {defaultKits[kit] &&
@@ -172,13 +170,12 @@ const SampleBtns = () => {
 const SampleBtn = ({ i, sample, selectSample }) => {
   return (
     <Button
-      classes={`sample sample-btn color${i}`}
+      classes='sample-btn'
       onClick={() => selectSample(i)}
+      ariaLabel={sample.name}
     >
       {icons[sample.icon](sample.color)}
-      <label className='sample-name'>{sample.name}</label>
-      <div className='border' />
-      <div className={`border-pulse border${i}`} />
+      <div className={`border border${i}`} />
     </Button>
   );
 };

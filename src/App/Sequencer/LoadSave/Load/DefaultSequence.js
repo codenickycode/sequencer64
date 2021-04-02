@@ -8,7 +8,7 @@ export const DefaultSequence = ({ sequence, selectSequence, selectedId }) => {
     const handleSelect = (e) => selectSequence(e, _id);
     return (
       <div
-        key={cuid()}
+        key={cuid.slug()}
         className={selected ? 'sequence selected' : 'sequence'}
         onClick={handleSelect}
       >

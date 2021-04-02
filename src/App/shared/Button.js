@@ -9,6 +9,7 @@ export const Button = ({
   disabled = false,
   onClick,
   type,
+  ariaLabel = '',
   children,
 }) => {
   const ref = useRef(null);
@@ -24,9 +25,10 @@ export const Button = ({
     <button
       ref={fwdRef || ref}
       type={type || 'button'}
-      id={id || cuid()}
+      id={id || cuid.slug()}
       className={classes + (pressed ? ' pressed btn' : ' btn')}
       disabled={disabled}
+      ariaLabel={ariaLabel}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
       onClick={onClick}

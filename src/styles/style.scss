@@ -4,8 +4,8 @@
 @use 'styles/slider' as *;
 @use 'styles/customSelect' as *;
 @use 'App/Sequencer/MainSection/Grid/grid';
-@use 'App/Sequencer/SamplePanel/pitchVelocityLength';
 @use 'App/Sequencer/SamplePanel/sampleEdit';
+@use 'App/Sequencer/SamplePanel/samplePanel';
 
 * {
   margin: 0;
@@ -800,93 +800,6 @@ button.social-btn {
   }
 }
 
-.sample-menu {
-  width: 100%;
-  height: 100%;
-  padding: 0.25rem;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: 1fr 1fr 1fr;
-  gap: 0.2rem;
-}
-
-.sample {
-  position: relative;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: $white;
-}
-
-.sample .border,
-.sample .border-pulse {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 1;
-  transition: 500ms;
-}
-
-.sample .border-pulse {
-  opacity: 0;
-}
-
-.sample .bg {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 1;
-}
-
-.sample.pressed .border,
-.sample.pulse .border {
-  transition: none;
-  opacity: 0;
-}
-
-.sample.pulse .border-pulse {
-  transition: none;
-  opacity: 1;
-}
-
-.sample.pressed .bg {
-  transition: none;
-  opacity: 1;
-}
-
-.sample-btn {
-  border: none;
-  color: none;
-  background: $grey-quarter;
-}
-
-.sample-btn .border {
-  opacity: 1;
-  border: 1px solid $purple-default-half;
-}
-
-.sample-btn .icon {
-  height: 1.5rem;
-  width: 1.5rem;
-  transition: 500ms;
-}
-
-.sample-btn .icon.colorDefault {
-  opacity: 1;
-}
-
-.sample-btn .icon.color {
-  opacity: 1;
-}
-
-.sample-btn label {
-  visibility: hidden;
-  width: 0;
-  user-select: none;
-  pointer-events: none;
-}
-
 .sample-name {
   z-index: 2;
 }
@@ -915,11 +828,11 @@ button.social-btn {
   transform: translateY(-0.25rem);
 }
 
-.sample-edit .icon {
-  width: 100%;
-  max-width: 4rem;
-  fill: $white;
-}
+// .sample-edit .icon {
+//   width: 100%;
+//   max-width: 4rem;
+//   fill: $white;
+// }
 
 .sample-edit-title {
   max-width: 50%;
@@ -932,10 +845,6 @@ button.social-btn {
 
 .sample-edit-middle .sample-edit-dummy {
   height: auto;
-}
-
-.icon.slicing {
-  animation: slicing 2000ms infinite linear;
 }
 
 @keyframes slicing {
@@ -1503,10 +1412,6 @@ a.disabled {
   pointer-events: none;
 }
 
-.border {
-  pointer-events: none;
-}
-
 .p-none {
   pointer-events: none;
 }
@@ -1596,8 +1501,4 @@ h1 {
 
 .noRadius {
   border-radius: 0.5rem;
-}
-
-.border {
-  border: 1px solid $white;
 }
