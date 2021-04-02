@@ -80,19 +80,6 @@ body {
   border-bottom: none;
 }
 
-#sample-panel {
-  position: fixed;
-  top: 60%;
-  width: 100%;
-  max-width: 800px;
-  height: 30%;
-  /* padding: 0.25rem; */
-  border-top: 1px solid $purple-default;
-  border-bottom: 1px solid $purple-default;
-  background: $purple-default-third;
-  overflow: hidden;
-}
-
 /*************************************/
 /************* Preparing *************/
 /*************************************/
@@ -802,45 +789,6 @@ button.social-btn {
 
 .sample-name {
   z-index: 2;
-}
-
-.sample-edit-menu {
-  position: relative;
-  height: 100%;
-  white-space: nowrap;
-  overflow-x: scroll;
-  overflow-y: hidden;
-}
-
-.sample-edit-btn {
-  position: relative;
-  z-index: 1;
-  display: inline-block;
-  vertical-align: top;
-  height: 100%;
-  cursor: pointer;
-  padding: 0.5rem;
-  border: none;
-  outline: none;
-  border-radius: 0.3rem;
-  color: $white;
-  background: $color-none;
-  transform: translateY(-0.25rem);
-}
-
-// .sample-edit .icon {
-//   width: 100%;
-//   max-width: 4rem;
-//   fill: $white;
-// }
-
-.sample-edit-title {
-  max-width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  color: $white;
 }
 
 .sample-edit-middle .sample-edit-dummy {

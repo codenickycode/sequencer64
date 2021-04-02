@@ -40,7 +40,7 @@ export const SamplePanel = () => {
     };
 
     return (
-      <div className={'sample-edit'}>
+      <>
         {mode === MODES.ERASING ? (
           <Erase onReturn={onReturn} />
         ) : mode === MODES.SLICING ? (
@@ -54,7 +54,7 @@ export const SamplePanel = () => {
         ) : (
           <SampleBtns />
         )}
-      </div>
+      </>
     );
   }, [dispatch, mode]);
 
@@ -69,71 +69,55 @@ const SampleEditMenu = ({ selectMode, onClose }) => {
 
   const sampleEditMenuMemo = useMemo(() => {
     // console.log('rendering: SampleEditMenu');
-
     return (
-      <div className='sample-edit-menu'>
-        <Button classes='sample-edit-close' onClick={onClose}>
+      <div className='edit-menu'>
+        <Button classes='close' onClick={onClose}>
           <CloseIcon />
         </Button>
-        <div className='sample-edit-dummy' />
+        <div className='dummy' />
         <Button
-          classes={'sample-edit-btn'}
+          classes='menu-btn'
           disabled={disabled}
           onClick={() => selectMode(MODES.ERASING)}
         >
-          <div className='sample-edit-icon-div'>
-            <EraserIcon />
-            <p>Erase</p>
-          </div>
+          <EraserIcon />
+          <p>Erase</p>
         </Button>
         <Button
-          classes='sample-edit-btn'
+          classes='menu-btn'
           disabled={disabled}
           onClick={() => selectMode(MODES.SLICING)}
         >
-          <div className='sample-edit-icon-div'>
-            <SawIcon />
-            <p>Slice</p>
-          </div>
+          <SawIcon />
+          <p>Slice</p>
+        </Button>
+        <Button classes='menu-btn' onClick={() => selectMode(MODES.COPYING)}>
+          <CopyIcon />
+          <p>Copy</p>
         </Button>
         <Button
-          classes='sample-edit-btn'
-          onClick={() => selectMode(MODES.COPYING)}
-        >
-          <div className='sample-edit-icon-div'>
-            <CopyIcon />
-            <p>Copy</p>
-          </div>
-        </Button>
-        <Button
-          classes='sample-edit-btn'
+          classes='menu-btn'
           disabled={disabled}
           onClick={() => selectMode(MODES.MOD_VELOCITY)}
         >
-          <div className='sample-edit-icon-div'>
-            <VelocityIcon />
-            <p>Velocity</p>
-          </div>
+          <VelocityIcon />
+          <p>Velocity</p>
         </Button>
         <Button
-          classes='sample-edit-btn'
+          classes='menu-btn'
           disabled={disabled}
           onClick={() => selectMode(MODES.MOD_LENGTH)}
         >
-          <div className='sample-edit-icon-div'>
-            <LengthIcon />
-            <p>Length</p>
-          </div>
+          <LengthIcon />
+          <p>Length</p>
         </Button>
         <Button
-          classes='sample-edit-btn'
+          classes='menu-btn'
           disabled={disabled}
           onClick={() => selectMode(MODES.MOD_PITCH)}
         >
-          <div className='sample-edit-icon-div'>
-            <PitchIcon />
-            <p>Pitch</p>
-          </div>
+          <PitchIcon />
+          <p>Pitch</p>
         </Button>
       </div>
     );
@@ -151,7 +135,7 @@ const SampleBtns = () => {
       dispatch(edit({ sample: i }));
     };
     return (
-      <div className='sample-menu'>
+      <div className='menu'>
         {defaultKits[kit] &&
           defaultKits[kit].samples.map((sample, i) => (
             <SampleBtn

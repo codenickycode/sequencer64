@@ -35,7 +35,7 @@ export const SequencerPage = () => {
           <LoadKit />
           <div id='paste-pattern-portal' />
         </div>
-        <div id='sample-panel'>
+        <div className='sample-panel'>
           <SpAlert />
           <SamplePanel />
           <div id='kit-info-portal' />

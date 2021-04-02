@@ -133,6 +133,15 @@ $red-quarter: rgba(232, 12, 48, 0.25);
   @include bgDefault;
 }
 
+@mixin bgDefault3rd {
+  .themePurple & {
+    background: $purple-default-third;
+  }
+}
+.bgDefault3rd {
+  @include bgDefault3rd;
+}
+
 @mixin borderDefault {
   .themePurple & {
     border: 1px solid $purple-default-half;

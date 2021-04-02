@@ -1,40 +1,86 @@
 @use 'styles/mixins' as *;
 @use 'styles/colors' as *;
 
-.sample-menu {
-  @include full;
-  padding: 0.25rem;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: 1fr 1fr 1fr;
-  gap: 0.2rem;
+.sample-panel {
+  position: fixed;
+  top: 60%;
+  width: 100%;
+  max-width: 800px;
+  height: 30%;
+  @include borderDefault;
+  border-left: none;
+  border-right: none;
+  @include bgDefault3rd;
+  overflow: hidden;
+}
 
-  .sample-btn {
-    cursor: pointer;
-    position: relative;
-    @include flex();
-    @include borderDefault;
-    background: $grey-quarter;
+.sample-panel {
+  .menu {
+    @include full;
+    padding: 0.25rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0.2rem;
 
-    .icon {
-      height: 5vw;
-      max-height: 2rem;
-      width: 5vw;
-      max-width: 2rem;
+    .sample-btn {
+      cursor: pointer;
+      position: relative;
+      @include flex();
+      @include borderDefault;
+      background: $grey-quarter;
+
+      .icon {
+        height: 5vw;
+        max-height: 2rem;
+        width: 5vw;
+        max-width: 2rem;
+      }
+
+      .border {
+        @include noEventsLayer(absolute);
+        opacity: 0;
+        transition: 500ms;
+        border-radius: 0;
+      }
     }
-
-    .border {
-      @include noEventsLayer(absolute);
-      opacity: 0;
-      transition: 500ms;
-      border-radius: 0;
+    .sample-btn.pressed,
+    .sample-btn.pulse {
+      .border {
+        transition: none;
+        opacity: 1;
+      }
     }
   }
-  .sample-btn.pressed,
-  .sample-btn.pulse {
-    .border {
-      transition: none;
-      opacity: 1;
+
+  .edit-menu {
+    position: relative;
+    height: 100%;
+    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    background: $black-90;
+    padding-left: 4rem;
+
+    .close.btn {
+      @include closeBtnSmall;
+    }
+    .dummy {
+      position: absolute;
+      left: 0;
+      @include dummySmall;
+    }
+
+    .menu-btn {
+      cursor: pointer;
+      width: 5rem;
+      height: 100%;
+      padding: 0.5rem;
+      display: inline-block;
+      outline: none;
+      color: $white;
+      fill: $white;
+      background: transparent;
     }
   }
 }
