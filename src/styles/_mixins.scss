@@ -12,6 +12,20 @@
   pointer-events: none;
 }
 
+@mixin grid(
+  $row,
+  $col,
+  $gap,
+  $rowSize: minmax(0, 1fr),
+  $colSize: minmax(0, 1fr)
+) {
+  display: grid;
+  align-items: center;
+  grid-template-rows: repeat($row, $rowSize);
+  grid-template-columns: repeat($col, $colSize);
+  gap: $gap;
+}
+
 @mixin turnOn {
   transition: none;
   opacity: 1;

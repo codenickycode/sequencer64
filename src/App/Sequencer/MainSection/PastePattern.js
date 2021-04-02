@@ -20,7 +20,7 @@ export const PastePattern = () => {
     return portal
       ? ReactDOM.createPortal(
           <div id='paste-pattern' className={'paste-pattern'}>
-            <div id='paste-pattern-samples'>
+            <div className='samples'>
               {grid.map((i) => {
                 return (
                   <SampleBtn
@@ -52,16 +52,17 @@ const SampleBtn = ({ i, icon, color }) => {
     setTimeout(() => setFlashClass('cells'));
   };
 
-  let classes = `sample borderDefault`;
   const selected = i === selectedSample;
-  if (selected) classes += ' flashing';
+  const classes = selected
+    ? 'sample flashing borderWhite'
+    : 'sample borderDefault';
 
   return (
-    <Button classes={classes} onClick={onClick}>
+    <Button classes={classes} disabled={selected} onClick={onClick}>
       {selected ? (
         <p className='flashing'>copying...</p>
       ) : (
-        <div className='paste-icon-wrapper'>{icons[icon](color)}</div>
+        <div className='icon-wrapper'>{icons[icon](color)}</div>
       )}
       <div className={flashClass}>
         {pattern.map((step, s) => {
@@ -69,7 +70,6 @@ const SampleBtn = ({ i, icon, color }) => {
           return <div key={`paste-pattern-${s}-${i}`} className={classes} />;
         })}
       </div>
-      <div className='border-flashing' />
     </Button>
   );
 };

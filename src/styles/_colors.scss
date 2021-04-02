@@ -80,6 +80,16 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 .bgWhite {
   @include bgWhite;
 }
+
+@mixin borderWhite {
+  .themePurple & {
+    border: 1px solid $white;
+  }
+}
+.borderWhite {
+  @include borderWhite;
+}
+
 @mixin fillWhite {
   .themePurple & {
     fill: $white;

@@ -4,6 +4,7 @@
 @use 'styles/slider' as *;
 @use 'styles/customSelect' as *;
 @use 'App/Sequencer/MainSection/Grid/grid';
+@use 'App/Sequencer/MainSection/pastePattern';
 @use 'App/Sequencer/SamplePanel/sampleEdit';
 @use 'App/Sequencer/SamplePanel/samplePanel';
 
@@ -659,78 +660,6 @@ button.social-btn {
 /*********** Paste Pattern ***********/
 /*************************************/
 
-#paste-pattern-portal {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  pointer-events: none;
-}
-
-.paste-pattern {
-  height: 100%;
-  width: 100%;
-  pointer-events: initial;
-  background: $black-90;
-}
-
-#paste-pattern-samples {
-  position: relative;
-  min-width: 100%;
-  min-height: 100%;
-  padding: 0.25rem;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.2rem;
-}
-
-#paste-pattern-samples .sample {
-  position: relative;
-  background: none;
-}
-
-#paste-pattern-samples p {
-  padding: 0.5rem;
-  text-align: center;
-  background: $black-3q;
-  border-radius: 0.5rem;
-  z-index: 3;
-}
-
-.paste-icon-wrapper {
-  height: 25%;
-  width: 25%;
-}
-
-#paste-pattern-samples .icon {
-  height: 100%;
-  width: 100%;
-  fill: $white;
-}
-
-#paste-pattern-samples .cells {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  padding: 0.25rem;
-  display: grid;
-  align-items: center;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  grid-template-rows: repeat(8, minmax(0, 1fr));
-  gap: 5px;
-  border-radius: 0.5rem;
-  opacity: 0.35;
-  transition: 150ms;
-}
-
-#paste-pattern-samples .cells.selected {
-  transition: none;
-  opacity: 1;
-}
-
-#paste-pattern-samples .cell {
-  border: none;
-}
-
 /*************************************/
 /************* SamplePanel ***********/
 /*************************************/
@@ -785,14 +714,6 @@ button.social-btn {
   100% {
     transform: translateY(0);
   }
-}
-
-.sample-name {
-  z-index: 2;
-}
-
-.sample-edit-middle .sample-edit-dummy {
-  height: auto;
 }
 
 @keyframes slicing {

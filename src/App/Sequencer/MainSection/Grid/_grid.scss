@@ -3,13 +3,8 @@
 
 .grid {
   @include full;
-  touch-action: initial;
+  @include grid(8, 8, 3px);
   padding: 0.25rem;
-  display: grid;
-  align-items: center;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  grid-template-rows: repeat(8, minmax(0, 1fr));
-  gap: 3px;
 }
 
 .cellWrapper {
@@ -108,11 +103,9 @@
 
 .sample-cells {
   @include noEventsLayer(absolute);
+  @include grid(3, 3, 1px, auto, auto);
+  align-items: initial;
   padding: 0.25rem;
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  grid-template-rows: repeat(3, auto);
-  gap: 1px;
   opacity: 0.5;
 
   .sample-cell {

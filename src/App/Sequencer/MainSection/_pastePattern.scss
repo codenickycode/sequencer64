@@ -1,0 +1,70 @@
+@use 'styles/mixins' as *;
+@use 'styles/colors' as *;
+
+#paste-pattern-portal {
+  @include noEventsLayer(absolute);
+}
+
+.paste-pattern {
+  @include full;
+  pointer-events: initial;
+  background: $black-90;
+
+  .samples {
+    position: relative;
+    min-width: 100%;
+    min-height: 100%;
+    padding: 0.25rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.2rem;
+
+    .sample {
+      position: relative;
+      background: none;
+      @include flex;
+
+      &.flashing {
+        animation: flashing 450ms alternate infinite;
+      }
+
+      p {
+        padding: 0.5rem;
+        text-align: center;
+        background: $black-3q;
+        border-radius: 0.5rem;
+        z-index: 3;
+        color: $white;
+      }
+
+      .icon-wrapper {
+        height: 25%;
+        width: 25%;
+
+        .icon {
+          fill: $white;
+        }
+      }
+
+      .cells {
+        @include noEventsLayer(absolute);
+        @include grid(8, 8, 5px);
+        padding: 0.25rem;
+        opacity: 0.35;
+        transition: 500ms;
+
+        &.selected {
+          @include turnOn;
+        }
+
+        .cell {
+          opacity: 0;
+
+          &.on {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}
