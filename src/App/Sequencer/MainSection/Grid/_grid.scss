@@ -20,13 +20,13 @@
   @include full;
   cursor: pointer;
   opacity: 1;
-  background: $color-none;
+  background: $grey-dim;
   transform: scale(1) rotate(0);
   transition: 200ms;
   transition-property: transform;
 
   &.pulse {
-    @include turnOn;
+    transition: none;
     transform: scale(0.8) rotate(2deg);
   }
 
@@ -38,7 +38,7 @@
   }
 
   .bg {
-    opacity: 0.2;
+    opacity: 0;
   }
   &.flash {
     .bg {
