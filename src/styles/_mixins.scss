@@ -40,3 +40,8 @@
   color: $white;
   background: $black;
 }
+
+@mixin pressed {
+  transition: none;
+  transform: scale(0.8);
+}

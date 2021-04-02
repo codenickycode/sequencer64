@@ -24,18 +24,14 @@ export const Erase = ({ onReturn }) => {
 
   // console.log('rendering: Erase');
   return (
-    <div className='sample-edit-detail'>
-      <Button classes='sample-edit-close' onClick={onReturn}>
+    <div className='detail'>
+      <Button classes='close' onClick={onReturn}>
         <ChevronLeftIcon />
       </Button>
-      <div className='sample-edit-dummy' />
-      <div className='sample-edit-middle'>
+      <div className='dummy' />
+      <div className='middle'>
         <p className=''>Click and drag to erase cells</p>
-        <Button
-          classes='sample-edit-btn mod-all'
-          disabled={disabled}
-          onClick={onEraseAll}
-        >
+        <Button disabled={disabled} onClick={onEraseAll}>
           Erase All
         </Button>
       </div>
@@ -53,16 +49,14 @@ export const Slice = ({ onReturn }) => {
     dispatch(resetSlice(selectedSample));
   };
   return (
-    <div className='sample-edit-detail'>
-      <Button classes='sample-edit-close' onClick={onReturn}>
+    <div className='detail'>
+      <Button classes='close' onClick={onReturn}>
         <ChevronLeftIcon />
       </Button>
-      <div className='sample-edit-dummy' />
-      <div className='sample-edit-middle'>
+      <div className='dummy' />
+      <div className='middle'>
         <p>Click each cell to slice into halves or thirds</p>
-        <Button classes='sample-edit-btn mod-all' onClick={onReset}>
-          Reset All
-        </Button>
+        <Button onClick={onReset}>Reset All</Button>
       </div>
       <SawIcon addClass='slicing' />
     </div>
@@ -71,14 +65,14 @@ export const Slice = ({ onReturn }) => {
 
 export const Copy = ({ onReturn }) => {
   return (
-    <div className={'sample-edit-detail'}>
-      <Button classes='sample-edit-close' onClick={onReturn}>
+    <div className='detail'>
+      <Button classes='close' onClick={onReturn}>
         <ChevronLeftIcon />
       </Button>
-      <div className='sample-edit-dummy' />
-      <p className='sample-edit-instructions'>
-        Click to paste current sample's pattern
-      </p>
+      <div className='dummy' />
+      <div className='middle'>
+        <p>Click to paste current sample's pattern</p>
+      </div>
       <CopyIcon />
       <PastePattern />
     </div>

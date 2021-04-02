@@ -16,8 +16,8 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
   } = usePitchVelocityLength(mode);
 
   return (
-    <div className='sample-edit-detail col'>
-      <Button classes='sample-edit-close' onClick={onReturn}>
+    <div className='detail col'>
+      <Button classes='close' onClick={onReturn}>
         <ChevronLeftIcon />
       </Button>
       <div className='mod-wrapper'>

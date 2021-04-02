@@ -1,0 +1,63 @@
+@use 'styles/mixins' as *;
+@use 'styles/colors' as *;
+
+.sample-edit {
+  @include full(absolute);
+  @include flex(column);
+  z-index: 6;
+  background: $black-90;
+
+  .detail {
+    @include full();
+    @include flex(row, space-evenly);
+    padding: 0.5rem;
+    overflow: hidden;
+
+    &.col {
+      flex-direction: column;
+    }
+
+    .close.btn {
+      z-index: 2;
+      position: absolute;
+      top: 0.25rem;
+      left: 0.25rem;
+      width: 3rem;
+      height: 3rem;
+      background: none;
+      fill: $white;
+      color: $white;
+      border: none;
+
+      .chevron-left {
+        width: 100%;
+      }
+
+      &.pressed {
+        @include pressed;
+      }
+    }
+    .dummy {
+      display: inline-block;
+      width: 3rem;
+      height: 100%;
+    }
+
+    .middle {
+      @include full;
+      max-width: 50%;
+      @include flex(column, space-evenly);
+      color: $white;
+      text-align: center;
+      white-space: initial;
+    }
+
+    .btn {
+      @include btn;
+    }
+  }
+}
+
+.icon.slicing {
+  animation: slicing 2000ms infinite linear;
+}
