@@ -1,9 +1,10 @@
+@use 'styles/placeholders' as *;
 @use 'styles/mixins' as *;
 @use 'styles/colors' as *;
 
 .sample-panel {
   .detail {
-    @include full();
+    @extend %full;
     @include flex(row, space-evenly);
     padding: 0.5rem;
     overflow: hidden;
@@ -19,18 +20,18 @@
     }
 
     .btn {
-      @include btn;
+      @extend %btn;
     }
 
     .close.btn {
-      @include closeBtnSmall;
+      @extend %closeBtnSmall;
     }
     .dummy {
-      @include dummySmall;
+      @extend %dummySmall;
     }
 
     .middle {
-      @include full;
+      @extend %full;
       max-width: 50%;
       @include flex(column, space-evenly);
       color: $white;
@@ -45,7 +46,7 @@
 
   // PitchVelocityLength
   .mod-wrapper {
-    @include full;
+    @extend %full;
     @include flex(column, space-evenly);
     color: $white;
 
@@ -65,7 +66,7 @@
     }
 
     .mod-value-wrapper {
-      @include full;
+      @extend %full;
       @include flex();
     }
 
@@ -79,14 +80,19 @@
       display: inline-block;
       text-align: center;
     }
+
+    input[type='range'] {
+      height: 100%;
+      width: 50%;
+    }
   }
 
   .mod-btns {
-    @include full;
+    @extend %full;
     @include flex(row, space-evenly);
 
     .btn {
-      @include btn();
+      @extend %btn;
     }
   }
 }

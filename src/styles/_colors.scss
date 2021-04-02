@@ -72,514 +72,514 @@ $red-quarter: rgba(232, 12, 48, 0.25);
   background: $green;
 }
 
-@mixin bgWhite {
+%bgWhite {
   .themePurple & {
     background: $white;
   }
 }
 .bgWhite {
-  @include bgWhite;
+  @extend %bgWhite;
 }
 
-@mixin borderWhite {
+%borderWhite {
   .themePurple & {
     border: 1px solid $white;
   }
 }
 .borderWhite {
-  @include borderWhite;
+  @extend %borderWhite;
 }
 
-@mixin fillWhite {
+%fillWhite {
   .themePurple & {
     fill: $white;
   }
 }
 .fillWhite {
-  @include fillWhite;
+  @extend %fillWhite;
 }
 
-@mixin bgGreyDim {
+%bgGreyDim {
   .themePurple & {
     background: $grey-dim;
   }
 }
 .bgGreyDim {
-  @include bgGreyDim;
+  @extend %bgGreyDim;
 }
-@mixin bgGreyHalf {
+%bgGreyHalf {
   .themePurple & {
     background: $grey-half;
   }
 }
 .bgGreyHalf {
-  @include bgGreyHalf;
+  @extend %bgGreyHalf;
 }
 
-@mixin strokeDefaultDark {
+%strokeDefaultDark {
   .themePurple & {
     stroke: $purple-default-dark;
   }
 }
 .strokeDefaultDark {
-  @include strokeDefaultDark();
+  @extend %strokeDefaultDark;
 }
 
-@mixin colorDefault {
+%colorDefault {
   .themePurple & {
     color: $purple-default-3q;
   }
 }
 .colorDefault {
-  @include colorDefault;
+  @extend %colorDefault;
 }
 
-@mixin bgDefault {
+%bgDefault {
   .themePurple & {
     background: $purple-default;
   }
 }
 .bgDefault {
-  @include bgDefault;
+  @extend %bgDefault;
 }
 
-@mixin bgDefault3rd {
+%bgDefault3rd {
   .themePurple & {
     background: $purple-default-third;
   }
 }
 .bgDefault3rd {
-  @include bgDefault3rd;
+  @extend %bgDefault3rd;
 }
 
-@mixin borderDefault {
+%borderDefault {
   .themePurple & {
     border: 1px solid $purple-default;
   }
 }
 .borderDefault {
-  @include borderDefault;
+  @extend %borderDefault;
 }
 
-@mixin borderDefaultHalf {
+%borderDefaultHalf {
   .themePurple & {
     border: 1px solid $purple-default-half;
   }
 }
 .borderDefault {
-  @include borderDefaultHalf;
+  @extend %borderDefaultHalf;
 }
 
-@mixin fillDefault {
+%fillDefault {
   .themePurple & {
     fill: $purple-default-3q;
   }
 }
 .fillDefault {
-  @include fillDefault;
+  @extend %fillDefault;
 }
 
-@mixin color0 {
+%color0 {
   .themePurple & {
     color: $purple-0;
   }
 }
 .color0 {
-  @include color0;
+  @extend %color0;
 }
 
-@mixin bg0 {
+%bg0 {
   .themePurple & {
     background-color: $purple-0;
   }
 }
 .bg0 {
-  @include bg0;
+  @extend %bg0;
 }
 
-@mixin bg0Q {
+%bg0Q {
   .themePurple & {
     background-color: $purple-0-quarter;
   }
 }
 .bg0Q {
-  @include bg0Q;
+  @extend %bg0Q;
 }
 
-@mixin border0 {
+%border0 {
   .themePurple & {
     border: 1px solid $purple-0;
   }
 }
 .border0 {
-  @include border0;
+  @extend %border0;
 }
 
-@mixin fill0 {
+%fill0 {
   .themePurple & {
     fill: $purple-0;
   }
 }
 .fill0 {
-  @include fill0;
+  @extend %fill0;
 }
 
-@mixin color1 {
+%color1 {
   .themePurple & {
     color: $purple-1;
   }
 }
 .color1 {
-  @include color1;
+  @extend %color1;
 }
 
-@mixin bg1 {
+%bg1 {
   .themePurple & {
     background-color: $purple-1;
   }
 }
 .bg1 {
-  @include bg1;
+  @extend %bg1;
 }
 
-@mixin bg1Q {
+%bg1Q {
   .themePurple & {
     background-color: $purple-1-quarter;
   }
 }
 .bg1Q {
-  @include bg1Q;
+  @extend %bg1Q;
 }
 
-@mixin border1 {
+%border1 {
   .themePurple & {
     border: 1px solid $purple-1;
   }
 }
 .border1 {
-  @include border1;
+  @extend %border1;
 }
 
-@mixin fill1 {
+%fill1 {
   .themePurple & {
     fill: $purple-1;
   }
 }
 .fill1 {
-  @include fill1;
+  @extend %fill1;
 }
 
-@mixin color2 {
+%color2 {
   .themePurple & {
     color: $purple-2;
   }
 }
 .color2 {
-  @include color2;
+  @extend %color2;
 }
 
-@mixin bg2 {
+%bg2 {
   .themePurple & {
     background-color: $purple-2;
   }
 }
 .bg2 {
-  @include bg2;
+  @extend %bg2;
 }
 
-@mixin bg2Q {
+%bg2Q {
   .themePurple & {
     background-color: $purple-2-quarter;
   }
 }
 .bg2Q {
-  @include bg2Q;
+  @extend %bg2Q;
 }
 
-@mixin border2 {
+%border2 {
   .themePurple & {
     border: 1px solid $purple-2;
   }
 }
 .border2 {
-  @include border2;
+  @extend %border2;
 }
 
-@mixin fill2 {
+%fill2 {
   .themePurple & {
     fill: $purple-2;
   }
 }
 .fill2 {
-  @include fill2;
+  @extend %fill2;
 }
 
-@mixin color3 {
+%color3 {
   .themePurple & {
     color: $purple-3;
   }
 }
 .color3 {
-  @include color3;
+  @extend %color3;
 }
 
-@mixin bg3 {
+%bg3 {
   .themePurple & {
     background-color: $purple-3;
   }
 }
 .bg3 {
-  @include bg3;
+  @extend %bg3;
 }
 
-@mixin bg3Q {
+%bg3Q {
   .themePurple & {
     background-color: $purple-3-quarter;
   }
 }
 .bg3Q {
-  @include bg3Q;
+  @extend %bg3Q;
 }
 
-@mixin border3 {
+%border3 {
   .themePurple & {
     border: 1px solid $purple-3;
   }
 }
 .border3 {
-  @include border3;
+  @extend %border3;
 }
 
-@mixin fill3 {
+%fill3 {
   .themePurple & {
     fill: $purple-3;
   }
 }
 .fill3 {
-  @include fill3;
+  @extend %fill3;
 }
 
-@mixin color4 {
+%color4 {
   .themePurple & {
     color: $purple-4;
   }
 }
 .color4 {
-  @include color4;
+  @extend %color4;
 }
 
-@mixin bg4 {
+%bg4 {
   .themePurple & {
     background-color: $purple-4;
   }
 }
 .bg4 {
-  @include bg4;
+  @extend %bg4;
 }
 
-@mixin bg4Q {
+%bg4Q {
   .themePurple & {
     background-color: $purple-4-quarter;
   }
 }
 .bg4Q {
-  @include bg4Q;
+  @extend %bg4Q;
 }
 
-@mixin border4 {
+%border4 {
   .themePurple & {
     border: 1px solid $purple-4;
   }
 }
 .border4 {
-  @include border4;
+  @extend %border4;
 }
 
-@mixin fill4 {
+%fill4 {
   .themePurple & {
     fill: $purple-4;
   }
 }
 .fill4 {
-  @include fill4;
+  @extend %fill4;
 }
 
-@mixin color5 {
+%color5 {
   .themePurple & {
     color: $purple-5;
   }
 }
 .color5 {
-  @include color5;
+  @extend %color5;
 }
 
-@mixin bg5 {
+%bg5 {
   .themePurple & {
     background-color: $purple-5;
   }
 }
 .bg5 {
-  @include bg5;
+  @extend %bg5;
 }
 
-@mixin bg5Q {
+%bg5Q {
   .themePurple & {
     background-color: $purple-5-quarter;
   }
 }
 .bg5Q {
-  @include bg5Q;
+  @extend %bg5Q;
 }
 
-@mixin border5 {
+%border5 {
   .themePurple & {
     border: 1px solid $purple-5;
   }
 }
 .border5 {
-  @include border5;
+  @extend %border5;
 }
 
-@mixin fill5 {
+%fill5 {
   .themePurple & {
     fill: $purple-5;
   }
 }
 .fill5 {
-  @include fill5;
+  @extend %fill5;
 }
 
-@mixin color6 {
+%color6 {
   .themePurple & {
     color: $purple-6;
   }
 }
 .color6 {
-  @include color6;
+  @extend %color6;
 }
 
-@mixin bg6 {
+%bg6 {
   .themePurple & {
     background-color: $purple-6;
   }
 }
 .bg6 {
-  @include bg6;
+  @extend %bg6;
 }
 
-@mixin bg6Q {
+%bg6Q {
   .themePurple & {
     background-color: $purple-6-quarter;
   }
 }
 .bg6Q {
-  @include bg6Q;
+  @extend %bg6Q;
 }
 
-@mixin border6 {
+%border6 {
   .themePurple & {
     border: 1px solid $purple-6;
   }
 }
 .border6 {
-  @include border6;
+  @extend %border6;
 }
 
-@mixin fill6 {
+%fill6 {
   .themePurple & {
     fill: $purple-6;
   }
 }
 .fill6 {
-  @include fill6;
+  @extend %fill6;
 }
 
-@mixin color7 {
+%color7 {
   .themePurple & {
     color: $purple-7;
   }
 }
 .color7 {
-  @include color7;
+  @extend %color7;
 }
 
-@mixin bg7 {
+%bg7 {
   .themePurple & {
     background-color: $purple-7;
   }
 }
 .bg7 {
-  @include bg7;
+  @extend %bg7;
 }
 
-@mixin bg7Q {
+%bg7Q {
   .themePurple & {
     background-color: $purple-7-quarter;
   }
 }
 .bg7Q {
-  @include bg7Q;
+  @extend %bg7Q;
 }
 
-@mixin border7 {
+%border7 {
   .themePurple & {
     border: 1px solid $purple-7;
   }
 }
 .border7 {
-  @include border7;
+  @extend %border7;
 }
 
-@mixin fill7 {
+%fill7 {
   .themePurple & {
     fill: $purple-7;
   }
 }
 .fill7 {
-  @include fill7;
+  @extend %fill7;
 }
 
-@mixin color8 {
+%color8 {
   .themePurple & {
     color: $purple-8;
   }
 }
 .color8 {
-  @include color8;
+  @extend %color8;
 }
 
-@mixin bg8 {
+%bg8 {
   .themePurple & {
     background-color: $purple-8;
   }
 }
 .bg8 {
-  @include bg8;
+  @extend %bg8;
 }
 
-@mixin bg8Q {
+%bg8Q {
   .themePurple & {
     background-color: $purple-8-quarter;
   }
 }
 .bg8Q {
-  @include bg8Q;
+  @extend %bg8Q;
 }
 
-@mixin border8 {
+%border8 {
   .themePurple & {
     border: 1px solid $purple-8;
   }
 }
 .border8 {
-  @include border8;
+  @extend %border8;
 }
 
-@mixin fill8 {
+%fill8 {
   .themePurple & {
     fill: $purple-8;
   }
 }
 .fill8 {
-  @include fill8;
+  @extend %fill8;
 }

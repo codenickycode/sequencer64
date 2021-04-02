@@ -1,3 +1,4 @@
+@use 'styles/placeholders' as *;
 @use 'styles/colors' as *;
 
 .custom-select-wrapper {
@@ -20,7 +21,7 @@
     width: 100%;
     padding: 0.5rem;
     font-size: 1.25rem;
-    @include borderDefault;
+    @extend %borderDefault;
     border-radius: 0.5rem;
     background: $black;
     color: $white;
@@ -34,6 +35,6 @@
     right: 0.5rem;
     transform: translateY(-50%);
     height: 2rem;
-    @include fillDefault;
+    @extend %fillDefault;
   }
 }

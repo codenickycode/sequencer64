@@ -6,15 +6,16 @@ export const Preparing = () => {
     grid.push(i);
   }
   return (
-    <div className='preparing'>
-      <div className='preparing-grid'>
+    <div id='preparing' className='preparing'>
+      <h1 className='header'>Sequencer64</h1>
+      <div className='grid'>
         {grid.map((i) => (
-          <div key={`preparing-cell-${i}`} className='preparing-cell'>
+          <div key={`preparing-cell-${i}`} className='cell'>
             <div className={`bg-color bg${i}`} />
           </div>
         ))}
       </div>
-      <h1 className='preparing-header'>preparing...</h1>
+      <p className='message'>preparing...</p>
     </div>
   );
 };

@@ -1,123 +1,125 @@
+@use 'styles/placeholders' as *;
 @use 'styles/colors' as *;
 @use 'styles/mixins' as *;
 
 .grid {
-  @include full;
+  @extend %full;
   @include grid(8, 8, 3px);
   padding: 0.25rem;
-}
 
-.cellWrapper {
-  @include full;
-}
-
-.cell {
-  @include full;
-  cursor: pointer;
-  opacity: 1;
-  background: $grey-dim;
-  transform: scale(1) rotate(0);
-  transition: 200ms;
-  transition-property: transform;
-
-  &.pulse {
-    transition: none;
-    transform: scale(0.8) rotate(2deg);
+  .cellWrapper {
+    @extend %full;
   }
 
-  .bg,
-  .border,
-  .pitch,
-  .slice {
-    @include noEventsLayer(absolute);
-  }
+  .cell {
+    @extend %full;
+    cursor: pointer;
+    opacity: 1;
+    background: $grey-dim;
+    transform: scale(1) rotate(0);
+    transition: 200ms;
+    transition-property: transform;
 
-  .bg {
-    opacity: 0;
-  }
-  &.flash {
+    &.pulse {
+      transition: none;
+      transform: scale(0.8) rotate(2deg);
+    }
+
+    .bg,
+    .border,
+    .pitch,
+    .slice {
+      @extend %noEventsLayerAbs;
+    }
+
     .bg {
-      @include turnOn;
+      opacity: 0;
     }
-  }
-  &[data-cursor='true'] {
-    .bg {
-      animation: flashing 200ms alternate infinite;
-    }
-  }
-
-  .border {
-    opacity: 0;
-  }
-  &.flashing {
-    .border {
-      animation: flashing 500ms alternate infinite;
-    }
-    &.pause {
-      .border {
-        animation: none;
+    &.flash {
+      .bg {
+        @extend %turnOn;
       }
     }
+    &[data-cursor='true'] {
+      .bg {
+        animation: flashing 200ms alternate infinite;
+      }
+    }
+
+    .border {
+      @extend %borderWhite;
+      opacity: 0;
+    }
+    &.flashing {
+      .border {
+        animation: flashing 500ms alternate infinite;
+      }
+      &.pause {
+        .border {
+          animation: none;
+        }
+      }
+    }
+
+    .pitch {
+      z-index: 5;
+      font-size: 4vw;
+    }
   }
 
-  .pitch {
-    z-index: 5;
-    font-size: 4vw;
+  .slice {
+    @include flex(row, center, center);
+    z-index: 2;
+    padding: 0.25rem;
+    transform: scale(0);
+    transition: 250ms ease-out;
+
+    &.slice-2,
+    &.slice-3 {
+      opacity: 1;
+    }
+
+    &.slice-2 {
+      transform: scale(0.5);
+    }
+
+    &.slice-3 {
+      transform: scale(1);
+    }
+
+    svg {
+      @extend %strokeDefaultDark;
+      width: 100%;
+      height: 100%;
+      stroke-width: 2px;
+      fill: transparent;
+      transform: rotate(0);
+      transition: 300ms ease-out;
+    }
   }
-}
-
-.slice {
-  @include flex(row, center, center);
-  z-index: 2;
-  padding: 0.25rem;
-  transform: scale(0);
-  transition: 250ms ease-out;
-
-  &.slice-2,
-  &.slice-3 {
-    opacity: 1;
+  .cell.pulse .slice svg {
+    transition: none;
+    transform: rotate(360deg);
   }
 
-  &.slice-2 {
-    transform: scale(0.5);
-  }
+  .sample-cells {
+    @extend %noEventsLayerAbs;
+    @include grid(3, 3, 1px, auto, auto);
+    align-items: initial;
+    padding: 0.25rem;
+    opacity: 0.5;
 
-  &.slice-3 {
-    transform: scale(1);
+    .sample-cell {
+      color: $color-none;
+      transform: scale(0.5);
+      border: 1px solid;
+      border-radius: 50%;
+      transition: 200ms;
+    }
   }
-
-  svg {
-    @include strokeDefaultDark;
-    width: 100%;
-    height: 100%;
-    stroke-width: 2px;
-    fill: transparent;
-    transform: rotate(0);
-    transition: 300ms ease-out;
+  .cell.flash .sample-cell,
+  .cell.pulse .sample-cell {
+    transition: none;
+    transform: scale(2);
   }
-}
-.cell.pulse .slice svg {
-  transition: none;
-  transform: rotate(360deg);
-}
-
-.sample-cells {
-  @include noEventsLayer(absolute);
-  @include grid(3, 3, 1px, auto, auto);
-  align-items: initial;
-  padding: 0.25rem;
-  opacity: 0.5;
-
-  .sample-cell {
-    color: $color-none;
-    transform: scale(0.5);
-    border: 1px solid;
-    border-radius: 50%;
-    transition: 200ms;
-  }
-}
-.cell.flash .sample-cell,
-.cell.pulse .sample-cell {
-  transition: none;
-  transform: scale(2);
 }

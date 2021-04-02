@@ -1,0 +1,82 @@
+@use 'styles/colors' as *;
+
+%full {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+}
+
+%noEventsLayer {
+  @extend %full;
+  pointer-events: none;
+}
+
+%fullAbs {
+  @extend %full;
+  position: absolute;
+}
+
+%noEventsLayerAbs {
+  @extend %fullAbs;
+  pointer-events: none;
+}
+
+%turnOn {
+  transition: none;
+  opacity: 1;
+}
+
+%turnOff {
+  transition: none;
+  opacity: 0;
+}
+
+%pressed {
+  transition: none;
+  transform: scale(0.8);
+}
+
+%btn {
+  cursor: pointer;
+  width: auto;
+  height: 2.5rem;
+  padding: 0.5rem;
+  outline: none;
+  border: 1px solid $white;
+  border-radius: 0.3rem;
+  color: $white;
+  background: $black;
+
+  &.pressed {
+    transition: none;
+    transform: scale(0.9);
+  }
+}
+
+%closeBtnSmall {
+  z-index: 2;
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  background: none;
+  fill: $white;
+  color: $white;
+  border: none;
+
+  .chevron-left {
+    width: 100%;
+  }
+
+  &.pressed {
+    @extend %pressed;
+  }
+}
+
+%dummySmall {
+  width: 4rem;
+  height: 100%;
+}

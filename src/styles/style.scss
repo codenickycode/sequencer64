@@ -1,19 +1,36 @@
 @use 'styles/mixins' as *;
+@use 'styles/placeholders' as *;
 @use 'styles/colors' as *;
 @use 'styles/themes/purple' as *;
-@use 'styles/slider' as *;
 @use 'styles/customSelect' as *;
 @use 'App/Sequencer/MainSection/Grid/grid';
 @use 'App/Sequencer/MainSection/pastePattern';
 @use 'App/Sequencer/MainSection/loadKit';
 @use 'App/Sequencer/SamplePanel/sampleEdit';
 @use 'App/Sequencer/SamplePanel/samplePanel';
+@use 'App/shared/preparing';
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   user-select: none;
+}
+
+/*************************************/
+/*************** Global **************/
+/*************************************/
+
+.deg90 {
+  transform: rotate(90deg);
+}
+
+.deg180 {
+  transform: rotate(180deg);
+}
+
+.deg270 {
+  transform: rotate(270deg);
 }
 
 input {
@@ -25,6 +42,96 @@ button {
   font-style: inherit;
   font-weight: bold;
   letter-spacing: 2px;
+}
+
+button:disabled {
+  opacity: 0.35;
+}
+
+a {
+  text-decoration: none;
+}
+
+a.disabled {
+  opacity: 0.5;
+}
+
+.icon {
+  height: 100%;
+  width: 100%;
+}
+
+.error {
+  color: $red;
+}
+
+.confirmation {
+  color: $green;
+}
+
+h1 {
+  font-weight: normal;
+}
+
+p.dim {
+  color: $white-quarter;
+}
+
+p.dim-2 {
+  color: $white-half;
+}
+
+.p-left-25 {
+  padding-left: 0.25rem;
+}
+
+.fade-in {
+  transition: 250ms;
+  opacity: 1;
+}
+
+.fade-out {
+  transition: 250ms;
+  opacity: 0;
+}
+
+@keyframes flashing {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes dim-flashing {
+  0% {
+    opacity: 0.25;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slicing {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 html,
@@ -86,91 +193,6 @@ body {
 /************* Preparing *************/
 /*************************************/
 
-.preparing {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  flex-direction: column;
-}
-
-.preparing-grid {
-  width: 50%;
-  height: 50vw;
-  padding: 0.5rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  gap: 0.25rem;
-  border-radius: 0.5rem;
-  border: 1px solid $purple-default;
-}
-
-.preparing-cell {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 0.25rem;
-  border: 1px dotted $white-dim;
-}
-
-.preparing .bg-color {
-  animation: color-scroll 1.5s infinite;
-}
-
-.preparing .bg0 {
-  animation-delay: 0;
-}
-
-.preparing .bg1 {
-  animation-delay: 150ms;
-}
-
-.preparing .bg2 {
-  animation-delay: 300ms;
-}
-
-.preparing .bg3 {
-  animation-delay: 450ms;
-}
-
-.preparing .bg4 {
-  animation-delay: 600ms;
-}
-
-.preparing .bg5 {
-  animation-delay: 750ms;
-}
-
-.preparing .bg6 {
-  animation-delay: 900ms;
-}
-
-.preparing .bg7 {
-  animation-delay: 1050ms;
-}
-
-.preparing .bg8 {
-  animation-delay: 1200ms;
-}
-
-.preparing .bg9 {
-  animation-delay: 1350ms;
-}
-
-@keyframes color-scroll {
-  0% {
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  40% {
-    opacity: 0;
-  }
-}
-
 /*************************************/
 /*********** Load Sequence ***********/
 /*************************************/
@@ -215,6 +237,12 @@ body {
   margin-top: 1rem;
   width: 100%;
   height: 100%;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .login-div {
@@ -537,27 +565,6 @@ button.social-btn {
 /************* SamplePanel ***********/
 /*************************************/
 
-@keyframes bounce {
-  0% {
-    transform: translateY(0);
-  }
-  20% {
-    transform: translateY(50%);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-@keyframes slicing {
-  0% {
-    transform: rotate(0);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 /*************************************/
 /******** PitchVelocityLength ********/
 /*************************************/
@@ -581,24 +588,6 @@ button.social-btn {
 /*************************************/
 /*************** GRID ****************/
 /*************************************/
-
-@keyframes flashing {
-  0% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes dim-flashing {
-  0% {
-    opacity: 0.25;
-  }
-  100% {
-    opacity: 0.5;
-  }
-}
 
 /*************************************/
 /*************** Menu **************/
@@ -799,191 +788,8 @@ button.social-btn {
 }
 
 /*************************************/
-/*************** Global **************/
+/*************** Chevrons ************/
 /*************************************/
-
-div.dim {
-  background-color: $white-quarter;
-}
-
-svg.dim {
-  fill: $white-quarter;
-}
-
-p.dim {
-  color: $white-quarter;
-}
-
-p.dim-2 {
-  color: $white-half;
-}
-
-.off {
-  opacity: 0;
-}
-
-.deg90 {
-  transform: rotate(90deg);
-}
-
-.deg180 {
-  transform: rotate(180deg);
-}
-
-.deg270 {
-  transform: rotate(270deg);
-}
-
-.capitalize {
-  text-transform: capitalize;
-}
-
-.o0 {
-  opacity: 0;
-}
-
-.swipe-icon {
-  position: relative;
-  height: 100%;
-}
-
-.swipe-icon .square {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  transform: translateY(-50%);
-}
-
-.sample-edit svg.pvl-swipe {
-  position: relative;
-  z-index: 2;
-  top: 45%;
-  left: 50%;
-  height: 3rem;
-  stroke: $black;
-  fill: $white;
-  transform: translate(-50%, 0%);
-  animation: swipe 3s ease-in-out infinite;
-}
-
-@keyframes swipe {
-  0% {
-    transform: translate(-50%, 0%);
-  }
-  50% {
-    transform: translate(-50%, 40%);
-  }
-  75% {
-    transform: translate(-50%, 0%);
-  }
-}
-
-.velocity-swipe {
-  animation: velocity-swipe 3s ease-in-out infinite;
-}
-
-@keyframes velocity-swipe {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.2;
-  }
-  75% {
-    opacity: 1;
-  }
-}
-
-.pvl-swipe-h {
-  position: relative;
-  z-index: 2;
-  top: 50%;
-  left: 40%;
-  height: 3rem;
-  stroke: $black;
-  fill: $white;
-  transform: translate(-15%, 0);
-  animation: swipe-h 3s ease-in-out infinite;
-}
-
-@keyframes swipe-h {
-  0% {
-    transform: translate(-15%, 0);
-  }
-  50% {
-    transform: translate(-50%, 0);
-  }
-  75% {
-    transform: translate(-15%, 0);
-  }
-}
-
-.length-swipe {
-  animation: length-swipe 3s ease-in-out infinite;
-}
-
-@keyframes length-swipe {
-  0% {
-    transform: translateY(-50%) scaleX(1);
-  }
-  50% {
-    transform: translateY(-50%) scaleX(0.25);
-  }
-  75% {
-    transform: translateY(-50%) scaleX(1);
-  }
-}
-
-.swipe-pitch-up {
-  color: $purple-default;
-  position: absolute;
-  top: 50%;
-  right: 25%;
-  transform: translateY(-50%);
-  animation: swipe-pitch-up 3s ease-in-out infinite;
-}
-
-@keyframes swipe-pitch-up {
-  0% {
-    opacity: 1;
-  }
-  25% {
-    opacity: 0;
-  }
-  60% {
-    opacity: 0;
-  }
-  75% {
-    opacity: 1;
-  }
-}
-
-.swipe-pitch-down {
-  color: $purple-default;
-  position: absolute;
-  top: 50%;
-  right: 25%;
-  animation: swipe-pitch-down 3s ease-in-out infinite;
-  opacity: 0;
-  transform: translateY(-50%);
-}
-
-@keyframes swipe-pitch-down {
-  0% {
-    opacity: 0;
-  }
-  25% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  75% {
-    opacity: 0;
-  }
-}
 
 .chevron {
   position: absolute;
@@ -1079,56 +885,16 @@ p.dim-2 {
   }
 }
 
-button:disabled {
-  opacity: 0.35;
-}
-
-.d-none {
-  display: none;
-}
-
-.center {
-  text-align: center;
-}
-
-.error {
-  color: $red;
-}
-
-.confirmation {
-  color: $green;
-}
-
-a.disabled {
-  opacity: 0.5;
-}
-
-.btn {
-}
-
-.btn * {
-  filter: drop-shadow(2px 2px 2px $purple-default-quarter);
-}
-
-.bg {
-  pointer-events: none;
-}
-
-.p-none {
-  pointer-events: none;
-}
-
-.pressed {
-  transition: none;
-  transform: scale(0.9);
-}
-
 .chevron-left,
 .chevron-right {
   fill: $white;
   width: 100%;
   height: 100%;
 }
+
+/*************************************/
+/*************** Scroll **************/
+/*************************************/
 
 .scrollbar {
   pointer-events: none;
@@ -1163,49 +929,4 @@ button.scroll-right:disabled,
 button.scroll-left:disabled {
   pointer-events: none;
   opacity: 0;
-}
-
-.p-left-25 {
-  padding-left: 0.25rem;
-}
-
-h1 {
-  font-weight: normal;
-}
-
-.flex-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.fade-in {
-  transition: 250ms;
-  opacity: 1;
-}
-
-.fade-out {
-  transition: 250ms;
-  opacity: 0;
-}
-
-/******** Size & Position *******/
-
-.noEvents {
-  pointer-events: none;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 0.5rem;
-}
-
-/*********** Border *************/
-
-.noRadius {
-  border-radius: 0.5rem;
-}
-
-.icon {
-  height: 100%;
-  width: 100%;
 }

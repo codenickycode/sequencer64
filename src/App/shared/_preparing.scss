@@ -1,0 +1,92 @@
+@use 'styles/placeholders' as *;
+@use 'styles/mixins' as *;
+@use 'styles/colors' as *;
+
+#preparing {
+  @extend %full;
+  @include flex(column, space-evenly);
+
+  .message {
+    font-size: 1.5rem;
+  }
+
+  .grid {
+    width: 50%;
+    height: 50vw;
+    padding: 0.5rem;
+    @include grid(3, 3, 0.25, 1fr, 1fr);
+    border-radius: 0.5rem;
+    @extend %borderDefault;
+
+    .cell {
+      @extend %full;
+      border-radius: 0.25rem;
+      border: 1px dotted $white-dim;
+      background: transparent;
+    }
+  }
+
+  .bg-color {
+    animation: colorScroll 1.5s infinite;
+    @extend %full;
+    transition: none;
+    opacity: 0;
+  }
+
+  .bg0 {
+    @extend %bg0;
+    animation-delay: 1ms;
+  }
+
+  .bg1 {
+    @extend %bg1;
+    animation-delay: 150ms;
+  }
+
+  .bg2 {
+    @extend %bg2;
+    animation-delay: 300ms;
+  }
+
+  .bg3 {
+    @extend %bg3;
+    animation-delay: 450ms;
+  }
+
+  .bg4 {
+    @extend %bg4;
+    animation-delay: 600ms;
+  }
+
+  .bg5 {
+    @extend %bg5;
+    animation-delay: 750ms;
+  }
+
+  .bg6 {
+    @extend %bg6;
+    animation-delay: 900ms;
+  }
+
+  .bg7 {
+    @extend %bg7;
+    animation-delay: 1050ms;
+  }
+
+  .bg8 {
+    @extend %bg8;
+    animation-delay: 1200ms;
+  }
+}
+
+@keyframes colorScroll {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0;
+  }
+}

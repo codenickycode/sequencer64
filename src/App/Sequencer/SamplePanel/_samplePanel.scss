@@ -1,3 +1,4 @@
+@use 'styles/placeholders' as *;
 @use 'styles/mixins' as *;
 @use 'styles/colors' as *;
 
@@ -7,16 +8,17 @@
   width: 100%;
   max-width: 800px;
   height: 30%;
-  @include borderDefault;
+  @extend %borderDefault;
   border-left: none;
   border-right: none;
-  @include bgDefault3rd;
+  @extend %bgDefault3rd;
   overflow: hidden;
+  border: 3px solid red;
 }
 
 .sample-panel {
   .menu {
-    @include full;
+    @extend %full;
     padding: 0.25rem;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -27,7 +29,7 @@
       cursor: pointer;
       position: relative;
       @include flex();
-      @include borderDefault;
+      @extend %borderDefault;
       background: $grey-quarter;
 
       .icon {
@@ -38,7 +40,7 @@
       }
 
       .border {
-        @include noEventsLayer(absolute);
+        @extend %noEventsLayerAbs;
         opacity: 0;
         transition: 500ms;
         border-radius: 0;
@@ -63,12 +65,12 @@
     padding-left: 4rem;
 
     .close.btn {
-      @include closeBtnSmall;
+      @extend %closeBtnSmall;
     }
     .dummy {
       position: absolute;
       left: 0;
-      @include dummySmall;
+      @extend %dummySmall;
     }
 
     .menu-btn {

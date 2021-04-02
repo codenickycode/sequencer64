@@ -1,12 +1,13 @@
+@use 'styles/placeholders' as *;
 @use 'styles/mixins' as *;
 @use 'styles/colors' as *;
 
 #paste-pattern-portal {
-  @include noEventsLayer(absolute);
+  @extend %noEventsLayerAbs;
 }
 
 .paste-pattern {
-  @include full;
+  @extend %full;
   pointer-events: initial;
   background: $black-90;
 
@@ -40,6 +41,7 @@
       .icon-wrapper {
         height: 25%;
         width: 25%;
+        z-index: 3;
 
         .icon {
           fill: $white;
@@ -47,17 +49,18 @@
       }
 
       .cells {
-        @include noEventsLayer(absolute);
+        @extend %noEventsLayerAbs;
         @include grid(8, 8, 5px);
         padding: 0.25rem;
         opacity: 0.35;
         transition: 500ms;
 
         &.selected {
-          @include turnOn;
+          @extend %turnOn;
         }
 
         .cell {
+          @extend %full;
           opacity: 0;
 
           &.on {

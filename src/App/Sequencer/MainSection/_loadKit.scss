@@ -1,21 +1,22 @@
 @use 'styles/mixins' as *;
+@use 'styles/placeholders' as *;
 @use 'styles/colors' as *;
 
 .load-kit {
-  @include full(absolute);
+  @extend %fullAbs;
   background: $black-90;
 
   .kits {
-    @include full;
+    @extend %full;
     @include grid(3, 3, 0.2);
     padding: 0.25rem;
 
     .btn {
       cursor: pointer;
       padding: 0.5rem;
-      @include full;
+      @extend %full;
       @include flex(column);
-      @include borderDefault;
+      @extend %borderDefault;
       color: $white;
       background: none;
       font-size: 1rem;
@@ -34,7 +35,7 @@
       }
 
       &.dim-border {
-        @include borderDefaultHalf;
+        @extend %borderDefaultHalf;
       }
 
       .icon {
@@ -62,7 +63,7 @@
           color: $green;
 
           &.show {
-            @include turnOn;
+            @extend %turnOn;
           }
         }
       }
@@ -76,14 +77,15 @@
 }
 
 .kit-info {
-  @include full(absolute);
+  @extend %fullAbs;
+  z-index: 6;
   @include flex(column, space-evenly);
   top: 0;
   padding: 0.5rem;
   background: $black-90;
 
   .btn.close {
-    @include btn;
+    @extend %btn;
     width: 60%;
     height: 2.5rem;
   }
