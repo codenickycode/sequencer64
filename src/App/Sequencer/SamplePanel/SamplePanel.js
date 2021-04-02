@@ -34,7 +34,8 @@ export const SamplePanel = () => {
     const onClose = () => dispatch(close());
 
     const selectMode = (mode) => {
-      if (mode === MODES.ERASING || mode === MODES.SLICING) showEditable();
+      if (mode && mode !== MODES.PAINTING && mode !== MODES.COPYING)
+        showEditable();
       dispatch(setMode(mode));
     };
 

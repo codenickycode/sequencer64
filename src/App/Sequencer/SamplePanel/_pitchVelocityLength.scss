@@ -5,9 +5,6 @@
   @include full;
   @include flex(column, space-evenly);
   color: $white;
-  * {
-    border: 1px dotted red;
-  }
 
   #mod-slider {
     width: 50%;

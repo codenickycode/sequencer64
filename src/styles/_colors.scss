@@ -72,6 +72,15 @@ $red-quarter: rgba(232, 12, 48, 0.25);
   background: $green;
 }
 
+@mixin bgWhite {
+  .themePurple & {
+    background: $white;
+  }
+}
+.bgWhite {
+  @include bgWhite;
+}
+
 @mixin bgGreyDim {
   .themePurple & {
     background: $grey-dim;

@@ -1,68 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { INITIAL_MODS, MODES, setModVal } from 'App/reducers/editorSlice';
+import React from 'react';
+import { MODES } from 'App/reducers/editorSlice';
 import { Button } from 'App/shared/Button';
 import { ChevronLeftIcon, ChevronDownIcon } from 'assets/icons';
-import { modAll, resetMods } from 'App/reducers/sequenceSlice';
 import { MIDI_NOTES } from 'utils/MIDI_NOTES';
-import { showEditable, hideEditable } from 'utils/toggleClasses';
+import { usePitchVelocityLength } from './usePitchVelocityLength';
 
 export const PitchVelocityLength = ({ onReturn, mode }) => {
-  const dispatch = useDispatch();
-  const selectedSample = useSelector((state) => state.editor.selectedSample);
-  const value = useSelector((state) => state.editor.mods[mode]);
-
-  const [editAll, setEditAll] = useState(true);
-
-  const onChange = ({ target: { value } }) => {
-    if (mode === MODES.MOD_PITCH) {
-      dispatch(setModVal(value));
-    } else {
-      dispatch(setModVal(Math.round(value * 100) / 100));
-    }
-  };
-
-  const dispatchModAll = () => {
-    dispatch(
-      modAll({
-        selectedSample,
-        type: mode,
-        value,
-      })
-    );
-  };
-
-  const toggleAll = () => {
-    if (editAll) {
-      setEditAll(false);
-      showEditable();
-    } else {
-      dispatchModAll();
-      setEditAll(true);
-      hideEditable();
-    }
-  };
-
-  // velocity & length
-  const onTouchEnd = () => {
-    if (editAll) dispatchModAll();
-  };
-
-  useEffect(() => {
-    if (mode === MODES.MOD_PITCH && editAll)
-      dispatch(
-        modAll({
-          selectedSample,
-          type: MODES.MOD_PITCH,
-          value,
-        })
-      );
-  }, [dispatch, editAll, mode, selectedSample, value]);
-
-  const onReset = () => {
-    dispatch(setModVal(INITIAL_MODS[mode]));
-    dispatch(resetMods({ selectedSample, type: mode }));
-  };
+  const {
+    value,
+    onChange,
+    onTouchEnd,
+    onReset,
+    toggleAll,
+    editAll,
+  } = usePitchVelocityLength(mode);
 
   return (
     <div className='sample-edit-detail col'>
