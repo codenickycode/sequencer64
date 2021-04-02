@@ -13,26 +13,22 @@ export const Cell = ({ id, step }) => {
     // console.log('rendering: Cell');
     const { classes, styles, values } = state;
     return (
-      <div className='cell-wrapper'>
+      <div className='cellWrapper'>
         <div
           id={id}
           className={classes.cell}
           onTouchStart={functions.onTouchStart}
         >
-          <div className='cell-mods'>
-            <p className={classes.pitchUp}>+{values.pitchShift}</p>
-            <p className={classes.pitchDown}>{values.pitchShift}</p>
-            <div className={classes.slice1}>
-              <SawIcon />
-            </div>
-            <div className={classes.slice2}>
-              <SawIcon />
-            </div>
+          <div className={classes.slice1}>
+            <SawIcon />
+          </div>
+          <div className={classes.slice2}>
+            <SawIcon />
           </div>
           <div className='bg' />
           <div style={styles.bgColor} className={classes.bgColor} />
           <div className='cursor' />
-          <div className='border-flashing' />
+          <div className='border' />
           <SampleCells id={id} step={step} />
         </div>
       </div>

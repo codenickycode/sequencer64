@@ -41,11 +41,7 @@ export const useCellState = (id, step) => {
     values.noteOn = noteOn;
 
     classes.cell = noteOn ? 'cell on' : 'cell';
-    classes.bgColor = `bg-color bg${selectedSample}`;
-    classes.pitchUp =
-      noteOn && values.midiNote > 24 ? 'pitch-up show' : 'pitch-up';
-    classes.pitchDown =
-      noteOn && values.midiNote < 24 ? 'pitch-down show' : 'pitch-down';
+    classes.bgColor = `bgColor bg${selectedSample}`;
     classes.slice1 =
       noteOn && slice === 2
         ? 'slice slice-2'

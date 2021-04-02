@@ -1,0 +1,520 @@
+@use 'styles/themes/purple' as *;
+
+$grey: rgba(197, 185, 219, 1);
+$grey-3q: rgba(197, 185, 219, 0.75);
+$grey-half: rgba(150, 140, 170, 0.5);
+$grey-quarter: rgba(150, 140, 170, 0.25);
+$grey-dim: rgb(150, 140, 170, 0.15);
+$color-none: rgb(150, 140, 170, 0);
+$black: #000;
+$black-90: rgba(0, 0, 0, 0.9);
+$black-3q: rgba(0, 0, 0, 0.75);
+$black-half: rgba(0, 0, 0, 0.5);
+$black-quarter: rgba(0, 0, 0, 0.25);
+$white: rgba(236, 237, 229, 1);
+$white-3q: rgba(236, 237, 229, 0.75);
+$white-half: rgba(236, 237, 229, 0.5);
+$white-quarter: rgba(236, 237, 229, 0.25);
+$white-dim: rgba(236, 237, 229, 0.1);
+$magenta: rgba(255, 0, 172, 1);
+$magenta-3q: rgba(255, 0, 172, 0.75);
+$magenta-half: rgba(255, 0, 172, 0.5);
+$magenta-quarter: rgba(255, 0, 172, 0.25);
+$lime: rgba(64, 244, 195, 1);
+$lime-3q: rgba(64, 244, 195, 0.75);
+$lime-half: rgba(64, 244, 195, 0.5);
+$lime-quarter: rgba(64, 244, 195, 0.25);
+$green: rgba(47, 222, 126, 1);
+$green-3q: rgba(47, 222, 126, 0.75);
+$green-half: rgba(47, 222, 126, 0.5);
+$green-quarter: rgba(47, 222, 126, 0.25);
+$red: rgba(232, 12, 48, 1);
+$red-3q: rgba(232, 12, 48, 0.75);
+$red-half: rgba(232, 12, 48, 0.5);
+$red-quarter: rgba(232, 12, 48, 0.25);
+
+.colorBlack {
+  color: $black;
+}
+.colorNone {
+  color: $color-none;
+}
+.bgNone {
+  background-color: $color-none;
+}
+.borderNone {
+  border: 1px solid $color-none;
+}
+
+.colorNone.icon,
+.colorNone .icon {
+  fill: $color-none;
+}
+
+.white.icon {
+  color: $white;
+  fill: $white;
+}
+
+.bg.white {
+  background: $white;
+}
+
+.black {
+  background: $black;
+}
+
+.red {
+  background: $red;
+}
+
+.green {
+  background: $green;
+}
+
+@mixin strokeDefaultDark {
+  .themePurple & {
+    stroke: $purple-default-dark;
+  }
+}
+
+@mixin colorDefault {
+  .themePurple & {
+    color: $purple-default-3q;
+  }
+}
+.colorDefault {
+  @include colorDefault;
+}
+
+@mixin bgDefault {
+  .themePurple & {
+    background: $purple-default-quarter;
+  }
+}
+.bgDefault {
+  @include bgDefault;
+}
+
+@mixin borderDefault {
+  .themePurple & {
+    border: 1px solid $purple-default-half;
+  }
+}
+.borderDefault {
+  @include borderDefault;
+}
+
+@mixin iconDefault {
+  .themePurple & {
+    fill: $purple-default-3q;
+  }
+}
+.iconDefault {
+  @include iconDefault;
+}
+
+@mixin color0 {
+  .themePurple & {
+    color: $purple-0;
+  }
+}
+.color0 {
+  @include color0;
+}
+
+@mixin bg0 {
+  .themePurple & {
+    background-color: $purple-0;
+  }
+}
+.bg0 {
+  @include bg0;
+}
+
+@mixin bg0Q {
+  .themePurple & {
+    background-color: $purple-0-quarter;
+  }
+}
+.bg0Q {
+  @include bg0Q;
+}
+
+@mixin border0 {
+  .themePurple & {
+    border: 1px solid $purple-0;
+  }
+}
+.border0 {
+  @include border0;
+}
+
+@mixin fill0 {
+  .themePurple & {
+    fill: $purple-0;
+  }
+}
+.fill0 {
+  @include fill0;
+}
+
+@mixin color1 {
+  .themePurple & {
+    color: $purple-1;
+  }
+}
+.color1 {
+  @include color1;
+}
+
+@mixin bg1 {
+  .themePurple & {
+    background-color: $purple-1;
+  }
+}
+.bg1 {
+  @include bg1;
+}
+
+@mixin bg1Q {
+  .themePurple & {
+    background-color: $purple-1-quarter;
+  }
+}
+.bg1Q {
+  @include bg1Q;
+}
+
+@mixin border1 {
+  .themePurple & {
+    border: 1px solid $purple-1;
+  }
+}
+.border1 {
+  @include border1;
+}
+
+@mixin fill1 {
+  .themePurple & {
+    fill: $purple-1;
+  }
+}
+.fill1 {
+  @include fill1;
+}
+
+@mixin color2 {
+  .themePurple & {
+    color: $purple-2;
+  }
+}
+.color2 {
+  @include color2;
+}
+
+@mixin bg2 {
+  .themePurple & {
+    background-color: $purple-2;
+  }
+}
+.bg2 {
+  @include bg2;
+}
+
+@mixin bg2Q {
+  .themePurple & {
+    background-color: $purple-2-quarter;
+  }
+}
+.bg2Q {
+  @include bg2Q;
+}
+
+@mixin border2 {
+  .themePurple & {
+    border: 1px solid $purple-2;
+  }
+}
+.border2 {
+  @include border2;
+}
+
+@mixin fill2 {
+  .themePurple & {
+    fill: $purple-2;
+  }
+}
+.fill2 {
+  @include fill2;
+}
+
+@mixin color3 {
+  .themePurple & {
+    color: $purple-3;
+  }
+}
+.color3 {
+  @include color3;
+}
+
+@mixin bg3 {
+  .themePurple & {
+    background-color: $purple-3;
+  }
+}
+.bg3 {
+  @include bg3;
+}
+
+@mixin bg3Q {
+  .themePurple & {
+    background-color: $purple-3-quarter;
+  }
+}
+.bg3Q {
+  @include bg3Q;
+}
+
+@mixin border3 {
+  .themePurple & {
+    border: 1px solid $purple-3;
+  }
+}
+.border3 {
+  @include border3;
+}
+
+@mixin fill3 {
+  .themePurple & {
+    fill: $purple-3;
+  }
+}
+.fill3 {
+  @include fill3;
+}
+
+@mixin color4 {
+  .themePurple & {
+    color: $purple-4;
+  }
+}
+.color4 {
+  @include color4;
+}
+
+@mixin bg4 {
+  .themePurple & {
+    background-color: $purple-4;
+  }
+}
+.bg4 {
+  @include bg4;
+}
+
+@mixin bg4Q {
+  .themePurple & {
+    background-color: $purple-4-quarter;
+  }
+}
+.bg4Q {
+  @include bg4Q;
+}
+
+@mixin border4 {
+  .themePurple & {
+    border: 1px solid $purple-4;
+  }
+}
+.border4 {
+  @include border4;
+}
+
+@mixin fill4 {
+  .themePurple & {
+    fill: $purple-4;
+  }
+}
+.fill4 {
+  @include fill4;
+}
+
+@mixin color5 {
+  .themePurple & {
+    color: $purple-5;
+  }
+}
+.color5 {
+  @include color5;
+}
+
+@mixin bg5 {
+  .themePurple & {
+    background-color: $purple-5;
+  }
+}
+.bg5 {
+  @include bg5;
+}
+
+@mixin bg5Q {
+  .themePurple & {
+    background-color: $purple-5-quarter;
+  }
+}
+.bg5Q {
+  @include bg5Q;
+}
+
+@mixin border5 {
+  .themePurple & {
+    border: 1px solid $purple-5;
+  }
+}
+.border5 {
+  @include border5;
+}
+
+@mixin fill5 {
+  .themePurple & {
+    fill: $purple-5;
+  }
+}
+.fill5 {
+  @include fill5;
+}
+
+@mixin color6 {
+  .themePurple & {
+    color: $purple-6;
+  }
+}
+.color6 {
+  @include color6;
+}
+
+@mixin bg6 {
+  .themePurple & {
+    background-color: $purple-6;
+  }
+}
+.bg6 {
+  @include bg6;
+}
+
+@mixin bg6Q {
+  .themePurple & {
+    background-color: $purple-6-quarter;
+  }
+}
+.bg6Q {
+  @include bg6Q;
+}
+
+@mixin border6 {
+  .themePurple & {
+    border: 1px solid $purple-6;
+  }
+}
+.border6 {
+  @include border6;
+}
+
+@mixin fill6 {
+  .themePurple & {
+    fill: $purple-6;
+  }
+}
+.fill6 {
+  @include fill6;
+}
+
+@mixin color7 {
+  .themePurple & {
+    color: $purple-7;
+  }
+}
+.color7 {
+  @include color7;
+}
+
+@mixin bg7 {
+  .themePurple & {
+    background-color: $purple-7;
+  }
+}
+.bg7 {
+  @include bg7;
+}
+
+@mixin bg7Q {
+  .themePurple & {
+    background-color: $purple-7-quarter;
+  }
+}
+.bg7Q {
+  @include bg7Q;
+}
+
+@mixin border7 {
+  .themePurple & {
+    border: 1px solid $purple-7;
+  }
+}
+.border7 {
+  @include border7;
+}
+
+@mixin fill7 {
+  .themePurple & {
+    fill: $purple-7;
+  }
+}
+.fill7 {
+  @include fill7;
+}
+
+@mixin color8 {
+  .themePurple & {
+    color: $purple-8;
+  }
+}
+.color8 {
+  @include color8;
+}
+
+@mixin bg8 {
+  .themePurple & {
+    background-color: $purple-8;
+  }
+}
+.bg8 {
+  @include bg8;
+}
+
+@mixin bg8Q {
+  .themePurple & {
+    background-color: $purple-8-quarter;
+  }
+}
+.bg8Q {
+  @include bg8Q;
+}
+
+@mixin border8 {
+  .themePurple & {
+    border: 1px solid $purple-8;
+  }
+}
+.border8 {
+  @include border8;
+}
+
+@mixin fill8 {
+  .themePurple & {
+    fill: $purple-8;
+  }
+}
+.fill8 {
+  @include fill8;
+}

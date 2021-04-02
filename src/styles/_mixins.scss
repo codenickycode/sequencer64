@@ -1,0 +1,28 @@
+@mixin full($p: relative) {
+  position: $p;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+}
+
+@mixin noEventsLayer($p: relative) {
+  @include full($p);
+  pointer-events: none;
+}
+
+@mixin turnOn {
+  transition: none;
+  opacity: 1;
+}
+
+@mixin turnOff {
+  transition: none;
+  opacity: 0;
+}
+
+@mixin flex($dir: row, $j: center, $a: center) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $j;
+  align-items: $a;
+}

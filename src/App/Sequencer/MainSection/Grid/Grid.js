@@ -34,7 +34,7 @@ export const Grid = () => {
       grid.push(i);
     }
     return (
-      <div id='grid' onTouchMove={onTouchMove}>
+      <div id='grid' className='grid' onTouchMove={onTouchMove}>
         {grid.map((step) => {
           const id = `cell-${step}`;
           return <Cell key={id} id={id} step={step} />;

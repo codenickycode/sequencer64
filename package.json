@@ -17,6 +17,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "redux-undo": "^1.0.1",
+    "sass": "^1.32.8",
     "tone": "^14.8.9",
     "web-vitals": "^0.2.4",
     "workbox-background-sync": "^5.1.4",
