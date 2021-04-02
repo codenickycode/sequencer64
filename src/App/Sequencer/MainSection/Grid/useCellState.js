@@ -1,8 +1,12 @@
-import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { setTapCellById, setToggleOn } from 'App/reducers/editorSlice';
+import { modCell } from 'App/reducers/sequenceSlice';
+import { useCallback, useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { MIDI_NOTES } from 'utils/MIDI_NOTES';
 
 export const useCellState = (id, step) => {
+  const dispatch = useDispatch();
+
   const selectedSample = useSelector((state) => state.editor.selectedSample);
 
   const noteOn = useSelector((state) =>
@@ -31,6 +35,27 @@ export const useCellState = (id, step) => {
       : 1
   );
 
+  const tapCell = useCallback(() => {
+    dispatch(modCell(step, noteOn));
+  }, [dispatch, noteOn, step]);
+
+  const tapCellAlert = useSelector((state) => state.editor.tapCellById[id]);
+  useEffect(() => {
+    if (tapCellAlert) {
+      tapCell();
+      dispatch(setTapCellById({ id, val: false }));
+    }
+  }, [dispatch, id, tapCell, tapCellAlert]);
+
+  const onTouchStart = useCallback(
+    (e) => {
+      e.stopPropagation();
+      dispatch(setToggleOn(!noteOn));
+      tapCell();
+    },
+    [dispatch, noteOn, tapCell]
+  );
+
   const state = useMemo(() => {
     const classes = {};
     const styles = {};
@@ -55,8 +80,8 @@ export const useCellState = (id, step) => {
       transform: length >= 1 ? 'scaleX(1)' : `scaleX(${length * 3})`,
     };
 
-    return { classes, styles, values };
-  }, [length, noteOn, pitch, selectedSample, slice, velocity]);
+    return { classes, styles, values, onTouchStart };
+  }, [length, noteOn, onTouchStart, pitch, selectedSample, slice, velocity]);
 
   return state;
 };

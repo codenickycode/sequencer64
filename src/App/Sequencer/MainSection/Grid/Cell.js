@@ -3,22 +3,15 @@ import { useSelector } from 'react-redux';
 import * as defaultKits from 'utils/defaultKits';
 import { SawIcon } from 'assets/icons';
 import { useCellState } from './useCellState';
-import { useCellFunctions } from './useCellFunctions';
 
 export const Cell = ({ id, step }) => {
-  const state = useCellState(id, step);
-  const functions = useCellFunctions(id, step, state.values.noteOn);
+  const { classes, styles, values, onTouchStart } = useCellState(id, step);
 
   const cellMemo = useMemo(() => {
     // console.log('rendering: Cell');
-    const { classes, styles, values } = state;
     return (
       <div className='cellWrapper'>
-        <div
-          id={id}
-          className={classes.cell}
-          onTouchStart={functions.onTouchStart}
-        >
+        <div id={id} className={classes.cell} onTouchStart={onTouchStart}>
           <div className={classes.slice1}>
             <SawIcon />
           </div>
@@ -27,13 +20,22 @@ export const Cell = ({ id, step }) => {
           </div>
           <div className='bg' />
           <div style={styles.bgColor} className={classes.bgColor} />
-          <div className='cursor' />
           <div className='border' />
+          <div className='cursor' />
           <SampleCells id={id} step={step} />
         </div>
       </div>
     );
-  }, [state, id, functions.onTouchStart, step]);
+  }, [
+    id,
+    classes.cell,
+    classes.slice1,
+    classes.slice2,
+    classes.bgColor,
+    onTouchStart,
+    styles.bgColor,
+    step,
+  ]);
   return cellMemo;
 };
 
