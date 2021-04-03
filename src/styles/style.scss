@@ -3,17 +3,18 @@
 @use 'styles/placeholders' as *;
 @use 'styles/themes/purple' as *;
 @use 'styles/customSelect' as *;
+@use 'App/shared/preparing';
+@use 'App/StatusBar/statusBar';
 @use 'App/Sequencer/sequencer';
+@use 'App/Sequencer/LoadSave/loadSave';
+@use 'App/Sequencer/LoadSave/Load/load';
+@use 'App/Sequencer/LoadSave/Save/save';
 @use 'App/Sequencer/MainSection/Grid/grid';
 @use 'App/Sequencer/MainSection/pastePattern';
 @use 'App/Sequencer/MainSection/loadKit';
 @use 'App/Sequencer/SamplePanel/sampleEdit';
 @use 'App/Sequencer/SamplePanel/samplePanel';
-@use 'App/Sequencer/LoadSave/loadSave';
-@use 'App/Sequencer/LoadSave/Load/load';
-@use 'App/Sequencer/LoadSave/Save/save';
-@use 'App/StatusBar/statusBar';
-@use 'App/shared/preparing';
+@use 'App/Sequencer/MenuBar/menuBar';
 
 * {
   margin: 0;
@@ -178,34 +179,6 @@ body {
   overflow-y: scroll;
 }
 
-#sequencer {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  max-width: 800px;
-  overflow-y: scroll;
-  /* border: 1px solid $red; */
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-
-#main {
-  margin: 0 auto;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  max-width: 60vh;
-  height: 60%;
-  padding: 0.25rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid $purple-default;
-  border-bottom: none;
-}
-
 /*************************************/
 /************** ChangeKit ************/
 /*************************************/
@@ -229,20 +202,6 @@ body {
 /*************************************/
 /*************** Menu **************/
 /*************************************/
-
-#menu {
-  position: fixed;
-  bottom: 0;
-  height: 10%;
-  width: 100%;
-  max-width: 800px;
-  scroll-snap-type: x mandatory;
-  overflow-x: scroll;
-  white-space: nowrap;
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  background: $purple-default-third;
-}
 
 /*************************************/
 /************* Menu Items ************/
@@ -388,152 +347,4 @@ body {
 
 .bpm-btn .icon {
   fill: $green;
-}
-
-/*************************************/
-/************ StatusBar **************/
-/*************************************/
-
-/*************************************/
-/*************** Chevrons ************/
-/*************************************/
-
-.chevron {
-  position: absolute;
-  height: 100%;
-  width: 2.5rem;
-}
-
-.chevron.left {
-  left: 0;
-}
-
-.chevron.right {
-  right: 0;
-}
-
-.chevron .icon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  fill: $white;
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.chevron-right-1,
-.chevron-right-2,
-.chevron-right-3,
-.chevron-left-1,
-.chevron-left-2,
-.chevron-left-3 {
-  opacity: 0;
-}
-
-.chevron-right-1,
-.chevron-left-1 {
-  animation: chevron-1 1s infinite;
-}
-@keyframes chevron-1 {
-  0% {
-    opacity: 0;
-  }
-  25% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 1;
-  }
-  75% {
-    opacity: 0;
-  }
-}
-
-.chevron-right-2,
-.chevron-left-2 {
-  animation: chevron-2 1s infinite;
-}
-@keyframes chevron-2 {
-  0% {
-    opacity: 0;
-  }
-  25% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-
-  75% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-.chevron-right-3,
-.chevron-left-3 {
-  animation: chevron-3 1s infinite;
-}
-@keyframes chevron-3 {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 0;
-  }
-  75% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.chevron-left,
-.chevron-right {
-  fill: $white;
-  width: 100%;
-  height: 100%;
-}
-
-/*************************************/
-/*************** Scroll **************/
-/*************************************/
-
-.scrollbar {
-  pointer-events: none;
-  position: fixed;
-  height: 10%;
-  width: 100%;
-  max-width: 800px;
-  bottom: 0;
-}
-
-.scroll-right,
-.scroll-left {
-  pointer-events: initial;
-  position: absolute;
-  height: 100%;
-  width: 2rem;
-  background: $color-none;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  transition: 150ms;
-}
-
-.scroll-left {
-  left: 0;
-}
-.scroll-right {
-  right: 0;
-}
-
-button.scroll-right:disabled,
-button.scroll-left:disabled {
-  pointer-events: none;
-  opacity: 0;
 }

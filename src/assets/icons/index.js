@@ -14,7 +14,7 @@ import { ReactComponent as Pitch } from 'assets/icons/pitch.svg';
 import { ReactComponent as Velocity } from 'assets/icons/velocity.svg';
 import { ReactComponent as Length } from 'assets/icons/length.svg';
 import { ReactComponent as Square } from 'assets/icons/square.svg';
-// import { ReactComponent as PointRight } from 'assets/icons/pointers/point-right.svg';
+import { ReactComponent as Tap } from 'assets/icons/tap.svg';
 import { ReactComponent as PointUp } from 'assets/icons/pointers/point-up.svg';
 import { ReactComponent as PointDown } from 'assets/icons/pointers/point-down.svg';
 import { ReactComponent as Paint } from 'assets/icons/paint.svg';
@@ -22,10 +22,6 @@ import { ReactComponent as Close } from 'assets/icons/close.svg';
 import { ReactComponent as ChevronDown } from 'assets/icons/chevrons/chevron-down.svg';
 import { ReactComponent as ChevronRight } from 'assets/icons/chevrons/chevron-right.svg';
 import { ReactComponent as ChevronLeft } from 'assets/icons/chevrons/chevron-left.svg';
-import { ReactComponent as ChevronDoubleLeft } from 'assets/icons/chevrons/chevron-double-left.svg';
-import { ReactComponent as ChevronDoubleRight } from 'assets/icons/chevrons/chevron-double-right.svg';
-import { ReactComponent as ChevronTripleLeft } from 'assets/icons/chevrons/chevron-triple-left.svg';
-import { ReactComponent as ChevronTripleRight } from 'assets/icons/chevrons/chevron-triple-right.svg';
 import { ReactComponent as Open } from 'assets/icons/open.svg';
 import { ReactComponent as Save } from 'assets/icons/save.svg';
 import { ReactComponent as Delete } from 'assets/icons/delete.svg';
@@ -45,20 +41,6 @@ export const ChevronLeftIcon = ({ addClass = '' }) => (
 );
 export const ChevronRightIcon = ({ addClass = '' }) => (
   <ChevronRight className={addClass + ' chevron-right'} />
-);
-
-export const ChevronDoubleLeftIcon = ({ addClass = '' }) => (
-  <ChevronDoubleLeft className={addClass + ' icon'} />
-);
-export const ChevronDoubleRightIcon = ({ addClass = '' }) => (
-  <ChevronDoubleRight className={addClass + ' icon'} />
-);
-
-export const ChevronTripleLeftIcon = ({ addClass = '' }) => (
-  <ChevronTripleLeft className={addClass + ' icon'} />
-);
-export const ChevronTripleRightIcon = (addClass = '') => (
-  <ChevronTripleRight className={addClass + ' icon'} />
 );
 
 export const StopIcon = ({ addClass = '' }) => (
@@ -158,6 +140,10 @@ export const TwitterIcon = ({ addClass = '' }) => (
 
 export const FacebookIcon = ({ addClass = '' }) => (
   <Facebook className={addClass + ' icon'} />
+);
+
+export const TapIcon = ({ addClass = '' }) => (
+  <Tap className={addClass + ' icon'} />
 );
 
 export const PointUpIcon = ({ addClass = '' }) => (
