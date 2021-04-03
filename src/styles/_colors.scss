@@ -143,6 +143,15 @@ $red-quarter: rgba(232, 12, 48, 0.25);
   @extend %bgDefault;
 }
 
+%bgDefaultHalf {
+  .themePurple & {
+    background: $purple-default-half;
+  }
+}
+.bgDefaultHalf {
+  @extend %bgDefaultHalf;
+}
+
 %bgDefault3rd {
   .themePurple & {
     background: $purple-default-third;
@@ -150,6 +159,15 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 .bgDefault3rd {
   @extend %bgDefault3rd;
+}
+
+%bgDefaultQuarter {
+  .themePurple & {
+    background: $purple-default-quarter;
+  }
+}
+.bgDefaultQuarter {
+  @extend %bgDefaultQuarter;
 }
 
 %borderDefault {
@@ -168,6 +186,12 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 .borderDefault {
   @extend %borderDefaultHalf;
+}
+
+%borderBottomHalf {
+  .themePurple & {
+    border-bottom: 1px solid $purple-default-half;
+  }
 }
 
 %fillDefault {

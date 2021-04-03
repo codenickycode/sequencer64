@@ -37,6 +37,31 @@
   transform: scale(0.8);
 }
 
+%centerTextPadding {
+  padding: 0.5rem;
+  text-align: center;
+}
+
+%inputFont {
+  font-family: inherit;
+  font-style: inherit;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+  letter-spacing: 3px;
+}
+
+%inputBtn {
+  -webkit-appearance: none;
+  width: 100%;
+  padding: 0.75rem;
+  @extend %bgDefaultHalf;
+  color: $white;
+  outline: none;
+  border: none;
+  opacity: 0.5;
+  @extend %inputFont;
+}
+
 %btn {
   cursor: pointer;
   width: auto;
@@ -47,6 +72,7 @@
   border-radius: 0.3rem;
   color: $white;
   background: $black;
+  @extend %inputFont;
 
   &.pressed {
     transition: none;
@@ -79,4 +105,29 @@
 %dummySmall {
   width: 4rem;
   height: 100%;
+}
+
+%bottomBtn {
+  position: fixed;
+  z-index: 101;
+  bottom: 0;
+  width: 100%;
+  padding: 0.5rem;
+  background: $black;
+}
+
+%btnFull {
+  min-height: 3rem;
+  width: 100%;
+  margin: 0.25rem 0;
+  padding: 0.25rem 0.5rem;
+  @extend %bgDefaultQuarter;
+  border-radius: 0.5rem;
+  @extend %inputFont;
+
+  transform: scale(1);
+
+  &.pressed {
+    transform: scale(0.95);
+  }
 }

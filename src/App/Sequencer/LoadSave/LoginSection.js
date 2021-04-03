@@ -15,12 +15,12 @@ const LoggedIn = ({ fetching, classes, values }) => {
   const dispatch = useDispatch();
   const onLogout = () => dispatch(logout());
   return (
-    <div className='login-status'>
+    <div className='loggedIn'>
       {fetching ? (
         <p>please wait...</p>
       ) : (
-        <div className='login-status-text'>
-          <p className='login-status-title'>{values.title}</p>
+        <div className='text'>
+          <p className='user'>{values.user}</p>
           <p className={classes.online}>{values.online}</p>
         </div>
       )}
@@ -37,8 +37,8 @@ const NotLoggedIn = ({ values, fetching }) => {
     dispatch(stopSequence());
   };
   return (
-    <div className='login-div'>
-      <p className='sequence-select-sub'>{values.sub}</p>
+    <div className='notLoggedIn'>
+      <p className='sub'>{values.sub}</p>
       <Link
         className='login-btn'
         onTouchStart={handleStopSequence}
@@ -57,10 +57,10 @@ const useLoginSectionState = () => {
   const fetching = useSelector((state) => state.app.fetching);
 
   const classes = {};
-  classes.online = online ? 'login-status-sub' : 'login-status-sub error';
+  classes.online = online ? 'online' : 'online error';
 
   const values = {};
-  values.title = `Logged in as: ${username}`;
+  values.user = `Logged in as: ${username}`;
   values.online = online ? 'online sync' : 'offline';
   values.sub = fetching
     ? 'Logging in...'

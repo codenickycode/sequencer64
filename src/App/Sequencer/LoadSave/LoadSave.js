@@ -17,16 +17,14 @@ export const LoadSave = () => {
     const onClose = () => fadeOutThen(() => dispatch(setShow('')));
     return (
       <>
-        <div className={'load-save-sequence' + fadeInClass}>
+        <div className={'loadSave' + fadeInClass}>
           <Tabs show={show} />
           <LoginSection />
           {show === 'save' && <Save />}
           {show === 'load' && <Load />}
         </div>
-        <div className={'bottom-btn' + fadeInClass}>
-          <Button classes='load-save-sequence-close' onClick={onClose}>
-            Close
-          </Button>
+        <div className={'bottomBtn' + fadeInClass}>
+          <Button onClick={onClose}>Close</Button>
         </div>
       </>
     );
@@ -39,12 +37,12 @@ const Tabs = ({ show }) => {
   const changeTab = ({ target: { value } }) => {
     dispatch(setShow(value));
   };
-  let loadClasses = 'load-save-tab';
+  let loadClasses = 'tab';
   let saveClasses = loadClasses;
   if (show === 'load') loadClasses += ' selected';
   if (show === 'save') saveClasses += ' selected';
   return (
-    <div className='load-save-tabs'>
+    <div className='tabs'>
       <input
         type='button'
         id='load-tab'

@@ -1,0 +1,80 @@
+@use 'styles/placeholders' as *;
+@use 'styles/mixins' as *;
+@use 'styles/colors' as *;
+
+.loadSave {
+  position: absolute;
+  z-index: 101;
+  top: 0;
+  min-height: 100%;
+  width: 100%;
+  padding: 0.5rem;
+  padding-bottom: 2.5rem;
+  background: $black;
+
+  .tabs {
+    width: 100%;
+    display: flex;
+
+    .tab {
+      @extend %inputBtn;
+      &.selected {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.notLoggedIn {
+  width: 100%;
+  padding: 1rem;
+  @include flex(column);
+
+  .sub {
+    @extend %centerTextPadding;
+  }
+
+  .login-btn {
+    @extend %btnFull;
+    @include flex;
+    color: $white;
+  }
+}
+
+.bottomBtn {
+  @extend %bottomBtn;
+  .btn {
+    @extend %btn;
+    width: 100%;
+  }
+}
+
+.loggedIn {
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 1rem;
+  @include flex(row, space-evenly);
+  @extend %borderBottomHalf;
+
+  .text {
+    @extend %full;
+    @include flex(row, space-evenly);
+    padding: 0.5rem;
+
+    .user {
+      font-size: 0.9rem;
+    }
+
+    .online {
+      font-size: 0.8rem;
+      font-weight: normal;
+      color: $green;
+    }
+  }
+
+  .btn {
+    @extend %btn;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+  }
+}
