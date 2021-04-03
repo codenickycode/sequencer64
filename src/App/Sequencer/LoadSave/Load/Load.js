@@ -9,7 +9,7 @@ export const Load = () => {
   const props = useSelectSequence(); // user/default sharing instance
 
   return (
-    <div className='load-sequence'>
+    <div className='loadSequence'>
       <div className='sequence-select'>
         <UserSection {...props} />
         <DefaultSection {...props} />

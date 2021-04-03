@@ -8,13 +8,18 @@
   top: 0;
   min-height: 100%;
   width: 100%;
-  padding: 0.5rem;
+  padding-top: 2.5rem;
   padding-bottom: 2.5rem;
   background: $black;
 
   .tabs {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    height: 2.5rem;
     width: 100%;
     display: flex;
+    background: $black;
 
     .tab {
       @extend %inputBtn;
@@ -46,6 +51,9 @@
   .btn {
     @extend %btn;
     width: 100%;
+    &.pressed {
+      transform: none;
+    }
   }
 }
 

@@ -18,8 +18,10 @@ export const LoadSave = () => {
     return (
       <>
         <div className={'loadSave' + fadeInClass}>
-          <Tabs show={show} />
-          <LoginSection />
+          <div className='top'>
+            <Tabs show={show} />
+            <LoginSection />
+          </div>
           {show === 'save' && <Save />}
           {show === 'load' && <Load />}
         </div>

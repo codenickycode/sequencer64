@@ -9,6 +9,7 @@
 @use 'App/Sequencer/SamplePanel/sampleEdit';
 @use 'App/Sequencer/SamplePanel/samplePanel';
 @use 'App/Sequencer/LoadSave/loadSave';
+@use 'App/Sequencer/LoadSave/Load/load';
 @use 'App/shared/preparing';
 
 * {
@@ -210,11 +211,8 @@ body {
 /*********** Load Sequence ***********/
 /*************************************/
 
-.load-sequence,
-.save-sequence {
-  margin-top: 1rem;
-  width: 100%;
-  height: 100%;
+.loadSequence,
+.saveSequence {
 }
 
 .flex-between {
