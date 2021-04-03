@@ -68,8 +68,8 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
         )}
         <div className='mod-btns'>
           <Button onClick={onReset}>Reset All</Button>
-          <Button onClick={toggleAll}>
-            {editAll ? 'Tap Cell' : 'Apply All'}
+          <Button classes={editAll ? 'bgGreen' : ''} onClick={toggleAll}>
+            Apply All
           </Button>
         </div>
       </div>

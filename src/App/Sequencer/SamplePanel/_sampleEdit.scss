@@ -93,6 +93,11 @@
 
     .btn {
       @extend %btn;
+
+      &.bgGreen {
+        color: $black;
+        background: $green;
+      }
     }
   }
 }
