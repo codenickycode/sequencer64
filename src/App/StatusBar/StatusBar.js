@@ -43,7 +43,7 @@ export const StatusBar = () => {
     }
     // console.log('rendering: StatusBar');
     return (
-      <div className='status-bar'>
+      <div className='statusBar'>
         <p className={classes} id='status'>
           {status}
         </p>

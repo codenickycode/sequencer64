@@ -1,0 +1,32 @@
+@use 'styles/placeholders' as *;
+@use 'styles/mixins' as *;
+@use 'styles/colors' as *;
+
+.statusBar {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  height: 2.5rem;
+  width: 100%;
+  z-index: 201;
+
+  .status {
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-family: Orbitron, Roboto, sans-serif;
+    color: $red;
+    letter-spacing: 2px;
+    text-align: center;
+    background: $black-90;
+    opacity: 0;
+    transition: 1500ms;
+
+    &.fade-out {
+      @extend %turnOn;
+    }
+
+    &.fade-out-2 {
+      opacity: 1;
+    }
+  }
+}

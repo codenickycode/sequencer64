@@ -11,6 +11,7 @@
 @use 'App/Sequencer/LoadSave/loadSave';
 @use 'App/Sequencer/LoadSave/Load/load';
 @use 'App/Sequencer/LoadSave/Save/save';
+@use 'App/StatusBar/statusBar';
 @use 'App/shared/preparing';
 
 * {
@@ -391,36 +392,6 @@ body {
 /*************************************/
 /************ StatusBar **************/
 /*************************************/
-
-.status-bar {
-  pointer-events: none;
-  position: fixed;
-  top: 0;
-  height: 2.5rem;
-  width: 100%;
-  z-index: 201;
-}
-.status {
-  padding: 0.5rem;
-  font-size: 1rem;
-  font-family: Orbitron, Roboto, sans-serif;
-  color: $red;
-  letter-spacing: 2px;
-  text-align: center;
-  background: $black-90;
-  filter: drop-shadow(2px 2px 2px $purple-default-half);
-  opacity: 0;
-  transition: 1500ms;
-}
-
-.status.fade-out-2 {
-  opacity: 1;
-}
-
-.status.fade-out {
-  opacity: 1;
-  transition: none;
-}
 
 /*************************************/
 /*************** Chevrons ************/
