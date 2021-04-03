@@ -3,6 +3,7 @@
 @use 'styles/placeholders' as *;
 @use 'styles/themes/purple' as *;
 @use 'styles/customSelect' as *;
+@use 'App/Sequencer/sequencer';
 @use 'App/Sequencer/MainSection/Grid/grid';
 @use 'App/Sequencer/MainSection/pastePattern';
 @use 'App/Sequencer/MainSection/loadKit';

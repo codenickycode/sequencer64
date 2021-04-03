@@ -3,20 +3,6 @@
 @use 'styles/colors' as *;
 
 .sample-panel {
-  position: fixed;
-  top: 60%;
-  width: 100%;
-  max-width: 800px;
-  height: 30%;
-  @extend %borderDefault;
-  border-left: none;
-  border-right: none;
-  @extend %bgDefault3rd;
-  overflow: hidden;
-  border: 3px solid red;
-}
-
-.sample-panel {
   .menu {
     @extend %full;
     padding: 0.25rem;

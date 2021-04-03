@@ -1,0 +1,37 @@
+@use 'styles/placeholders' as *;
+@use 'styles/mixins' as *;
+@use 'styles/colors' as *;
+
+#sequencer {
+  @extend %full;
+  z-index: 1;
+  max-width: 800px;
+  overflow-y: scroll;
+  @include flex(column);
+}
+
+#main {
+  margin: 0 auto;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  max-width: 60vh;
+  height: 60%;
+  padding: 0.25rem;
+  @include flex;
+  @extend %borderDefault;
+}
+
+.sample-panel {
+  position: fixed;
+  top: 60%;
+  width: 100%;
+  max-width: 800px;
+  height: 30%;
+  @extend %borderDefault;
+  border-left: none;
+  border-right: none;
+  @extend %bgDefault3rd;
+  overflow: hidden;
+  border: 3px solid red;
+}
