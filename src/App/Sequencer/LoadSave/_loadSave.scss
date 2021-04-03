@@ -23,6 +23,7 @@
 
     .tab {
       @extend %inputBtn;
+      border-radius: 0;
       &.selected {
         opacity: 1;
       }
@@ -36,13 +37,14 @@
   @include flex(column);
 
   .sub {
-    @extend %centerTextPadding;
+    @extend %textCenterPadding;
   }
 
   .login-btn {
     @extend %btnFull;
     @include flex;
     color: $white;
+    @extend %bgDefaultQuarter;
   }
 }
 

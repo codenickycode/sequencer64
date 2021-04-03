@@ -10,19 +10,17 @@ export const Load = () => {
 
   return (
     <div className='loadSequence'>
-      <div className='sequence-select'>
-        <UserSection {...props} />
-        <DefaultSection {...props} />
-      </div>
+      <UserSequences {...props} />
+      <DefaultSequences {...props} />
     </div>
   );
 };
 
-const UserSection = (props) => {
+const UserSequences = (props) => {
   const userSequences = useSelector((state) => state.app.userSequences);
   return (
-    <div className='sequence-select-group'>
-      <p className='sequence-select-sub'>User Sequences</p>
+    <div className='userSequences'>
+      <p className='title'>User Sequences</p>
       {!userSequences || userSequences.length === 0 ? (
         <p>No user sequences</p>
       ) : (
@@ -39,11 +37,11 @@ const UserSection = (props) => {
   );
 };
 
-const DefaultSection = (props) => {
+const DefaultSequences = (props) => {
   const defaultSequences = useSelector((state) => state.app.defaultSequences);
   return (
-    <div className='sequence-select-group'>
-      <p className='sequence-select-sub'>Default Sequences</p>
+    <div className='defaultSequences'>
+      <p className='title'>Default Sequences</p>
       <ColumnTitles />
       {defaultSequences.map((sequence) => (
         <DefaultSequence key={cuid.slug()} sequence={sequence} {...props} />
@@ -54,7 +52,7 @@ const DefaultSection = (props) => {
 
 const ColumnTitles = () => {
   return (
-    <div className='load-sequence-sub'>
+    <div className='columnTitles'>
       <p>Name</p>
       <p className='p-left-25'>Kit</p>
       <p>Bpm</p>

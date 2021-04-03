@@ -3,9 +3,72 @@
 @use 'styles/colors' as *;
 
 .loadSequence {
-  position: relative;
+  @extend %full;
   padding: 1rem 0.5rem;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+
+  .userSequences,
+  .defaultSequences {
+    @extend %borderDefaultHalf;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+
+    .title {
+      @extend %textCenterPadding;
+    }
+
+    .columnTitles {
+      width: 100%;
+      padding: 0.5rem;
+      display: grid;
+      grid-template-columns: 0.5fr 0.25fr 0.15fr 0.1fr;
+      align-items: center;
+      @extend %borderTopBottomHalf;
+      border-right: none;
+      border-left: none;
+    }
+
+    .sequence {
+      @extend %btnFull;
+      @extend %bgDefaultQuarter;
+      display: grid;
+      grid-template-columns: 0.5fr 0.25fr 0.15fr 0.1fr;
+      align-items: center;
+      transform: scale(1);
+
+      &.selected {
+        background: $green-half;
+      }
+
+      &.deleting {
+        opacity: 0.5;
+      }
+
+      .delete-btn {
+        background: transparent;
+        padding: 0.25rem;
+        outline: none;
+        border: none;
+
+        .icon {
+          max-height: 2rem;
+          width: 100%;
+          fill: $white;
+        }
+      }
+    }
+
+    .confirm-delete {
+      width: 100%;
+      padding: 0.5rem;
+      @include flex(row, space-evenly);
+      @extend %bgDefaultQuarter;
+
+      .btn {
+        @extend %btn;
+        &.red {
+          @extend .red;
+        }
+      }
+    }
+  }
 }

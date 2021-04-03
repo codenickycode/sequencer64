@@ -37,7 +37,7 @@
   transform: scale(0.8);
 }
 
-%centerTextPadding {
+%textCenterPadding {
   padding: 0.5rem;
   text-align: center;
 }
@@ -121,10 +121,7 @@
   width: 100%;
   margin: 0.25rem 0;
   padding: 0.25rem 0.5rem;
-  @extend %bgDefaultQuarter;
   border-radius: 0.5rem;
-  @extend %inputFont;
-
   transform: scale(1);
 
   &.pressed {

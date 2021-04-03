@@ -193,6 +193,12 @@ $red-quarter: rgba(232, 12, 48, 0.25);
     border-bottom: 1px solid $purple-default-half;
   }
 }
+%borderTopBottomHalf {
+  .themePurple & {
+    border-bottom: 1px solid $purple-default-half;
+    border-top: 1px solid $purple-default-half;
+  }
+}
 
 %fillDefault {
   .themePurple & {
