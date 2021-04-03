@@ -5,20 +5,18 @@ import { FacebookIcon, TwitterIcon } from 'assets/icons';
 
 export const ShareJSX = ({ online, loggedIn, link, copyLink }) => {
   return (
-    <div className='save-sequence-group'>
-      <h1 className='save-header'>Share:</h1>
-      <div className='share-div'>
+    <div className='share'>
+      <h1 className='header'>Share:</h1>
+      <div className='shareDiv'>
         {!online ? (
-          <p className='share-p dim-2'>Share unavailable while offline</p>
+          <p>Share unavailable while offline</p>
         ) : !loggedIn ? (
-          <p className='share-p dim-2'>Share unavailable until logged in</p>
+          <p>Share unavailable until logged in</p>
         ) : !link ? (
-          <p className='share-p dim-2'>
-            Save your sequence to generate a shareable link
-          </p>
+          <p>Save your sequence to generate a shareable link</p>
         ) : (
-          <div className='share-link-wrapper'>
-            <div className='share-link'>
+          <div>
+            <div className='shareLink'>
               <input
                 type='text'
                 value={link}
@@ -29,13 +27,13 @@ export const ShareJSX = ({ online, loggedIn, link, copyLink }) => {
                 <label htmlFor='copy-link'>copy</label>
               </Button>
             </div>
-            <div className='social-links'>
+            <div className='socialLinks'>
               <a
                 href={`${TWITTER_URL}${link}`}
                 target='_blank'
                 rel='noreferrer'
               >
-                <Button classes='social-btn' aria-label='Tweet'>
+                <Button aria-label='Tweet'>
                   <TwitterIcon />
                   <span>Tweet</span>
                 </Button>
@@ -45,7 +43,7 @@ export const ShareJSX = ({ online, loggedIn, link, copyLink }) => {
                 target='_blank'
                 rel='noreferrer'
               >
-                <Button classes='social-btn' aria-label='Share to Facebook'>
+                <Button aria-label='Share to Facebook'>
                   <FacebookIcon />
                   <span>Share</span>
                 </Button>

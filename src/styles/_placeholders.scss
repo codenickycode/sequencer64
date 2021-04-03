@@ -37,17 +37,32 @@
   transform: scale(0.8);
 }
 
+%headerLeft {
+  width: 100%;
+  text-align: left;
+  font-size: 1.25rem;
+}
+
 %textCenterPadding {
   padding: 0.5rem;
   text-align: center;
 }
 
-%inputFont {
+%btnFont {
   font-family: inherit;
   font-style: inherit;
   font-size: 0.8rem;
   text-transform: capitalize;
   letter-spacing: 3px;
+}
+
+%input {
+  padding: 0.5rem;
+  outline: none;
+  border: 1px solid $white;
+  border-radius: 0.3rem;
+  color: $white;
+  background: $black;
 }
 
 %inputBtn {
@@ -59,20 +74,15 @@
   outline: none;
   border: none;
   opacity: 0.5;
-  @extend %inputFont;
+  @extend %btnFont;
 }
 
 %btn {
   cursor: pointer;
   width: auto;
   height: 2.5rem;
-  padding: 0.5rem;
-  outline: none;
-  border: 1px solid $white;
-  border-radius: 0.3rem;
-  color: $white;
-  background: $black;
-  @extend %inputFont;
+  @extend %input;
+  @extend %btnFont;
 
   &.pressed {
     transition: none;

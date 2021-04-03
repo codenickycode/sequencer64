@@ -12,17 +12,18 @@ export const SaveJSX = ({
   fileLimit,
 }) => {
   return (
-    <div className='save-sequence-group'>
+    <div className='save'>
       <form id='save-form' onSubmit={save}>
-        <h1 className='save-header flex-between'>
+        <h1 className='header flexBetween'>
           Save:
-          <span className='save-location'>{`(saving to ${
+          <span className='saveLocation'>{`(saving to ${
             online && loggedIn ? 'cloud and device' : 'device'
           })`}</span>
         </h1>
 
-        <div className='save-sequence-input'>
+        <div className='saveInputWrapper'>
           <input
+            className='nameInput'
             type='text'
             value={newName}
             onChange={handleNewName}
@@ -37,21 +38,13 @@ export const SaveJSX = ({
       <p className={userError ? 'error' : 'confirmation'}>
         {userError ? userError : confirmation}
       </p>
-      <div className='file-limit'>
-        <p className='file-limit-p'>
+      <div className='fileLimit'>
+        <p>
           File limit:
-          <span
-            className={
-              fileLimit <= 0 ? 'file-limit-span error' : 'file-limit-span'
-            }
-          >
-            {fileLimit}
-          </span>
+          <span className={fileLimit <= 0 ? 'error' : ''}>{fileLimit}</span>
         </p>
         {fileLimit <= 0 && (
-          <p className='file-limit-instructions error'>
-            Delete some old sequences to save
-          </p>
+          <p className='error'>Delete some old sequences to save</p>
         )}
       </div>
     </div>

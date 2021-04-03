@@ -1,0 +1,119 @@
+@use 'styles/placeholders' as *;
+@use 'styles/mixins' as *;
+@use 'styles/colors' as *;
+
+.saveSequence {
+  @extend %full;
+  padding: 1rem 0.5rem;
+
+  .share {
+    @extend %borderDefaultHalf;
+    margin-bottom: 1rem;
+    padding: 1rem;
+
+    .header {
+      @extend %headerLeft;
+    }
+
+    p {
+      margin-top: 1rem;
+      color: $white-half;
+    }
+
+    .shareLink {
+      padding: 0.5rem;
+      display: flex;
+
+      #sequence-link {
+        width: 100%;
+        @extend %input;
+      }
+
+      .btn {
+        @extend %btn;
+        margin-left: 0.25rem;
+        max-width: 5rem;
+      }
+    }
+
+    .socialLinks {
+      margin-top: 0.25rem;
+      width: 100%;
+      height: 2.5rem;
+      @include flex(row, space-evenly);
+
+      a {
+        @extend %full;
+      }
+
+      .btn {
+        width: 100%;
+        height: 100%;
+        padding: 1rem;
+        background: none;
+        border: none;
+        @include flex;
+        justify-content: flex-start;
+
+        span {
+          color: $white;
+          margin-left: 0.5rem;
+        }
+
+        .icon {
+          height: 2rem;
+          width: 2rem;
+          fill: $white;
+        }
+      }
+    }
+  }
+
+  .save {
+    @extend %borderDefaultHalf;
+    margin-bottom: 1rem;
+    padding: 1rem;
+
+    .header {
+      @extend %headerLeft;
+      @include flex(row, space-between);
+
+      .saveLocation {
+        font-size: 0.8rem;
+        font-weight: lighter;
+        color: $white-half;
+      }
+    }
+
+    .saveInputWrapper {
+      width: 100%;
+      margin-bottom: 0.5rem;
+      @include flex(column, space-evenly);
+
+      .nameInput {
+        @extend %input;
+        @extend %full;
+        margin: 0.5rem 0;
+        overflow: hidden;
+        font-size: 1.25rem;
+      }
+
+      .btn {
+        @extend %btn;
+        width: 100%;
+      }
+    }
+
+    .fileLimit {
+      p {
+        padding-top: 0.5rem;
+      }
+
+      span {
+        margin-left: 0.5rem;
+        font-size: 1.25rem;
+        color: $green;
+      }
+    }
+  }
+}
