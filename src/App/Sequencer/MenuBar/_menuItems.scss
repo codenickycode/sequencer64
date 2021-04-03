@@ -1,0 +1,99 @@
+@use 'styles/placeholders' as *;
+@use 'styles/mixins' as *;
+@use 'styles/colors' as *;
+
+.menuItems {
+  @extend %full;
+  scroll-snap-align: start;
+  @include flex(row, space-evenly);
+  display: inline-flex;
+  vertical-align: top;
+
+  .dummy {
+    width: 1rem;
+  }
+
+  .menuBtn {
+    @extend %btn;
+    @include flex;
+    background: transparent;
+    border: none;
+
+    label {
+      margin: 0 0.5rem;
+    }
+  }
+
+  .icon {
+    width: 2rem;
+    fill: $white;
+  }
+}
+
+.transportWrapper {
+  width: 100%;
+  @include flex;
+
+  .btn {
+    width: 4rem;
+    height: 2rem;
+    margin: 0 0.25rem;
+
+    .icon {
+      height: 1rem;
+    }
+
+    &#stop {
+      background: $magenta-3q;
+    }
+    &#start {
+      background: $lime-3q;
+      &.flashing {
+        animation: dim-flashing 300ms alternate infinite;
+      }
+    }
+  }
+
+  .inputWrapper {
+    margin-left: 0.25rem;
+    width: 7rem;
+    @include flex;
+
+    .input {
+      @extend %input;
+      width: 4rem;
+      height: 100%;
+      padding: 0.25rem;
+      overflow: hidden;
+      text-align: center;
+      font-size: 1.25rem;
+
+      &.edited {
+        animation: flashing 300ms alternate infinite;
+      }
+    }
+
+    .bpmOrBtn {
+      width: 3rem;
+      @include flex;
+
+      label {
+        display: inline-block;
+        width: 100%;
+        font-style: normal;
+        padding: 0.5rem;
+      }
+
+      .btn {
+        background: none;
+        border: 1px solid $white;
+        border-radius: 0.5rem;
+        outline: none;
+
+        .icon {
+          fill: $green;
+        }
+      }
+    }
+  }
+}

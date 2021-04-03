@@ -15,29 +15,25 @@ export const LoadSaveButton = () => {
 
   // console.log('rendering: LoadSaveButton');
   return (
-    <div className='menu-items'>
-      <span className='menu-dummy' />
+    <div className='menuItems'>
+      <span className='dummy' />
       <Button
         id='load-sequence'
-        classes='menu-btn'
+        classes='menuBtn'
         onClick={() => onClick('load')}
       >
         <OpenIcon />
-        <label htmlFor='load-sequence' className='menu-label'>
-          load
-        </label>
+        <label htmlFor='load-sequence'>load</label>
       </Button>
       <Button
         id='save-sequence'
-        classes='menu-btn'
+        classes='menuBtn'
         onClick={() => onClick('save')}
       >
         <SaveIcon />
-        <label htmlFor='save-sequence' className='menu-label'>
-          save
-        </label>
+        <label htmlFor='save-sequence'>save</label>
       </Button>
-      <span className='menu-dummy' />
+      <span className='dummy' />
     </div>
   );
 };

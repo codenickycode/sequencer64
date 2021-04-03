@@ -15,6 +15,7 @@
 @use 'App/Sequencer/SamplePanel/sampleEdit';
 @use 'App/Sequencer/SamplePanel/samplePanel';
 @use 'App/Sequencer/MenuBar/menuBar';
+@use 'App/Sequencer/MenuBar/menuItems';
 
 * {
   margin: 0;
@@ -23,9 +24,28 @@
   user-select: none;
 }
 
-/*************************************/
-/*************** Global **************/
-/*************************************/
+html,
+body {
+  @extend %full;
+  background: $black;
+}
+
+body {
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  color: $white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  font-style: italic;
+}
+
+#root {
+  @extend %full;
+  z-index: 1;
+  max-width: 800px;
+  overflow-y: scroll;
+}
 
 .deg90 {
   transform: rotate(90deg);
@@ -150,201 +170,4 @@ p.dim-2 {
   100% {
     transform: rotate(360deg);
   }
-}
-
-html,
-body {
-  width: 100%;
-  height: 100%;
-  background: $black;
-}
-
-body {
-  position: relative;
-  max-width: 100%;
-  max-height: 100%;
-  overflow: hidden;
-  color: $white;
-  font-family: 'Roboto', sans-serif;
-  font-size: 15px;
-  font-style: italic;
-}
-
-#root {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  max-width: 800px;
-  overflow-y: scroll;
-}
-
-/*************************************/
-/************** ChangeKit ************/
-/*************************************/
-
-.change-kit-wrapper {
-  padding: 0.5rem;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.change-kit-wrapper label {
-  margin-right: 0.5rem;
-}
-
-/*************************************/
-/*************** GRID ****************/
-/*************************************/
-
-/*************************************/
-/*************** Menu **************/
-/*************************************/
-
-/*************************************/
-/************* Menu Items ************/
-/*************************************/
-
-.menu-items {
-  position: relative;
-  scroll-snap-align: start;
-  width: 100%;
-  height: 100%;
-  display: inline-flex;
-  justify-content: space-evenly;
-  align-items: center;
-  vertical-align: top;
-}
-
-.menu-items .chevron.left,
-.menu-items .chevron.right {
-  height: 100%;
-  max-width: 2rem;
-  display: flex;
-  align-items: center;
-}
-
-.menu-dummy {
-  width: 1rem;
-}
-
-.menu-btn {
-  cursor: pointer;
-  border: none;
-  outline: none;
-  border-radius: 0.3rem;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: $white;
-}
-
-.menu-label {
-  margin: 0 0.5rem;
-}
-
-.menu-items .icon {
-  width: 2rem;
-  fill: $white;
-}
-
-/*************************************/
-/************* Transport *************/
-/*************************************/
-
-.transport-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.transport .menu-btn {
-  width: 4rem;
-  height: 2rem;
-  margin: 0 0.25rem;
-}
-
-.transport .menu-btn .icon {
-  height: 1rem;
-}
-
-#stop {
-  background: $magenta-3q;
-}
-
-#start {
-  background: $lime-3q;
-}
-
-#start.flashing {
-  animation: dim-flashing 300ms alternate infinite;
-}
-
-#stop,
-#start {
-  border-radius: 0.3rem;
-}
-
-#stop label,
-#start label {
-  visibility: hidden;
-  width: 0;
-  user-select: none;
-  pointer-events: none;
-}
-
-.transport .input-div {
-  margin-left: 0.25rem;
-  width: 7rem;
-  user-select: initial;
-  display: flex;
-  align-items: center;
-}
-
-.transport .input {
-  width: 4rem;
-  height: 100%;
-  padding: 0.25rem;
-  border: none;
-  outline: none;
-  border: 1px solid $white;
-  border-radius: 0.3rem;
-  background: $black;
-  color: $white;
-  overflow: hidden;
-  text-align: center;
-  font-size: 1.25rem;
-}
-
-.transport .input.edited {
-  animation: flashing 300ms alternate infinite;
-}
-
-.bpm-or-btn {
-  width: 3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.bpm-label {
-  display: inline-block;
-  width: 100%;
-  font-style: normal;
-  padding: 0.5rem;
-}
-
-.bpm-btn {
-  background: none;
-  border: 1px solid $white;
-  border-radius: 0.5rem;
-  outline: none;
-}
-
-.bpm-btn .icon {
-  fill: $green;
 }

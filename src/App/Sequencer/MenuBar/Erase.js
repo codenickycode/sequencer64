@@ -23,17 +23,15 @@ export const Erase = () => {
 
     // console.log('rendering: Erase');
     return (
-      <div className='menu-items'>
+      <div className='menuItems'>
         <Button
           id='erase-all'
-          classes='menu-btn'
+          classes='menuBtn'
           disabled={disabled}
           onClick={onClick}
         >
           <EraseAllIcon />
-          <label htmlFor='erase-all' className='menu-label'>
-            erase pattern
-          </label>
+          <label htmlFor='erase-all'>erase pattern</label>
         </Button>
       </div>
     );

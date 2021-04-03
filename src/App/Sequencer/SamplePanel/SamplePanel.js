@@ -76,7 +76,7 @@ const SampleEditMenu = ({ selectMode, onClose }) => {
         </Button>
         <div className='dummy' />
         <Button
-          classes='menu-btn'
+          classes='sampleMenuBtn'
           disabled={disabled}
           onClick={() => selectMode(MODES.ERASING)}
         >
@@ -84,19 +84,22 @@ const SampleEditMenu = ({ selectMode, onClose }) => {
           <p>Erase</p>
         </Button>
         <Button
-          classes='menu-btn'
+          classes='sampleMenuBtn'
           disabled={disabled}
           onClick={() => selectMode(MODES.SLICING)}
         >
           <SawIcon />
           <p>Slice</p>
         </Button>
-        <Button classes='menu-btn' onClick={() => selectMode(MODES.COPYING)}>
+        <Button
+          classes='sampleMenuBtn'
+          onClick={() => selectMode(MODES.COPYING)}
+        >
           <CopyIcon />
           <p>Copy</p>
         </Button>
         <Button
-          classes='menu-btn'
+          classes='sampleMenuBtn'
           disabled={disabled}
           onClick={() => selectMode(MODES.MOD_VELOCITY)}
         >
@@ -104,7 +107,7 @@ const SampleEditMenu = ({ selectMode, onClose }) => {
           <p>Velocity</p>
         </Button>
         <Button
-          classes='menu-btn'
+          classes='sampleMenuBtn'
           disabled={disabled}
           onClick={() => selectMode(MODES.MOD_LENGTH)}
         >
@@ -112,7 +115,7 @@ const SampleEditMenu = ({ selectMode, onClose }) => {
           <p>Length</p>
         </Button>
         <Button
-          classes='menu-btn'
+          classes='sampleMenuBtn'
           disabled={disabled}
           onClick={() => selectMode(MODES.MOD_PITCH)}
         >

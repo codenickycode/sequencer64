@@ -4,22 +4,20 @@ import { Button } from 'App/shared/Button';
 import { KitIcon } from 'assets/icons';
 import { setShow, VIEWS } from '../../reducers/appSlice';
 
-export const ChangeKit = () => {
+export const LoadKitBtn = () => {
   const dispatch = useDispatch();
   const changeKitMemo = useMemo(() => {
-    // console.log('rendering: ChangeKit');
+    // console.log('rendering: LoadKitBtn');
 
     const onClick = () => {
       dispatch(setShow(VIEWS.LOAD_KIT));
     };
 
     return (
-      <div className='menu-items'>
-        <Button id='load-kit-btn' classes='menu-btn' onClick={onClick}>
+      <div className='menuItems'>
+        <Button id='loadKitBtn' classes='menuBtn' onClick={onClick}>
           <KitIcon />
-          <label htmlFor='load-kit-btn' className='menu-label'>
-            load kit
-          </label>
+          <label htmlFor='loadKitBtn'>load kit</label>
         </Button>
       </div>
     );

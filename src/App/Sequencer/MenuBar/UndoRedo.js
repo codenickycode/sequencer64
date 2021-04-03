@@ -28,31 +28,27 @@ let UndoRedo = ({ canUndo, canRedo, onUndo, onRedo }) => {
   const undoRedoMemo = useMemo(() => {
     // console.log('rendering: UndoRedo');
     return (
-      <div className='menu-items'>
-        <span className='menu-dummy' />
+      <div className='menuItems'>
+        <span className='dummy' />
         <Button
           id='undo'
-          classes='menu-btn'
+          classes='menuBtn'
           disabled={!canUndo || !buffersLoaded}
           onClick={handleUndo}
         >
           <UndoIcon />
-          <label htmlFor='undo' className='menu-label'>
-            undo
-          </label>
+          <label htmlFor='undo'>undo</label>
         </Button>
         <Button
           id='redo'
-          classes='menu-btn'
+          classes='menuBtn'
           disabled={!canRedo || !buffersLoaded}
           onClick={handleRedo}
         >
           <RedoIcon />
-          <label htmlFor='redo' className='menu-label'>
-            redo
-          </label>
+          <label htmlFor='redo'>redo</label>
         </Button>
-        <span className='menu-dummy' />
+        <span className='dummy' />
       </div>
     );
   }, [buffersLoaded, canRedo, canUndo, handleRedo, handleUndo]);

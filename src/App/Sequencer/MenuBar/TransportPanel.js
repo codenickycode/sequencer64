@@ -71,22 +71,26 @@ export const TransportPanel = () => {
     };
 
     return (
-      <div className='menu-items transport'>
-        <div className='transport-wrapper'>
-          <Button id='stop' classes='menu-btn' onClick={onStop}>
+      <div className='menuItems transport'>
+        <div className='transportWrapper'>
+          <Button
+            id='stop'
+            classes='menuBtn'
+            aria-label='stop'
+            onClick={onStop}
+          >
             <StopIcon />
-            <label htmlFor='stop'>stop</label>
           </Button>
           <Button
             id='start'
-            classes={!ready ? 'menu-btn flashing' : 'menu-btn'}
+            classes={!ready ? 'menuBtn flashing' : 'menuBtn'}
             disabled={!ready}
+            aria-label='start'
             onClick={onStart}
           >
             {transportState === 'started' ? <PauseIcon /> : <StartIcon />}
-            <label htmlFor='start'>start</label>
           </Button>
-          <div className='input-div'>
+          <div className='inputWrapper'>
             <input
               id='bpm'
               className={bpmEdited ? 'input edited' : 'input'}
@@ -95,10 +99,10 @@ export const TransportPanel = () => {
               onChange={onChange}
               onKeyPress={onKeyPress}
             ></input>
-            <div className='bpm-or-btn'>
+            <div className='bpmOrBtn'>
               {bpmEdited ? (
-                <Button id='bpm-btn' classes='bpm-btn' onClick={handleBpm}>
-                  <label htmlFor='bpm-btn'>
+                <Button id='bpmBtn' classes='bpmBtn' onClick={handleBpm}>
+                  <label htmlFor='bpmBtn'>
                     <CheckIcon />
                   </label>
                 </Button>
