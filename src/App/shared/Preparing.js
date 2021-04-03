@@ -15,7 +15,9 @@ export const Preparing = () => {
           </div>
         ))}
       </div>
-      <p className='message'>preparing...</p>
+      <p className='messageContainer'>
+        <span className='message'>preparing...</span>
+      </p>
     </div>
   );
 };

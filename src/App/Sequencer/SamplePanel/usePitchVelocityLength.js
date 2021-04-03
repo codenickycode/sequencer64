@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { INITIAL_MODS, MODES, setModVal } from 'App/reducers/editorSlice';
+import {
+  INITIAL_MODS,
+  MODES,
+  setModVal,
+  setSpAlert,
+} from 'App/reducers/editorSlice';
 import { modAll, resetMods } from 'App/reducers/sequenceSlice';
 import { showEditable, hideEditable } from 'utils/toggleClasses';
 import { MIDI_NOTES } from 'utils/MIDI_NOTES';
@@ -24,6 +29,9 @@ export const usePitchVelocityLength = (mode) => {
   const onChange = ({ target: { value } }) => {
     if (mode === MODES.MOD_PITCH) {
       setValue(value);
+      if (!editAll) {
+        dispatch(setSpAlert('Tap cells to apply'));
+      }
     } else {
       setValue(Math.round(value * 100) / 100);
     }
@@ -31,7 +39,11 @@ export const usePitchVelocityLength = (mode) => {
 
   // velocity & length
   const onTouchEnd = () => {
-    if (editAll) dispatchModAll();
+    if (editAll) {
+      dispatchModAll();
+    } else {
+      dispatch(setSpAlert('Tap cells to apply'));
+    }
   };
 
   const dispatchModAll = () => {

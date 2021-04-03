@@ -14,17 +14,17 @@ export const SequencerPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { shared } = useParams();
-  // const initialLoad = useSelector(
-  //   (state) => state.sequence.present.initialLoad
-  // );
-  // useEffect(() => {
-  //   if (initialLoad) {
-  //     const clearUrl = () => history.replace('/');
-  //     dispatch(loadInitialSequence(shared, clearUrl));
-  //   }
-  // }, [dispatch, history, initialLoad, shared]);
+  const initialLoad = useSelector(
+    (state) => state.sequence.present.initialLoad
+  );
+  useEffect(() => {
+    if (initialLoad) {
+      const clearUrl = () => history.replace('/');
+      dispatch(loadInitialSequence(shared, clearUrl));
+    }
+  }, [dispatch, history, initialLoad, shared]);
 
-  const initialLoad = true;
+  // const initialLoad = true;
   return initialLoad ? (
     <Preparing />
   ) : (

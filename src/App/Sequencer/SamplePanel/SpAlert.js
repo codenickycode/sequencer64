@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { PointDownIcon } from 'assets/icons';
+import { PointDownIcon, PointUpIcon } from 'assets/icons';
 
 export const SpAlert = () => {
   const message = useSelector((state) => state.editor.spAlert.message);
@@ -29,13 +29,14 @@ export const SpAlert = () => {
 
     const index = message.indexOf('#');
     const spAlert = message.substr(index + 1);
-
+    const up = spAlert.match(/Tap/);
+    const Icon = up ? PointUpIcon : PointDownIcon;
     return spAlert ? (
       <div className='sp-alert-wrapper'>
         <div id='sp-alert' className={classes}>
           <span className='dummy' />
           <p className='alert'>{spAlert}</p>
-          <PointDownIcon />
+          <Icon addClass={up ? 'up' : ''} />
           <span className='dummy' />
         </div>
       </div>

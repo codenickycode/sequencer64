@@ -125,6 +125,18 @@ p.dim-2 {
   }
 }
 
+@keyframes bounceUp {
+  0% {
+    transform: translateY(25%);
+  }
+  20% {
+    transform: translateY(-25%);
+  }
+  100% {
+    transform: translateY(25%);
+  }
+}
+
 @keyframes slicing {
   0% {
     transform: rotate(0);

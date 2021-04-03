@@ -6,7 +6,16 @@
   @extend %full;
   @include flex(column, space-evenly);
 
+  .messageContainer {
+    width: 100%;
+  }
   .message {
+    display: inline-block;
+    width: 60%;
+    text-align: right;
+    font-size: 1.5rem;
+  }
+  .dots {
     font-size: 1.5rem;
   }
 
@@ -21,8 +30,6 @@
     .cell {
       @extend %full;
       border-radius: 0.25rem;
-      border: 1px dotted $white-dim;
-      background: transparent;
     }
   }
 

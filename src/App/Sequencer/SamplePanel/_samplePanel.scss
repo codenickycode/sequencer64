@@ -141,4 +141,7 @@
   .sp-alert.fade-out-2 .icon {
     animation: bounce 1s linear infinite;
   }
+  .sp-alert.fade-out-2 .icon.up {
+    animation: bounceUp 1s linear infinite;
+  }
 }

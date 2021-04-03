@@ -160,6 +160,10 @@ export const FacebookIcon = ({ addClass = '' }) => (
   <Facebook className={addClass + ' icon'} />
 );
 
+export const PointUpIcon = ({ addClass = '' }) => (
+  <PointUp className={addClass + ' icon'} />
+);
+
 export const PointDownIcon = ({ addClass = '' }) => (
   <PointDown className={addClass + ' icon'} />
 );
