@@ -30,12 +30,18 @@
     label {
       // margin: 0 0.5rem;
       letter-spacing: initial;
+      &.active {
+        color: $green;
+      }
     }
   }
 
   .icon {
     width: 2rem;
     fill: $white;
+    &.active {
+      fill: $green;
+    }
   }
 }
 

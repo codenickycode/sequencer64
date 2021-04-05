@@ -3,7 +3,7 @@ import { TransportPanel } from 'App/Sequencer/MenuBar/TransportPanel';
 import { UndoRedoBtn } from 'App/Sequencer/MenuBar/UndoRedoBtn';
 import { EraseBtn } from 'App/Sequencer/MenuBar/EraseBtn';
 import { LoadSaveBtn } from 'App/Sequencer/MenuBar/LoadSaveBtn';
-import { LoadKitBtn } from 'App/Sequencer/MenuBar/LoadKitBtn';
+import { KitAndTapModeBtn } from 'App/Sequencer/MenuBar/KitAndTapModeBtn';
 import { ScrollLeft, ScrollRight } from 'App/shared/Button';
 
 export const Menu = () => {
@@ -64,7 +64,7 @@ export const Menu = () => {
     <div ref={menuRef} id='menu' onScroll={handleScroll}>
       <div className='menuItems'>
         <LoadSaveBtn />
-        <LoadKitBtn />
+        <KitAndTapModeBtn />
       </div>
       <TransportPanel />
       <div className='menuItems'>

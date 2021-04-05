@@ -8,7 +8,7 @@ import { Button } from 'App/shared/Button';
 export const EraseBtn = () => {
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.editor.mode);
-  const editing = mode && mode !== MODES.PAINTING;
+  const editing = mode && mode !== MODES.PAINT;
   const disabled = useSelector(
     (state) => state.sequence.present.noteTally.total.empty
   );
@@ -17,7 +17,7 @@ export const EraseBtn = () => {
     const onClick = () => {
       dispatch(eraseAll());
       if (editing) {
-        dispatch(setMode(MODES.PAINTING));
+        dispatch(setMode(MODES.PAINT));
       }
     };
 

@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const MODES = {
-  PAINTING: 'PAINTING',
-  ERASING: 'ERASING',
-  SLICING: 'SLICING',
-  COPYING: 'COPYING',
+  TAP: 'TAP',
+  PAINT: 'PAINT',
+  ERASE: 'ERASE',
+  SLICE: 'SLICE',
+  COPY: 'COPY',
   MOD_VELOCITY: 'velocity',
   MOD_LENGTH: 'length',
   MOD_PITCH: 'pitch',
@@ -35,7 +36,7 @@ export const editorSlice = createSlice({
     },
     edit: (state, { payload: { sample } }) => {
       state.selectedSample = sample;
-      state.mode = MODES.PAINTING;
+      state.mode = MODES.PAINT;
       state.spAlert = { ...INITIAL_STATE.spAlert };
     },
     setMode: (state, { payload }) => {

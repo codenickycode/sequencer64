@@ -6,7 +6,7 @@ import * as appThunks from './thunks/appThunks';
 export const VIEWS = {
   SAVE: 'save',
   LOAD: 'load',
-  LOAD_KIT: 'LOAD_KIT',
+  CHANGE_KIT: 'CHANGE_KIT',
 };
 
 export const INITIAL_USER = {

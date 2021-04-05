@@ -1,4 +1,5 @@
-import React, { useMemo } from 'react';
+import * as Tone from 'tone';
+import React, { useContext, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { close, edit, setMode, MODES } from 'App/reducers/editorSlice';
 import {
@@ -16,6 +17,7 @@ import { Button } from 'App/shared/Button';
 import { Erase, Slice, Copy } from 'App/Sequencer/SamplePanel/EraseSliceCopy';
 import { PitchVelocityLength } from 'App/Sequencer/SamplePanel/PitchVelocityLength';
 import { showEditable, hideEditable } from 'utils/toggleClasses';
+import { Kit } from 'App/shared/KitProvider';
 
 export const SamplePanel = () => {
   const dispatch = useDispatch();
@@ -25,34 +27,33 @@ export const SamplePanel = () => {
   const spMemo = useMemo(() => {
     // console.log('rendering: SamplePanel');
     const onReturn = () => {
-      if (mode !== MODES.COPYING) {
+      if (mode !== MODES.COPY) {
         hideEditable();
       }
-      dispatch(setMode(MODES.PAINTING));
+      dispatch(setMode(MODES.PAINT));
     };
 
     const onClose = () => dispatch(close());
 
     const selectMode = (mode) => {
-      if (mode && mode !== MODES.PAINTING && mode !== MODES.COPYING)
-        showEditable();
+      if (mode && mode !== MODES.PAINT && mode !== MODES.COPY) showEditable();
       dispatch(setMode(mode));
     };
 
     return (
       <>
-        {mode === MODES.ERASING ? (
-          <Erase onReturn={onReturn} />
-        ) : mode === MODES.SLICING ? (
-          <Slice onReturn={onReturn} />
-        ) : mode === MODES.COPYING ? (
-          <Copy onReturn={onReturn} />
-        ) : mode && mode !== MODES.PAINTING ? (
-          <PitchVelocityLength onReturn={onReturn} mode={mode} />
-        ) : mode ? (
+        {mode === MODES.PAINT ? (
           <SampleEditMenu selectMode={selectMode} onClose={onClose} />
-        ) : (
+        ) : mode === MODES.ERASE ? (
+          <Erase onReturn={onReturn} />
+        ) : mode === MODES.SLICE ? (
+          <Slice onReturn={onReturn} />
+        ) : mode === MODES.COPY ? (
+          <Copy onReturn={onReturn} />
+        ) : mode === MODES.TAP || !mode ? (
           <SampleBtns />
+        ) : (
+          <PitchVelocityLength onReturn={onReturn} mode={mode} />
         )}
       </>
     );
@@ -78,7 +79,7 @@ const SampleEditMenu = ({ selectMode, onClose }) => {
         <Button
           classes='sampleMenuBtn'
           disabled={disabled}
-          onClick={() => selectMode(MODES.ERASING)}
+          onClick={() => selectMode(MODES.ERASE)}
         >
           <EraserIcon />
           <p>Erase</p>
@@ -86,15 +87,12 @@ const SampleEditMenu = ({ selectMode, onClose }) => {
         <Button
           classes='sampleMenuBtn'
           disabled={disabled}
-          onClick={() => selectMode(MODES.SLICING)}
+          onClick={() => selectMode(MODES.SLICE)}
         >
           <SawIcon />
           <p>Slice</p>
         </Button>
-        <Button
-          classes='sampleMenuBtn'
-          onClick={() => selectMode(MODES.COPYING)}
-        >
+        <Button classes='sampleMenuBtn' onClick={() => selectMode(MODES.COPY)}>
           <CopyIcon />
           <p>Copy</p>
         </Button>
@@ -155,10 +153,31 @@ const SampleBtns = () => {
 };
 
 const SampleBtn = ({ i, sample, selectSample }) => {
+  const { kitRef } = useContext(Kit);
+  const mode = useSelector((state) => state.editor.mode);
+  const tapping = mode === MODES.TAP;
+
+  const onTouchStart = () => {
+    if (tapping) {
+      kitRef.current.samples[i].sampler.triggerAttack(
+        'C2',
+        Tone.immediate(),
+        1
+      );
+    }
+  };
+
+  const onClick = () => {
+    if (!tapping) {
+      selectSample(i);
+    }
+  };
+
   return (
     <Button
       classes='sample-btn'
-      onClick={() => selectSample(i)}
+      onTouchStart={onTouchStart}
+      onClick={onClick}
       ariaLabel={sample.name}
     >
       {icons[sample.icon](sample.color)}

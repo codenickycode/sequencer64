@@ -11,11 +11,11 @@ import { setShow, VIEWS } from '../../reducers/appSlice';
 
 const kits = Object.values(defaultKits);
 
-export const LoadKit = () => {
+export const ChangeKit = () => {
   const dispatch = useDispatch();
   const show = useSelector((state) => state.app.show);
-  const showLoadKit = show === VIEWS.LOAD_KIT;
-  const { fadeInClass, fadeOutThen } = useFadeIn(showLoadKit);
+  const showChangeKit = show === VIEWS.CHANGE_KIT;
+  const { fadeInClass, fadeOutThen } = useFadeIn(showChangeKit);
 
   const onClick = useCallback(
     () =>
@@ -25,8 +25,8 @@ export const LoadKit = () => {
     [dispatch, fadeOutThen]
   );
 
-  const loadKitMemo = useMemo(() => {
-    // console.log('rendering: LoadKit');
+  const changeKitMemo = useMemo(() => {
+    // console.log('rendering: ChangeKit');
     let grid = [];
     for (let i = 0, len = kits.length; i < len; i++) {
       grid.push(i);
@@ -46,12 +46,12 @@ export const LoadKit = () => {
             );
           })}
         </div>
-        <LoadKitInfo fadeInClass={fadeInClass} onClick={onClick} />
+        <ChangeKitInfo fadeInClass={fadeInClass} onClick={onClick} />
       </div>
     );
   }, [fadeInClass, onClick]);
 
-  return showLoadKit ? loadKitMemo : null;
+  return showChangeKit ? changeKitMemo : null;
 };
 
 const KitBtn = ({ kitName, available }) => {
@@ -76,7 +76,7 @@ const KitBtn = ({ kitName, available }) => {
   );
 };
 
-export const LoadKitInfo = ({ fadeInClass, onClick }) => {
+export const ChangeKitInfo = ({ fadeInClass, onClick }) => {
   const portal = document.getElementById('kit-info-portal');
   return portal
     ? ReactDOM.createPortal(

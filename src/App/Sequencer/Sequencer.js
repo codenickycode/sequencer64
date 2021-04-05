@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid } from 'App/Sequencer/MainSection/Grid/Grid';
-import { LoadKit } from 'App/Sequencer/MainSection/LoadKit';
+import { ChangeKit } from 'App/Sequencer/MainSection/ChangeKit';
 import { SamplePanel } from 'App/Sequencer/SamplePanel/SamplePanel';
 import { LoadSave } from 'App/Sequencer/LoadSave/LoadSave';
 import { Menu } from 'App/Sequencer/MenuBar/MenuBar';
@@ -32,7 +32,7 @@ export const SequencerPage = () => {
       <div id='sequencer'>
         <div id='main'>
           <Grid />
-          <LoadKit />
+          <ChangeKit />
           <div id='paste-pattern-portal' />
         </div>
         <div className='sample-panel'>

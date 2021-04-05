@@ -42,7 +42,7 @@ export const modCell = (step, noteOn) => (dispatch, getState) => {
   }
   const mode = getState().editor.mode;
   switch (mode) {
-    case MODES.PAINTING:
+    case MODES.PAINT:
       const toggleOn = getState().editor.toggleOn;
       if ((toggleOn && !noteOn) || (!toggleOn && noteOn))
         dispatch(
@@ -53,10 +53,10 @@ export const modCell = (step, noteOn) => (dispatch, getState) => {
           })
         );
       break;
-    case MODES.ERASING:
+    case MODES.ERASE:
       if (noteOn) dispatch(eraseCell({ step, selectedSample }));
       break;
-    case MODES.SLICING:
+    case MODES.SLICE:
       if (noteOn) dispatch(sliceCell({ step, selectedSample }));
       break;
     case MODES.MOD_LENGTH:
