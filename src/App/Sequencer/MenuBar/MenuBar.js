@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { TransportPanel } from 'App/Sequencer/MenuBar/TransportPanel';
 import { UndoRedoBtn } from 'App/Sequencer/MenuBar/UndoRedoBtn';
 import { EraseBtn } from 'App/Sequencer/MenuBar/EraseBtn';
@@ -6,26 +6,39 @@ import { LoadSaveBtn } from 'App/Sequencer/MenuBar/LoadSaveBtn';
 import { KitAndTapModeBtn } from 'App/Sequencer/MenuBar/KitAndTapModeBtn';
 import { ScrollLeft, ScrollRight } from 'App/shared/Button';
 import { ChangeTheme } from './ChangeTheme';
+import { MODES, setMode } from 'App/reducers/editorSlice';
+import { setShow, VIEWS } from 'App/reducers/appSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const Menu = () => {
+  const dispatch = useDispatch();
+  const mode = useSelector((state) => state.editor.mode);
+  const show = useSelector((state) => state.app.show);
+
   const menuRef = useRef(null);
   const scrollbarRef = useRef(null);
 
+  const [initialState, setInitialState] = useState(true);
   useEffect(() => {
-    if (menuRef.current) {
-      const width = scrollbarRef.current.clientWidth;
-      menuRef.current.scrollTo({
-        left: width,
-        behavior: 'smooth',
-      });
+    if (initialState) {
+      if (menuRef.current) {
+        const width = scrollbarRef.current.clientWidth;
+        menuRef.current.scrollTo({
+          left: width,
+          behavior: 'smooth',
+        });
+        setInitialState(false);
+      }
     }
-  });
+  }, [initialState]);
 
   const leftRef = useRef(null);
   const rightRef = useRef(null);
   const scrollEnd = useRef(null);
 
   const scroll = (dir) => {
+    if (mode === MODES.TAP) dispatch(setMode(null));
+    if (show === VIEWS.THEMES) dispatch(setShow(''));
     enableScroll();
     clearTimeout(scrollEnd.current);
     const offset =

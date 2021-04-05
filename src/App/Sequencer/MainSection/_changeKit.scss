@@ -29,10 +29,6 @@
         border: 2px solid $white;
       }
 
-      &.pressed {
-        transform: scale(0.9);
-      }
-
       &.dim-border {
         @extend %borderDefaultHalf;
       }

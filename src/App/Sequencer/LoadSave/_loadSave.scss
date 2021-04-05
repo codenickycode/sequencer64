@@ -42,7 +42,7 @@
     @extend %btnFull;
     @include flex;
     color: $white;
-    @extend %bgDefaultQuarter;
+    @extend %bgDark2;
   }
 }
 
@@ -51,9 +51,6 @@
   .btn {
     @extend %btn;
     width: 100%;
-    &.pressed {
-      transform: none;
-    }
   }
 }
 

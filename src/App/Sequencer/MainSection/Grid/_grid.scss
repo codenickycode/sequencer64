@@ -15,7 +15,7 @@
     @extend %full;
     cursor: pointer;
     opacity: 1;
-    background: $grey-dim;
+    @extend %bgGreyDim;
     transform: scale(1) rotate(0);
     transition: 200ms;
     transition-property: transform;
@@ -47,7 +47,7 @@
     }
 
     .border {
-      @extend %borderWhite;
+      @extend %borderActive;
       opacity: 0;
     }
     &.flashing {

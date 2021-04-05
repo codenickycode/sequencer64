@@ -29,7 +29,7 @@
 
     .sequence {
       @extend %btnFull;
-      @extend %bgDefaultQuarter;
+      @extend %bgDark2;
       display: grid;
       grid-template-columns: 0.5fr 0.25fr 0.15fr 0.1fr;
       align-items: center;
@@ -61,12 +61,12 @@
       width: 100%;
       padding: 0.5rem;
       @include flex(row, space-evenly);
-      @extend %bgDefaultQuarter;
+      @extend %bgDark2;
 
       .btn {
         @extend %btn;
         &.red {
-          @extend .red;
+          @extend %bgRed;
         }
       }
     }

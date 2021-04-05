@@ -19,6 +19,7 @@ export default function App() {
       <ErrorBoundary>
         <Provider store={store}>
           <KitProvider>
+            <div id='themesPortal' />
             <Switch>
               <Route
                 path='/'

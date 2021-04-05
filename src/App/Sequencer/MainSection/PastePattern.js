@@ -54,7 +54,7 @@ const SampleBtn = ({ i, icon, color }) => {
 
   const selected = i === selectedSample;
   const classes = selected
-    ? 'sample flashing borderWhite'
+    ? 'sample flashing borderActive'
     : 'sample borderDefault';
 
   return (

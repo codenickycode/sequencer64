@@ -27,7 +27,7 @@ const INITIAL_STATE = {
   error: '',
   online: window.navigator.onLine,
   serviceWorkerActive: false,
-  theme: 'Synth',
+  theme: 'Joker',
 };
 
 export const appSlice = createSlice({

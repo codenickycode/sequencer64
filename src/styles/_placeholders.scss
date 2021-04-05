@@ -32,11 +32,6 @@
   opacity: 0;
 }
 
-%pressed {
-  transition: none;
-  transform: scale(0.8);
-}
-
 %headerLeft {
   width: 100%;
   text-align: left;
@@ -83,11 +78,6 @@
   height: 2.5rem;
   @extend %input;
   @extend %btnFont;
-
-  &.pressed {
-    transition: none;
-    transform: scale(0.9);
-  }
 }
 
 %closeBtnSmall {
@@ -105,10 +95,6 @@
 
   .chevron-left {
     width: 100%;
-  }
-
-  &.pressed {
-    @extend %pressed;
   }
 }
 
@@ -133,8 +119,4 @@
   padding: 0.25rem 0.5rem;
   border-radius: 0.5rem;
   transform: scale(1);
-
-  &.pressed {
-    transform: scale(0.95);
-  }
 }

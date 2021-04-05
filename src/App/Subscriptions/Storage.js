@@ -1,3 +1,4 @@
+import { VIEWS } from 'App/reducers/appSlice';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { setLS, setSS } from 'utils/storage';
@@ -7,7 +8,7 @@ export const Storage = () => {
   const theme = useSelector((state) => state.app.theme);
 
   useEffect(() => {
-    setSS('show', show);
+    if (show !== VIEWS.THEMES) setSS('show', show);
   }, [show]);
 
   useEffect(() => {

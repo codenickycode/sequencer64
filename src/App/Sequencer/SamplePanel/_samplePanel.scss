@@ -16,7 +16,7 @@
       position: relative;
       @include flex();
       @extend %borderDefault;
-      background: $grey-quarter;
+      @extend %bgSampleBtn;
 
       .icon {
         height: 5vw;

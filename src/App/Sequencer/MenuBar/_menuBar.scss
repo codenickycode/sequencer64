@@ -14,7 +14,7 @@
   overflow: scroll;
   white-space: nowrap;
   scroll-behavior: smooth;
-  @extend %bgDefault3rd;
+  @extend %bg;
 }
 
 .scrollbar {

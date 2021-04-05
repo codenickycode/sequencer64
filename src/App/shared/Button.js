@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from 'assets/icons';
 import cuid from 'cuid';
 
@@ -14,25 +14,20 @@ export const Button = ({
   children,
 }) => {
   const ref = useRef(null);
-  const [pressed, setPressed] = useState(false);
 
   const handleTouchStart = () => {
-    if (!disabled) setPressed(true);
     if (onTouchStart) onTouchStart();
   };
-
-  const onTouchEnd = () => setPressed(false);
 
   return (
     <button
       ref={fwdRef || ref}
       type={type || 'button'}
       id={id || cuid.slug()}
-      className={(pressed ? 'pressed btn ' : 'btn ') + classes}
+      className={'btn ' + classes}
       disabled={disabled}
       aria-label={ariaLabel}
       onTouchStart={handleTouchStart}
-      onTouchEnd={onTouchEnd}
       onClick={onClick}
     >
       {children}

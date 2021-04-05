@@ -30,27 +30,41 @@ export const ChangeTheme = () => {
   return memo;
 };
 
+const THEMES = {
+  JOKER: 'Joker',
+  NES: 'NES',
+  SNES: 'SNES',
+};
+
 const Themes = ({ showThemes }) => {
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.app.theme);
 
-  const onClick = (newTheme) => {
+  const onTouchStart = (newTheme) => {
     dispatch(setTheme(newTheme));
   };
   return ReactDOM.createPortal(
     <div className={showThemes ? 'themes show' : 'themes'}>
       <Button
-        id='synthTheme'
-        classes={theme === 'Synth' ? 'themeBtn active' : 'themeBtn'}
-        onClick={() => onClick('Synth')}
+        id={`${THEMES.JOKER}Theme`}
+        classes={theme === THEMES.JOKER ? 'themeBtn active' : 'themeBtn'}
+        onClick={() => onTouchStart(THEMES.JOKER)}
       >
-        <label htmlFor='synthTheme'>Synth</label>
+        <label htmlFor={`${THEMES.JOKER}Theme`}>{THEMES.JOKER}</label>
       </Button>
-      <Button id='nesTheme' classes='themeBtn' onClick={() => onClick('NES')}>
-        <label htmlFor='nesTheme'>NES</label>
+      <Button
+        id={`${THEMES.NES}Theme`}
+        classes={theme === THEMES.NES ? 'themeBtn active' : 'themeBtn'}
+        onTouchStart={() => onTouchStart(THEMES.NES)}
+      >
+        <label htmlFor={`${THEMES.NES}Theme`}>{THEMES.NES}</label>
       </Button>
-      <Button id='snesTheme' classes='themeBtn' onClick={() => onClick('SNES')}>
-        <label htmlFor='snesTheme'>SNES</label>
+      <Button
+        id={`${THEMES.SNES}Theme`}
+        classes={theme === THEMES.SNES ? 'themeBtn active' : 'themeBtn'}
+        onTouchStart={() => onTouchStart(THEMES.SNES)}
+      >
+        <label htmlFor={`${THEMES.SNES}Theme`}>{THEMES.SNES}</label>
       </Button>
     </div>,
     document.getElementById('themesPortal')

@@ -117,13 +117,23 @@
   }
 }
 
-.themes {
-  position: absolute;
+#themesPortal {
+  pointer-events: none;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
   bottom: 10%;
+}
+
+.themes {
+  pointer-events: initial;
+  position: absolute;
+  bottom: 0;
   right: 0;
   width: 50%;
   @include flex(column);
-  background: $black-half;
+  @extend %bg;
   opacity: 0;
   transform: scaleY(0);
   transform-origin: bottom;
@@ -136,9 +146,15 @@
 
   .themeBtn {
     @extend %btn;
-    @extend %bgDefault3q;
+    @extend %bg;
+    border: none;
     border-radius: 0;
     margin-bottom: 0.5rem;
     width: 100%;
+
+    &.active {
+      @extend %borderActive;
+      @extend %bgDefault3q;
+    }
   }
 }
