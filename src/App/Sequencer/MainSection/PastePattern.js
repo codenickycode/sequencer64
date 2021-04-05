@@ -11,7 +11,7 @@ export const PastePattern = () => {
   const samples = defaultKits[kit].samples;
 
   const pastePatternMemo = useMemo(() => {
-    const portal = document.getElementById('paste-pattern-portal');
+    const portal = document.getElementById('pastePatternPortal');
     // console.log('rendering: PastePattern');
     let grid = [];
     for (let i = 0, len = samples.length; i < len; i++) {

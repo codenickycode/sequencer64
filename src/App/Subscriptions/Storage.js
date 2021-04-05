@@ -4,10 +4,15 @@ import { setLS, setSS } from 'utils/storage';
 
 export const Storage = () => {
   const show = useSelector((state) => state.app.show);
+  const theme = useSelector((state) => state.app.theme);
 
   useEffect(() => {
     setSS('show', show);
   }, [show]);
+
+  useEffect(() => {
+    setLS('theme', theme);
+  }, [theme]);
 
   const sequence = useSelector((state) => state.sequence.present);
 

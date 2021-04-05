@@ -7,6 +7,7 @@ export const VIEWS = {
   SAVE: 'save',
   LOAD: 'load',
   CHANGE_KIT: 'CHANGE_KIT',
+  THEMES: 'THEMES',
 };
 
 export const INITIAL_USER = {
@@ -26,6 +27,7 @@ const INITIAL_STATE = {
   error: '',
   online: window.navigator.onLine,
   serviceWorkerActive: false,
+  theme: 'Synth',
 };
 
 export const appSlice = createSlice({
@@ -60,6 +62,9 @@ export const appSlice = createSlice({
     },
     setServiceWorkerActive: (state, { payload }) => {
       state.serviceWorkerActive = payload;
+    },
+    setTheme: (state, { payload }) => {
+      state.theme = payload;
     },
     updateSequencesFinally: (
       state,
@@ -96,6 +101,7 @@ export const {
   setError,
   setOnline,
   setServiceWorkerActive,
+  setTheme,
   updateSequencesFinally,
   getUserFinally,
 } = appSlice.actions;

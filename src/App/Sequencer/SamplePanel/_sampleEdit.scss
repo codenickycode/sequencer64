@@ -2,14 +2,13 @@
 @use 'styles/mixins' as *;
 @use 'styles/colors' as *;
 
-.sample-panel {
+#samplePanel {
   .detail {
     @extend %full;
     @include flex(row, space-evenly);
     padding: 0.5rem;
     overflow: hidden;
     background: $black-90;
-
     .icon {
       max-width: 5rem;
       fill: $white;

@@ -2,7 +2,7 @@
 @use 'styles/mixins' as *;
 @use 'styles/colors' as *;
 
-.sample-panel {
+#samplePanel {
   .menu {
     @extend %full;
     padding: 0.25rem;

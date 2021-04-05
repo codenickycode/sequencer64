@@ -1,4 +1,6 @@
-@use 'styles/themes/purple' as *;
+@use 'styles/themes/synth' as *;
+@use 'styles/themes/nes' as *;
+@use 'styles/themes/snes' as *;
 
 $grey: rgba(197, 185, 219, 1);
 $grey-3q: rgba(197, 185, 219, 0.75);
@@ -73,106 +75,179 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bgWhite {
-  .themePurple & {
-    background: $white;
-  }
+  background: $white;
 }
 .bgWhite {
   @extend %bgWhite;
 }
 
 %borderWhite {
-  .themePurple & {
-    border: 1px solid $white;
-  }
+  border: 1px solid $white;
 }
 .borderWhite {
   @extend %borderWhite;
 }
 
 %fillWhite {
-  .themePurple & {
-    fill: $white;
-  }
+  fill: $white;
 }
 .fillWhite {
   @extend %fillWhite;
 }
 
 %bgGreyDim {
-  .themePurple & {
-    background: $grey-dim;
-  }
+  background: $grey-dim;
 }
 .bgGreyDim {
   @extend %bgGreyDim;
 }
 %bgGreyHalf {
-  .themePurple & {
-    background: $grey-half;
-  }
+  background: $grey-half;
 }
 .bgGreyHalf {
   @extend %bgGreyHalf;
 }
 
+/*************** THEMES ****************/
+
+%bgStopBtn {
+  .themeSynth & {
+    background: $magenta-3q;
+  }
+  .themeNES & {
+    background: $grey-half;
+  }
+  .themeSNES & {
+    background: $snes-0;
+  }
+}
+
+%bgStartBtn {
+  .themeSynth & {
+    background: $lime-3q;
+  }
+  .themeNES & {
+    background: $grey-half;
+  }
+  .themeSNES & {
+    background: $snes-0;
+  }
+}
+
 %strokeDefaultDark {
-  .themePurple & {
-    stroke: $purple-default-dark;
+  .themeSynth & {
+    stroke: $synth-default-dark;
+  }
+  .themeNES & {
+    stroke: $nes-default-dark;
+  }
+  .themeSNES & {
+    stroke: $snes-default-dark;
   }
 }
 .strokeDefaultDark {
   @extend %strokeDefaultDark;
 }
 
-%colorDefault {
-  .themePurple & {
-    color: $purple-default-3q;
-  }
-}
-.colorDefault {
-  @extend %colorDefault;
-}
+// %colorDefault {
+//   .themeSynth & {
+//     color: $synth-default-3q;
+//   }
+//   .themeNES & {
+//     color: $synth-default-3q;
+//   }
+//   .themeSNES & {
+//     color: $synth-default-3q;
+//   }
+// }
+// .colorDefault {
+//   @extend %colorDefault;
+// }
 
 %bgDefault {
-  .themePurple & {
-    background: $purple-default;
+  .themeSynth & {
+    background: $synth-default;
+  }
+  .themeNES & {
+    background: $nes-default;
+  }
+  .themeSNES & {
+    background: $snes-default;
   }
 }
-.bgDefault {
-  @extend %bgDefault;
+// .bgDefault {
+//   @extend %bgDefault;
+// }
+
+%bgDefault3q {
+  .themeSynth & {
+    background: $synth-default-3q;
+  }
+  .themeNES & {
+    background: $nes-default-3q;
+  }
+  .themeSNES & {
+    background: $snes-default-3q;
+  }
 }
+// .bgDefault3q {
+//   @extend %bgDefault3q;
+// }
 
 %bgDefaultHalf {
-  .themePurple & {
-    background: $purple-default-half;
+  .themeSynth & {
+    background: $synth-default-half;
+  }
+  .themeNES & {
+    background: $nes-default-half;
+  }
+  .themeSNES & {
+    background: $snes-default-half;
   }
 }
-.bgDefaultHalf {
-  @extend %bgDefaultHalf;
-}
+// .bgDefaultHalf {
+//   @extend %bgDefaultHalf;
+// }
 
 %bgDefault3rd {
-  .themePurple & {
-    background: $purple-default-third;
+  .themeSynth & {
+    background: $synth-default-third;
+  }
+  .themeNES & {
+    background: $nes-default-third;
+  }
+  .themeSNES & {
+    background: $snes-default-third;
   }
 }
-.bgDefault3rd {
-  @extend %bgDefault3rd;
-}
+// .bgDefault3rd {
+//   @extend %bgDefault3rd;
+// }
 
 %bgDefaultQuarter {
-  .themePurple & {
-    background: $purple-default-quarter;
+  .themeSynth & {
+    background: $synth-default-quarter;
+  }
+  .themeNES & {
+    background: $nes-default-quarter;
+  }
+  .themeSNES & {
+    background: $snes-default-quarter;
   }
 }
-.bgDefaultQuarter {
-  @extend %bgDefaultQuarter;
-}
+// .bgDefaultQuarter {
+//   @extend %bgDefaultQuarter;
+// }
 
 %borderDefault {
-  .themePurple & {
-    border: 1px solid $purple-default;
+  .themeSynth & {
+    border: 1px solid $synth-default;
+  }
+  .themeNES & {
+    border: 1px solid $nes-default;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-default;
   }
 }
 .borderDefault {
@@ -180,38 +255,70 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %borderDefaultHalf {
-  .themePurple & {
-    border: 1px solid $purple-default-half;
+  .themeSynth & {
+    border: 1px solid $synth-default-half;
+  }
+  .themeNES & {
+    border: 1px solid $nes-default-half;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-default-half;
   }
 }
-.borderDefault {
-  @extend %borderDefaultHalf;
-}
+// .borderDefault {
+//   @extend %borderDefaultHalf;
+// }
 
 %borderBottomHalf {
-  .themePurple & {
-    border-bottom: 1px solid $purple-default-half;
+  .themeSynth & {
+    border-bottom: 1px solid $synth-default-half;
+  }
+  .themeNES & {
+    border-bottom: 1px solid $nes-default-half;
+  }
+  .themeSNES & {
+    border-bottom: 1px solid $snes-default-half;
   }
 }
 %borderTopBottomHalf {
-  .themePurple & {
-    border-bottom: 1px solid $purple-default-half;
-    border-top: 1px solid $purple-default-half;
+  .themeSynth & {
+    border-bottom: 1px solid $synth-default-half;
+    border-top: 1px solid $synth-default-half;
+  }
+  .themeNES & {
+    border-bottom: 1px solid $nes-default-half;
+    border-top: 1px solid $nes-default-half;
+  }
+  .themeSNES & {
+    border-bottom: 1px solid $snes-default-half;
+    border-top: 1px solid $snes-default-half;
   }
 }
 
 %fillDefault {
-  .themePurple & {
-    fill: $purple-default-3q;
+  .themeSynth & {
+    fill: $synth-default-3q;
+  }
+  .themeNES & {
+    fill: $nes-default-3q;
+  }
+  .themeSNES & {
+    fill: $snes-default-3q;
   }
 }
-.fillDefault {
-  @extend %fillDefault;
-}
+// .fillDefault {
+//   @extend %fillDefault;
+// }
 
 %color0 {
-  .themePurple & {
-    color: $purple-0;
+  .themeSynth & {
+    color: $synth-0;
+  }
+  .themeNES & {
+    color: $nes-0;
+  }
+  .themeSNES & {
+    color: $snes-0;
   }
 }
 .color0 {
@@ -219,8 +326,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bg0 {
-  .themePurple & {
-    background-color: $purple-0;
+  .themeSynth & {
+    background-color: $synth-0;
+  }
+  .themeNES & {
+    background-color: $nes-0;
+  }
+  .themeSNES & {
+    background-color: $snes-0;
   }
 }
 .bg0 {
@@ -228,8 +341,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bg0Q {
-  .themePurple & {
-    background-color: $purple-0-quarter;
+  .themeSynth & {
+    background-color: $synth-0-quarter;
+  }
+  .themeNES & {
+    background-color: $nes-0-quarter;
+  }
+  .themeSNES & {
+    background-color: $snes-0-quarter;
   }
 }
 .bg0Q {
@@ -237,8 +356,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %border0 {
-  .themePurple & {
-    border: 1px solid $purple-0;
+  .themeSynth & {
+    border: 1px solid $synth-0;
+  }
+  .themeNES & {
+    border: 1px solid $nes-0;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-0;
   }
 }
 .border0 {
@@ -246,8 +371,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %fill0 {
-  .themePurple & {
-    fill: $purple-0;
+  .themeSynth & {
+    fill: $synth-0;
+  }
+  .themeNES & {
+    fill: $nes-0;
+  }
+  .themeSNES & {
+    fill: $snes-0;
   }
 }
 .fill0 {
@@ -255,8 +386,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %color1 {
-  .themePurple & {
-    color: $purple-1;
+  .themeSynth & {
+    color: $synth-1;
+  }
+  .themeNES & {
+    color: $nes-1;
+  }
+  .themeSNES & {
+    color: $snes-1;
   }
 }
 .color1 {
@@ -264,8 +401,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bg1 {
-  .themePurple & {
-    background-color: $purple-1;
+  .themeSynth & {
+    background-color: $synth-1;
+  }
+  .themeNES & {
+    background-color: $nes-1;
+  }
+  .themeSNES & {
+    background-color: $snes-1;
   }
 }
 .bg1 {
@@ -273,8 +416,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bg1Q {
-  .themePurple & {
-    background-color: $purple-1-quarter;
+  .themeSynth & {
+    background-color: $synth-1-quarter;
+  }
+  .themeNES & {
+    background-color: $nes-1-quarter;
+  }
+  .themeSNES & {
+    background-color: $snes-1-quarter;
   }
 }
 .bg1Q {
@@ -282,8 +431,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %border1 {
-  .themePurple & {
-    border: 1px solid $purple-1;
+  .themeSynth & {
+    border: 1px solid $synth-1;
+  }
+  .themeNES & {
+    border: 1px solid $nes-1;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-1;
   }
 }
 .border1 {
@@ -291,8 +446,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %fill1 {
-  .themePurple & {
-    fill: $purple-1;
+  .themeSynth & {
+    fill: $synth-1;
+  }
+  .themeNES & {
+    fill: $nes-1;
+  }
+  .themeSNES & {
+    fill: $snes-1;
   }
 }
 .fill1 {
@@ -300,8 +461,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %color2 {
-  .themePurple & {
-    color: $purple-2;
+  .themeSynth & {
+    color: $synth-2;
+  }
+  .themeNES & {
+    color: $nes-2;
+  }
+  .themeSNES & {
+    color: $snes-2;
   }
 }
 .color2 {
@@ -309,8 +476,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bg2 {
-  .themePurple & {
-    background-color: $purple-2;
+  .themeSynth & {
+    background-color: $synth-2;
+  }
+  .themeNES & {
+    background-color: $nes-2;
+  }
+  .themeSNES & {
+    background-color: $snes-2;
   }
 }
 .bg2 {
@@ -318,8 +491,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bg2Q {
-  .themePurple & {
-    background-color: $purple-2-quarter;
+  .themeSynth & {
+    background-color: $synth-2-quarter;
+  }
+  .themeNES & {
+    background-color: $nes-2-quarter;
+  }
+  .themeSNES & {
+    background-color: $snes-2-quarter;
   }
 }
 .bg2Q {
@@ -327,8 +506,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %border2 {
-  .themePurple & {
-    border: 1px solid $purple-2;
+  .themeSynth & {
+    border: 1px solid $synth-2;
+  }
+  .themeNES & {
+    border: 1px solid $nes-2;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-2;
   }
 }
 .border2 {
@@ -336,8 +521,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %fill2 {
-  .themePurple & {
-    fill: $purple-2;
+  .themeSynth & {
+    fill: $synth-2;
+  }
+  .themeNES & {
+    fill: $nes-2;
+  }
+  .themeSNES & {
+    fill: $snes-2;
   }
 }
 .fill2 {
@@ -345,8 +536,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %color3 {
-  .themePurple & {
-    color: $purple-3;
+  .themeSynth & {
+    color: $synth-3;
+  }
+  .themeNES & {
+    color: $nes-3;
+  }
+  .themeSNES & {
+    color: $snes-3;
   }
 }
 .color3 {
@@ -354,8 +551,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bg3 {
-  .themePurple & {
-    background-color: $purple-3;
+  .themeSynth & {
+    background-color: $synth-3;
+  }
+  .themeNES & {
+    background-color: $nes-3;
+  }
+  .themeSNES & {
+    background-color: $snes-3;
   }
 }
 .bg3 {
@@ -363,8 +566,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bg3Q {
-  .themePurple & {
-    background-color: $purple-3-quarter;
+  .themeSynth & {
+    background-color: $synth-3-quarter;
+  }
+  .themeNES & {
+    background-color: $nes-3-quarter;
+  }
+  .themeSNES & {
+    background-color: $snes-3-quarter;
   }
 }
 .bg3Q {
@@ -372,8 +581,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %border3 {
-  .themePurple & {
-    border: 1px solid $purple-3;
+  .themeSynth & {
+    border: 1px solid $synth-3;
+  }
+  .themeNES & {
+    border: 1px solid $nes-3;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-3;
   }
 }
 .border3 {
@@ -381,8 +596,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %fill3 {
-  .themePurple & {
-    fill: $purple-3;
+  .themeSynth & {
+    fill: $synth-3;
+  }
+  .themeNES & {
+    fill: $nes-3;
+  }
+  .themeSNES & {
+    fill: $snes-3;
   }
 }
 .fill3 {
@@ -390,8 +611,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %color4 {
-  .themePurple & {
-    color: $purple-4;
+  .themeSynth & {
+    color: $synth-4;
+  }
+  .themeNES & {
+    color: $nes-4;
+  }
+  .themeSNES & {
+    color: $snes-4;
   }
 }
 .color4 {
@@ -399,8 +626,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bg4 {
-  .themePurple & {
-    background-color: $purple-4;
+  .themeSynth & {
+    background-color: $synth-4;
+  }
+  .themeNES & {
+    background-color: $nes-4;
+  }
+  .themeSNES & {
+    background-color: $snes-4;
   }
 }
 .bg4 {
@@ -408,8 +641,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bg4Q {
-  .themePurple & {
-    background-color: $purple-4-quarter;
+  .themeSynth & {
+    background-color: $synth-4-quarter;
+  }
+  .themeNES & {
+    background-color: $nes-4-quarter;
+  }
+  .themeSNES & {
+    background-color: $snes-4-quarter;
   }
 }
 .bg4Q {
@@ -417,8 +656,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %border4 {
-  .themePurple & {
-    border: 1px solid $purple-4;
+  .themeSynth & {
+    border: 1px solid $synth-4;
+  }
+  .themeNES & {
+    border: 1px solid $nes-4;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-4;
   }
 }
 .border4 {
@@ -426,8 +671,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %fill4 {
-  .themePurple & {
-    fill: $purple-4;
+  .themeSynth & {
+    fill: $synth-4;
+  }
+  .themeNES & {
+    fill: $nes-4;
+  }
+  .themeSNES & {
+    fill: $snes-4;
   }
 }
 .fill4 {
@@ -435,8 +686,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %color5 {
-  .themePurple & {
-    color: $purple-5;
+  .themeSynth & {
+    color: $synth-5;
+  }
+  .themeNES & {
+    color: $nes-5;
+  }
+  .themeSNES & {
+    color: $snes-5;
   }
 }
 .color5 {
@@ -444,8 +701,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bg5 {
-  .themePurple & {
-    background-color: $purple-5;
+  .themeSynth & {
+    background-color: $synth-5;
+  }
+  .themeNES & {
+    background-color: $nes-5;
+  }
+  .themeSNES & {
+    background-color: $snes-5;
   }
 }
 .bg5 {
@@ -453,8 +716,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bg5Q {
-  .themePurple & {
-    background-color: $purple-5-quarter;
+  .themeSynth & {
+    background-color: $synth-5-quarter;
+  }
+  .themeNES & {
+    background-color: $nes-5-quarter;
+  }
+  .themeSNES & {
+    background-color: $snes-5-quarter;
   }
 }
 .bg5Q {
@@ -462,8 +731,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %border5 {
-  .themePurple & {
-    border: 1px solid $purple-5;
+  .themeSynth & {
+    border: 1px solid $synth-5;
+  }
+  .themeNES & {
+    border: 1px solid $nes-5;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-5;
   }
 }
 .border5 {
@@ -471,8 +746,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %fill5 {
-  .themePurple & {
-    fill: $purple-5;
+  .themeSynth & {
+    fill: $synth-5;
+  }
+  .themeNES & {
+    fill: $nes-5;
+  }
+  .themeSNES & {
+    fill: $snes-5;
   }
 }
 .fill5 {
@@ -480,8 +761,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %color6 {
-  .themePurple & {
-    color: $purple-6;
+  .themeSynth & {
+    color: $synth-6;
+  }
+  .themeNES & {
+    color: $nes-6;
+  }
+  .themeSNES & {
+    color: $snes-6;
   }
 }
 .color6 {
@@ -489,8 +776,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bg6 {
-  .themePurple & {
-    background-color: $purple-6;
+  .themeSynth & {
+    background-color: $synth-6;
+  }
+  .themeNES & {
+    background-color: $nes-6;
+  }
+  .themeSNES & {
+    background-color: $snes-6;
   }
 }
 .bg6 {
@@ -498,8 +791,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bg6Q {
-  .themePurple & {
-    background-color: $purple-6-quarter;
+  .themeSynth & {
+    background-color: $synth-6-quarter;
+  }
+  .themeNES & {
+    background-color: $nes-6-quarter;
+  }
+  .themeSNES & {
+    background-color: $snes-6-quarter;
   }
 }
 .bg6Q {
@@ -507,8 +806,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %border6 {
-  .themePurple & {
-    border: 1px solid $purple-6;
+  .themeSynth & {
+    border: 1px solid $synth-6;
+  }
+  .themeNES & {
+    border: 1px solid $nes-6;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-6;
   }
 }
 .border6 {
@@ -516,8 +821,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %fill6 {
-  .themePurple & {
-    fill: $purple-6;
+  .themeSynth & {
+    fill: $synth-6;
+  }
+  .themeNES & {
+    fill: $nes-6;
+  }
+  .themeSNES & {
+    fill: $snes-6;
   }
 }
 .fill6 {
@@ -525,8 +836,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %color7 {
-  .themePurple & {
-    color: $purple-7;
+  .themeSynth & {
+    color: $synth-7;
+  }
+  .themeNES & {
+    color: $nes-7;
+  }
+  .themeSNES & {
+    color: $snes-7;
   }
 }
 .color7 {
@@ -534,8 +851,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bg7 {
-  .themePurple & {
-    background-color: $purple-7;
+  .themeSynth & {
+    background-color: $synth-7;
+  }
+  .themeNES & {
+    background-color: $nes-7;
+  }
+  .themeSNES & {
+    background-color: $snes-7;
   }
 }
 .bg7 {
@@ -543,8 +866,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bg7Q {
-  .themePurple & {
-    background-color: $purple-7-quarter;
+  .themeSynth & {
+    background-color: $synth-7-quarter;
+  }
+  .themeNES & {
+    background-color: $nes-7-quarter;
+  }
+  .themeSNES & {
+    background-color: $snes-7-quarter;
   }
 }
 .bg7Q {
@@ -552,8 +881,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %border7 {
-  .themePurple & {
-    border: 1px solid $purple-7;
+  .themeSynth & {
+    border: 1px solid $synth-7;
+  }
+  .themeNES & {
+    border: 1px solid $nes-7;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-7;
   }
 }
 .border7 {
@@ -561,8 +896,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %fill7 {
-  .themePurple & {
-    fill: $purple-7;
+  .themeSynth & {
+    fill: $synth-7;
+  }
+  .themeNES & {
+    fill: $nes-7;
+  }
+  .themeSNES & {
+    fill: $snes-7;
   }
 }
 .fill7 {
@@ -570,8 +911,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %color8 {
-  .themePurple & {
-    color: $purple-8;
+  .themeSynth & {
+    color: $synth-8;
+  }
+  .themeNES & {
+    color: $nes-8;
+  }
+  .themeSNES & {
+    color: $snes-8;
   }
 }
 .color8 {
@@ -579,8 +926,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bg8 {
-  .themePurple & {
-    background-color: $purple-8;
+  .themeSynth & {
+    background-color: $synth-8;
+  }
+  .themeNES & {
+    background-color: $nes-8;
+  }
+  .themeSNES & {
+    background-color: $snes-8;
   }
 }
 .bg8 {
@@ -588,8 +941,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %bg8Q {
-  .themePurple & {
-    background-color: $purple-8-quarter;
+  .themeSynth & {
+    background-color: $synth-8-quarter;
+  }
+  .themeNES & {
+    background-color: $nes-8-quarter;
+  }
+  .themeSNES & {
+    background-color: $snes-8-quarter;
   }
 }
 .bg8Q {
@@ -597,8 +956,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %border8 {
-  .themePurple & {
-    border: 1px solid $purple-8;
+  .themeSynth & {
+    border: 1px solid $synth-8;
+  }
+  .themeNES & {
+    border: 1px solid $nes-8;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-8;
   }
 }
 .border8 {
@@ -606,8 +971,14 @@ $red-quarter: rgba(232, 12, 48, 0.25);
 }
 
 %fill8 {
-  .themePurple & {
-    fill: $purple-8;
+  .themeSynth & {
+    fill: $synth-8;
+  }
+  .themeNES & {
+    fill: $nes-8;
+  }
+  .themeSNES & {
+    fill: $snes-8;
   }
 }
 .fill8 {

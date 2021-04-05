@@ -77,7 +77,7 @@ const KitBtn = ({ kitName, available }) => {
 };
 
 export const ChangeKitInfo = ({ fadeInClass, onClick }) => {
-  const portal = document.getElementById('kit-info-portal');
+  const portal = document.getElementById('kitInfoPortal');
   return portal
     ? ReactDOM.createPortal(
         <div className={'kit-info' + fadeInClass}>

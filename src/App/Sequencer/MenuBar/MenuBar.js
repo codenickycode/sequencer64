@@ -5,6 +5,7 @@ import { EraseBtn } from 'App/Sequencer/MenuBar/EraseBtn';
 import { LoadSaveBtn } from 'App/Sequencer/MenuBar/LoadSaveBtn';
 import { KitAndTapModeBtn } from 'App/Sequencer/MenuBar/KitAndTapModeBtn';
 import { ScrollLeft, ScrollRight } from 'App/shared/Button';
+import { ChangeTheme } from './ChangeTheme';
 
 export const Menu = () => {
   const menuRef = useRef(null);
@@ -61,7 +62,7 @@ export const Menu = () => {
 
   // console.log('rendering: Menu');
   return (
-    <div ref={menuRef} id='menu' onScroll={handleScroll}>
+    <div ref={menuRef} id='menuBar' onScroll={handleScroll}>
       <div className='menuItems'>
         <LoadSaveBtn />
         <KitAndTapModeBtn />
@@ -70,6 +71,8 @@ export const Menu = () => {
       <div className='menuItems'>
         <UndoRedoBtn />
         <EraseBtn />
+        <div className='dummy'>|</div>
+        <ChangeTheme />
       </div>
       <div ref={scrollbarRef} className='scrollbar'>
         <ScrollLeft fwdRef={leftRef} onClick={() => scroll('left')} />

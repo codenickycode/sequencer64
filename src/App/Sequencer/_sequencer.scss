@@ -4,7 +4,6 @@
 
 #sequencer {
   @extend %full;
-  z-index: 1;
   max-width: 800px;
   overflow-y: scroll;
   @include flex(column);
@@ -22,7 +21,7 @@
   @extend %borderDefault;
 }
 
-.sample-panel {
+#samplePanel {
   position: fixed;
   top: 60%;
   width: 100%;
@@ -33,5 +32,4 @@
   border-right: none;
   @extend %bgDefault3rd;
   overflow: hidden;
-  border: 3px solid red;
 }

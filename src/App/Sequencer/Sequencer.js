@@ -33,12 +33,12 @@ export const SequencerPage = () => {
         <div id='main'>
           <Grid />
           <ChangeKit />
-          <div id='paste-pattern-portal' />
+          <div id='pastePatternPortal' />
         </div>
-        <div className='sample-panel'>
+        <div id='samplePanel'>
           <SpAlert />
           <SamplePanel />
-          <div id='kit-info-portal' />
+          <div id='kitInfoPortal' />
         </div>
         <Menu />
       </div>

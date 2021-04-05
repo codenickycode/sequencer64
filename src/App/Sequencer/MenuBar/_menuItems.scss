@@ -3,15 +3,19 @@
 @use 'styles/colors' as *;
 
 .menuItems {
+  position: relative;
   @extend %full;
   scroll-snap-align: start;
   @include flex(row, center);
   display: inline-flex;
   vertical-align: top;
+  overflow: visible;
 
   .dummy {
-    width: 1rem;
-    border: 1px solid red;
+    width: 2rem;
+    text-align: center;
+    font-style: initial;
+    // border: 1px solid red;
   }
 
   .menuBtn {
@@ -59,10 +63,10 @@
     }
 
     &#stop {
-      background: $magenta-3q;
+      @extend %bgStopBtn;
     }
     &#start {
-      background: $lime-3q;
+      @extend %bgStartBtn;
       &.flashing {
         animation: dim-flashing 300ms alternate infinite;
       }
@@ -110,5 +114,31 @@
         }
       }
     }
+  }
+}
+
+.themes {
+  position: absolute;
+  bottom: 10%;
+  right: 0;
+  width: 50%;
+  @include flex(column);
+  background: $black-half;
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: 150ms;
+
+  &.show {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+
+  .themeBtn {
+    @extend %btn;
+    @extend %bgDefault3q;
+    border-radius: 0;
+    margin-bottom: 0.5rem;
+    width: 100%;
   }
 }

@@ -8,6 +8,7 @@ import { ReactComponent as EraseAll } from 'assets/icons/erase-all.svg';
 import { ReactComponent as Swipe } from 'assets/icons/swipe.svg';
 import { ReactComponent as Saw } from 'assets/icons/saw.svg';
 import { ReactComponent as Copy } from 'assets/icons/copy.svg';
+import { ReactComponent as Palette } from 'assets/icons/palette.svg';
 import { ReactComponent as Solo } from 'assets/icons/solo.svg';
 import { ReactComponent as Mute } from 'assets/icons/mute.svg';
 import { ReactComponent as Pitch } from 'assets/icons/pitch.svg';
@@ -81,6 +82,10 @@ export const SliceIcon = ({ addClass = '' }) => (
 
 export const CopyIcon = ({ addClass = '' }) => (
   <Copy className={addClass + ' icon'} />
+);
+
+export const PaletteIcon = ({ addClass = '' }) => (
+  <Palette className={addClass + ' icon'} />
 );
 
 export const SoloIcon = ({ addClass = '' }) => (
