@@ -37,8 +37,6 @@ export const Menu = () => {
   const scrollEnd = useRef(null);
 
   const scroll = (dir) => {
-    if (mode === MODES.TAP) dispatch(setMode(null));
-    if (show === VIEWS.THEMES) dispatch(setShow(''));
     enableScroll();
     clearTimeout(scrollEnd.current);
     const offset =
@@ -51,6 +49,8 @@ export const Menu = () => {
   };
 
   const enableScroll = () => {
+    if (mode === MODES.TAP) dispatch(setMode(null));
+    if (show === VIEWS.THEMES) dispatch(setShow(''));
     rightRef.current.disabled = false;
     leftRef.current.disabled = false;
   };
