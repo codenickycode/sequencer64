@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { TransportPanel } from 'App/Sequencer/MenuBar/TransportPanel';
-import { UndoRedo } from 'App/Sequencer/MenuBar/UndoRedo';
-import { Erase } from 'App/Sequencer/MenuBar/Erase';
-import { LoadSaveButton } from 'App/Sequencer/MenuBar/LoadSaveButton';
+import { UndoRedoBtn } from 'App/Sequencer/MenuBar/UndoRedoBtn';
+import { EraseBtn } from 'App/Sequencer/MenuBar/EraseBtn';
+import { LoadSaveBtn } from 'App/Sequencer/MenuBar/LoadSaveBtn';
 import { LoadKitBtn } from 'App/Sequencer/MenuBar/LoadKitBtn';
 import { ScrollLeft, ScrollRight } from 'App/shared/Button';
 
@@ -14,7 +14,7 @@ export const Menu = () => {
     if (menuRef.current) {
       const width = scrollbarRef.current.clientWidth;
       menuRef.current.scrollTo({
-        left: width * 2,
+        left: width,
         behavior: 'smooth',
       });
     }
@@ -47,7 +47,7 @@ export const Menu = () => {
     }
     if (
       menuRef.current.scrollLeft + scrollbarRef.current.clientWidth >=
-      5 * scrollbarRef.current.clientWidth
+      3 * scrollbarRef.current.clientWidth
     ) {
       rightRef.current.disabled = true;
     }
@@ -62,11 +62,15 @@ export const Menu = () => {
   // console.log('rendering: Menu');
   return (
     <div ref={menuRef} id='menu' onScroll={handleScroll}>
-      <LoadKitBtn />
-      <LoadSaveButton />
+      <div className='menuItems'>
+        <LoadSaveBtn />
+        <LoadKitBtn />
+      </div>
       <TransportPanel />
-      <UndoRedo />
-      <Erase />
+      <div className='menuItems'>
+        <UndoRedoBtn />
+        <EraseBtn />
+      </div>
       <div ref={scrollbarRef} className='scrollbar'>
         <ScrollLeft fwdRef={leftRef} onClick={() => scroll('left')} />
         <ScrollRight fwdRef={rightRef} onClick={() => scroll('right')} />

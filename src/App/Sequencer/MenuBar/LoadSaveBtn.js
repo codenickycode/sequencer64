@@ -4,7 +4,7 @@ import { Button } from 'App/shared/Button';
 import { OpenIcon, SaveIcon } from 'assets/icons';
 import { setShow } from 'App/reducers/appSlice';
 
-export const LoadSaveButton = () => {
+export const LoadSaveBtn = () => {
   const dispatch = useDispatch();
 
   const onClick = (type) => {
@@ -15,8 +15,7 @@ export const LoadSaveButton = () => {
 
   // console.log('rendering: LoadSaveButton');
   return (
-    <div className='menuItems'>
-      <span className='dummy' />
+    <>
       <Button
         id='load-sequence'
         classes='menuBtn'
@@ -33,7 +32,6 @@ export const LoadSaveButton = () => {
         <SaveIcon />
         <label htmlFor='save-sequence'>save</label>
       </Button>
-      <span className='dummy' />
-    </div>
+    </>
   );
 };

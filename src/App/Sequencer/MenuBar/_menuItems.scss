@@ -5,22 +5,31 @@
 .menuItems {
   @extend %full;
   scroll-snap-align: start;
-  @include flex(row, space-evenly);
+  @include flex(row, center);
   display: inline-flex;
   vertical-align: top;
 
   .dummy {
     width: 1rem;
+    border: 1px solid red;
   }
 
   .menuBtn {
     @extend %btn;
-    @include flex;
+    @include flex(column);
+    margin: 0 0.5rem;
+    height: 100%;
     background: transparent;
     border: none;
+    // border: 1px solid gold;
+
+    * {
+      // border: 1px solid red;
+    }
 
     label {
-      margin: 0 0.5rem;
+      // margin: 0 0.5rem;
+      letter-spacing: initial;
     }
   }
 

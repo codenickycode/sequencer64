@@ -14,12 +14,10 @@ export const LoadKitBtn = () => {
     };
 
     return (
-      <div className='menuItems'>
-        <Button id='loadKitBtn' classes='menuBtn' onClick={onClick}>
-          <KitIcon />
-          <label htmlFor='loadKitBtn'>load kit</label>
-        </Button>
-      </div>
+      <Button id='loadKitBtn' classes='menuBtn' onClick={onClick}>
+        <KitIcon />
+        <label htmlFor='loadKitBtn'>kit</label>
+      </Button>
     );
   }, [dispatch]);
   return changeKitMemo;

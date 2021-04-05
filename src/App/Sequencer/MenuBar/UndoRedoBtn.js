@@ -5,7 +5,7 @@ import { Button } from 'App/shared/Button';
 import { RedoIcon, UndoIcon } from 'assets/icons';
 import { setStatus } from 'App/reducers/appSlice';
 
-let UndoRedo = ({ canUndo, canRedo, onUndo, onRedo }) => {
+let UndoRedoBtn = ({ canUndo, canRedo, onUndo, onRedo }) => {
   const dispatch = useDispatch();
 
   const undoStatus = useSelector((state) => state.sequence.present.undoStatus);
@@ -28,8 +28,7 @@ let UndoRedo = ({ canUndo, canRedo, onUndo, onRedo }) => {
   const undoRedoMemo = useMemo(() => {
     // console.log('rendering: UndoRedo');
     return (
-      <div className='menuItems'>
-        <span className='dummy' />
+      <>
         <Button
           id='undo'
           classes='menuBtn'
@@ -48,8 +47,7 @@ let UndoRedo = ({ canUndo, canRedo, onUndo, onRedo }) => {
           <RedoIcon />
           <label htmlFor='redo'>redo</label>
         </Button>
-        <span className='dummy' />
-      </div>
+      </>
     );
   }, [buffersLoaded, canRedo, canUndo, handleRedo, handleUndo]);
   return undoRedoMemo;
@@ -69,6 +67,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-UndoRedo = connect(mapStateToProps, mapDispatchToProps)(UndoRedo);
+UndoRedoBtn = connect(mapStateToProps, mapDispatchToProps)(UndoRedoBtn);
 
-export { UndoRedo };
+export { UndoRedoBtn };

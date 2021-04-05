@@ -5,7 +5,7 @@ import { MODES, setMode } from 'App/reducers/editorSlice';
 import { EraseAllIcon } from 'assets/icons';
 import { Button } from 'App/shared/Button';
 
-export const Erase = () => {
+export const EraseBtn = () => {
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.editor.mode);
   const editing = mode && mode !== MODES.PAINTING;
@@ -23,7 +23,7 @@ export const Erase = () => {
 
     // console.log('rendering: Erase');
     return (
-      <div className='menuItems'>
+      <>
         <Button
           id='erase-all'
           classes='menuBtn'
@@ -31,9 +31,9 @@ export const Erase = () => {
           onClick={onClick}
         >
           <EraseAllIcon />
-          <label htmlFor='erase-all'>erase pattern</label>
+          <label htmlFor='erase-all'>erase</label>
         </Button>
-      </div>
+      </>
     );
   }, [disabled, dispatch, editing]);
 
