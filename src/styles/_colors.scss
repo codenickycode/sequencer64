@@ -84,7 +84,7 @@ $red: rgb(232, 12, 48);
     background: $joker-darker;
   }
   .themeNES & {
-    background: $black;
+    background: $nes-grey;
   }
 }
 
@@ -115,7 +115,7 @@ $red: rgb(232, 12, 48);
     background: $magenta-dark;
   }
   .themeNES & {
-    background: $nes-grey-darker;
+    background: $nes;
   }
 }
 
@@ -124,7 +124,7 @@ $red: rgb(232, 12, 48);
     background: $lime-dark;
   }
   .themeNES & {
-    background: $nes-grey-darker;
+    background: $nes;
   }
 }
 
@@ -133,7 +133,7 @@ $red: rgb(232, 12, 48);
     background: $joker-darkest;
   }
   .themeNES & {
-    background: $nes-grey-darker;
+    background: $nes-grey-darkest;
   }
 }
 
@@ -144,7 +144,7 @@ $red: rgb(232, 12, 48);
     border: 1px solid $joker;
   }
   .themeNES & {
-    border: 1px solid $nes;
+    border: 1px solid $nes-grey;
   }
 }
 .borderDefault {

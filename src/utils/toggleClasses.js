@@ -10,10 +10,10 @@ export const showEditable = () => {
 
 export const highlightSamplePanel = () => {
   const sp = document.getElementById('samplePanel');
-  sp.classList.add('highlight');
+  if (sp) sp.classList.add('highlight');
 };
 
 export const unhighlightSamplePanel = () => {
   const sp = document.getElementById('samplePanel');
-  sp.classList.remove('highlight');
+  if (sp) sp.classList.remove('highlight');
 };
