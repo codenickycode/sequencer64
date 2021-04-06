@@ -63,7 +63,9 @@
 
     .pitch {
       z-index: 5;
-      font-size: 4vw;
+      font-size: 5vw;
+      padding: 0.15rem;
+      @extend %pitchColor;
     }
   }
 

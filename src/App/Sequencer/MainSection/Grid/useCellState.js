@@ -66,12 +66,19 @@ export const useCellState = (id, step) => {
     classes.cell = noteOn ? 'cell on' : 'cell';
     classes.bg = noteOn ? `bg bg${selectedSample}` : 'bg';
     classes.slice1 =
-      noteOn && slice === 2
+      mode === MODES.MOD_PITCH
+        ? 'slice'
+        : noteOn && slice === 2
         ? 'slice slice-2'
         : noteOn && slice === 3
         ? 'slice slice-3'
         : 'slice';
-    classes.slice2 = noteOn && slice > 2 ? 'slice slice-2' : 'slice';
+    classes.slice2 =
+      mode === MODES.MOD_PITCH
+        ? 'slice'
+        : noteOn && slice > 2
+        ? 'slice slice-2'
+        : 'slice';
 
     styles.bg = {
       transform: length >= 1 ? 'scaleX(1)' : `scaleX(${length * 3})`,

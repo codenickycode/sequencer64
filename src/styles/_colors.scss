@@ -1,5 +1,6 @@
 @use 'styles/themes/joker' as *;
 @use 'styles/themes/nes' as *;
+@use 'styles/themes/tmnt' as *;
 
 $grey: rgba(197, 185, 219, 1);
 $grey-half: rgba(150, 140, 170, 0.5);
@@ -49,6 +50,21 @@ $red: rgb(232, 12, 48);
   .themeNES & {
     stroke: $nes-grey;
   }
+  .themeTMNT & {
+    stroke: $tmnt-grey;
+  }
+}
+
+%pitchColor {
+  .themeJoker & {
+    color: $joker-dark;
+  }
+  .themeNES & {
+    color: $nes-grey;
+  }
+  .themeTMNT & {
+    color: $black;
+  }
 }
 
 /**************** BG *******************/
@@ -84,7 +100,10 @@ $red: rgb(232, 12, 48);
     background: $joker-darker;
   }
   .themeNES & {
-    background: $nes-grey;
+    background: $black;
+  }
+  .themeTMNT & {
+    background: $tmnt-darkest;
   }
 }
 
@@ -99,6 +118,9 @@ $red: rgb(232, 12, 48);
   .themeNES & {
     background: $nes-dark2;
   }
+  .themeTMNT & {
+    background: $tmnt-blue-dark;
+  }
 }
 
 %bgBtnHalf {
@@ -107,6 +129,9 @@ $red: rgb(232, 12, 48);
   }
   .themeNES & {
     background: $nes-dark2-half;
+  }
+  .themeTMNT & {
+    background: $tmnt-blue-dark-quarter;
   }
 }
 
@@ -117,6 +142,9 @@ $red: rgb(232, 12, 48);
   .themeNES & {
     background: $nes;
   }
+  .themeTMNT & {
+    background: $tmnt-2;
+  }
 }
 
 %bgStartBtn {
@@ -126,6 +154,9 @@ $red: rgb(232, 12, 48);
   .themeNES & {
     background: $nes;
   }
+  .themeTMNT & {
+    background: $tmnt;
+  }
 }
 
 %bgMenuBar {
@@ -134,6 +165,9 @@ $red: rgb(232, 12, 48);
   }
   .themeNES & {
     background: $nes-grey-darkest;
+  }
+  .themeTMNT & {
+    background: $tmnt-grey-darkest;
   }
 }
 
@@ -145,6 +179,9 @@ $red: rgb(232, 12, 48);
   }
   .themeNES & {
     border: 1px solid $nes-grey;
+  }
+  .themeTMNT & {
+    border: 1px solid $tmnt;
   }
 }
 .borderDefault {
@@ -166,6 +203,9 @@ $red: rgb(232, 12, 48);
   .themeNES & {
     border: 1px solid $nes-half;
   }
+  .themeTMNT & {
+    border: 1px solid $tmnt-half;
+  }
 }
 
 %borderBottomHalf {
@@ -175,188 +215,7 @@ $red: rgb(232, 12, 48);
   .themeNES & {
     border-bottom: 1px solid $nes-half;
   }
+  .themeTMNT & {
+    border-bottom: 1px solid $tmnt-half;
+  }
 }
-
-// %fillWhite {
-//   fill: $white;
-// }
-// .fillWhite {
-//   @extend %fillWhite;
-// }
-
-// %bgGreyHalf {
-//   background: $grey-half;
-// }
-// .bgGreyHalf {
-//   @extend %bgGreyHalf;
-// }
-
-// %bgSamplePanel {
-//   .themeJoker & {
-//     background: $black;
-//   }
-//   .themeNES & {
-//     background: $black;
-//   }
-//   .themeSNES & {
-//     background: $snes-bg;
-//   }
-// }
-
-// %bgMenuBar {
-//   .themeJoker & {
-//     background: $joker-bg;
-//   }
-//   .themeNES & {
-//     background: $black;
-//   }
-//   .themeSNES & {
-//     background: $snes-bg;
-//   }
-// }
-
-// %bgDark2 {
-//   .themeJoker & {
-//     background: $joker-dark2;
-//   }
-//   .themeNES & {
-//     background: $nes-dark2;
-//   }
-//   .themeSNES & {
-//     background: $snes-dark2;
-//   }
-// }
-
-// %bgHalf {
-//   .themeJoker & {
-//     background: $joker-bg-half;
-//   }
-//   .themeNES & {
-//     background: $nes-bg-half;
-//   }
-//   .themeSNES & {
-//     background: $snes-bg-half;
-//   }
-// }
-
-// %bg {
-//   .themeJoker & {
-//     background: $joker-dark2;
-//   }
-//   .themeNES & {
-//     background: $nes-bg2;
-//   }
-//   .themeSNES & {
-//     background: $snes-bg;
-//   }
-// }
-
-// %bgDefault {
-//   .themeJoker & {
-//     background: $joker-default;
-//   }
-//   .themeNES & {
-//     background: $nes-default;
-//   }
-//   .themeSNES & {
-//     background: $snes-default;
-//   }
-// }
-
-// %bgDefault3q {
-//   .themeJoker & {
-//     background: $joker-default-3q;
-//   }
-//   .themeNES & {
-//     background: $nes-default-3q;
-//   }
-//   .themeSNES & {
-//     background: $snes-default-3q;
-//   }
-// }
-
-// %bgDefaultHalf {
-//   .themeJoker & {
-//     background: $joker-default-half;
-//   }
-//   .themeNES & {
-//     background: $nes-default-half;
-//   }
-//   .themeSNES & {
-//     background: $snes-default-half;
-//   }
-// }
-
-// %bgDefault3rd {
-//   .themeJoker & {
-//     background: $joker-default-third;
-//   }
-//   .themeNES & {
-//     background: $nes-default-third;
-//   }
-//   .themeSNES & {
-//     background: $snes-default-third;
-//   }
-// }
-
-// %bgDefaultQuarter {
-//   .themeJoker & {
-//     background: $joker-default-quarter;
-//   }
-//   .themeNES & {
-//     background: $nes-default-quarter;
-//   }
-//   .themeSNES & {
-//     background: $snes-default-quarter;
-//   }
-// }
-
-// %borderDefaultHalf {
-//   .themeJoker & {
-//     border: 1px solid $joker-default-half;
-//   }
-//   .themeNES & {
-//     border: 1px solid $nes-default-half;
-//   }
-//   .themeSNES & {
-//     border: 1px solid $snes-default-half;
-//   }
-// }
-
-// %borderBottomHalf {
-//   .themeJoker & {
-//     border-bottom: 1px solid $joker-default-half;
-//   }
-//   .themeNES & {
-//     border-bottom: 1px solid $nes-default-half;
-//   }
-//   .themeSNES & {
-//     border-bottom: 1px solid $snes-default-half;
-//   }
-// }
-// %borderTopBottomHalf {
-//   .themeJoker & {
-//     border-bottom: 1px solid $joker-default-half;
-//     border-top: 1px solid $joker-default-half;
-//   }
-//   .themeNES & {
-//     border-bottom: 1px solid $nes-default-half;
-//     border-top: 1px solid $nes-default-half;
-//   }
-//   .themeSNES & {
-//     border-bottom: 1px solid $snes-default-half;
-//     border-top: 1px solid $snes-default-half;
-//   }
-// }
-
-// %fillDefault {
-//   .themeJoker & {
-//     fill: $joker-default-3q;
-//   }
-//   .themeNES & {
-//     fill: $nes-default-3q;
-//   }
-//   .themeSNES & {
-//     fill: $snes-default-3q;
-//   }
-// }

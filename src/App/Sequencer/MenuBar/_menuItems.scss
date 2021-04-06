@@ -132,7 +132,7 @@
   right: 0;
   width: 50%;
   @include flex(column);
-  @extend %bg;
+  @extend %bgMenuBar;
   opacity: 0;
   transform: scaleY(0);
   transform-origin: bottom;
@@ -145,7 +145,7 @@
 
   .themeBtn {
     @extend %btn;
-    @extend %bg;
+    @extend %bgMenuBar;
     border: none;
     border-radius: 0;
     margin-bottom: 0.5rem;
@@ -153,7 +153,7 @@
 
     &.active {
       @extend %borderActive;
-      @extend %bg3q;
+      @extend %bgBtnFull;
     }
   }
 }
