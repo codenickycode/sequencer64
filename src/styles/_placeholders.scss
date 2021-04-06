@@ -77,7 +77,8 @@
 %btn {
   cursor: pointer;
   width: auto;
-  height: 2.5rem;
+  height: auto;
+  min-height: 2rem;
   @extend %input;
   @extend %btnFont;
 }

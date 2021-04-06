@@ -11,6 +11,10 @@
   vertical-align: top;
   overflow: visible;
 
+  @media (min-width: 768px) {
+    justify-content: space-evenly;
+  }
+
   .dummy {
     width: 2rem;
     text-align: center;
@@ -27,8 +31,8 @@
     border: none;
     // border: 1px solid gold;
 
-    * {
-      // border: 1px solid red;
+    @media (orientation: landscape) {
+      flex-direction: row;
     }
 
     label {
@@ -41,7 +45,8 @@
   }
 
   .icon {
-    width: 2rem;
+    max-width: 2rem;
+    min-width: 1rem;
     &.active {
       fill: $green;
     }
@@ -53,8 +58,10 @@
   @include flex;
 
   .btn {
-    width: 4rem;
-    height: 2rem;
+    max-width: 4rem;
+    min-width: 2rem;
+    max-height: 2rem;
+    min-height: 1rem;
     margin: 0 0.25rem;
 
     .icon {
@@ -79,8 +86,10 @@
 
     .input {
       @extend %input;
-      width: 4rem;
-      height: 100%;
+      max-width: 4rem;
+      min-width: 2rem;
+      max-height: 2rem;
+      min-height: 1rem;
       padding: 0.25rem;
       overflow: hidden;
       text-align: center;

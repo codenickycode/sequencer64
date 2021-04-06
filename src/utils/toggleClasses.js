@@ -7,13 +7,3 @@ export const showEditable = () => {
   const cells = document.querySelectorAll('.on');
   cells.forEach((cell) => cell.classList.add('flashing'));
 };
-
-export const highlightSamplePanel = () => {
-  const sp = document.getElementById('samplePanel');
-  if (sp) sp.classList.add('highlight');
-};
-
-export const unhighlightSamplePanel = () => {
-  const sp = document.getElementById('samplePanel');
-  if (sp) sp.classList.remove('highlight');
-};

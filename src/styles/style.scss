@@ -37,12 +37,16 @@ body {
   @extend %text;
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
-  // font-style: italic;
 }
+// @media screen and (min-width: 1024px) {
+//   body {
+//     font-size: 18px;
+//   }
+// }
 
 #root {
   @extend %full;
-  max-width: 800px;
+  // max-width: 800px;
   background: $black;
   color: $white;
 

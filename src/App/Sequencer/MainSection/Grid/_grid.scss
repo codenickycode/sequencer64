@@ -1,6 +1,7 @@
 @use 'styles/placeholders' as *;
 @use 'styles/colors' as *;
 @use 'styles/mixins' as *;
+@use 'styles/responsiveFont' as *;
 
 .grid {
   @extend %full;
@@ -63,7 +64,7 @@
 
     .pitch {
       z-index: 5;
-      font-size: 5vw;
+      @include responsiveFont(5vw, 14px, 50px);
       padding: 0.15rem;
       @extend %pitchColor;
     }

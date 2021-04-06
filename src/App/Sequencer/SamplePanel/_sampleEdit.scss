@@ -9,6 +9,11 @@
     padding: 0.5rem;
     overflow: hidden;
     @extend %bg90;
+
+    * {
+      // border: 1px solid red;
+    }
+
     .icon {
       max-width: 5rem;
     }
@@ -46,7 +51,9 @@
   .modWrapper {
     @extend %full;
     @include flex(column, space-evenly);
-    // color: $white;
+    @media (orientation: landscape) {
+      max-height: 70%;
+    }
 
     #modSlider {
       width: 50%;

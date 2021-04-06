@@ -30,16 +30,17 @@ export const SequencerPage = () => {
   ) : (
     <>
       <div id='sequencer'>
-        <div id='main'>
-          <Grid />
-          <ChangeKit />
-          <div id='pastePatternPortal' />
-        </div>
-        <div id='samplePanel'>
-          <SpAlert />
-          <SamplePanel />
-          <div id='kitInfoPortal' />
-          <div className='border' />
+        <div className='mainContainer'>
+          <div id='main'>
+            <Grid />
+            <ChangeKit />
+            <div id='pastePatternPortal' />
+          </div>
+          <div id='samplePanel'>
+            <SpAlert />
+            <SamplePanel />
+            <div id='kitInfoPortal' />
+          </div>
         </div>
         <Menu />
       </div>

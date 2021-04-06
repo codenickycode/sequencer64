@@ -11,6 +11,7 @@ import { KitProvider } from 'App/shared/KitProvider';
 import { Provider } from 'react-redux';
 import store from 'App/store';
 import { setOnline } from 'App/reducers/appSlice';
+import { setWidthAndHeight } from 'utils/calcScreen';
 
 export default function App() {
   // console.log('rendering: App');
@@ -63,6 +64,8 @@ function resize() {
   document.body.style.display = 'none';
   setTimeout(function () {
     document.body.style.display = 'initial';
+    setWidthAndHeight();
   }, 10);
   window.removeEventListener('focus', resize);
 }
+setWidthAndHeight();
