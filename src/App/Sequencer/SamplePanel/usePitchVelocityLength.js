@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   INITIAL_MODS,
@@ -16,15 +16,27 @@ export const usePitchVelocityLength = (mode) => {
   const [value, setValue] = useState(
     mode === MODES.MOD_PITCH ? MIDI_NOTES[24] : 0.5
   );
+
+  const dispatchModAll = useCallback(() => {
+    dispatch(
+      modAll({
+        selectedSample,
+        type: mode,
+        value,
+      })
+    );
+  }, [dispatch, mode, selectedSample, value]);
+
+  const [editAll, setEditAll] = useState(false);
+
   useEffect(() => {
     if (mode === MODES.MOD_PITCH) {
       dispatch(setModVal(value));
+      if (editAll) dispatchModAll();
     } else {
       dispatch(setModVal(Math.round(value * 100) / 100));
     }
-  }, [dispatch, mode, value]);
-
-  const [editAll, setEditAll] = useState(false);
+  }, [dispatch, dispatchModAll, editAll, mode, value]);
 
   const onChange = ({ target: { value } }) => {
     if (mode === MODES.MOD_PITCH) {
@@ -44,16 +56,6 @@ export const usePitchVelocityLength = (mode) => {
     } else {
       dispatch(setSpAlert('Tap cells to apply'));
     }
-  };
-
-  const dispatchModAll = () => {
-    dispatch(
-      modAll({
-        selectedSample,
-        type: mode,
-        value,
-      })
-    );
   };
 
   const toggleAll = () => {

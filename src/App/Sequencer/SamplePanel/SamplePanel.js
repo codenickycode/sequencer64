@@ -23,6 +23,7 @@ export const SamplePanel = () => {
   const dispatch = useDispatch();
 
   const mode = useSelector((state) => state.editor.mode);
+  const landscape = useSelector((state) => state.app.landscape);
 
   const spMemo = useMemo(() => {
     // console.log('rendering: SamplePanel');
@@ -45,11 +46,11 @@ export const SamplePanel = () => {
         {mode === MODES.PAINT ? (
           <SampleEditMenu selectMode={selectMode} onClose={onClose} />
         ) : mode === MODES.ERASE ? (
-          <Erase onReturn={onReturn} />
+          <Erase onReturn={onReturn} landscape={landscape} />
         ) : mode === MODES.SLICE ? (
-          <Slice onReturn={onReturn} />
+          <Slice onReturn={onReturn} landscape={landscape} />
         ) : mode === MODES.COPY ? (
-          <Copy onReturn={onReturn} />
+          <Copy onReturn={onReturn} landscape={landscape} />
         ) : mode === MODES.TAP || !mode ? (
           <SampleBtns />
         ) : (
@@ -57,7 +58,7 @@ export const SamplePanel = () => {
         )}
       </>
     );
-  }, [dispatch, mode]);
+  }, [dispatch, landscape, mode]);
 
   return spMemo;
 };

@@ -3,17 +3,38 @@
 @use 'styles/colors' as *;
 
 #samplePanel {
+  * {
+    // border: 1px solid red;
+  }
+
   .detail {
     @extend %full;
     @include flex(row, space-evenly);
     padding: 0.5rem;
     overflow: hidden;
-    @extend %bg90;
-    @extend %border;
+    @extend %bg;
+    @extend %borderHalf;
     border-radius: 0;
 
-    * {
-      // border: 1px solid red;
+    @media (orientation: landscape) {
+      top: 50%;
+      transform: translateY(-50%);
+      flex-direction: column-reverse;
+      padding: 1rem;
+      min-width: 100%;
+      max-height: 500px;
+
+      .dummy {
+        display: none;
+      }
+
+      .icon {
+        height: auto;
+        &.chevron-down {
+          max-height: 2rem;
+          max-width: 2rem;
+        }
+      }
     }
 
     .icon {
@@ -39,9 +60,12 @@
       @extend %full;
       max-width: 50%;
       @include flex(column, space-evenly);
-      // color: $white;
       text-align: center;
       white-space: initial;
+
+      @media (orientation: landscape) {
+        max-width: 100%;
+      }
     }
   }
 

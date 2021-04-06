@@ -5,7 +5,7 @@ import { Button } from 'App/shared/Button';
 import { ChevronLeftIcon, CopyIcon, EraserIcon, SawIcon } from 'assets/icons';
 import { PastePattern } from 'App/Sequencer/MainSection/PastePattern';
 
-export const Erase = ({ onReturn }) => {
+export const Erase = ({ onReturn, landscape }) => {
   const dispatch = useDispatch();
   const selectedSample = useSelector((state) => state.editor.selectedSample);
   const disabled = useSelector(
@@ -30,17 +30,18 @@ export const Erase = ({ onReturn }) => {
       </Button>
       <div className='dummy' />
       <div className='middle'>
+        {landscape && <EraserIcon />}
         <p className=''>Click and drag to erase cells</p>
         <Button disabled={disabled} onClick={onEraseAll}>
           Erase All
         </Button>
       </div>
-      <EraserIcon />
+      {!landscape && <EraserIcon />}
     </div>
   );
 };
 
-export const Slice = ({ onReturn }) => {
+export const Slice = ({ onReturn, landscape }) => {
   const dispatch = useDispatch();
   const selectedSample = useSelector((state) => state.editor.selectedSample);
 
@@ -55,15 +56,16 @@ export const Slice = ({ onReturn }) => {
       </Button>
       <div className='dummy' />
       <div className='middle'>
+        {landscape && <SawIcon addClass='slicing' />}
         <p>Click each cell to slice into halves or thirds</p>
         <Button onClick={onReset}>Reset All</Button>
       </div>
-      <SawIcon addClass='slicing' />
+      {!landscape && <SawIcon addClass='slicing' />}
     </div>
   );
 };
 
-export const Copy = ({ onReturn }) => {
+export const Copy = ({ onReturn, landscape }) => {
   return (
     <div className='detail'>
       <Button classes='close' onClick={onReturn}>
@@ -71,9 +73,10 @@ export const Copy = ({ onReturn }) => {
       </Button>
       <div className='dummy' />
       <div className='middle'>
+        {landscape && <CopyIcon />}
         <p>Click to paste current sample's pattern</p>
       </div>
-      <CopyIcon />
+      {!landscape && <CopyIcon />}
       <PastePattern />
     </div>
   );

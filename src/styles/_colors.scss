@@ -83,7 +83,7 @@ $red: rgb(232, 12, 48);
 
 %pitchColor {
   .themeJoker & {
-    color: $joker-dark;
+    color: $black;
   }
   .themeNES & {
     color: $nes-grey;
@@ -103,6 +103,9 @@ $red: rgb(232, 12, 48);
 
 %bg {
   background: $black;
+  .themeJoker & {
+    background: $joker-bg;
+  }
   .themeWhite & {
     background: $white;
   }

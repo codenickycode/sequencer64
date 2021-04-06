@@ -9,11 +9,13 @@ export const KitAndTapModeBtn = () => {
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.editor.mode);
   const tapping = mode === MODES.TAP;
+  const show = useSelector((state) => state.app.show);
+  const showChangeKit = show === VIEWS.CHANGE_KIT;
   const memo = useMemo(() => {
     // console.log('rendering: ChangeKitBtn');
 
     const changeKit = () => {
-      dispatch(setShow(VIEWS.CHANGE_KIT));
+      dispatch(setShow(showChangeKit ? '' : VIEWS.CHANGE_KIT));
     };
 
     const tapMode = () => {
@@ -23,8 +25,13 @@ export const KitAndTapModeBtn = () => {
     return (
       <>
         <Button id='changeKitBtn' classes='menuBtn' onClick={changeKit}>
-          <KitIcon />
-          <label htmlFor='changeKitBtn'>kit</label>
+          <KitIcon addClass={showChangeKit ? 'active' : ''} />
+          <label
+            className={showChangeKit ? 'active' : ''}
+            htmlFor='changeKitBtn'
+          >
+            kit
+          </label>
         </Button>
         <Button id='tapModeBtn' classes='menuBtn' onClick={tapMode}>
           <TapIcon addClass={tapping ? 'active' : ''} />
@@ -34,6 +41,6 @@ export const KitAndTapModeBtn = () => {
         </Button>
       </>
     );
-  }, [dispatch, tapping]);
+  }, [dispatch, showChangeKit, tapping]);
   return memo;
 };

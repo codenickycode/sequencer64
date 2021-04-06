@@ -15,9 +15,16 @@ export const LoadSave = () => {
 
   const loadSaveSequenceMemo = useMemo(() => {
     const onClose = () => fadeOutThen(() => dispatch(setShow('')));
+    const onClick = (e) => {
+      if (e.target.id && e.target.id === 'loadSave') onClose();
+    };
     return (
       <>
-        <div className={'loadSave' + fadeInClass}>
+        <div
+          id='loadSave'
+          className={'loadSave' + fadeInClass}
+          onClick={onClick}
+        >
           <div className='top'>
             <Tabs show={show} />
             <LoginSection />

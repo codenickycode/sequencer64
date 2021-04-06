@@ -34,10 +34,6 @@
         @extend %borderHalf;
       }
 
-      // .icon {
-      //   fill: $white;
-      // }
-
       p,
       .dummy,
       .icon {
@@ -72,11 +68,17 @@
   }
 }
 
-.kit-info {
-  @extend %fullAbs;
+#kitInfoPortal {
+  @extend %full;
+  top: -100%;
   z-index: 6;
+  pointer-events: none;
+}
+
+.kit-info {
+  pointer-events: initial;
+  @extend %full;
   @include flex(column, space-evenly);
-  top: 0;
   padding: 0.5rem;
   @extend %bg90;
   .btn.close {

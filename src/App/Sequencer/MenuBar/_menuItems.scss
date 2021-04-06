@@ -12,7 +12,12 @@
   overflow: visible;
 
   @media (min-width: 768px) {
+    flex-shrink: 1;
     justify-content: space-evenly;
+
+    &.transport {
+      flex-shrink: 1.25;
+    }
   }
 
   .dummy {
@@ -29,7 +34,6 @@
     height: 100%;
     background: transparent;
     border: none;
-    // border: 1px solid gold;
 
     @media (orientation: landscape) {
       flex-direction: row;
@@ -140,6 +144,7 @@
   bottom: 0;
   right: 0;
   width: 50%;
+  max-width: 250px;
   @include flex(column);
   @extend %bgMenuBar;
   opacity: 0;

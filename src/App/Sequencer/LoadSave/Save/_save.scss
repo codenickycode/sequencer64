@@ -4,6 +4,8 @@
 
 .saveSequence {
   @extend %full;
+  flex: 1;
+  min-height: 100%;
   padding: 1rem 0.5rem;
 
   .share {

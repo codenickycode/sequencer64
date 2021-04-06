@@ -15,10 +15,17 @@
   scroll-behavior: smooth;
   @extend %bgMenuBar;
 
+  * {
+    // border: 1px solid red;
+  }
+
+  @media (orientation: landscape) {
+    height: var(--15vh);
+  }
+
   @media (min-width: 768px) {
     padding: 0.25rem;
     display: flex;
-    justify-content: center;
   }
 }
 

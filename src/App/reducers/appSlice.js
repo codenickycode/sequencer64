@@ -28,8 +28,7 @@ const INITIAL_STATE = {
   online: window.navigator.onLine,
   serviceWorkerActive: false,
   theme: getLS('theme') || 'Joker',
-  width: document.documentElement.clientWidth,
-  height: document.documentElement.clientHeight,
+  landscape: window.innerWidth > window.innerHeight,
 };
 
 export const appSlice = createSlice({
@@ -68,9 +67,8 @@ export const appSlice = createSlice({
     setTheme: (state, { payload }) => {
       state.theme = payload;
     },
-    setScreen: (state, { payload }) => {
-      state.width = payload.width;
-      state.height = payload.height;
+    setLandscape: (state, { payload }) => {
+      state.landscape = payload;
     },
     updateSequencesFinally: (
       state,
@@ -108,7 +106,7 @@ export const {
   setOnline,
   setServiceWorkerActive,
   setTheme,
-  setScreen,
+  setLandscape,
   updateSequencesFinally,
   getUserFinally,
 } = appSlice.actions;

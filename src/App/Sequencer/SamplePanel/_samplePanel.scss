@@ -42,14 +42,19 @@
   }
 
   .editMenu {
-    position: relative;
-    height: 100%;
+    @extend %full;
     white-space: nowrap;
     overflow-x: scroll;
     overflow-y: hidden;
-    @extend %bg90;
-    @extend %border;
+    @extend %bg;
+    @extend %borderHalf;
+    border-radius: 0;
     padding-left: 4rem;
+
+    @media (orientation: landscape) and (min-width: 768px) {
+      display: flex;
+      justify-content: space-evenly;
+    }
 
     @media (orientation: landscape) {
       white-space: initial;
@@ -75,13 +80,10 @@
       display: inline-flex;
       background: transparent;
       border: none;
-
-      * {
-        // border: 1px solid gold;
-      }
+      border-radius: 0.5rem;
 
       @media (orientation: landscape) {
-        width: 100%;
+        width: 55%;
         height: 5rem;
         margin-bottom: 0.5rem;
         flex-direction: row;
