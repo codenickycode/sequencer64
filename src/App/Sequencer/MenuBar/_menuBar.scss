@@ -38,7 +38,7 @@
     pointer-events: initial;
     position: absolute;
     height: 100%;
-    width: 2rem;
+    width: 3rem;
     background: transparent;
     border: none;
     outline: none;
@@ -48,9 +48,11 @@
 
   .scrollLeft {
     left: 0;
+    padding-right: 1rem;
   }
   .scrollRight {
     right: 0;
+    padding-left: 1rem;
   }
 
   button.scrollRight:disabled,

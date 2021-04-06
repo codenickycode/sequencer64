@@ -48,6 +48,7 @@
     overflow-x: scroll;
     overflow-y: hidden;
     @extend %bg90;
+    @extend %border;
     padding-left: 4rem;
 
     @media (orientation: landscape) {
@@ -104,10 +105,15 @@
 
 .spAlertWrapper {
   pointer-events: none;
-  position: absolute;
+  position: relative;
   top: -3rem;
   margin: 0 auto;
   width: 100%;
+
+  @media (orientation: landscape) {
+    top: 0;
+    z-index: 2;
+  }
 
   .spAlert {
     position: fixed;
@@ -118,6 +124,10 @@
     transform: translateX(-0.25rem);
     opacity: 0;
     transition: 1500ms;
+
+    @media (orientation: landscape) {
+      width: 48%;
+    }
 
     .alert {
       text-align: center;
