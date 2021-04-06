@@ -4,15 +4,16 @@
 
 .saveSequence {
   @extend %full;
-  flex: 1;
-  min-height: 100%;
   padding: 1rem 0.5rem;
 
-  .share {
+  .share,
+  .save {
     @extend %borderHalf;
     margin-bottom: 1rem;
-    padding: 1rem;
+    padding: 2rem;
+  }
 
+  .share {
     .header {
       @extend %headerLeft;
     }
@@ -72,10 +73,6 @@
   }
 
   .save {
-    @extend %borderHalf;
-    margin-bottom: 1rem;
-    padding: 1rem;
-
     .header {
       @extend %headerLeft;
       @include flex(row, space-between);

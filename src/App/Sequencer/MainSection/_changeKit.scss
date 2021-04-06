@@ -7,7 +7,7 @@
   @extend %bg90;
   .kits {
     @extend %full;
-    @include grid(3, 3, 0.2);
+    @include grid(3, 3, 5px);
     padding: 0.25rem;
 
     .btn {

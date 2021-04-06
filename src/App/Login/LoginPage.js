@@ -3,8 +3,8 @@ import googleImg from 'App/Login/img/google.png';
 import twitterImg from 'App/Login/img/twitter.png';
 import githubImg from 'App/Login/img/github.png';
 import facebookImg from 'App/Login/img/facebook.png';
-import styles from 'App/Login/LoginPage.module.css';
 import { Link } from 'react-router-dom';
+import { Button } from 'App/shared/Button';
 
 export const LoginPage = () => {
   const googleLogin = () => {
@@ -40,45 +40,31 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className={styles.loginPage}>
+    <div className='loginPage'>
       <h1>Login</h1>
-      <div className={styles.loginMethods}>
-        <button
-          className={styles.methodBtn}
-          id='login-google'
-          onClick={googleLogin}
-        >
+      <div className='loginMethods'>
+        <button className='methodBtn' id='login-google' onClick={googleLogin}>
           <img src={googleImg} alt='Google Logo' />
-          {/* <p>Login with Google</p> */}
         </button>
-        <button
-          className={styles.methodBtn}
-          id='login-twitter'
-          onClick={twitterLogin}
-        >
+        <button className='methodBtn' id='login-twitter' onClick={twitterLogin}>
           <img src={twitterImg} alt='Twitter Logo' />
-          {/* <p>Login with Twitter</p> */}
         </button>
         <button
-          className={styles.methodBtn}
+          className='methodBtn'
           id='login-facebook'
           onClick={facebookLogin}
         >
-          <img src={facebookImg} alt='Facebok Logo' />
-          {/* <p>Login with Facebook</p> */}
+          <img src={facebookImg} alt='Facebook Logo' />
         </button>
-        <button
-          className={styles.methodBtn}
-          id='login-github'
-          onClick={githubLogin}
-        >
+        <button className='methodBtn' id='login-github' onClick={githubLogin}>
           <img src={githubImg} alt='Github Logo' />
-          {/* <p>Login with Github</p> */}
         </button>
       </div>
       <div className='bottom-btn show'>
-        <Link className='load-save-sequence-close' to='/?load=true'>
-          Close
+        <Link className='bottomBtn' to='/?load=true'>
+          <Button id='goBack'>
+            <label htmlFor='goBack'>Go Back</label>
+          </Button>
         </Link>
       </div>
     </div>

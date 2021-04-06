@@ -80,10 +80,8 @@ export const ChangeKitInfo = ({ fadeInClass, onClick }) => {
   const portal = document.getElementById('kitInfoPortal');
   return portal
     ? ReactDOM.createPortal(
-        <div className={'kit-info' + fadeInClass}>
-          <Button classes='close' onClick={onClick}>
-            close
-          </Button>
+        <div className={'kit-info' + fadeInClass} onClick={onClick}>
+          <Button classes='close'>close</Button>
         </div>,
         portal
       )

@@ -5,6 +5,7 @@ import { PointDownIcon, PointUpIcon } from 'assets/icons';
 export const SpAlert = () => {
   const message = useSelector((state) => state.editor.spAlert.message);
   const [classes, setClasses] = useState('spAlert');
+  const landscape = useSelector((state) => state.app.landscape);
 
   useEffect(() => {
     let onTimer;
@@ -36,11 +37,11 @@ export const SpAlert = () => {
         <div id='spAlert' className={classes}>
           <span className='dummy' />
           <p className='alert'>{spAlert}</p>
-          <Icon addClass={up ? 'up' : ''} />
+          {!landscape && <Icon addClass={up ? 'up' : ''} />}
           <span className='dummy' />
         </div>
       </div>
     ) : null;
-  }, [classes, message]);
+  }, [classes, landscape, message]);
   return spAlertMemo;
 };

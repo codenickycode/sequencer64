@@ -39,7 +39,7 @@
   max-height: 75%;
   padding: 0.25rem;
   @include flex;
-  @extend %borderHalf;
+  // @extend %borderHalf;
 }
 
 #samplePanel {

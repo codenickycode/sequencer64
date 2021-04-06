@@ -7,7 +7,9 @@
   bottom: 0;
   margin: 0 auto;
   height: var(--10vh);
+  max-height: 100px;
   width: 100%;
+  max-width: 1440px;
   scroll-snap-type: x mandatory;
   overflow-x: scroll;
   overflow-y: hidden;
@@ -15,12 +17,16 @@
   scroll-behavior: smooth;
   @extend %bgMenuBar;
 
-  * {
-    // border: 1px solid red;
-  }
-
   @media (orientation: landscape) {
     height: var(--15vh);
+  }
+
+  @media (min-width: 768px) {
+    overflow: hidden;
+  }
+
+  * {
+    // border: 1px solid red;
   }
 
   @media (min-width: 768px) {
@@ -32,9 +38,15 @@
 .scrollbar {
   pointer-events: none;
   position: fixed;
-  height: 10%;
+  height: var(--10vh);
+  max-height: 100px;
   width: 100%;
+  max-width: 1440px;
   bottom: 0;
+
+  @media (orientation: landscape) {
+    height: var(--15vh);
+  }
 
   @media (min-width: 768px) {
     display: none;

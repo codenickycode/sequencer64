@@ -10,19 +10,25 @@
   .defaultSequences {
     @extend %borderHalf;
     margin-bottom: 1rem;
-    padding: 0.5rem;
+    padding-bottom: 1rem;
+
+    .sub {
+      padding: 1rem 0 0 1rem;
+    }
 
     .title {
       @extend %textCenterPadding;
+      @extend %borderBottomHalf;
     }
 
     .columnTitles {
       width: 100%;
+      margin: 0.25rem auto;
+      max-width: 90%;
       padding: 0.5rem;
       display: grid;
       grid-template-columns: 0.5fr 0.25fr 0.15fr 0.1fr;
       align-items: center;
-      @extend %borderHalf;
       border-right: none !important;
       border-left: none !important;
     }
@@ -30,6 +36,8 @@
     .sequence {
       @extend %btnFull;
       @extend %bgBtnFull;
+      margin: 0.25rem auto;
+      max-width: 90%;
       display: grid;
       grid-template-columns: 0.5fr 0.25fr 0.15fr 0.1fr;
       align-items: center;

@@ -1,6 +1,8 @@
 .loginPage {
+  margin: 0 auto;
   height: 100%;
   width: 100%;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,4 +30,8 @@
 
 .methodBtn p {
   color: white;
+}
+
+.loginPage .bottomBtn {
+  transform: translateX(-50%);
 }

@@ -22,7 +22,7 @@ const UserSequences = (props) => {
     <div className='userSequences'>
       <p className='title'>User Sequences</p>
       {!userSequences || userSequences.length === 0 ? (
-        <p>No user sequences</p>
+        <p className='sub'>No user sequences</p>
       ) : (
         <>
           <ColumnTitles />
