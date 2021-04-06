@@ -4,18 +4,18 @@ import { PointDownIcon, PointUpIcon } from 'assets/icons';
 
 export const SpAlert = () => {
   const message = useSelector((state) => state.editor.spAlert.message);
-  const [classes, setClasses] = useState('sp-alert');
+  const [classes, setClasses] = useState('spAlert');
 
   useEffect(() => {
     let onTimer;
     let fadeTimer;
     if (message) {
-      setClasses('sp-alert fade-out fade-out-2');
+      setClasses('spAlert fadeOut fadeOut2');
       onTimer = setTimeout(() => {
-        setClasses('sp-alert');
+        setClasses('spAlert');
       }, 1000);
       fadeTimer = setTimeout(() => {
-        setClasses('sp-alert fade-out-2');
+        setClasses('spAlert fadeOut2');
       }, 500);
     }
     return () => {
@@ -32,8 +32,8 @@ export const SpAlert = () => {
     const up = spAlert.match(/Tap/);
     const Icon = up ? PointUpIcon : PointDownIcon;
     return spAlert ? (
-      <div className='sp-alert-wrapper'>
-        <div id='sp-alert' className={classes}>
+      <div className='spAlertWrapper'>
+        <div id='spAlert' className={classes}>
           <span className='dummy' />
           <p className='alert'>{spAlert}</p>
           <Icon addClass={up ? 'up' : ''} />

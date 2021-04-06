@@ -39,7 +39,7 @@ export const animateCell = (time, cell) => {
 };
 
 export const animateSample = (time, step) => {
-  const sampleBtns = document.querySelectorAll('.sample-btn');
+  const sampleBtns = document.querySelectorAll('.sampleBtn');
   Tone.Draw.schedule(() => {
     step.forEach((sample, i) => {
       if (sample.noteOn) {

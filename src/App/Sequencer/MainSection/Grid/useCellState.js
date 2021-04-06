@@ -64,7 +64,7 @@ export const useCellState = (id, step) => {
     values.midiNote = noteOn && mode === MODES.MOD_PITCH ? pitch : null;
 
     classes.cell = noteOn ? 'cell on' : 'cell';
-    classes.bg = noteOn ? `bg bg${selectedSample}` : 'bg bgGreyHalf';
+    classes.bg = noteOn ? `bg bg${selectedSample}` : 'bg';
     classes.slice1 =
       noteOn && slice === 2
         ? 'slice slice-2'

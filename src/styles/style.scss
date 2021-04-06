@@ -1,4 +1,6 @@
+// @use 'styles/colors' as *;
 @use 'styles/colors' as *;
+@use 'styles/spectrum' as *;
 @use 'styles/mixins' as *;
 @use 'styles/placeholders' as *;
 @use 'styles/customSelect' as *;
@@ -26,23 +28,21 @@
 html,
 body {
   @extend %full;
-  background: $black;
+  @extend %bg;
 }
 
 body {
   max-width: 100%;
   max-height: 100%;
-  // overflow: hidden;
-  color: $white;
+  @extend %text;
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
-  font-style: italic;
+  // font-style: italic;
 }
 
 #root {
   @extend %full;
   max-width: 800px;
-  // overflow-y: scroll;
 }
 
 .deg90 {
@@ -83,6 +83,7 @@ a.disabled {
 .icon {
   height: 100%;
   width: 100%;
+  @extend %iconFill;
 }
 
 .error {
@@ -98,11 +99,11 @@ h1 {
 }
 
 p.dim {
-  color: $white-quarter;
+  @extend %textDim;
 }
 
 p.dim-2 {
-  color: $white-half;
+  @extend %textDim2;
 }
 
 .p-left-25 {
@@ -114,7 +115,7 @@ p.dim-2 {
   opacity: 1;
 }
 
-.fade-out {
+.fadeOut {
   transition: 250ms;
   opacity: 0;
 }

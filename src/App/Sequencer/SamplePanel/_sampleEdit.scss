@@ -8,10 +8,9 @@
     @include flex(row, space-evenly);
     padding: 0.5rem;
     overflow: hidden;
-    background: $black-90;
+    @extend %bg90;
     .icon {
       max-width: 5rem;
-      fill: $white;
     }
 
     &.col {
@@ -33,7 +32,7 @@
       @extend %full;
       max-width: 50%;
       @include flex(column, space-evenly);
-      color: $white;
+      // color: $white;
       text-align: center;
       white-space: initial;
     }
@@ -44,32 +43,32 @@
   }
 
   // PitchVelocityLength
-  .mod-wrapper {
+  .modWrapper {
     @extend %full;
     @include flex(column, space-evenly);
-    color: $white;
+    // color: $white;
 
-    #mod-slider {
+    #modSlider {
       width: 50%;
     }
 
-    .select-label {
+    .selectLabel {
       height: 100%;
       @include flex;
     }
 
-    .custom-select-wrapper {
+    .customSelectWrapper {
       width: 50%;
       height: 100%;
       @include flex;
     }
 
-    .mod-value-wrapper {
+    .modValueWrapper {
       @extend %full;
-      @include flex();
+      @include flex;
     }
 
-    .mod-label {
+    .modLabel {
       display: inline-block;
       text-align: right;
     }
@@ -86,7 +85,7 @@
     }
   }
 
-  .mod-btns {
+  .modBtns {
     @extend %full;
     @include flex(row, space-evenly);
 

@@ -37,7 +37,7 @@ export const Button = ({
 
 export const ScrollLeft = ({ fwdRef, onClick }) => {
   return (
-    <Button fwdRef={fwdRef} classes='scroll-left' onClick={onClick}>
+    <Button fwdRef={fwdRef} classes='scrollLeft' onClick={onClick}>
       <div className=''>
         <ChevronLeftIcon />
       </div>
@@ -47,7 +47,7 @@ export const ScrollLeft = ({ fwdRef, onClick }) => {
 
 export const ScrollRight = ({ fwdRef, onClick }) => {
   return (
-    <Button fwdRef={fwdRef} classes='scroll-right' onClick={onClick}>
+    <Button fwdRef={fwdRef} classes='scrollRight' onClick={onClick}>
       <div className=''>
         <ChevronRightIcon />
       </div>

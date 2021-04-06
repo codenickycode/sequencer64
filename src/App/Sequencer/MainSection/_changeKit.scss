@@ -2,9 +2,9 @@
 @use 'styles/placeholders' as *;
 @use 'styles/colors' as *;
 
-.load-kit {
+.changeKit {
   @extend %fullAbs;
-  background: $black-90;
+  @extend %bg90;
   .kits {
     @extend %full;
     @include grid(3, 3, 0.2);
@@ -15,8 +15,8 @@
       padding: 0.5rem;
       @extend %full;
       @include flex(column);
-      @extend %borderDefault;
-      color: $white;
+      @extend %border;
+      @extend %color;
       background: none;
       font-size: 1rem;
       transform: scale(1);
@@ -26,16 +26,17 @@
       }
 
       &.selected {
-        border: 2px solid $white;
+        @extend %borderActive;
+        border-width: 2px !important;
       }
 
-      &.dim-border {
-        @extend %borderDefaultHalf;
+      &.borderDim {
+        @extend %borderHalf;
       }
 
-      .icon {
-        fill: $white;
-      }
+      // .icon {
+      //   fill: $white;
+      // }
 
       p,
       .dummy,
@@ -77,7 +78,7 @@
   @include flex(column, space-evenly);
   top: 0;
   padding: 0.5rem;
-  background: $black-90;
+  @extend %bg90;
   .btn.close {
     @extend %btn;
     width: 60%;

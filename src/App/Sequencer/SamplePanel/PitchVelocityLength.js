@@ -20,16 +20,16 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
       <Button classes='close' onClick={onReturn}>
         <ChevronLeftIcon />
       </Button>
-      <div className='mod-wrapper'>
+      <div className='modWrapper'>
         {mode === MODES.MOD_PITCH ? (
           <>
-            <label htmlFor='pitch-select' className='select-label'>
+            <label htmlFor='pitchSelect' className='selectLabel'>
               Select Pitch:
             </label>
-            <div className='custom-select-wrapper'>
+            <div className='customSelectWrapper'>
               <select
-                id='pitch-select'
-                className='custom-select'
+                id='pitchSelect'
+                className='customSelect'
                 value={value}
                 onChange={onChange}
               >
@@ -49,7 +49,7 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
           <>
             <input
               type='range'
-              id='mod-slider'
+              id='modSlider'
               min={0.1}
               max={1}
               step={0.01}
@@ -57,8 +57,8 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
               onChange={onChange}
               onTouchEnd={onTouchEnd}
             />
-            <div className='mod-value-wrapper'>
-              <label htmlFor='mod-slider' className='mod-label'>
+            <div className='modValueWrapper'>
+              <label htmlFor='modSlider' className='modLabel'>
                 {mode && mode.substr(0, 1).toUpperCase() + mode.substr(1)}{' '}
                 Value:
               </label>
@@ -66,7 +66,7 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
             </div>
           </>
         )}
-        <div className='mod-btns'>
+        <div className='modBtns'>
           <Button onClick={onReset}>Reset All</Button>
           <Button classes={editAll ? 'bgGreen' : ''} onClick={toggleAll}>
             Apply All

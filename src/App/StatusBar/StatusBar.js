@@ -13,12 +13,12 @@ export const StatusBar = () => {
     let onTimer;
     let fadeTimer;
     if (message) {
-      setClasses('status fade-out fade-out-2');
+      setClasses('status fadeOut fadeOut2');
       onTimer = setTimeout(() => {
         setClasses('status');
       }, 1000);
       fadeTimer = setTimeout(() => {
-        setClasses('status fade-out-2');
+        setClasses('status fadeOut2');
       }, 500);
     }
     return () => {

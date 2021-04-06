@@ -1,6 +1,5 @@
-@use 'styles/themes/synth' as *;
+@use 'styles/themes/joker' as *;
 @use 'styles/themes/nes' as *;
-@use 'styles/themes/snes' as *;
 
 $grey: rgba(197, 185, 219, 1);
 $grey-half: rgba(150, 140, 170, 0.5);
@@ -11,46 +10,104 @@ $black: #000;
 $black-90: rgba(0, 0, 0, 0.9);
 $black-3q: rgba(0, 0, 0, 0.75);
 $black-half: rgba(0, 0, 0, 0.5);
-$white: rgba(236, 237, 229, 1);
-$white-half: rgba(236, 237, 229, 0.5);
-$white-quarter: rgba(236, 237, 229, 0.25);
+$white: white;
+$white-half: rgba(255, 255, 255, 0.5);
+$white-quarter: rgba(255, 255, 255, 0.25);
 $magenta: rgba(255, 0, 172, 1);
 $magenta-dark: rgb(169, 0, 112);
 $lime: rgba(64, 244, 195, 1);
 $lime-dark: rgb(49, 187, 150);
 $green: rgba(47, 222, 126, 1);
+$green-dark: rgb(40, 170, 99);
+$green-darker: rgb(31, 133, 77);
 $green-half: rgba(47, 222, 126, 0.5);
 $red: rgb(232, 12, 48);
+
+/**************** FG *******************/
+
+%text,
+%color {
+  color: white;
+}
+
+%textDim {
+  color: $white-quarter;
+}
+%textDim2,
+%textHalf {
+  color: $white-half;
+}
+
+%iconFill {
+  fill: $white;
+}
+
+%sliceStroke {
+  .themeJoker & {
+    stroke: $joker-dark;
+  }
+  .themeNES & {
+    stroke: $nes-grey;
+  }
+}
+
+/**************** BG *******************/
+
+%bg {
+  background: $black;
+}
+
+%bg3q {
+  background: $black-3q;
+}
+
+%bgHalf {
+  background: $black-half;
+}
+
+%bg90 {
+  background: $black-90;
+}
 
 %bgRed {
   background: $red;
 }
-
-%borderActive {
-  border: 1px solid $white;
+%bgGreen {
+  background: $green;
 }
-.borderActive {
-  @extend %borderActive;
-}
-
-%fillWhite {
-  fill: $white;
-}
-.fillWhite {
-  @extend %fillWhite;
+.bgGreen {
+  @extend %bgGreen;
 }
 
-%bgGreyDim {
+%bgSampleBtn {
+  .themeJoker & {
+    background: $joker-darker;
+  }
+  .themeNES & {
+    background: $black;
+  }
+}
+
+%bgCellOff {
   background: $grey-dim;
 }
-.bgGreyDim {
-  @extend %bgGreyDim;
+
+%bgBtnFull {
+  .themeJoker & {
+    background: $joker-dark;
+  }
+  .themeNES & {
+    background: $nes-dark2;
+  }
 }
-%bgGreyHalf {
-  background: $grey-half;
-}
-.bgGreyHalf {
-  @extend %bgGreyHalf;
+
+%bgBtnHalf {
+  .themeJoker & {
+    background: $joker-dark-half;
+  }
+  .themeNES & {
+    background: $nes-dark2-half;
+  }
 }
 
 %bgStopBtn {
@@ -58,10 +115,7 @@ $red: rgb(232, 12, 48);
     background: $magenta-dark;
   }
   .themeNES & {
-    background: $nes-btn;
-  }
-  .themeSNES & {
-    background: $snes-btn;
+    background: $nes-grey-darker;
   }
 }
 
@@ -70,641 +124,239 @@ $red: rgb(232, 12, 48);
     background: $lime-dark;
   }
   .themeNES & {
-    background: $nes-btn;
-  }
-  .themeSNES & {
-    background: $snes-btn;
-  }
-}
-
-%strokeDefaultDark {
-  .themeJoker & {
-    stroke: $synth-dark;
-  }
-  .themeNES & {
-    stroke: $nes-dark;
-  }
-  .themeSNES & {
-    stroke: $snes-dark;
-  }
-}
-.strokeDefaultDark {
-  @extend %strokeDefaultDark;
-}
-
-%bgSamplePanel {
-  .themeJoker & {
-    background: $black;
-  }
-  .themeNES & {
-    background: $black;
-  }
-  .themeSNES & {
-    background: $snes-bg;
-  }
-}
-
-%bgSampleBtn {
-  .themeJoker & {
-    background: $synth-dark2;
-  }
-  .themeNES & {
-    background: $black;
-  }
-  .themeSNES & {
-    background: $snes-dark2;
+    background: $nes-grey-darker;
   }
 }
 
 %bgMenuBar {
   .themeJoker & {
-    background: $synth-bg;
+    background: $joker-darkest;
   }
   .themeNES & {
-    background: $black;
-  }
-  .themeSNES & {
-    background: $snes-bg;
+    background: $nes-grey-darker;
   }
 }
 
-%bgDark2 {
-  .themeJoker & {
-    background: $synth-dark2;
-  }
-  .themeNES & {
-    background: $nes-dark2;
-  }
-  .themeSNES & {
-    background: $snes-dark2;
-  }
-}
+/************** BORDER *****************/
 
-%bgHalf {
+%border {
   .themeJoker & {
-    background: $synth-bg-half;
+    border: 1px solid $joker;
   }
   .themeNES & {
-    background: $nes-bg-half;
-  }
-  .themeSNES & {
-    background: $snes-bg-half;
-  }
-}
-
-%bg {
-  .themeJoker & {
-    background: $synth-dark2;
-  }
-  .themeNES & {
-    background: $nes-bg2;
-  }
-  .themeSNES & {
-    background: $snes-bg;
-  }
-}
-
-%bgDefault {
-  .themeJoker & {
-    background: $synth-default;
-  }
-  .themeNES & {
-    background: $nes-default;
-  }
-  .themeSNES & {
-    background: $snes-default;
-  }
-}
-
-%bgDefault3q {
-  .themeJoker & {
-    background: $synth-default-3q;
-  }
-  .themeNES & {
-    background: $nes-default-3q;
-  }
-  .themeSNES & {
-    background: $snes-default-3q;
-  }
-}
-
-%bgDefaultHalf {
-  .themeJoker & {
-    background: $synth-default-half;
-  }
-  .themeNES & {
-    background: $nes-default-half;
-  }
-  .themeSNES & {
-    background: $snes-default-half;
-  }
-}
-
-%bgDefault3rd {
-  .themeJoker & {
-    background: $synth-default-third;
-  }
-  .themeNES & {
-    background: $nes-default-third;
-  }
-  .themeSNES & {
-    background: $snes-default-third;
-  }
-}
-
-%bgDefaultQuarter {
-  .themeJoker & {
-    background: $synth-default-quarter;
-  }
-  .themeNES & {
-    background: $nes-default-quarter;
-  }
-  .themeSNES & {
-    background: $snes-default-quarter;
-  }
-}
-
-%borderDefault {
-  .themeJoker & {
-    border: 1px solid $synth-default;
-  }
-  .themeNES & {
-    border: 1px solid $nes-default;
-  }
-  .themeSNES & {
-    border: 1px solid $snes-default;
+    border: 1px solid $nes;
   }
 }
 .borderDefault {
-  @extend %borderDefault;
+  @extend %border;
 }
 
-%borderDefaultHalf {
+%borderActive,
+%borderWhite {
+  border: 1px solid $white;
+}
+.borderActive {
+  @extend %borderActive;
+}
+
+%borderHalf {
   .themeJoker & {
-    border: 1px solid $synth-default-half;
+    border: 1px solid $joker-half;
   }
   .themeNES & {
-    border: 1px solid $nes-default-half;
-  }
-  .themeSNES & {
-    border: 1px solid $snes-default-half;
+    border: 1px solid $nes-half;
   }
 }
 
 %borderBottomHalf {
   .themeJoker & {
-    border-bottom: 1px solid $synth-default-half;
+    border-bottom: 1px solid $joker-half;
   }
   .themeNES & {
-    border-bottom: 1px solid $nes-default-half;
-  }
-  .themeSNES & {
-    border-bottom: 1px solid $snes-default-half;
-  }
-}
-%borderTopBottomHalf {
-  .themeJoker & {
-    border-bottom: 1px solid $synth-default-half;
-    border-top: 1px solid $synth-default-half;
-  }
-  .themeNES & {
-    border-bottom: 1px solid $nes-default-half;
-    border-top: 1px solid $nes-default-half;
-  }
-  .themeSNES & {
-    border-bottom: 1px solid $snes-default-half;
-    border-top: 1px solid $snes-default-half;
+    border-bottom: 1px solid $nes-half;
   }
 }
 
-%fillDefault {
-  .themeJoker & {
-    fill: $synth-default-3q;
-  }
-  .themeNES & {
-    fill: $nes-default-3q;
-  }
-  .themeSNES & {
-    fill: $snes-default-3q;
-  }
-}
+// %fillWhite {
+//   fill: $white;
+// }
+// .fillWhite {
+//   @extend %fillWhite;
+// }
 
-%bg0 {
-  .themeJoker & {
-    background-color: $synth-0;
-  }
-  .themeNES & {
-    background-color: $nes-0;
-  }
-  .themeSNES & {
-    background-color: $snes-0;
-  }
-}
-.bg0 {
-  @extend %bg0;
-}
+// %bgGreyHalf {
+//   background: $grey-half;
+// }
+// .bgGreyHalf {
+//   @extend %bgGreyHalf;
+// }
 
-%border0 {
-  .themeJoker & {
-    border: 1px solid $synth-0;
-  }
-  .themeNES & {
-    border: 1px solid $nes-0;
-  }
-  .themeSNES & {
-    border: 1px solid $snes-0;
-  }
-}
-.border0 {
-  @extend %border0;
-}
+// %bgSamplePanel {
+//   .themeJoker & {
+//     background: $black;
+//   }
+//   .themeNES & {
+//     background: $black;
+//   }
+//   .themeSNES & {
+//     background: $snes-bg;
+//   }
+// }
 
-%fill0 {
-  .themeJoker & {
-    fill: $synth-0;
-  }
-  .themeNES & {
-    fill: $nes-0;
-  }
-  .themeSNES & {
-    fill: $snes-0;
-  }
-}
-.fill0 {
-  @extend %fill0;
-}
+// %bgMenuBar {
+//   .themeJoker & {
+//     background: $joker-bg;
+//   }
+//   .themeNES & {
+//     background: $black;
+//   }
+//   .themeSNES & {
+//     background: $snes-bg;
+//   }
+// }
 
-%bg1 {
-  .themeJoker & {
-    background-color: $synth-1;
-  }
-  .themeNES & {
-    background-color: $nes-1;
-  }
-  .themeSNES & {
-    background-color: $snes-1;
-  }
-}
-.bg1 {
-  @extend %bg1;
-}
+// %bgDark2 {
+//   .themeJoker & {
+//     background: $joker-dark2;
+//   }
+//   .themeNES & {
+//     background: $nes-dark2;
+//   }
+//   .themeSNES & {
+//     background: $snes-dark2;
+//   }
+// }
 
-%border1 {
-  .themeJoker & {
-    border: 1px solid $synth-1;
-  }
-  .themeNES & {
-    border: 1px solid $nes-1;
-  }
-  .themeSNES & {
-    border: 1px solid $snes-1;
-  }
-}
-.border1 {
-  @extend %border1;
-}
+// %bgHalf {
+//   .themeJoker & {
+//     background: $joker-bg-half;
+//   }
+//   .themeNES & {
+//     background: $nes-bg-half;
+//   }
+//   .themeSNES & {
+//     background: $snes-bg-half;
+//   }
+// }
 
-%fill1 {
-  .themeJoker & {
-    fill: $synth-1;
-  }
-  .themeNES & {
-    fill: $nes-1;
-  }
-  .themeSNES & {
-    fill: $snes-1;
-  }
-}
-.fill1 {
-  @extend %fill1;
-}
+// %bg {
+//   .themeJoker & {
+//     background: $joker-dark2;
+//   }
+//   .themeNES & {
+//     background: $nes-bg2;
+//   }
+//   .themeSNES & {
+//     background: $snes-bg;
+//   }
+// }
 
-%bg2 {
-  .themeJoker & {
-    background-color: $synth-2;
-  }
-  .themeNES & {
-    background-color: $nes-2;
-  }
-  .themeSNES & {
-    background-color: $snes-2;
-  }
-}
-.bg2 {
-  @extend %bg2;
-}
+// %bgDefault {
+//   .themeJoker & {
+//     background: $joker-default;
+//   }
+//   .themeNES & {
+//     background: $nes-default;
+//   }
+//   .themeSNES & {
+//     background: $snes-default;
+//   }
+// }
 
-%border2 {
-  .themeJoker & {
-    border: 1px solid $synth-2;
-  }
-  .themeNES & {
-    border: 1px solid $nes-2;
-  }
-  .themeSNES & {
-    border: 1px solid $snes-2;
-  }
-}
-.border2 {
-  @extend %border2;
-}
+// %bgDefault3q {
+//   .themeJoker & {
+//     background: $joker-default-3q;
+//   }
+//   .themeNES & {
+//     background: $nes-default-3q;
+//   }
+//   .themeSNES & {
+//     background: $snes-default-3q;
+//   }
+// }
 
-%fill2 {
-  .themeJoker & {
-    fill: $synth-2;
-  }
-  .themeNES & {
-    fill: $nes-2;
-  }
-  .themeSNES & {
-    fill: $snes-2;
-  }
-}
-.fill2 {
-  @extend %fill2;
-}
+// %bgDefaultHalf {
+//   .themeJoker & {
+//     background: $joker-default-half;
+//   }
+//   .themeNES & {
+//     background: $nes-default-half;
+//   }
+//   .themeSNES & {
+//     background: $snes-default-half;
+//   }
+// }
 
-%bg3 {
-  .themeJoker & {
-    background-color: $synth-3;
-  }
-  .themeNES & {
-    background-color: $nes-3;
-  }
-  .themeSNES & {
-    background-color: $snes-3;
-  }
-}
-.bg3 {
-  @extend %bg3;
-}
+// %bgDefault3rd {
+//   .themeJoker & {
+//     background: $joker-default-third;
+//   }
+//   .themeNES & {
+//     background: $nes-default-third;
+//   }
+//   .themeSNES & {
+//     background: $snes-default-third;
+//   }
+// }
 
-%border3 {
-  .themeJoker & {
-    border: 1px solid $synth-3;
-  }
-  .themeNES & {
-    border: 1px solid $nes-3;
-  }
-  .themeSNES & {
-    border: 1px solid $snes-3;
-  }
-}
-.border3 {
-  @extend %border3;
-}
+// %bgDefaultQuarter {
+//   .themeJoker & {
+//     background: $joker-default-quarter;
+//   }
+//   .themeNES & {
+//     background: $nes-default-quarter;
+//   }
+//   .themeSNES & {
+//     background: $snes-default-quarter;
+//   }
+// }
 
-%fill3 {
-  .themeJoker & {
-    fill: $synth-3;
-  }
-  .themeNES & {
-    fill: $nes-3;
-  }
-  .themeSNES & {
-    fill: $snes-3;
-  }
-}
-.fill3 {
-  @extend %fill3;
-}
+// %borderDefaultHalf {
+//   .themeJoker & {
+//     border: 1px solid $joker-default-half;
+//   }
+//   .themeNES & {
+//     border: 1px solid $nes-default-half;
+//   }
+//   .themeSNES & {
+//     border: 1px solid $snes-default-half;
+//   }
+// }
 
-%bg4 {
-  .themeJoker & {
-    background-color: $synth-4;
-  }
-  .themeNES & {
-    background-color: $nes-4;
-  }
-  .themeSNES & {
-    background-color: $snes-4;
-  }
-}
-.bg4 {
-  @extend %bg4;
-}
+// %borderBottomHalf {
+//   .themeJoker & {
+//     border-bottom: 1px solid $joker-default-half;
+//   }
+//   .themeNES & {
+//     border-bottom: 1px solid $nes-default-half;
+//   }
+//   .themeSNES & {
+//     border-bottom: 1px solid $snes-default-half;
+//   }
+// }
+// %borderTopBottomHalf {
+//   .themeJoker & {
+//     border-bottom: 1px solid $joker-default-half;
+//     border-top: 1px solid $joker-default-half;
+//   }
+//   .themeNES & {
+//     border-bottom: 1px solid $nes-default-half;
+//     border-top: 1px solid $nes-default-half;
+//   }
+//   .themeSNES & {
+//     border-bottom: 1px solid $snes-default-half;
+//     border-top: 1px solid $snes-default-half;
+//   }
+// }
 
-%border4 {
-  .themeJoker & {
-    border: 1px solid $synth-4;
-  }
-  .themeNES & {
-    border: 1px solid $nes-4;
-  }
-  .themeSNES & {
-    border: 1px solid $snes-4;
-  }
-}
-.border4 {
-  @extend %border4;
-}
-
-%fill4 {
-  .themeJoker & {
-    fill: $synth-4;
-  }
-  .themeNES & {
-    fill: $nes-4;
-  }
-  .themeSNES & {
-    fill: $snes-4;
-  }
-}
-.fill4 {
-  @extend %fill4;
-}
-
-%bg5 {
-  .themeJoker & {
-    background-color: $synth-5;
-  }
-  .themeNES & {
-    background-color: $nes-5;
-  }
-  .themeSNES & {
-    background-color: $snes-5;
-  }
-}
-.bg5 {
-  @extend %bg5;
-}
-
-%border5 {
-  .themeJoker & {
-    border: 1px solid $synth-5;
-  }
-  .themeNES & {
-    border: 1px solid $nes-5;
-  }
-  .themeSNES & {
-    border: 1px solid $snes-5;
-  }
-}
-.border5 {
-  @extend %border5;
-}
-
-%fill5 {
-  .themeJoker & {
-    fill: $synth-5;
-  }
-  .themeNES & {
-    fill: $nes-5;
-  }
-  .themeSNES & {
-    fill: $snes-5;
-  }
-}
-.fill5 {
-  @extend %fill5;
-}
-
-%color6 {
-  .themeJoker & {
-    color: $synth-6;
-  }
-  .themeNES & {
-    color: $nes-6;
-  }
-  .themeSNES & {
-    color: $snes-6;
-  }
-}
-.color6 {
-  @extend %color6;
-}
-
-%bg6 {
-  .themeJoker & {
-    background-color: $synth-6;
-  }
-  .themeNES & {
-    background-color: $nes-6;
-  }
-  .themeSNES & {
-    background-color: $snes-6;
-  }
-}
-.bg6 {
-  @extend %bg6;
-}
-
-%border6 {
-  .themeJoker & {
-    border: 1px solid $synth-6;
-  }
-  .themeNES & {
-    border: 1px solid $nes-6;
-  }
-  .themeSNES & {
-    border: 1px solid $snes-6;
-  }
-}
-.border6 {
-  @extend %border6;
-}
-
-%fill6 {
-  .themeJoker & {
-    fill: $synth-6;
-  }
-  .themeNES & {
-    fill: $nes-6;
-  }
-  .themeSNES & {
-    fill: $snes-6;
-  }
-}
-.fill6 {
-  @extend %fill6;
-}
-
-%bg7 {
-  .themeJoker & {
-    background-color: $synth-7;
-  }
-  .themeNES & {
-    background-color: $nes-7;
-  }
-  .themeSNES & {
-    background-color: $snes-7;
-  }
-}
-.bg7 {
-  @extend %bg7;
-}
-
-%border7 {
-  .themeJoker & {
-    border: 1px solid $synth-7;
-  }
-  .themeNES & {
-    border: 1px solid $nes-7;
-  }
-  .themeSNES & {
-    border: 1px solid $snes-7;
-  }
-}
-.border7 {
-  @extend %border7;
-}
-
-%fill7 {
-  .themeJoker & {
-    fill: $synth-7;
-  }
-  .themeNES & {
-    fill: $nes-7;
-  }
-  .themeSNES & {
-    fill: $snes-7;
-  }
-}
-.fill7 {
-  @extend %fill7;
-}
-
-%bg8 {
-  .themeJoker & {
-    background-color: $synth-8;
-  }
-  .themeNES & {
-    background-color: $nes-8;
-  }
-  .themeSNES & {
-    background-color: $snes-8;
-  }
-}
-.bg8 {
-  @extend %bg8;
-}
-
-%border8 {
-  .themeJoker & {
-    border: 1px solid $synth-8;
-  }
-  .themeNES & {
-    border: 1px solid $nes-8;
-  }
-  .themeSNES & {
-    border: 1px solid $snes-8;
-  }
-}
-.border8 {
-  @extend %border8;
-}
-
-%fill8 {
-  .themeJoker & {
-    fill: $synth-8;
-  }
-  .themeNES & {
-    fill: $nes-8;
-  }
-  .themeSNES & {
-    fill: $snes-8;
-  }
-}
-.fill8 {
-  @extend %fill8;
-}
+// %fillDefault {
+//   .themeJoker & {
+//     fill: $joker-default-3q;
+//   }
+//   .themeNES & {
+//     fill: $nes-default-3q;
+//   }
+//   .themeSNES & {
+//     fill: $snes-default-3q;
+//   }
+// }

@@ -21,11 +21,11 @@
     opacity: 0;
     transition: 1500ms;
 
-    &.fade-out {
+    &.fadeOut {
       @extend %turnOn;
     }
 
-    &.fade-out-2 {
+    &.fadeOut2 {
       opacity: 1;
     }
   }

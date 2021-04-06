@@ -8,7 +8,7 @@
 
   .userSequences,
   .defaultSequences {
-    @extend %borderDefaultHalf;
+    @extend %borderHalf;
     margin-bottom: 1rem;
     padding: 0.5rem;
 
@@ -22,21 +22,21 @@
       display: grid;
       grid-template-columns: 0.5fr 0.25fr 0.15fr 0.1fr;
       align-items: center;
-      @extend %borderTopBottomHalf;
-      border-right: none;
-      border-left: none;
+      @extend %borderHalf;
+      border-right: none !important;
+      border-left: none !important;
     }
 
     .sequence {
       @extend %btnFull;
-      @extend %bgDark2;
+      @extend %bgBtnFull;
       display: grid;
       grid-template-columns: 0.5fr 0.25fr 0.15fr 0.1fr;
       align-items: center;
       transform: scale(1);
 
       &.selected {
-        background: $green-half;
+        background: $green-dark;
       }
 
       &.deleting {
@@ -52,7 +52,7 @@
         .icon {
           max-height: 2rem;
           width: 100%;
-          fill: $white;
+          // fill: $white;
         }
       }
     }
@@ -61,7 +61,7 @@
       width: 100%;
       padding: 0.5rem;
       @include flex(row, space-evenly);
-      @extend %bgDark2;
+      @extend %bgBtnFull;
 
       .btn {
         @extend %btn;

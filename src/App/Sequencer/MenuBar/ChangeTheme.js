@@ -33,7 +33,7 @@ export const ChangeTheme = () => {
 const THEMES = {
   JOKER: 'Joker',
   NES: 'NES',
-  SNES: 'SNES',
+  TMNT: 'TMNT',
 };
 
 const Themes = ({ showThemes }) => {
@@ -60,11 +60,11 @@ const Themes = ({ showThemes }) => {
         <label htmlFor={`${THEMES.NES}Theme`}>{THEMES.NES}</label>
       </Button>
       <Button
-        id={`${THEMES.SNES}Theme`}
-        classes={theme === THEMES.SNES ? 'themeBtn active' : 'themeBtn'}
-        onTouchStart={() => onTouchStart(THEMES.SNES)}
+        id={`${THEMES.TMNT}Theme`}
+        classes={theme === THEMES.TMNT ? 'themeBtn active' : 'themeBtn'}
+        onTouchStart={() => onTouchStart(THEMES.TMNT)}
       >
-        <label htmlFor={`${THEMES.SNES}Theme`}>{THEMES.SNES}</label>
+        <label htmlFor={`${THEMES.TMNT}Theme`}>{THEMES.TMNT}</label>
       </Button>
     </div>,
     document.getElementById('themesPortal')

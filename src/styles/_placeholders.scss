@@ -60,18 +60,6 @@
   background: $black;
 }
 
-%inputBtn {
-  -webkit-appearance: none;
-  width: 100%;
-  padding: 0.75rem;
-  @extend %bgDefaultHalf;
-  color: $white;
-  outline: none;
-  border: none;
-  opacity: 0.5;
-  @extend %btnFont;
-}
-
 %btn {
   cursor: pointer;
   width: auto;

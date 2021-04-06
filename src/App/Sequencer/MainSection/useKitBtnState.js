@@ -29,7 +29,7 @@ export const useKitBtnState = (kitName, available) => {
   const btnDisabled = disabled || fetching;
 
   const classes = {
-    btn: selected ? 'selected' : !ready ? 'dim-border' : '',
+    btn: selected ? 'selected' : !ready ? 'borderDim' : '',
     ready: showReady ? 'ready show' : 'ready',
     name: fetching ? 'name flashing' : !ready ? 'name dim' : 'name',
     icon: fetching ? 'flashing' : '',

@@ -11,7 +11,7 @@ export const Preparing = () => {
       <div className='grid'>
         {grid.map((i) => (
           <div key={`preparing-cell-${i}`} className='cell'>
-            <div className={`bg-color bg${i}`} />
+            <div className={`bgColor bg${i}`} />
           </div>
         ))}
       </div>

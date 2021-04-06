@@ -71,7 +71,7 @@ const SampleEditMenu = ({ selectMode, onClose }) => {
   const sampleEditMenuMemo = useMemo(() => {
     // console.log('rendering: SampleEditMenu');
     return (
-      <div className='edit-menu'>
+      <div className='editMenu'>
         <Button classes='close' onClick={onClose}>
           <CloseIcon />
         </Button>
@@ -175,7 +175,7 @@ const SampleBtn = ({ i, sample, selectSample }) => {
 
   return (
     <Button
-      classes='sample-btn'
+      classes='sampleBtn'
       onTouchStart={onTouchStart}
       onClick={onClick}
       ariaLabel={sample.name}

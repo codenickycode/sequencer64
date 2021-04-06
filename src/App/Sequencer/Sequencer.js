@@ -39,6 +39,7 @@ export const SequencerPage = () => {
           <SpAlert />
           <SamplePanel />
           <div id='kitInfoPortal' />
+          <div className='border' />
         </div>
         <Menu />
       </div>

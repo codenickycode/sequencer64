@@ -1,0 +1,424 @@
+@use 'styles/colors' as *;
+@use 'styles/themes/joker' as *;
+@use 'styles/themes/nes' as *;
+@use 'styles/themes/snes' as *;
+
+%bg0 {
+  .themeJoker & {
+    background-color: $joker-0;
+  }
+  .themeNES & {
+    background-color: $nes-0;
+  }
+  .themeSNES & {
+    background-color: $snes-0;
+  }
+}
+.bg0 {
+  @extend %bg0;
+}
+
+%border0 {
+  .themeJoker & {
+    border: 1px solid $joker-0;
+  }
+  .themeNES & {
+    border: 1px solid $nes-0;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-0;
+  }
+}
+.border0 {
+  @extend %border0;
+}
+
+%fill0 {
+  .themeJoker & {
+    fill: $joker-0;
+  }
+  .themeNES & {
+    fill: $nes-0;
+  }
+  .themeSNES & {
+    fill: $snes-0;
+  }
+}
+.fill0 {
+  @extend %fill0;
+}
+
+%bg1 {
+  .themeJoker & {
+    background-color: $joker-1;
+  }
+  .themeNES & {
+    background-color: $nes-1;
+  }
+  .themeSNES & {
+    background-color: $snes-1;
+  }
+}
+.bg1 {
+  @extend %bg1;
+}
+
+%border1 {
+  .themeJoker & {
+    border: 1px solid $joker-1;
+  }
+  .themeNES & {
+    border: 1px solid $nes-1;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-1;
+  }
+}
+.border1 {
+  @extend %border1;
+}
+
+%fill1 {
+  .themeJoker & {
+    fill: $joker-1;
+  }
+  .themeNES & {
+    fill: $nes-1;
+  }
+  .themeSNES & {
+    fill: $snes-1;
+  }
+}
+.fill1 {
+  @extend %fill1;
+}
+
+%bg2 {
+  .themeJoker & {
+    background-color: $joker-2;
+  }
+  .themeNES & {
+    background-color: $nes-2;
+  }
+  .themeSNES & {
+    background-color: $snes-2;
+  }
+}
+.bg2 {
+  @extend %bg2;
+}
+
+%border2 {
+  .themeJoker & {
+    border: 1px solid $joker-2;
+  }
+  .themeNES & {
+    border: 1px solid $nes-2;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-2;
+  }
+}
+.border2 {
+  @extend %border2;
+}
+
+%fill2 {
+  .themeJoker & {
+    fill: $joker-2;
+  }
+  .themeNES & {
+    fill: $nes-2;
+  }
+  .themeSNES & {
+    fill: $snes-2;
+  }
+}
+.fill2 {
+  @extend %fill2;
+}
+
+%bg3 {
+  .themeJoker & {
+    background-color: $joker-3;
+  }
+  .themeNES & {
+    background-color: $nes-3;
+  }
+  .themeSNES & {
+    background-color: $snes-3;
+  }
+}
+.bg3 {
+  @extend %bg3;
+}
+
+%border3 {
+  .themeJoker & {
+    border: 1px solid $joker-3;
+  }
+  .themeNES & {
+    border: 1px solid $nes-3;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-3;
+  }
+}
+.border3 {
+  @extend %border3;
+}
+
+%fill3 {
+  .themeJoker & {
+    fill: $joker-3;
+  }
+  .themeNES & {
+    fill: $nes-3;
+  }
+  .themeSNES & {
+    fill: $snes-3;
+  }
+}
+.fill3 {
+  @extend %fill3;
+}
+
+%bg4 {
+  .themeJoker & {
+    background-color: $joker-4;
+  }
+  .themeNES & {
+    background-color: $nes-4;
+  }
+  .themeSNES & {
+    background-color: $snes-4;
+  }
+}
+.bg4 {
+  @extend %bg4;
+}
+
+%border4 {
+  .themeJoker & {
+    border: 1px solid $joker-4;
+  }
+  .themeNES & {
+    border: 1px solid $nes-4;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-4;
+  }
+}
+.border4 {
+  @extend %border4;
+}
+
+%fill4 {
+  .themeJoker & {
+    fill: $joker-4;
+  }
+  .themeNES & {
+    fill: $nes-4;
+  }
+  .themeSNES & {
+    fill: $snes-4;
+  }
+}
+.fill4 {
+  @extend %fill4;
+}
+
+%bg5 {
+  .themeJoker & {
+    background-color: $joker-5;
+  }
+  .themeNES & {
+    background-color: $nes-5;
+  }
+  .themeSNES & {
+    background-color: $snes-5;
+  }
+}
+.bg5 {
+  @extend %bg5;
+}
+
+%border5 {
+  .themeJoker & {
+    border: 1px solid $joker-5;
+  }
+  .themeNES & {
+    border: 1px solid $nes-5;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-5;
+  }
+}
+.border5 {
+  @extend %border5;
+}
+
+%fill5 {
+  .themeJoker & {
+    fill: $joker-5;
+  }
+  .themeNES & {
+    fill: $nes-5;
+  }
+  .themeSNES & {
+    fill: $snes-5;
+  }
+}
+.fill5 {
+  @extend %fill5;
+}
+
+%color6 {
+  .themeJoker & {
+    color: $joker-6;
+  }
+  .themeNES & {
+    color: $nes-6;
+  }
+  .themeSNES & {
+    color: $snes-6;
+  }
+}
+.color6 {
+  @extend %color6;
+}
+
+%bg6 {
+  .themeJoker & {
+    background-color: $joker-6;
+  }
+  .themeNES & {
+    background-color: $nes-6;
+  }
+  .themeSNES & {
+    background-color: $snes-6;
+  }
+}
+.bg6 {
+  @extend %bg6;
+}
+
+%border6 {
+  .themeJoker & {
+    border: 1px solid $joker-6;
+  }
+  .themeNES & {
+    border: 1px solid $nes-6;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-6;
+  }
+}
+.border6 {
+  @extend %border6;
+}
+
+%fill6 {
+  .themeJoker & {
+    fill: $joker-6;
+  }
+  .themeNES & {
+    fill: $nes-6;
+  }
+  .themeSNES & {
+    fill: $snes-6;
+  }
+}
+.fill6 {
+  @extend %fill6;
+}
+
+%bg7 {
+  .themeJoker & {
+    background-color: $joker-7;
+  }
+  .themeNES & {
+    background-color: $nes-7;
+  }
+  .themeSNES & {
+    background-color: $snes-7;
+  }
+}
+.bg7 {
+  @extend %bg7;
+}
+
+%border7 {
+  .themeJoker & {
+    border: 1px solid $joker-7;
+  }
+  .themeNES & {
+    border: 1px solid $nes-7;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-7;
+  }
+}
+.border7 {
+  @extend %border7;
+}
+
+%fill7 {
+  .themeJoker & {
+    fill: $joker-7;
+  }
+  .themeNES & {
+    fill: $nes-7;
+  }
+  .themeSNES & {
+    fill: $snes-7;
+  }
+}
+.fill7 {
+  @extend %fill7;
+}
+
+%bg8 {
+  .themeJoker & {
+    background-color: $joker-8;
+  }
+  .themeNES & {
+    background-color: $nes-8;
+  }
+  .themeSNES & {
+    background-color: $snes-8;
+  }
+}
+.bg8 {
+  @extend %bg8;
+}
+
+%border8 {
+  .themeJoker & {
+    border: 1px solid $joker-8;
+  }
+  .themeNES & {
+    border: 1px solid $nes-8;
+  }
+  .themeSNES & {
+    border: 1px solid $snes-8;
+  }
+}
+.border8 {
+  @extend %border8;
+}
+
+%fill8 {
+  .themeJoker & {
+    fill: $joker-8;
+  }
+  .themeNES & {
+    fill: $nes-8;
+  }
+  .themeSNES & {
+    fill: $snes-8;
+  }
+}
+.fill8 {
+  @extend %fill8;
+}

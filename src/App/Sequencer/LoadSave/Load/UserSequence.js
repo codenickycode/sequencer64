@@ -43,7 +43,7 @@ const ConfirmDelete = ({ deleting, handleDelete, cancelConfirm }) => {
       <Button classes='red' onClick={handleDelete} disabled={deleting}>
         DELETE
       </Button>
-      <Button classes='black' onClick={cancelConfirm} disabled={deleting}>
+      <Button onClick={cancelConfirm} disabled={deleting}>
         CANCEL
       </Button>
     </div>

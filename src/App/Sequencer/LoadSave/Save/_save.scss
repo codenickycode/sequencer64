@@ -7,7 +7,7 @@
   padding: 1rem 0.5rem;
 
   .share {
-    @extend %borderDefaultHalf;
+    @extend %borderHalf;
     margin-bottom: 1rem;
     padding: 1rem;
 
@@ -17,7 +17,7 @@
 
     p {
       margin-top: 1rem;
-      color: $white-half;
+      @extend %textHalf;
     }
 
     .shareLink {
@@ -56,21 +56,21 @@
         justify-content: flex-start;
 
         span {
-          color: $white;
+          @extend %text;
           margin-left: 0.5rem;
         }
 
         .icon {
           height: 2rem;
           width: 2rem;
-          fill: $white;
+          // fill: $white;
         }
       }
     }
   }
 
   .save {
-    @extend %borderDefaultHalf;
+    @extend %borderHalf;
     margin-bottom: 1rem;
     padding: 1rem;
 
@@ -81,7 +81,7 @@
       .saveLocation {
         font-size: 0.8rem;
         font-weight: lighter;
-        color: $white-half;
+        @extend %textHalf;
       }
     }
 

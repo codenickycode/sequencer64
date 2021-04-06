@@ -10,7 +10,7 @@
   width: 100%;
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
-  background: $black;
+  @extend %bg;
   .tabs {
     position: fixed;
     z-index: 2;
@@ -18,12 +18,15 @@
     height: 2.5rem;
     width: 100%;
     display: flex;
-    background: $black;
     .tab {
-      @extend %inputBtn;
+      @extend %btn;
+      width: 100%;
       border-radius: 0;
+      border: none;
+      @extend %bgBtnHalf;
       &.selected {
         opacity: 1;
+        @extend %bgBtnFull;
       }
     }
   }
@@ -39,10 +42,12 @@
   }
 
   .login-btn {
+    @extend %btn;
     @extend %btnFull;
+    @extend %bgBtnFull;
     @include flex;
     color: $white;
-    @extend %bgDark2;
+    border: none;
   }
 }
 

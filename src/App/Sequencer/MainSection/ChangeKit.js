@@ -32,7 +32,7 @@ export const ChangeKit = () => {
       grid.push(i);
     }
     return (
-      <div id='load-kit' className={'load-kit' + fadeInClass}>
+      <div id='changeKit' className={'changeKit' + fadeInClass}>
         <div className='kits'>
           {grid.map((i) => {
             const available = kits[i].available;

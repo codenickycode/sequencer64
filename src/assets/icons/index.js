@@ -34,14 +34,14 @@ import { ReactComponent as Twitter } from 'assets/icons/social/twitter.svg';
 import { ReactComponent as Facebook } from 'assets/icons/social/facebook.svg';
 
 export const ChevronDownIcon = ({ addClass = '' }) => (
-  <ChevronDown className={addClass + ' chevron-down'} />
+  <ChevronDown className={addClass + ' icon chevron-down'} />
 );
 
 export const ChevronLeftIcon = ({ addClass = '' }) => (
-  <ChevronLeft className={addClass + ' chevron-left'} />
+  <ChevronLeft className={addClass + ' icon chevron-left'} />
 );
 export const ChevronRightIcon = ({ addClass = '' }) => (
-  <ChevronRight className={addClass + ' chevron-right'} />
+  <ChevronRight className={addClass + ' icon chevron-right'} />
 );
 
 export const StopIcon = ({ addClass = '' }) => (
@@ -66,9 +66,6 @@ export const EraseOneIcon = ({ addClass = '' }) => (
 export const EraseAllIcon = ({ addClass = '' }) => (
   <EraseAll className={addClass + ' icon'} />
 );
-
-export const SwipeHorizontalIcon = () => <Swipe />;
-export const SwipeVerticalIcon = () => <Swipe className='deg90' />;
 
 export const SawIcon = ({ addClass = '' }) => (
   <Saw className={addClass + ' icon'} />
@@ -158,32 +155,3 @@ export const PointUpIcon = ({ addClass = '' }) => (
 export const PointDownIcon = ({ addClass = '' }) => (
   <PointDown className={addClass + ' icon'} />
 );
-
-export const PitchSwipe = () => {
-  return (
-    <div className='swipe-icon'>
-      <PointUp className='pvl-swipe' />
-      <Square className='square icon' />
-      <p className='swipe-pitch-up'>+12</p>
-      <p className='swipe-pitch-down'>-5</p>
-    </div>
-  );
-};
-
-export const VelocitySwipe = () => {
-  return (
-    <div className='swipe-icon'>
-      <PointUp className='pvl-swipe' />
-      <Square className='square icon velocity-swipe' />
-    </div>
-  );
-};
-
-export const LengthSwipe = () => {
-  return (
-    <div className='swipe-icon'>
-      <PointUp className='pvl-swipe-h' />
-      <Square className='square icon length-swipe' />
-    </div>
-  );
-};
