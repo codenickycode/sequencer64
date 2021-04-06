@@ -19,10 +19,9 @@
     width: 100%;
     display: flex;
     .tab {
-      @extend %btn;
-      width: 100%;
+      @extend %inputBtn;
+      @extend %text;
       border-radius: 0;
-      border: none;
       @extend %bgBtnHalf;
       &.selected {
         opacity: 1;
@@ -46,7 +45,7 @@
     @extend %btnFull;
     @extend %bgBtnFull;
     @include flex;
-    color: $white;
+    @extend %text;
     border: none;
   }
 }

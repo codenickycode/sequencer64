@@ -2,6 +2,11 @@
 @use 'styles/themes/nes' as *;
 @use 'styles/themes/tmnt' as *;
 
+$true-grey-light: rgb(169, 169, 169);
+$true-grey: rgba(125, 125, 125, 1);
+$true-grey-half: rgba(125, 125, 125, 0.5);
+$true-grey-dark: rgb(88, 88, 88);
+$true-grey-dark-half: rgba(88, 88, 88, 0.5);
 $grey: rgba(197, 185, 219, 1);
 $grey-half: rgba(150, 140, 170, 0.5);
 $grey-quarter: rgba(150, 140, 170, 0.25);
@@ -11,7 +16,10 @@ $black: #000;
 $black-90: rgba(0, 0, 0, 0.9);
 $black-3q: rgba(0, 0, 0, 0.75);
 $black-half: rgba(0, 0, 0, 0.5);
+$black-quarter: rgba(0, 0, 0, 0.25);
 $white: white;
+$white-90: rgba(255, 255, 255, 0.9);
+$white-3q: rgba(255, 255, 255, 0.75);
 $white-half: rgba(255, 255, 255, 0.5);
 $white-quarter: rgba(255, 255, 255, 0.25);
 $magenta: rgba(255, 0, 172, 1);
@@ -29,18 +37,30 @@ $red: rgb(232, 12, 48);
 %text,
 %color {
   color: white;
+  .themeWhite & {
+    color: black;
+  }
 }
 
 %textDim {
   color: $white-quarter;
+  .themeWhite & {
+    color: $black;
+  }
 }
 %textDim2,
 %textHalf {
   color: $white-half;
+  .themeWhite & {
+    color: $black;
+  }
 }
 
 %iconFill {
   fill: $white;
+  .themeWhite & {
+    fill: $black;
+  }
 }
 
 %sliceStroke {
@@ -52,6 +72,12 @@ $red: rgb(232, 12, 48);
   }
   .themeTMNT & {
     stroke: $tmnt-grey;
+  }
+  .themeBlack & {
+    stroke: $black;
+  }
+  .themeWhite & {
+    stroke: $white;
   }
 }
 
@@ -65,24 +91,42 @@ $red: rgb(232, 12, 48);
   .themeTMNT & {
     color: $black;
   }
+  .themeBlack & {
+    color: $black;
+  }
+  .themeWhite & {
+    color: $white;
+  }
 }
 
 /**************** BG *******************/
 
 %bg {
   background: $black;
+  .themeWhite & {
+    background: $white;
+  }
 }
 
 %bg3q {
   background: $black-3q;
+  .themeWhite & {
+    background: $white-3q;
+  }
 }
 
 %bgHalf {
   background: $black-half;
+  .themeWhite & {
+    background: $white-half;
+  }
 }
 
 %bg90 {
   background: $black-90;
+  .themeWhite & {
+    background: $white-90;
+  }
 }
 
 %bgRed {
@@ -105,6 +149,12 @@ $red: rgb(232, 12, 48);
   .themeTMNT & {
     background: $tmnt-darkest;
   }
+  .themeBlack & {
+    background: $black;
+  }
+  .themeWhite & {
+    background: $white;
+  }
 }
 
 %bgCellOff {
@@ -121,6 +171,12 @@ $red: rgb(232, 12, 48);
   .themeTMNT & {
     background: $tmnt-blue-dark;
   }
+  .themeBlack & {
+    background: $true-grey-dark;
+  }
+  .themeWhite & {
+    background: $true-grey-light !important;
+  }
 }
 
 %bgBtnHalf {
@@ -132,6 +188,12 @@ $red: rgb(232, 12, 48);
   }
   .themeTMNT & {
     background: $tmnt-blue-dark-quarter;
+  }
+  .themeBlack & {
+    background: $true-grey-dark-half;
+  }
+  .themeWhite & {
+    background: $true-grey-half;
   }
 }
 
@@ -145,6 +207,12 @@ $red: rgb(232, 12, 48);
   .themeTMNT & {
     background: $tmnt-2;
   }
+  .themeBlack & {
+    background: $true-grey-dark;
+  }
+  .themeWhite & {
+    background: $true-grey;
+  }
 }
 
 %bgStartBtn {
@@ -157,6 +225,12 @@ $red: rgb(232, 12, 48);
   .themeTMNT & {
     background: $tmnt;
   }
+  .themeBlack & {
+    background: $true-grey-dark;
+  }
+  .themeWhite & {
+    background: $true-grey;
+  }
 }
 
 %bgMenuBar {
@@ -168,6 +242,12 @@ $red: rgb(232, 12, 48);
   }
   .themeTMNT & {
     background: $tmnt-grey-darkest;
+  }
+  .themeBlack & {
+    background: $black;
+  }
+  .themeWhite & {
+    background: $white;
   }
 }
 
@@ -183,6 +263,12 @@ $red: rgb(232, 12, 48);
   .themeTMNT & {
     border: 1px solid $tmnt;
   }
+  .themeBlack & {
+    border: 1px solid $grey;
+  }
+  .themeWhite & {
+    border: 1px solid $true-grey-dark;
+  }
 }
 .borderDefault {
   @extend %border;
@@ -191,6 +277,9 @@ $red: rgb(232, 12, 48);
 %borderActive,
 %borderWhite {
   border: 1px solid $white;
+  .themeWhite & {
+    border: 1px solid $black;
+  }
 }
 .borderActive {
   @extend %borderActive;
@@ -206,6 +295,12 @@ $red: rgb(232, 12, 48);
   .themeTMNT & {
     border: 1px solid $tmnt-half;
   }
+  .themeBlack & {
+    border: $grey-half;
+  }
+  .themeWhite & {
+    border: $true-grey;
+  }
 }
 
 %borderBottomHalf {
@@ -217,5 +312,11 @@ $red: rgb(232, 12, 48);
   }
   .themeTMNT & {
     border-bottom: 1px solid $tmnt-half;
+  }
+  .themeBlack & {
+    border-bottom: 1px solid $grey-half;
+  }
+  .themeWhite & {
+    border-bottom: 1px solid $grey;
   }
 }

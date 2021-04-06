@@ -58,6 +58,20 @@
   border-radius: 0.3rem;
   color: $white;
   background: $black;
+  .themeWhite & {
+    color: $black;
+    background: $white;
+  }
+}
+
+%inputBtn {
+  -webkit-appearance: none;
+  width: 100%;
+  padding: 0.75rem;
+  outline: none;
+  border: none;
+  opacity: 0.5;
+  @extend %btnFont;
 }
 
 %btn {

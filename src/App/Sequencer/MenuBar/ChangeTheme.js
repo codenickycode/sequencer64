@@ -34,6 +34,8 @@ const THEMES = {
   JOKER: 'Joker',
   NES: 'NES',
   TMNT: 'TMNT',
+  BLACK: 'Black',
+  WHITE: 'White',
 };
 
 const Themes = ({ showThemes }) => {
@@ -65,6 +67,20 @@ const Themes = ({ showThemes }) => {
         onTouchStart={() => onTouchStart(THEMES.TMNT)}
       >
         <label htmlFor={`${THEMES.TMNT}Theme`}>{THEMES.TMNT}</label>
+      </Button>
+      <Button
+        id={`${THEMES.BLACK}Theme`}
+        classes={theme === THEMES.BLACK ? 'themeBtn active' : 'themeBtn'}
+        onTouchStart={() => onTouchStart(THEMES.BLACK)}
+      >
+        <label htmlFor={`${THEMES.BLACK}Theme`}>{THEMES.BLACK}</label>
+      </Button>
+      <Button
+        id={`${THEMES.WHITE}Theme`}
+        classes={theme === THEMES.WHITE ? 'themeBtn active' : 'themeBtn'}
+        onTouchStart={() => onTouchStart(THEMES.WHITE)}
+      >
+        <label htmlFor={`${THEMES.WHITE}Theme`}>{THEMES.WHITE}</label>
       </Button>
     </div>,
     document.getElementById('themesPortal')

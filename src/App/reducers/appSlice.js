@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getSS } from 'utils/storage';
+import { getLS, getSS } from 'utils/storage';
 import { defaultSequences } from 'utils/defaultSequences';
 import * as appThunks from './thunks/appThunks';
 
@@ -27,7 +27,7 @@ const INITIAL_STATE = {
   error: '',
   online: window.navigator.onLine,
   serviceWorkerActive: false,
-  theme: 'Joker',
+  theme: getLS('theme') || 'Joker',
 };
 
 export const appSlice = createSlice({

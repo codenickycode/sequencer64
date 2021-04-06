@@ -28,7 +28,7 @@
 html,
 body {
   @extend %full;
-  @extend %bg;
+  background: $black;
 }
 
 body {
@@ -43,6 +43,13 @@ body {
 #root {
   @extend %full;
   max-width: 800px;
+  background: $black;
+  color: $white;
+
+  &.themeWhite {
+    background: $white;
+    color: $black;
+  }
 }
 
 .deg90 {
