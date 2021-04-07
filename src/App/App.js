@@ -5,7 +5,6 @@ import { LoginPage } from 'App/Login/LoginPage';
 import { SequencerPage } from 'App/Sequencer/Sequencer';
 import { StatusBar } from 'App/StatusBar/StatusBar';
 import ErrorBoundary from 'App/ErrorBoundary/ErrorBoundary';
-import ErrorHandler from 'App/ErrorBoundary/ErrorHandler';
 import { Subscriptions } from 'App/Subscriptions';
 import { KitProvider } from 'App/shared/KitProvider';
 import { Provider } from 'react-redux';
@@ -32,7 +31,6 @@ export default function App() {
                 render={() => <SequencerPage />}
               />
               <Route path='/login' component={LoginPage} />
-              <Route path='/error/' component={ErrorHandler} />
             </Switch>
             <StatusBar />
             <Subscriptions />

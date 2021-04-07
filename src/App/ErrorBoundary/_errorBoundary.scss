@@ -1,0 +1,9 @@
+@use 'styles/placeholders';
+
+#errorHandler {
+  @extend %fullAbs;
+}
+
+.printError {
+  background: blue;
+}
