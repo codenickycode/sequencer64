@@ -24,7 +24,13 @@ export const KitAndTapModeBtn = () => {
     // console.log('rendering: ChangeKitBtn');
 
     const changeKit = () => {
-      dispatch(setShow(showChangeKit ? '' : VIEWS.CHANGE_KIT));
+      if (showChangeKit) {
+        dispatch(setShow(''));
+        dispatch(setMode(null));
+      } else {
+        dispatch(setShow(VIEWS.CHANGE_KIT));
+        dispatch(setMode(MODES.TAP));
+      }
     };
 
     const tapMode = () => {
@@ -35,7 +41,7 @@ export const KitAndTapModeBtn = () => {
       <>
         <Button
           id='changeKitBtn'
-          classes={showChangeKit ? 'menuBtn active' : 'menuBtn'}
+          classes={showChangeKit ? 'menuBtn active kit' : 'menuBtn kit'}
           onClick={changeKit}
         >
           <KitIcon />
@@ -44,6 +50,7 @@ export const KitAndTapModeBtn = () => {
         <Button
           id='tapModeBtn'
           classes={tapping ? 'menuBtn active tap' : 'menuBtn tap'}
+          disabled={showChangeKit}
           onClick={tapMode}
         >
           <TapIcon />

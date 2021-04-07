@@ -166,22 +166,13 @@ const SampleBtn = ({ i, sample, selectSample }) => {
         Tone.immediate(),
         1
       );
-    }
-  };
-
-  const onClick = () => {
-    if (!tapping) {
+    } else {
       selectSample(i);
     }
   };
 
   return (
-    <Button
-      classes='sampleBtn'
-      onTouchStart={onTouchStart}
-      onClick={onClick}
-      ariaLabel={sample.name}
-    >
+    <Button classes='sampleBtn' onClick={onTouchStart} ariaLabel={sample.name}>
       {icons[sample.icon](sample.color)}
       <div className={`border border${i}`} />
     </Button>

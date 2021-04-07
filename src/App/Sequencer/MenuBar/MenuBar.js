@@ -50,7 +50,8 @@ export const Menu = () => {
 
   const enableScroll = () => {
     if (mode === MODES.TAP) dispatch(setMode(null));
-    if (show === VIEWS.THEMES) dispatch(setShow(''));
+    if (show === VIEWS.THEMES || show === VIEWS.CHANGE_KIT)
+      dispatch(setShow(''));
     rightRef.current.disabled = false;
     leftRef.current.disabled = false;
   };

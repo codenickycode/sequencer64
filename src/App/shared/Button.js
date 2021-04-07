@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from 'assets/icons';
 import cuid from 'cuid';
 
@@ -13,24 +13,40 @@ export const Button = ({
   ariaLabel = '',
   children,
 }) => {
-  const ref = useRef(null);
+  const defaultRef = useRef(null);
+  const ref = fwdRef || defaultRef;
 
-  const handleTouchStart = (e) => {
-    e.preventDefault();
-    if (onTouchStart) onTouchStart();
-  };
+  const handleTouchStart = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (onTouchStart) onTouchStart();
+      if (onClick) onClick();
+    },
+    [onClick, onTouchStart]
+  );
+
+  // disable passive eventListener hack
+  useEffect(() => {
+    let keepRef = ref;
+    if (keepRef.current)
+      keepRef.current.addEventListener('touchstart', handleTouchStart, {
+        passive: false,
+      });
+    return () => {
+      if (keepRef.current)
+        keepRef.current.removeEventListener('touchstart', handleTouchStart);
+    };
+  }, [handleTouchStart, ref]);
 
   return (
     <button
-      ref={fwdRef || ref}
+      ref={ref}
       type={type || 'button'}
       id={id || cuid.slug()}
       className={'btn ' + classes}
       disabled={disabled}
       aria-label={ariaLabel}
-      onTouchStart={handleTouchStart}
       onMouseDown={handleTouchStart}
-      onClick={onClick}
     >
       {children}
     </button>

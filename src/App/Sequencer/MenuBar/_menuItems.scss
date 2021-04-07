@@ -39,7 +39,8 @@
       flex-direction: row;
     }
 
-    &.tap {
+    &.tap,
+    &.kit {
       border: 1px solid $color-none;
     }
 
@@ -50,9 +51,12 @@
       .icon {
         fill: $green;
       }
+      &.kit {
+        border-color: $green;
+      }
       &.tap {
-        border: 1px solid $green;
-        animation: flashing 400ms alternate infinite;
+        border-color: $green;
+        // animation: flashing 400ms alternate infinite;
       }
     }
 

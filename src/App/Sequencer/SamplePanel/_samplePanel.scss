@@ -10,7 +10,6 @@
     border-color: $color-none;
     &.highlight {
       border-color: initial;
-      animation: flashing 400ms alternate infinite;
     }
   }
 

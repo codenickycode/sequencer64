@@ -3,7 +3,7 @@ import { modCell } from 'App/reducers/sequenceSlice';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const useCellState = (id, step) => {
+export const useCellState = (id, step, prevCellRef) => {
   const dispatch = useDispatch();
 
   const selectedSample = useSelector((state) => state.editor.selectedSample);
@@ -36,6 +36,7 @@ export const useCellState = (id, step) => {
   );
 
   const tapCell = useCallback(() => {
+    console.log('tapping');
     dispatch(modCell(step, noteOn));
   }, [dispatch, noteOn, step]);
 
@@ -52,9 +53,10 @@ export const useCellState = (id, step) => {
       e.stopPropagation();
       e.preventDefault();
       dispatch(setToggleOn(!noteOn));
+      prevCellRef.current = id;
       tapCell();
     },
-    [dispatch, noteOn, tapCell]
+    [dispatch, id, noteOn, prevCellRef, tapCell]
   );
 
   const state = useMemo(() => {
