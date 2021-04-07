@@ -147,6 +147,7 @@ const SampleBtns = () => {
               selectSample={selectSample}
             />
           ))}
+        <div id='samplePanelBorder' />
       </div>
     );
   }, [dispatch, kit]);

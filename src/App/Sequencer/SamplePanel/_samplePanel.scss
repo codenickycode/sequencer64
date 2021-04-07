@@ -3,6 +3,17 @@
 @use 'styles/colors' as *;
 
 #samplePanel {
+  #samplePanelBorder {
+    @extend %noEventsLayerAbs;
+    @extend %borderActive;
+    top: 0;
+    border-color: $color-none;
+    &.highlight {
+      border-color: initial;
+      animation: flashing 400ms alternate infinite;
+    }
+  }
+
   .menu {
     @extend %full;
     padding: 0.25rem;

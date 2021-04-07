@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'App/shared/Button';
 import { KitIcon, TapIcon } from 'assets/icons';
@@ -11,6 +11,15 @@ export const KitAndTapModeBtn = () => {
   const tapping = mode === MODES.TAP;
   const show = useSelector((state) => state.app.show);
   const showChangeKit = show === VIEWS.CHANGE_KIT;
+
+  useEffect(() => {
+    const spBorder = document.getElementById('samplePanelBorder');
+    if (spBorder) {
+      if (tapping) spBorder.classList.add('highlight');
+      if (!tapping) spBorder.classList.remove('highlight');
+    }
+  }, [tapping]);
+
   const memo = useMemo(() => {
     // console.log('rendering: ChangeKitBtn');
 
