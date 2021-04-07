@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { MODES } from 'App/reducers/editorSlice';
 import { Button } from 'App/shared/Button';
 import { ChevronLeftIcon, ChevronDownIcon } from 'assets/icons';
 import { MIDI_NOTES } from 'utils/MIDI_NOTES';
 import { usePitchVelocityLength } from './usePitchVelocityLength';
+import { useDisablePassiveHack } from 'utils/useDisablePassiveHack';
 
 export const PitchVelocityLength = ({ onReturn, mode }) => {
   const {
@@ -15,19 +16,7 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
     editAll,
   } = usePitchVelocityLength(mode);
 
-  // disable passive eventListener hack
-  const inputRef = useRef(null);
-  useEffect(() => {
-    let keepRef = inputRef;
-    if (keepRef.current)
-      keepRef.current.addEventListener('touchend', onTouchEnd, {
-        passive: false,
-      });
-    return () => {
-      if (keepRef.current)
-        keepRef.current.removeEventListener('touchend', onTouchEnd);
-    };
-  }, [onTouchEnd]);
+  const inputRef = useDisablePassiveHack('touchend', onTouchEnd);
 
   return (
     <div className='detail col'>

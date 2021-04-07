@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from 'assets/icons';
 import cuid from 'cuid';
+import { useDisablePassiveHack } from 'utils/useDisablePassiveHack';
 
 export const Button = ({
   fwdRef,
@@ -25,18 +26,7 @@ export const Button = ({
     [onClick, onTouchStart]
   );
 
-  // disable passive eventListener hack
-  useEffect(() => {
-    let keepRef = ref;
-    if (keepRef.current)
-      keepRef.current.addEventListener('touchstart', handleTouchStart, {
-        passive: false,
-      });
-    return () => {
-      if (keepRef.current)
-        keepRef.current.removeEventListener('touchstart', handleTouchStart);
-    };
-  }, [handleTouchStart, ref]);
+  useDisablePassiveHack('touchstart', handleTouchStart, ref);
 
   return (
     <button

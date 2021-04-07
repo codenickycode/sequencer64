@@ -2,6 +2,7 @@ import React, { useMemo, useRef, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTapCellById } from 'App/reducers/editorSlice';
 import { Cell } from './Cell';
+import { useDisablePassiveHack } from 'utils/useDisablePassiveHack';
 
 export const Grid = () => {
   const dispatch = useDispatch();
@@ -33,19 +34,7 @@ export const Grid = () => {
     [dispatch, selectedSample]
   );
 
-  // disable passive eventListener hack
-  const gridRef = useRef(null);
-  useEffect(() => {
-    let keepRef = gridRef;
-    if (keepRef.current)
-      keepRef.current.addEventListener('touchmove', onTouchMove, {
-        passive: false,
-      });
-    return () => {
-      if (keepRef.current)
-        keepRef.current.removeEventListener('touchmove', onTouchMove);
-    };
-  }, [onTouchMove]);
+  const gridRef = useDisablePassiveHack('touchmove', onTouchMove);
 
   const gridMemo = useMemo(() => {
     // console.log('rendering: Grid');
