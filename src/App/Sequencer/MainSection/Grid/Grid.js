@@ -49,12 +49,26 @@ export const Grid = () => {
 
   const gridMemo = useMemo(() => {
     // console.log('rendering: Grid');
+    const handleMouseMove = (e) => {
+      if (prevCellRef.current) onTouchMove(e);
+    };
+
+    const handleMouseUp = () => {
+      prevCellRef.current = null;
+    };
+
     let grid = [];
     for (let i = 0; i < length; i++) {
       grid.push(i);
     }
     return (
-      <div ref={gridRef} id='grid' className='grid' onMouseMove={onTouchMove}>
+      <div
+        ref={gridRef}
+        id='grid'
+        className='grid'
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+      >
         {grid.map((step) => {
           const id = `cell-${step}`;
           return (

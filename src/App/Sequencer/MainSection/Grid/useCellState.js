@@ -36,7 +36,6 @@ export const useCellState = (id, step, prevCellRef) => {
   );
 
   const tapCell = useCallback(() => {
-    console.log('tapping');
     dispatch(modCell(step, noteOn));
   }, [dispatch, noteOn, step]);
 
