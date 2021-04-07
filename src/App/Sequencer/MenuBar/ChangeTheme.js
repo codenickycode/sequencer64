@@ -52,7 +52,7 @@ const Themes = ({ showThemes }) => {
       <Button
         id={`${THEMES.JOKER}Theme`}
         classes={theme === THEMES.JOKER ? 'themeBtn active' : 'themeBtn'}
-        onClick={() => onTouchStart(THEMES.JOKER)}
+        onTouchStart={() => onTouchStart(THEMES.JOKER)}
       >
         <label htmlFor={`${THEMES.JOKER}Theme`}>{THEMES.JOKER}</label>
       </Button>

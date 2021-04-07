@@ -55,17 +55,21 @@ document.addEventListener('click', initialClick);
 
 Tone.getDestination().volume.value = -12;
 
-window.addEventListener('orientationchange', resize);
+window.addEventListener('orientationchange', afterRotate);
 window.addEventListener('blur', () => {
   window.addEventListener('focus', resize);
 });
+
+function afterRotate() {
+  resize();
+  window.location.reload();
+}
 
 function resize() {
   document.body.style.display = 'none';
   setTimeout(function () {
     document.body.style.display = 'initial';
     setWidthAndHeight();
-    window.location.reload();
   }, 10);
   window.removeEventListener('focus', resize);
 }

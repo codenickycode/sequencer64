@@ -12,7 +12,12 @@ export const Cell = ({ id, step }) => {
     // console.log('rendering: Cell');
     return (
       <div className='cellWrapper'>
-        <div id={id} className={classes.cell} onTouchStart={onTouchStart}>
+        <div
+          id={id}
+          className={classes.cell}
+          onTouchStart={onTouchStart}
+          onMouseDown={onTouchStart}
+        >
           <SliceIcon addClass={classes.slice1} />
           <SliceIcon addClass={classes.slice2} />
           <div style={styles.bg} className={classes.bg} />

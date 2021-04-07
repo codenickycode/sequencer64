@@ -39,6 +39,10 @@
       flex-direction: row;
     }
 
+    &.tap {
+      border: 1px solid $color-none;
+    }
+
     &.active {
       label {
         color: $green;

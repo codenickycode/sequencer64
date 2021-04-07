@@ -19,10 +19,10 @@ const LoggedIn = ({ fetching, classes, values }) => {
       {fetching ? (
         <p>please wait...</p>
       ) : (
-        <div className='text'>
+        <>
           <p className='user'>{values.user}</p>
           <p className={classes.online}>{values.online}</p>
-        </div>
+        </>
       )}
       <Button disabled={fetching} onClick={onLogout}>
         logout

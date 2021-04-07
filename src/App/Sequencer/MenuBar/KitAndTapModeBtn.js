@@ -34,7 +34,7 @@ export const KitAndTapModeBtn = () => {
         </Button>
         <Button
           id='tapModeBtn'
-          classes={tapping ? 'menuBtn active tap' : 'menuBtn'}
+          classes={tapping ? 'menuBtn active tap' : 'menuBtn tap'}
           onClick={tapMode}
         >
           <TapIcon />

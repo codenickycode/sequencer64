@@ -68,31 +68,26 @@
 
 .loggedIn {
   width: 100%;
-  margin-top: 0.25rem;
-  padding: 1rem;
+  margin-top: 0.5rem;
   @include flex(row, space-evenly);
-  @extend %borderBottomHalf;
 
-  .text {
-    @extend %full;
-    @include flex(row, space-evenly);
-    padding: 0.5rem;
+  .user {
+    font-size: 0.9rem;
+  }
 
-    .user {
-      font-size: 0.9rem;
-    }
-
-    .online {
-      font-size: 0.8rem;
-      font-weight: normal;
-      color: $green;
-    }
+  .online {
+    font-size: 0.8rem;
+    font-weight: normal;
+    color: $green;
   }
 
   .btn {
     @extend %btn;
     border-radius: 0.5rem;
     font-size: 0.8rem;
+    border: none;
+    background: transparent;
+    text-decoration: underline;
   }
 }
 
@@ -109,7 +104,7 @@
   .top {
     margin: 0 auto;
     max-width: 600px;
-    padding: 2rem;
+    padding: 0 2rem;
   }
 
   .tabs {

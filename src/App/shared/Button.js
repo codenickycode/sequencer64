@@ -15,7 +15,8 @@ export const Button = ({
 }) => {
   const ref = useRef(null);
 
-  const handleTouchStart = () => {
+  const handleTouchStart = (e) => {
+    e.preventDefault();
     if (onTouchStart) onTouchStart();
   };
 
@@ -28,6 +29,7 @@ export const Button = ({
       disabled={disabled}
       aria-label={ariaLabel}
       onTouchStart={handleTouchStart}
+      onMouseDown={handleTouchStart}
       onClick={onClick}
     >
       {children}

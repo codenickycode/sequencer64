@@ -50,6 +50,7 @@ export const useCellState = (id, step) => {
   const onTouchStart = useCallback(
     (e) => {
       e.stopPropagation();
+      e.preventDefault();
       dispatch(setToggleOn(!noteOn));
       tapCell();
     },
