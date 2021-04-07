@@ -29,6 +29,7 @@ const INITIAL_STATE = {
   serviceWorkerActive: false,
   theme: getLS('theme') || 'Joker',
   landscape: window.innerWidth > window.innerHeight,
+  log: { count: 0, message: '' },
 };
 
 export const appSlice = createSlice({
@@ -70,6 +71,10 @@ export const appSlice = createSlice({
     setLandscape: (state, { payload }) => {
       state.landscape = payload;
     },
+    setLog: (state, { payload }) => {
+      state.log.count++;
+      state.log.message = payload;
+    },
     updateSequencesFinally: (
       state,
       { payload: { newSequences, message, error, confirmation } }
@@ -107,6 +112,7 @@ export const {
   setServiceWorkerActive,
   setTheme,
   setLandscape,
+  setLog,
   updateSequencesFinally,
   getUserFinally,
 } = appSlice.actions;

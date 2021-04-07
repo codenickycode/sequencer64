@@ -14,12 +14,16 @@ const INITIAL_STATE = {
   transportState: Tone.Transport.state,
   restarting: false,
   step: 0,
+  audioContextReady: false,
 };
 
 export const toneSlice = createSlice({
   name: 'tone',
   initialState: INITIAL_STATE,
   reducers: {
+    setAudioContextReady: (state, { payload }) => {
+      state.audioContextReady = payload;
+    },
     setLoadingBuffers: (state, { payload }) => {
       state.loadingBuffers = payload;
     },
@@ -57,6 +61,7 @@ export const toneSlice = createSlice({
 });
 
 export const {
+  setAudioContextReady,
   setLoadingBuffers,
   loadSamplesFinally,
   setStep,
@@ -68,6 +73,7 @@ export const {
 } = toneSlice.actions;
 
 export const {
+  startTone,
   loadSamples,
   schedulePattern,
   startSequence,

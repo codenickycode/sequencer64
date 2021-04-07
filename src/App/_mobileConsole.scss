@@ -1,0 +1,6 @@
+@use 'styles/placeholders';
+
+#mobileConsole {
+  @extend %noEventsLayerAbs;
+  background: rgba(0, 0, 0, 0.75);
+}

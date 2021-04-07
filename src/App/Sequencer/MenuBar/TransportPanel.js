@@ -9,6 +9,7 @@ import {
   stopSequence,
 } from 'App/reducers/toneSlice';
 import { Kit } from 'App/shared/KitProvider';
+import { startTone } from 'App/reducers/thunks/toneThunks';
 
 export const TransportPanel = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,9 @@ export const TransportPanel = () => {
 
   const transportState = useSelector((state) => state.tone.transportState);
   const buffersLoaded = useSelector((state) => state.tone.buffersLoaded);
+  const audioContextReady = useSelector(
+    (state) => state.tone.audioContextReady
+  );
 
   const bpm = useSelector((state) => state.sequence.present.bpm);
   useEffect(() => {
@@ -50,11 +54,14 @@ export const TransportPanel = () => {
     const onStop = () => {
       if (transportState !== 'stopped') dispatch(stopSequence());
     };
-    const onStart = () => {
+    const onStart = async () => {
       if (transportState === 'started') {
         dispatch(pauseSequence());
       } else {
         setReady(false);
+        // if (!audioContextReady) dispatch(startTone(kitRef.current));
+        // if (audioContextReady) dispatch(startSequence(kitRef.current));
+        window.log('starting sequence');
         dispatch(startSequence(kitRef.current));
       }
     };
@@ -114,6 +121,15 @@ export const TransportPanel = () => {
         </div>
       </div>
     );
-  }, [bpm, bpmEdited, dispatch, kitRef, ready, tempBpm, transportState]);
+  }, [
+    audioContextReady,
+    bpm,
+    bpmEdited,
+    dispatch,
+    kitRef,
+    ready,
+    tempBpm,
+    transportState,
+  ]);
   return transportMemo;
 };

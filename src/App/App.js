@@ -9,8 +9,9 @@ import { Subscriptions } from 'App/Subscriptions';
 import { KitProvider } from 'App/shared/KitProvider';
 import { Provider } from 'react-redux';
 import store from 'App/store';
-import { setOnline } from 'App/reducers/appSlice';
+import { setLog, setOnline } from 'App/reducers/appSlice';
 import { setWidthAndHeight } from 'utils/calcScreen';
+import { startTone } from './reducers/thunks/toneThunks';
 
 export default function App() {
   // console.log('rendering: App');
@@ -45,11 +46,13 @@ window.addEventListener('online', () => store.dispatch(setOnline(true)));
 window.addEventListener('offline', () => store.dispatch(setOnline(false)));
 
 const initialClick = async () => {
-  await Tone.start();
-  console.log('audio ready');
-  document.removeEventListener('click', initialClick);
+  store.dispatch(startTone());
+  window.log('dispatching from initialClick');
+  document.removeEventListener('touchstart', initialClick);
+  document.removeEventListener('mousedown', initialClick);
 };
-document.addEventListener('click', initialClick);
+// document.addEventListener('touchstart', initialClick);
+// document.addEventListener('mousedown', initialClick);
 
 Tone.getDestination().volume.value = -12;
 
@@ -98,3 +101,5 @@ document.addEventListener('gestureend', function (e) {
   // special hack to prevent zoom-to-tabs gesture in safari
   document.body.style.zoom = 0.99;
 });
+
+window.log = (message) => store.dispatch(setLog(message));

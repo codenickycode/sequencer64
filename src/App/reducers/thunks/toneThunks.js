@@ -16,7 +16,17 @@ import {
   setStep,
   startSequenceFinally,
   stopSequenceFinally,
+  setAudioContextReady,
 } from '../toneSlice';
+
+export const startTone = (kit) => async (dispatch) => {
+  window.log('prepping audio');
+  await Tone.start();
+  dispatch(setAudioContextReady(true));
+  console.log('audio ready');
+  window.log('audio ready');
+  if (kit) dispatch(startSequence(kit));
+};
 
 export const loadSamples = (kit) => async (dispatch, getState) => {
   dispatch(stopSequence());
@@ -54,7 +64,9 @@ export const schedulePattern = (dispatch, getState, kit) => {
   }, '16n');
 };
 
-export const startSequence = (kit) => (dispatch, getState) => {
+export const startSequence = (kit) => async (dispatch, getState) => {
+  const audioContextReady = getState().tone.audioContextReady;
+  if (!audioContextReady) return dispatch(startTone(kit));
   removeCursor(getState().sequence.present.length, getState().tone.step);
   if (Tone.Transport.state === 'stopped')
     schedulePattern(dispatch, getState, kit);

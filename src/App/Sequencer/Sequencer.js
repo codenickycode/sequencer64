@@ -9,6 +9,7 @@ import { Menu } from 'App/Sequencer/MenuBar/MenuBar';
 import { Preparing } from 'App/shared/Preparing';
 import { loadInitialSequence } from 'App/reducers/sequenceSlice';
 import { SpAlert } from 'App/Sequencer/SamplePanel/SpAlert';
+import { MobileConsole } from 'App/MobileConsole';
 
 export const SequencerPage = () => {
   const history = useHistory();
@@ -34,6 +35,7 @@ export const SequencerPage = () => {
           <div id='main'>
             <Grid />
             <ChangeKit />
+            <MobileConsole />
             <div id='pastePatternPortal' />
           </div>
           <div id='samplePanel'>

@@ -19,6 +19,7 @@
 @use 'App/Sequencer/MenuBar/menuItems';
 @use 'App/Login/loginPage';
 @use 'App/ErrorBoundary/errorBoundary';
+@use 'App/mobileConsole';
 
 * {
   margin: 0;
