@@ -40,6 +40,7 @@
 
     .bg {
       opacity: 0;
+      transform-origin: left;
     }
     &.flash {
       .bg {

@@ -1,29 +1,19 @@
 import cuid from 'cuid';
-import React, { useCallback, useMemo } from 'react';
-import ReactDOM from 'react-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import * as defaultKits from 'utils/defaultKits';
 import { Button } from 'App/shared/Button';
 import { useFadeIn } from 'utils/useFadeIn';
 import { CloudDownloadIcon } from 'assets/icons';
 import { useKitBtnState } from './useKitBtnState';
-import { setShow, VIEWS } from '../../reducers/appSlice';
+import { VIEWS } from '../../reducers/appSlice';
 
 const kits = Object.values(defaultKits);
 
 export const ChangeKit = () => {
-  const dispatch = useDispatch();
   const show = useSelector((state) => state.app.show);
   const showChangeKit = show === VIEWS.CHANGE_KIT;
-  const { fadeInClass, fadeOutThen } = useFadeIn(showChangeKit);
-
-  const onClick = useCallback(
-    () =>
-      fadeOutThen(() => {
-        dispatch(setShow(''));
-      }),
-    [dispatch, fadeOutThen]
-  );
+  const { fadeInClass } = useFadeIn(showChangeKit);
 
   const changeKitMemo = useMemo(() => {
     // console.log('rendering: ChangeKit');
@@ -46,10 +36,9 @@ export const ChangeKit = () => {
             );
           })}
         </div>
-        <ChangeKitInfo fadeInClass={fadeInClass} onClick={onClick} />
       </div>
     );
-  }, [fadeInClass, onClick]);
+  }, [fadeInClass]);
 
   return showChangeKit ? changeKitMemo : null;
 };
@@ -74,16 +63,4 @@ const KitBtn = ({ kitName, available }) => {
       )}
     </Button>
   );
-};
-
-export const ChangeKitInfo = ({ fadeInClass, onClick }) => {
-  const portal = document.getElementById('kitInfoPortal');
-  return portal
-    ? ReactDOM.createPortal(
-        <div className={'kit-info' + fadeInClass} onClick={onClick}>
-          <Button classes='close'>close</Button>
-        </div>,
-        portal
-      )
-    : null;
 };

@@ -39,7 +39,6 @@ export const SequencerPage = () => {
           <div id='samplePanel'>
             <SpAlert />
             <SamplePanel />
-            <div id='kitInfoPortal' />
           </div>
         </div>
         <Menu />

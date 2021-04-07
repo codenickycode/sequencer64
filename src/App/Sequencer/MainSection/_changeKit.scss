@@ -68,13 +68,6 @@
   }
 }
 
-#kitInfoPortal {
-  @extend %full;
-  top: -100%;
-  z-index: 6;
-  pointer-events: none;
-}
-
 .kit-info {
   pointer-events: initial;
   @extend %full;
