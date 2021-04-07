@@ -44,7 +44,7 @@ const Themes = ({ showThemes }) => {
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.app.theme);
 
-  const onTouchStart = (newTheme) => {
+  const onClick = (newTheme) => {
     dispatch(setTheme(newTheme));
   };
   return ReactDOM.createPortal(
@@ -52,35 +52,35 @@ const Themes = ({ showThemes }) => {
       <Button
         id={`${THEMES.JOKER}Theme`}
         classes={theme === THEMES.JOKER ? 'themeBtn active' : 'themeBtn'}
-        onTouchStart={() => onTouchStart(THEMES.JOKER)}
+        onClick={() => onClick(THEMES.JOKER)}
       >
         <label htmlFor={`${THEMES.JOKER}Theme`}>{THEMES.JOKER}</label>
       </Button>
       <Button
         id={`${THEMES.NES}Theme`}
         classes={theme === THEMES.NES ? 'themeBtn active' : 'themeBtn'}
-        onTouchStart={() => onTouchStart(THEMES.NES)}
+        onClick={() => onClick(THEMES.NES)}
       >
         <label htmlFor={`${THEMES.NES}Theme`}>{THEMES.NES}</label>
       </Button>
       <Button
         id={`${THEMES.TMNT}Theme`}
         classes={theme === THEMES.TMNT ? 'themeBtn active' : 'themeBtn'}
-        onTouchStart={() => onTouchStart(THEMES.TMNT)}
+        onClick={() => onClick(THEMES.TMNT)}
       >
         <label htmlFor={`${THEMES.TMNT}Theme`}>{THEMES.TMNT}</label>
       </Button>
       <Button
         id={`${THEMES.BLACK}Theme`}
         classes={theme === THEMES.BLACK ? 'themeBtn active' : 'themeBtn'}
-        onTouchStart={() => onTouchStart(THEMES.BLACK)}
+        onClick={() => onClick(THEMES.BLACK)}
       >
         <label htmlFor={`${THEMES.BLACK}Theme`}>{THEMES.BLACK}</label>
       </Button>
       <Button
         id={`${THEMES.WHITE}Theme`}
         classes={theme === THEMES.WHITE ? 'themeBtn active' : 'themeBtn'}
-        onTouchStart={() => onTouchStart(THEMES.WHITE)}
+        onClick={() => onClick(THEMES.WHITE)}
       >
         <label htmlFor={`${THEMES.WHITE}Theme`}>{THEMES.WHITE}</label>
       </Button>

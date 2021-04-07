@@ -24,7 +24,7 @@ const LoggedIn = ({ fetching, classes, values }) => {
           <p className={classes.online}>{values.online}</p>
         </>
       )}
-      <Button disabled={fetching} onTouchStart={onLogout}>
+      <Button disabled={fetching} onClick={onLogout}>
         logout
       </Button>
     </div>

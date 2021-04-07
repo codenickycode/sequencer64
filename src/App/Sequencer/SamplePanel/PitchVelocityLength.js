@@ -4,7 +4,7 @@ import { Button } from 'App/shared/Button';
 import { ChevronLeftIcon, ChevronDownIcon } from 'assets/icons';
 import { MIDI_NOTES } from 'utils/MIDI_NOTES';
 import { usePitchVelocityLength } from './usePitchVelocityLength';
-import { useDisablePassiveHack } from 'utils/useDisablePassiveHack';
+import { useTouchAndMouse } from 'utils/useTouchAndMouse';
 
 export const PitchVelocityLength = ({ onReturn, mode }) => {
   const {
@@ -16,7 +16,11 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
     editAll,
   } = usePitchVelocityLength(mode);
 
-  const inputRef = useDisablePassiveHack('touchend', onTouchEnd);
+  const { touchStart, touchEnd, mouseUp } = useTouchAndMouse(
+    null,
+    null,
+    onTouchEnd
+  );
 
   return (
     <div className='detail col'>
@@ -51,14 +55,15 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
         ) : (
           <>
             <input
-              ref={inputRef}
               type='range'
               id='modSlider'
               min={0.1}
               max={1}
               step={0.01}
               value={value}
-              onMouseUp={onTouchEnd}
+              onTouchStart={touchStart}
+              onTouchEnd={touchEnd}
+              onMouseUp={mouseUp}
               onChange={onChange}
             />
             <div className='modValueWrapper'>

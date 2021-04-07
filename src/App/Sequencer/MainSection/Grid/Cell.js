@@ -3,23 +3,23 @@ import { useSelector } from 'react-redux';
 import * as defaultKits from 'utils/defaultKits';
 import { SliceIcon } from 'assets/icons';
 import { useCellState } from './useCellState';
-import { useDisablePassiveHack } from 'utils/useDisablePassiveHack';
+import { useTouchAndMouse } from 'utils/useTouchAndMouse';
 
 export const Cell = ({ id, step, prevCellRef }) => {
   const { state, onTouchStart } = useCellState(id, step, prevCellRef);
   const { classes, styles, values } = state;
 
-  const cellRef = useDisablePassiveHack('touchstart', onTouchStart);
+  const { touchStart, mouseDown } = useTouchAndMouse(onTouchStart);
 
   const cellMemo = useMemo(() => {
     // console.log('rendering: Cell');
     return (
       <div className='cellWrapper'>
         <div
-          ref={cellRef}
           id={id}
           className={classes.cell}
-          onMouseDown={onTouchStart}
+          onTouchStart={touchStart}
+          onMouseDown={mouseDown}
         >
           <SliceIcon addClass={classes.slice1} />
           <SliceIcon addClass={classes.slice2} />
@@ -31,13 +31,13 @@ export const Cell = ({ id, step, prevCellRef }) => {
       </div>
     );
   }, [
-    cellRef,
     id,
     classes.cell,
     classes.slice1,
     classes.slice2,
     classes.bg,
-    onTouchStart,
+    touchStart,
+    mouseDown,
     styles.bg,
     values.midiNote,
     step,

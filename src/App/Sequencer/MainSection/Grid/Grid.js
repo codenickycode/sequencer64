@@ -2,7 +2,6 @@ import React, { useMemo, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTapCellById } from 'App/reducers/editorSlice';
 import { Cell } from './Cell';
-import { useDisablePassiveHack } from 'utils/useDisablePassiveHack';
 
 export const Grid = () => {
   const dispatch = useDispatch();
@@ -13,7 +12,6 @@ export const Grid = () => {
 
   const onTouchMove = useCallback(
     (e) => {
-      e.preventDefault();
       if (selectedSample === -1) return;
       let cell;
       if (e.touches) {
@@ -34,29 +32,28 @@ export const Grid = () => {
     [dispatch, selectedSample]
   );
 
-  const gridRef = useDisablePassiveHack('touchmove', onTouchMove);
-
   const gridMemo = useMemo(() => {
-    // console.log('rendering: Grid');
-    const handleMouseMove = (e) => {
+    const moveFunc = (e) => {
       if (prevCellRef.current) onTouchMove(e);
     };
 
-    const handleMouseUp = () => {
+    const endFunc = () => {
       prevCellRef.current = null;
     };
 
+    // console.log('rendering: Grid');
     let grid = [];
     for (let i = 0; i < length; i++) {
       grid.push(i);
     }
     return (
       <div
-        ref={gridRef}
         id='grid'
         className='grid'
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
+        onTouchMove={moveFunc}
+        onMouseDown={moveFunc}
+        onTouchEnd={endFunc}
+        onMouseUp={endFunc}
       >
         {grid.map((step) => {
           const id = `cell-${step}`;
@@ -66,6 +63,6 @@ export const Grid = () => {
         })}
       </div>
     );
-  }, [gridRef, length, onTouchMove]);
+  }, [length, onTouchMove]);
   return gridMemo;
 };

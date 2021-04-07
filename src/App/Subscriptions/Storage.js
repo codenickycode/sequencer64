@@ -8,7 +8,7 @@ export const Storage = () => {
   const theme = useSelector((state) => state.app.theme);
 
   useEffect(() => {
-    if (show !== VIEWS.THEMES) setSS('show', show);
+    if (show !== VIEWS.THEMES && show !== VIEWS.CHANGE_KIT) setSS('show', show);
   }, [show]);
 
   useEffect(() => {

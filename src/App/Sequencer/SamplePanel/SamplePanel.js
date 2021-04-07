@@ -1,5 +1,11 @@
 import * as Tone from 'tone';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { close, edit, setMode, MODES } from 'App/reducers/editorSlice';
 import {
@@ -18,6 +24,7 @@ import { Erase, Slice, Copy } from 'App/Sequencer/SamplePanel/EraseSliceCopy';
 import { PitchVelocityLength } from 'App/Sequencer/SamplePanel/PitchVelocityLength';
 import { showEditable, hideEditable } from 'utils/toggleClasses';
 import { Kit } from 'App/shared/KitProvider';
+import { useTouchAndMouse } from 'utils/useTouchAndMouse';
 
 export const SamplePanel = () => {
   const dispatch = useDispatch();
@@ -164,28 +171,34 @@ const SampleBtn = ({ i, sample, selectSample }) => {
     if (flash) setTimeout(() => setFlash(false), 100);
   }, [flash]);
 
-  const onTouchStart = () => {
-    if (tapping) {
-      kitRef.current.samples[i].sampler.triggerAttack(
-        'C2',
-        Tone.immediate(),
-        1
-      );
-      setFlash(true);
-    } else {
-      selectSample(i);
-    }
-  };
+  const startFunc = useCallback(
+    (e) => {
+      window.log('tapping');
+      if (tapping) {
+        kitRef.current.samples[i].sampler.triggerAttack(
+          'C2',
+          Tone.immediate(),
+          1
+        );
+        setFlash(true);
+      } else {
+        selectSample(i);
+      }
+    },
+    [i, kitRef, selectSample, tapping]
+  );
 
+  const { touchStart, mouseDown } = useTouchAndMouse(startFunc);
   return (
-    <Button
-      classes={flash ? 'sampleBtn flash' : 'sampleBtn'}
-      onClick={onTouchStart}
-      ariaLabel={sample.name}
+    <div
+      className={flash ? 'sampleBtn flash' : 'sampleBtn'}
+      onTouchStart={touchStart}
+      onMouseDown={mouseDown}
+      aria-label={sample.name}
     >
       {icons[sample.icon](sample.color)}
       <div className={`border border${i}`} />
       <div className='bgFlash' />
-    </Button>
+    </div>
   );
 };

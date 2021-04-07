@@ -32,6 +32,7 @@ html,
 body {
   @extend %full;
   background: $black;
+  touch-action: pan-y;
 }
 
 body {

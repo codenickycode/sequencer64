@@ -33,7 +33,7 @@ export const LoadSave = () => {
           {show === 'load' && <Load />}
         </div>
         <div className={'bottomBtn' + fadeInClass}>
-          <Button onTouchStart={onClose}>Close</Button>
+          <Button onClick={onClose}>Close</Button>
         </div>
       </>
     );

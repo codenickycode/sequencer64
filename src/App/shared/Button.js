@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from 'assets/icons';
 import cuid from 'cuid';
-import { useDisablePassiveHack } from 'utils/useDisablePassiveHack';
+import { useTouchAndMouse } from 'utils/useTouchAndMouse';
 
 export const Button = ({
   fwdRef,
@@ -17,16 +17,11 @@ export const Button = ({
   const defaultRef = useRef(null);
   const ref = fwdRef || defaultRef;
 
-  const handleTouchStart = useCallback(
-    (e) => {
-      e.preventDefault();
-      if (onTouchStart) onTouchStart();
-      if (onClick) onClick();
-    },
-    [onClick, onTouchStart]
-  );
+  const handleTouchStart = (e) => {
+    if (onTouchStart) onTouchStart(e);
+  };
 
-  useDisablePassiveHack('touchstart', handleTouchStart, ref);
+  const { touchStart, mouseDown } = useTouchAndMouse(handleTouchStart);
 
   return (
     <button
@@ -36,7 +31,9 @@ export const Button = ({
       className={'btn ' + classes}
       disabled={disabled}
       aria-label={ariaLabel}
-      onMouseDown={handleTouchStart}
+      onTouchStart={touchStart}
+      onMouseDown={mouseDown}
+      onClick={onClick}
     >
       {children}
     </button>

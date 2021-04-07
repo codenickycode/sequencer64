@@ -27,6 +27,7 @@
       @include flex();
       @extend %border;
       @extend %bgSampleBtn;
+      border: 2px solid red;
 
       @media (hover: hover) {
         &:hover {
