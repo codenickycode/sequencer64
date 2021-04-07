@@ -12,7 +12,6 @@ import { Provider } from 'react-redux';
 import store from 'App/store';
 import { setOnline } from 'App/reducers/appSlice';
 import { setWidthAndHeight } from 'utils/calcScreen';
-import debounce from 'utils/debounce';
 
 export default function App() {
   // console.log('rendering: App');
@@ -56,11 +55,18 @@ document.addEventListener('click', initialClick);
 
 Tone.getDestination().volume.value = -12;
 
-window.addEventListener('resize', debounce(afterResize, 150));
+window.addEventListener('resize', handleResize);
 window.addEventListener('orientationchange', afterResize);
 window.addEventListener('blur', () => {
   window.addEventListener('focus', redraw);
 });
+
+let resizeTimer;
+function handleResize() {
+  clearTimeout(resizeTimer);
+  document.body.style.display = 'none';
+  resizeTimer = setTimeout(afterResize, 350);
+}
 
 function afterResize() {
   redraw();
@@ -72,7 +78,7 @@ function redraw() {
   setTimeout(function () {
     document.body.style.display = 'initial';
     setWidthAndHeight();
-  }, 10);
+  }, 100);
   window.removeEventListener('focus', redraw);
 }
 setWidthAndHeight();

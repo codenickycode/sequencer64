@@ -10,6 +10,11 @@
   width: 100%;
   z-index: 201;
 
+  @media (orientation: landscape) and (min-height: 754px) {
+    top: initial;
+    bottom: var(--10vh);
+  }
+
   .status {
     padding: 0.5rem;
     font-size: 1rem;
