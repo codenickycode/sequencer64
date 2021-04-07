@@ -39,21 +39,27 @@
       flex-direction: row;
     }
 
-    label {
-      // margin: 0 0.5rem;
-      letter-spacing: initial;
-      &.active {
+    &.active {
+      label {
         color: $green;
       }
+      .icon {
+        fill: $green;
+      }
+      &.tap {
+        border: 1px solid $green;
+        animation: flashing 400ms alternate infinite;
+      }
+    }
+
+    label {
+      letter-spacing: initial;
     }
   }
 
   .icon {
     max-width: 2rem;
     min-width: 1rem;
-    &.active {
-      fill: $green;
-    }
   }
 }
 

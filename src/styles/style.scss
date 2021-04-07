@@ -39,11 +39,6 @@ body {
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
 }
-// @media screen and (min-width: 1024px) {
-//   body {
-//     font-size: 18px;
-//   }
-// }
 
 #root {
   @extend %full;
@@ -78,10 +73,19 @@ button {
   font-style: inherit;
   font-weight: bold;
   letter-spacing: 2px;
+  @media (hover: hover) {
+    cursor: pointer;
+  }
+}
+
+label {
+  cursor: inherit;
+  pointer-events: none;
 }
 
 button:disabled {
   opacity: 0.35;
+  cursor: initial;
 }
 
 a {

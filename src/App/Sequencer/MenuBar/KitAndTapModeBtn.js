@@ -24,20 +24,21 @@ export const KitAndTapModeBtn = () => {
 
     return (
       <>
-        <Button id='changeKitBtn' classes='menuBtn' onClick={changeKit}>
-          <KitIcon addClass={showChangeKit ? 'active' : ''} />
-          <label
-            className={showChangeKit ? 'active' : ''}
-            htmlFor='changeKitBtn'
-          >
-            kit
-          </label>
+        <Button
+          id='changeKitBtn'
+          classes={showChangeKit ? 'menuBtn active' : 'menuBtn'}
+          onClick={changeKit}
+        >
+          <KitIcon />
+          <label htmlFor='changeKitBtn'>kit</label>
         </Button>
-        <Button id='tapModeBtn' classes='menuBtn' onClick={tapMode}>
-          <TapIcon addClass={tapping ? 'active' : ''} />
-          <label className={tapping ? 'active' : ''} htmlFor='tapModeBtn'>
-            tap
-          </label>
+        <Button
+          id='tapModeBtn'
+          classes={tapping ? 'menuBtn active tap' : 'menuBtn'}
+          onClick={tapMode}
+        >
+          <TapIcon />
+          <label htmlFor='tapModeBtn'>tap</label>
         </Button>
       </>
     );

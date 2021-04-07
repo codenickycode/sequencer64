@@ -65,6 +65,7 @@
 }
 
 %inputBtn {
+  cursor: pointer;
   -webkit-appearance: none;
   width: 100%;
   padding: 0.75rem;
@@ -72,6 +73,10 @@
   border: none;
   opacity: 0.5;
   @extend %btnFont;
+
+  &:disabled {
+    cursor: initial;
+  }
 }
 
 %btn {
@@ -81,9 +86,14 @@
   min-height: 2rem;
   @extend %input;
   @extend %btnFont;
+
+  &:disabled {
+    cursor: initial;
+  }
 }
 
 %closeBtnSmall {
+  cursor: pointer;
   z-index: 2;
   position: absolute;
   top: 0.25rem;
@@ -107,19 +117,29 @@
 }
 
 %bottomBtn {
+  cursor: pointer;
   position: fixed;
   z-index: 101;
   bottom: 0;
   width: 100%;
   padding: 0.5rem;
   @extend %bg3q;
+
+  &:disabled {
+    cursor: initial;
+  }
 }
 
 %btnFull {
+  cursor: pointer;
   min-height: 3rem;
   width: 100%;
   margin: 0.25rem 0;
   padding: 0.25rem 0.5rem;
   border-radius: 0.5rem;
   transform: scale(1);
+
+  &:disabled {
+    cursor: initial;
+  }
 }

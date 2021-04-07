@@ -10,6 +10,11 @@
 
   .cellWrapper {
     @extend %full;
+    @media (hover: hover) {
+      &:hover {
+        border: 1px solid $white;
+      }
+    }
   }
 
   .cell {

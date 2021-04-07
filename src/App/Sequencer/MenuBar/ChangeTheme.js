@@ -17,11 +17,13 @@ export const ChangeTheme = () => {
     };
     return (
       <>
-        <Button id='changeTheme' classes='menuBtn' onClick={onClick}>
-          <PaletteIcon addClass={showThemes ? 'active' : ''} />
-          <label className={showThemes ? 'active' : ''} htmlFor='changeTheme'>
-            theme
-          </label>
+        <Button
+          id='changeTheme'
+          classes={showThemes ? 'menuBtn active' : 'menuBtn'}
+          onClick={onClick}
+        >
+          <PaletteIcon />
+          <label htmlFor='changeTheme'>theme</label>
         </Button>
         <Themes showThemes={showThemes} />
       </>

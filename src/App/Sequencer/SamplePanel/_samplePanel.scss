@@ -18,6 +18,12 @@
       @extend %border;
       @extend %bgSampleBtn;
 
+      @media (hover: hover) {
+        &:hover {
+          border: 1px solid $white;
+        }
+      }
+
       .icon {
         height: 5vw;
         max-height: 2rem;
@@ -44,7 +50,7 @@
   .editMenu {
     @extend %full;
     white-space: nowrap;
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-y: hidden;
     @extend %bg;
     @extend %borderHalf;
@@ -59,7 +65,7 @@
     @media (orientation: landscape) {
       white-space: initial;
       overflow-x: hidden;
-      overflow-y: scroll;
+      overflow-y: auto;
       @include flex;
       flex-wrap: wrap;
     }
@@ -81,6 +87,12 @@
       background: transparent;
       border: none;
       border-radius: 0.5rem;
+
+      @media (hover: hover) {
+        &:hover {
+          border: 1px solid $white;
+        }
+      }
 
       @media (orientation: landscape) {
         width: 55%;
