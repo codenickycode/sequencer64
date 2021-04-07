@@ -22,14 +22,8 @@ $white-90: rgba(255, 255, 255, 0.9);
 $white-3q: rgba(255, 255, 255, 0.75);
 $white-half: rgba(255, 255, 255, 0.5);
 $white-quarter: rgba(255, 255, 255, 0.25);
-$magenta: rgba(255, 0, 172, 1);
-$magenta-dark: rgb(169, 0, 112);
-$lime: rgba(64, 244, 195, 1);
-$lime-dark: rgb(49, 187, 150);
 $green: rgba(47, 222, 126, 1);
 $green-dark: rgb(40, 170, 99);
-$green-darker: rgb(31, 133, 77);
-$green-half: rgba(47, 222, 126, 0.5);
 $red: rgb(232, 12, 48);
 
 /**************** FG *******************/
@@ -99,7 +93,43 @@ $red: rgb(232, 12, 48);
   }
 }
 
+%fillMenuBar {
+  .themeJoker & {
+    fill: $white;
+  }
+  .themeNES & {
+    fill: $nes-grey-darkest;
+  }
+  .themeTMNT & {
+    fill: $tmnt-grey-darkest;
+  }
+  .themeBlack & {
+    fill: $black;
+  }
+  .themeWhite & {
+    fill: $white;
+  }
+}
+
 /**************** BG *******************/
+
+%bgBright {
+  .themeJoker & {
+    background: $joker;
+  }
+  .themeNES & {
+    background: $nes;
+  }
+  .themeTMNT & {
+    background: $tmnt;
+  }
+  .themeBlack & {
+    background: $white;
+  }
+  .themeWhite & {
+    background: $black;
+  }
+}
 
 %bg {
   background: $black;
@@ -197,42 +227,6 @@ $red: rgb(232, 12, 48);
   }
   .themeWhite & {
     background: $true-grey-half;
-  }
-}
-
-%bgStopBtn {
-  .themeJoker & {
-    background: $magenta-dark;
-  }
-  .themeNES & {
-    background: $nes;
-  }
-  .themeTMNT & {
-    background: $tmnt-2;
-  }
-  .themeBlack & {
-    background: $true-grey-dark;
-  }
-  .themeWhite & {
-    background: $true-grey;
-  }
-}
-
-%bgStartBtn {
-  .themeJoker & {
-    background: $lime-dark;
-  }
-  .themeNES & {
-    background: $nes;
-  }
-  .themeTMNT & {
-    background: $tmnt;
-  }
-  .themeBlack & {
-    background: $true-grey-dark;
-  }
-  .themeWhite & {
-    background: $true-grey;
   }
 }
 

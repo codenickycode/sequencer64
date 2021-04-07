@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useCallback, useEffect } from 'react';
+import React, { useMemo, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTapCellById } from 'App/reducers/editorSlice';
 import { Cell } from './Cell';
@@ -66,6 +66,6 @@ export const Grid = () => {
         })}
       </div>
     );
-  }, [length, onTouchMove]);
+  }, [gridRef, length, onTouchMove]);
   return gridMemo;
 };

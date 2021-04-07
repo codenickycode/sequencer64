@@ -87,10 +87,10 @@
     }
 
     &#stop {
-      @extend %bgStopBtn;
+      @extend %bgBright;
     }
     &#start {
-      @extend %bgStartBtn;
+      @extend %bgBright;
       &.flashing {
         animation: dim-flashing 300ms alternate infinite;
       }
@@ -183,5 +183,12 @@
       @extend %borderActive;
       @extend %bgBtnFull;
     }
+  }
+}
+
+#stop,
+#start {
+  .icon {
+    @extend %fillMenuBar;
   }
 }

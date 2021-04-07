@@ -41,16 +41,21 @@
         max-width: 2rem;
       }
 
-      .border {
+      .border,
+      .bgFlash {
         @extend %noEventsLayerAbs;
         opacity: 0;
-        transition: 500ms;
+        transition: 400ms;
         border-radius: 0;
       }
+      .bgFlash {
+        @extend %bgBright;
+      }
     }
-    .sampleBtn.pressed,
+    .sampleBtn.flash,
     .sampleBtn.pulse {
-      .border {
+      .border,
+      .bgFlash {
         transition: none;
         opacity: 1;
       }

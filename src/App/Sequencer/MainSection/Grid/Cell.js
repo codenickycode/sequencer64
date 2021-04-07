@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import * as defaultKits from 'utils/defaultKits';
 import { SliceIcon } from 'assets/icons';
@@ -9,19 +9,6 @@ export const Cell = ({ id, step, prevCellRef }) => {
   const { state, onTouchStart } = useCellState(id, step, prevCellRef);
   const { classes, styles, values } = state;
 
-  // disable passive eventListener hack
-  // const cellRef = useRef(null);
-  // useEffect(() => {
-  //   let keepRef = cellRef;
-  //   if (keepRef.current)
-  //     keepRef.current.addEventListener('touchstart', onTouchStart, {
-  //       passive: false,
-  //     });
-  //   return () => {
-  //     if (keepRef.current)
-  //       keepRef.current.removeEventListener('touchstart', onTouchStart);
-  //   };
-  // }, [onTouchStart]);
   const cellRef = useDisablePassiveHack('touchstart', onTouchStart);
 
   const cellMemo = useMemo(() => {

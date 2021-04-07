@@ -1,5 +1,5 @@
 import * as Tone from 'tone';
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { close, edit, setMode, MODES } from 'App/reducers/editorSlice';
 import {
@@ -159,6 +159,11 @@ const SampleBtn = ({ i, sample, selectSample }) => {
   const mode = useSelector((state) => state.editor.mode);
   const tapping = mode === MODES.TAP;
 
+  const [flash, setFlash] = useState(false);
+  useEffect(() => {
+    if (flash) setTimeout(() => setFlash(false), 100);
+  }, [flash]);
+
   const onTouchStart = () => {
     if (tapping) {
       kitRef.current.samples[i].sampler.triggerAttack(
@@ -166,15 +171,21 @@ const SampleBtn = ({ i, sample, selectSample }) => {
         Tone.immediate(),
         1
       );
+      setFlash(true);
     } else {
       selectSample(i);
     }
   };
 
   return (
-    <Button classes='sampleBtn' onClick={onTouchStart} ariaLabel={sample.name}>
+    <Button
+      classes={flash ? 'sampleBtn flash' : 'sampleBtn'}
+      onClick={onTouchStart}
+      ariaLabel={sample.name}
+    >
       {icons[sample.icon](sample.color)}
       <div className={`border border${i}`} />
+      <div className='bgFlash' />
     </Button>
   );
 };
