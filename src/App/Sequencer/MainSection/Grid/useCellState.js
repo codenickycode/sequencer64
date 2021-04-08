@@ -37,14 +37,12 @@ export const useCellState = (id, step, prevCellRef) => {
 
   const tapCell = useCallback(() => {
     dispatch(modCell(step, noteOn));
-    window.log(`tapping: ${id}`);
-  }, [dispatch, id, noteOn, step]);
+  }, [dispatch, noteOn, step]);
 
   const tapCellAlert = useSelector((state) => state.editor.tapCellById[id]);
   useEffect(() => {
     if (tapCellAlert) {
       tapCell();
-      window.log(`dragging over : ${id}`);
       dispatch(setTapCellById({ id, val: false }));
     }
   }, [dispatch, id, tapCell, tapCellAlert]);

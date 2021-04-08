@@ -192,7 +192,6 @@ const SampleBtn = ({ i, sample, selectSample }) => {
 
   const startFunc = useCallback(
     (e) => {
-      window.log('tapping');
       if (tapping) {
         kitRef.current.samples[i].sampler.triggerAttack(
           'C2',

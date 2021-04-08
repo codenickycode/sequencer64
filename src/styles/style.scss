@@ -72,6 +72,7 @@ input {
 }
 
 button {
+  position: relative;
   font-family: inherit;
   font-style: inherit;
   font-weight: bold;
@@ -79,6 +80,14 @@ button {
   @media (hover: hover) {
     cursor: pointer;
   }
+}
+
+button.pressed::before {
+  content: '';
+  @extend %noEventsLayerAbs;
+  top: 0;
+  left: 0;
+  @extend %bgCellOff;
 }
 
 label {

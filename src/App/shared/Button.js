@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from 'assets/icons';
 import cuid from 'cuid';
 import { useTouchAndMouse } from 'utils/useTouchAndMouse';
@@ -17,8 +17,14 @@ export const Button = ({
   const defaultRef = useRef(null);
   const ref = fwdRef || defaultRef;
 
+  const [pressed, setPressed] = useState('');
+
   const handleTouchStart = (e) => {
     if (onTouchStart) onTouchStart(e);
+    setPressed(' pressed');
+  };
+  const handleTouchEnd = (e) => {
+    setPressed('');
   };
 
   const { touchStart, mouseDown } = useTouchAndMouse(handleTouchStart);
@@ -28,11 +34,13 @@ export const Button = ({
       ref={ref}
       type={type || 'button'}
       id={id || cuid.slug()}
-      className={'btn ' + classes}
+      className={'btn ' + classes + pressed}
       disabled={disabled}
       aria-label={ariaLabel}
       onTouchStart={touchStart}
       onMouseDown={mouseDown}
+      onTouchEnd={handleTouchEnd}
+      onMouseUp={handleTouchEnd}
       onClick={onClick}
     >
       {children}

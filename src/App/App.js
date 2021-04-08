@@ -47,12 +47,11 @@ window.addEventListener('offline', () => store.dispatch(setOnline(false)));
 
 const initialClick = async () => {
   store.dispatch(startTone());
-  window.log('dispatching from initialClick');
   document.removeEventListener('touchstart', initialClick);
   document.removeEventListener('mousedown', initialClick);
 };
-// document.addEventListener('touchstart', initialClick);
-// document.addEventListener('mousedown', initialClick);
+document.addEventListener('touchstart', initialClick);
+document.addEventListener('mousedown', initialClick);
 
 Tone.getDestination().volume.value = -12;
 

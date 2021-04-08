@@ -20,7 +20,6 @@ import {
 } from '../toneSlice';
 
 export const startTone = (kit) => async (dispatch) => {
-  window.log('prepping audio');
   await Tone.start();
   dispatch(setAudioContextReady(true));
   console.log('audio ready');
