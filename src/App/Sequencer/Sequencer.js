@@ -9,7 +9,7 @@ import { Menu } from 'App/Sequencer/MenuBar/MenuBar';
 import { Preparing } from 'App/shared/Preparing';
 import { loadInitialSequence } from 'App/reducers/sequenceSlice';
 import { SpAlert } from 'App/Sequencer/SamplePanel/SpAlert';
-import { MobileConsole } from 'App/MobileConsole';
+// import { MobileConsole } from 'App/MobileConsole';
 
 export const SequencerPage = () => {
   const history = useHistory();

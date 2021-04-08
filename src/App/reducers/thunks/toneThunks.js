@@ -18,7 +18,7 @@ import {
   stopSequenceFinally,
   setAudioContextReady,
 } from '../toneSlice';
-import { setAvailable, setFetchingSamples } from '../assetsSlice';
+import { setFetchingSamples } from '../assetsSlice';
 import { setStatus } from '../appSlice';
 
 export const startTone = (kit) => async (dispatch) => {
@@ -41,9 +41,6 @@ export const loadSamples = (kit) => async (dispatch, getState) => {
   );
   let payload = { bufferedKit: kit.name, loadingError: false };
   dispatch(setLoadingSamples(true));
-  console.log('mock wait');
-  await window.wait(2000);
-  console.log('done mock waiting');
   try {
     if (kit.samples[0].sampler) disposeSamplers(kit);
     await buildSamplers(kit, kitAssets);

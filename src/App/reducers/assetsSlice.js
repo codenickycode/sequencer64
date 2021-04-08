@@ -18,7 +18,7 @@ export const assetsSlice = createSlice({
     },
     setFetchingSamples: (state, { payload: { kit, fetching, available } }) => {
       state.kits[kit].fetching = fetching;
-      state.kits[kit].available = available;
+      if (available !== undefined) state.kits[kit].available = available;
     },
   },
 });

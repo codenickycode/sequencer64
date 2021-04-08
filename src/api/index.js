@@ -36,3 +36,19 @@ export const apiDeleteSequence = (_id) =>
     data: { _id },
     withCredentials: true,
   });
+
+export const preFetchSamples = async (samples) => {
+  const promises = [];
+  samples.forEach((sample) => {
+    promises.push(fetch(sample.path));
+  });
+  let received, error;
+  try {
+    await Promise.all(promises);
+    received = true;
+  } catch (e) {
+    error = e;
+  } finally {
+    return [received, error];
+  }
+};

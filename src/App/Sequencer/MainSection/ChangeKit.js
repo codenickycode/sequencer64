@@ -1,5 +1,5 @@
 import cuid from 'cuid';
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from 'App/shared/Button';
 import { useFadeIn } from 'utils/useFadeIn';
@@ -13,6 +13,9 @@ export const ChangeKit = () => {
   const { fadeInClass } = useFadeIn(showChangeKit);
   const numKits = useSelector((state) => state.assets.numKits);
 
+  // track which kit to load after multiple presses
+  const counterRef = useRef(0);
+
   const changeKitMemo = useMemo(() => {
     // console.log('rendering: ChangeKit');
     let grid = [];
@@ -23,7 +26,7 @@ export const ChangeKit = () => {
       <div id='changeKit' className={'changeKit' + fadeInClass}>
         <div className='kits'>
           {grid.map((i) => {
-            return <KitBtn key={cuid.slug()} i={i} />;
+            return <KitBtn key={cuid.slug()} i={i} counterRef={counterRef} />;
           })}
         </div>
       </div>
@@ -33,8 +36,8 @@ export const ChangeKit = () => {
   return showChangeKit ? changeKitMemo : null;
 };
 
-const KitBtn = ({ i }) => {
-  const { state, functions } = useKitBtnState(i);
+const KitBtn = ({ i, counterRef }) => {
+  const { state, functions } = useKitBtnState(i, counterRef);
   const { classes } = state;
   // console.log(kitName, ': ', state.ready);
 

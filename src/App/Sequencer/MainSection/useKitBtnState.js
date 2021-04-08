@@ -1,10 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeKit } from 'App/reducers/sequenceSlice';
+import { setFetchingSamples } from 'App/reducers/assetsSlice';
+import { setStatus } from 'App/reducers/appSlice';
+import { preFetchSamples } from 'api';
 
-export const useKitBtnState = (i) => {
+export const useKitBtnState = (i, counterRef) => {
   const dispatch = useDispatch();
 
+  const serviceWorkerActive = useSelector(
+    (state) => state.app.serviceWorkerActive
+  );
   const sequenceKit = useSelector((state) => state.sequence.present.kit);
   const kit = useSelector((state) => {
     return Object.values(state.assets.kits)[i];
@@ -33,7 +39,15 @@ export const useKitBtnState = (i) => {
   };
 
   const onClick = async () => {
-    dispatch(changeKit(name));
+    if (available || !serviceWorkerActive) return dispatch(changeKit(name));
+    dispatch(setFetchingSamples({ kit: name, fetching: true }));
+    const thisClick = ++counterRef.current;
+    const [received, error] = await preFetchSamples(kit.samples);
+    if (received && thisClick === counterRef.current) dispatch(changeKit(name));
+    if (error) dispatch(setStatus('Error loading kit: ', name));
+    dispatch(
+      setFetchingSamples({ kit: name, fetching: false, available: received })
+    );
   };
 
   const state = { selected, available, classes, btnDisabled, name };
