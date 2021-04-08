@@ -51,7 +51,7 @@ export const Grid = () => {
         id='grid'
         className='grid'
         onTouchMove={moveFunc}
-        onMouseDown={moveFunc}
+        onMouseMove={moveFunc}
         onTouchEnd={endFunc}
         onMouseUp={endFunc}
       >
