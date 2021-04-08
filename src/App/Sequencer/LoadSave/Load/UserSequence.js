@@ -7,6 +7,7 @@ export const UserSequence = ({ sequence, selectSequence, selectedId }) => {
   const selected = selectedId === sequence._id;
   const { showConfirm, classes, functions, deleting } = useUserSequenceState(
     sequence._id,
+    sequence.kit,
     selected
   );
   const memo = useMemo(() => {

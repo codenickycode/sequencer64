@@ -54,7 +54,6 @@ const connectSample = (sample, url) => {
           channelCount: 2,
         }).toDestination();
         sample.sampler.connect(sample.channel);
-        console.log('resolved');
         resolve();
       },
     });

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import undoable, { groupByActionTypes } from 'redux-undo';
-import { analog } from 'utils/defaultSequences';
+import { analog } from 'assets/sequences';
 import { getLS } from 'utils/storage';
 import {
   getNoteTally,

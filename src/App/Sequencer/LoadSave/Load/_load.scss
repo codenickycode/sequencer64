@@ -47,6 +47,11 @@
         background: $green-dark;
       }
 
+      &.fetching {
+        background: $green-dark;
+        animation: flashing 400ms alternate infinite;
+      }
+
       &.deleting {
         opacity: 0.5;
       }

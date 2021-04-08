@@ -28,7 +28,6 @@ export const Transport = () => {
   }, [sequenceBpm]);
 
   useEffect(() => {
-    console.log('loadingError: ', loadingError);
     if (loadingError) {
       if (loadingErrorCount > 3) throw new Error('Error loading samples');
       dispatch(changeKit('analog'));

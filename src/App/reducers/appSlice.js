@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getLS, getSS } from 'utils/storage';
-import { defaultSequences } from 'utils/defaultSequences';
 import * as appThunks from './thunks/appThunks';
 
 export const VIEWS = {
@@ -18,8 +17,6 @@ export const INITIAL_USER = {
 
 const INITIAL_STATE = {
   user: { ...INITIAL_USER },
-  userSequences: [],
-  defaultSequences,
   status: { count: 0, message: 'loading' },
   show: getSS('show') || '',
   fetching: false,
@@ -77,9 +74,8 @@ export const appSlice = createSlice({
     },
     updateSequencesFinally: (
       state,
-      { payload: { newSequences, message, error, confirmation } }
+      { payload: { message, error, confirmation } }
     ) => {
-      state.userSequences = newSequences;
       state.status.count++;
       state.status.message = message;
       if (confirmation) state.confirmation = confirmation;
@@ -88,12 +84,11 @@ export const appSlice = createSlice({
     },
     getUserFinally: (
       state,
-      { payload: { loggedIn, _id, username, userSequences, message } }
+      { payload: { loggedIn, _id, username, message } }
     ) => {
       state.user.loggedIn = loggedIn;
       state.user._id = _id;
       state.user.username = username;
-      state.userSequences = userSequences;
       state.status.count++;
       state.status.message = message;
       state.fetching = false;

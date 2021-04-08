@@ -1,5 +1,5 @@
-// export const HOST = 'http://localhost:4000';
-export const HOST = 'http://192.168.1.234:4000';
+export const HOST = 'http://localhost:4000';
+// export const HOST = 'http://192.168.1.234:4000';
 export const ORIGIN = 'http://localhost:3000';
 export const NETWORK_TIMEOUT = 5000;
 export const SHARE_TEXT =

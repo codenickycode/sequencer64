@@ -15,6 +15,7 @@ import {
   setUser,
   updateSequencesFinally,
 } from '../appSlice';
+import { setUserSequences } from '../assetsSlice';
 
 export const saveSequence = (sequence) => async (dispatch, getState) => {
   dispatch(setFetching(true));
@@ -22,7 +23,7 @@ export const saveSequence = (sequence) => async (dispatch, getState) => {
     message: '',
     confirmation: '',
     error: '',
-    newSequences: [...getState().app.userSequences],
+    newSequences: [...getState().assets.userSequences],
   };
   try {
     await idbSaveSeqs(sequence, payload.newSequences);
@@ -38,6 +39,7 @@ export const saveSequence = (sequence) => async (dispatch, getState) => {
       payload.message = 'updated local database';
     }
   } finally {
+    dispatch(setUserSequences(payload.newSequences));
     dispatch(updateSequencesFinally(payload));
   }
 };
@@ -47,7 +49,7 @@ export const deleteSequence = (_id) => async (dispatch, getState) => {
   const payload = {
     message: '',
     error: '',
-    newSequences: [...getState().app.userSequences],
+    newSequences: [...getState().assets.userSequences],
   };
   try {
     await idbDelSeq(_id, payload.newSequences);
@@ -62,6 +64,7 @@ export const deleteSequence = (_id) => async (dispatch, getState) => {
       flagDeleted(_id);
     }
   } finally {
+    dispatch(setUserSequences(payload.newSequences));
     dispatch(updateSequencesFinally(payload));
   }
 };
@@ -72,8 +75,8 @@ export const getUser = () => async (dispatch, getState) => {
     loggedIn: false,
     _id: '',
     username: '',
-    userSequences: [],
     message: '',
+    userSequences: [],
     promises: [],
   };
   try {
@@ -84,6 +87,7 @@ export const getUser = () => async (dispatch, getState) => {
     console.error('getUser ->\n', e);
     payload.message = 'No user data';
   } finally {
+    dispatch(setUserSequences(payload.userSequences));
     dispatch(getUserFinally(payload));
     const online = getState().app.online;
     if (online && payload.loggedIn && payload.promises.length > 0) {

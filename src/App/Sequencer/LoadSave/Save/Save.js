@@ -7,7 +7,8 @@ import { useSaveSequence } from './useSaveSequence';
 
 export const Save = () => {
   const app = useSelector((state) => state.app);
-  const fileLimit = 20 - app.userSequences.length;
+  const userSequences = useSelector((state) => state.assets.userSequences);
+  const fileLimit = 20 - userSequences.length;
   const idRef = useRef(null);
   const { newName, handleNewName, userError, save } = useSaveSequence(idRef);
   const { link, copyLink } = useShareLink(idRef);

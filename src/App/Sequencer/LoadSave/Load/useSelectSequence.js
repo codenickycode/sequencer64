@@ -6,8 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export const useSelectSequence = () => {
   const dispatch = useDispatch();
-  const defaultSequences = useSelector((state) => state.app.defaultSequences);
-  const userSequences = useSelector((state) => state.app.userSequences);
+  const defaultSequences = useSelector(
+    (state) => state.assets.defaultSequences
+  );
+  const userSequences = useSelector((state) => state.assets.userSequences);
   const [selectedId, setSelectedId] = useState(null);
 
   const selectSequence = (e, _id) => {

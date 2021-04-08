@@ -17,7 +17,7 @@ export const Load = () => {
 };
 
 const UserSequences = (props) => {
-  const userSequences = useSelector((state) => state.app.userSequences);
+  const userSequences = useSelector((state) => state.assets.userSequences);
   return (
     <div className='userSequences'>
       <p className='title'>User Sequences</p>
@@ -38,7 +38,9 @@ const UserSequences = (props) => {
 };
 
 const DefaultSequences = (props) => {
-  const defaultSequences = useSelector((state) => state.app.defaultSequences);
+  const defaultSequences = useSelector(
+    (state) => state.assets.defaultSequences
+  );
   return (
     <div className='defaultSequences'>
       <p className='title'>Default Sequences</p>

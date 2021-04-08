@@ -5,12 +5,13 @@ import githubImg from 'App/Login/img/github.png';
 import facebookImg from 'App/Login/img/facebook.png';
 import { Link } from 'react-router-dom';
 import { Button } from 'App/shared/Button';
+import { HOST } from 'utils/network';
 
 export const LoginPage = () => {
   const googleLogin = () => {
     window.open(
       // 'https://drumnickydrum-sequencer.herokuapp.com/auth/google',
-      'http://localhost:4000/auth/google',
+      HOST + '/auth/google',
       '_self'
     );
   };
@@ -18,7 +19,7 @@ export const LoginPage = () => {
   const twitterLogin = () => {
     window.open(
       // 'https://drumnickydrum-sequencer.herokuapp.com/auth/twitter',
-      'http://localhost:4000/auth/twitter',
+      HOST + '/auth/twitter',
       '_self'
     );
   };
@@ -26,7 +27,7 @@ export const LoginPage = () => {
   const facebookLogin = () => {
     window.open(
       //  'https://drumnickydrum-sequencer.herokuapp.com/auth/facebook',
-      'http://localhost:4000/auth/facebook',
+      HOST + '/auth/facebook',
       '_self'
     );
   };
@@ -34,7 +35,7 @@ export const LoginPage = () => {
   const githubLogin = () => {
     window.open(
       // 'https://drumnickydrum-sequencer.herokuapp.com/auth/github',
-      'http://localhost:4000/auth/github',
+      HOST + '/auth/github',
       '_self'
     );
   };
