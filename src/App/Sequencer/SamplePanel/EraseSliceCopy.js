@@ -13,9 +13,7 @@ export const Erase = ({ onReturn, landscape }) => {
   );
 
   useEffect(() => {
-    let timer;
-    if (disabled) timer = setTimeout(() => onReturn(), 500);
-    return () => clearTimeout(timer);
+    if (disabled) onReturn();
   }, [onReturn, disabled]);
 
   const onEraseAll = () => {
