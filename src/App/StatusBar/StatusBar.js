@@ -39,7 +39,7 @@ export const StatusBar = () => {
     } else if (status.match(/kit/)) {
       status += kitName;
     } else if (status.match(/sequence/)) {
-      status += sequenceName;
+      if (!status.match(/erase/)) status += sequenceName;
     }
     // console.log('rendering: StatusBar');
     return (
