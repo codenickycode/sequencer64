@@ -36,6 +36,8 @@ export const StatusBar = () => {
 
     if (status.match(/bpm/)) {
       status = status.substr(6) + bpm;
+    } else if (status.match(/Error loading/)) {
+      status = 'Error loading samples, reverting to default kit';
     } else if (status.match(/kit/)) {
       status += kitName;
     } else if (status.match(/sequence/)) {

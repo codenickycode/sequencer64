@@ -20,7 +20,6 @@ import {
   VelocityIcon,
 } from 'assets/icons';
 import * as icons from 'assets/icons/kit';
-import * as defaultKits from 'utils/defaultKits';
 import { Button } from 'App/shared/Button';
 import { Erase, Slice, Copy } from 'App/Sequencer/SamplePanel/EraseSliceCopy';
 import { PitchVelocityLength } from 'App/Sequencer/SamplePanel/PitchVelocityLength';
@@ -155,7 +154,8 @@ const SampleEditMenu = ({ selectMode, onClose }) => {
 
 const SampleBtns = () => {
   const dispatch = useDispatch();
-  const kit = useSelector((state) => state.sequence.present.kit);
+  const sequenceKitName = useSelector((state) => state.sequence.present.kit);
+  const kit = useSelector((state) => state.assets.kits[sequenceKitName]);
 
   const sampleBtnsMemo = useMemo(() => {
     // console.log('rendering: SampleBtns');
@@ -164,8 +164,8 @@ const SampleBtns = () => {
     };
     return (
       <div className='menu'>
-        {defaultKits[kit] &&
-          defaultKits[kit].samples.map((sample, i) => (
+        {kit &&
+          kit.samples.map((sample, i) => (
             <SampleBtn
               key={`sample-menu-${sample.name}`}
               i={i}

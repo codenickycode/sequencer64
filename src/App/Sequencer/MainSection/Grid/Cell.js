@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import * as defaultKits from 'utils/defaultKits';
 import { SliceIcon } from 'assets/icons';
 import { useCellState } from './useCellState';
 import { useTouchAndMouse } from 'utils/useTouchAndMouse';
@@ -47,7 +46,7 @@ export const Cell = ({ id, step, prevCellRef }) => {
 
 const SampleCells = ({ id, step }) => {
   const kit = useSelector((state) => state.sequence.present.kit);
-  const length = defaultKits[kit].samples.length;
+  const length = useSelector((state) => state.assets.kits[kit].samples.length);
 
   const sampleCellsMemo = useMemo(() => {
     // console.log('rendering: SampleCells');

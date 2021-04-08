@@ -33,7 +33,11 @@ export const toneSlice = createSlice({
       state.buffersLoaded = payload.buffersLoaded;
       state.bufferedKit = payload.bufferedKit;
       state.loadingError.error = payload.loadingError;
-      if (payload.loadingError) state.loadingError.count++;
+      if (payload.loadingError) {
+        state.loadingError.count++;
+      } else {
+        state.loadingError.count = 0;
+      }
     },
     setStep: (state, { payload }) => {
       state.step = payload;

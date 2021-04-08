@@ -18,6 +18,7 @@ import {
   stopSequenceFinally,
   setAudioContextReady,
 } from '../toneSlice';
+import { setAvailable, setFetchingSamples } from '../assetsSlice';
 import { setStatus } from '../appSlice';
 
 export const startTone = (kit) => async (dispatch) => {
@@ -31,15 +32,22 @@ export const startTone = (kit) => async (dispatch) => {
 export const loadSamples = (kit) => async (dispatch, getState) => {
   dispatch(stopSequence());
   const sequenceKitName = getState().sequence.present.kit;
+  const kits = getState().assets.kits;
+  const kitAssets = kits[sequenceKitName];
   dispatch(setStatus(`Loading samples: ${sequenceKitName}`));
+  let available = kitAssets.available;
+  dispatch(
+    setFetchingSamples({ kit: sequenceKitName, fetching: true, available })
+  );
   let payload = { bufferedKit: kit.name, loadingError: false };
   dispatch(setLoadingSamples(true));
-  console.log('wait');
+  console.log('mock wait');
   await window.wait(2000);
-  console.log('ready');
+  console.log('done mock waiting');
   try {
     if (kit.samples[0].sampler) disposeSamplers(kit);
-    await buildSamplers(kit, sequenceKitName);
+    await buildSamplers(kit, kitAssets);
+    available = true;
     payload.bufferedKit = sequenceKitName;
     payload.buffersLoaded = true;
   } catch (e) {
@@ -49,6 +57,9 @@ export const loadSamples = (kit) => async (dispatch, getState) => {
   } finally {
     payload.loadingSamples = false;
     dispatch(loadSamplesFinally(payload));
+    dispatch(
+      setFetchingSamples({ kit: sequenceKitName, fetching: false, available })
+    );
   }
 };
 

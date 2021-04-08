@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from 'assets/icons';
 import cuid from 'cuid';
 import { useTouchAndMouse } from 'utils/useTouchAndMouse';

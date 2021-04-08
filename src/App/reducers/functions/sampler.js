@@ -1,17 +1,5 @@
 import * as Tone from 'tone';
-import { HOST, NETWORK_TIMEOUT } from 'utils/network';
-import * as defaultKits from 'utils/defaultKits';
-import ch from 'assets/audio/analog/ch.mp3';
-import clp from 'assets/audio/analog/clp.mp3';
-import cym from 'assets/audio/analog/cym.mp3';
-import ht from 'assets/audio/analog/ht.mp3';
-import kick from 'assets/audio/analog/kick.mp3';
-import lt from 'assets/audio/analog/lt.mp3';
-import mt from 'assets/audio/analog/mt.mp3';
-import oh from 'assets/audio/analog/oh.mp3';
-import snr from 'assets/audio/analog/snr.mp3';
-
-const defaultUrls = { ch, clp, cym, ht, kick, lt, mt, oh, snr };
+import { NETWORK_TIMEOUT } from 'utils/network';
 
 export const disposeSamplers = (kit) => {
   for (let sample of kit.samples) {
@@ -23,9 +11,9 @@ export const disposeSamplers = (kit) => {
   kit.samples.length = 0;
 };
 
-export const buildSamplers = (kit, sequenceKitName) =>
+export const buildSamplers = (kit, kitAssets) =>
   new Promise(async (resolve, reject) => {
-    const addSamplersPromises = addSamplersToKit(kit, sequenceKitName);
+    const addSamplersPromises = addSamplersToKit(kit, kitAssets);
     try {
       let rejectTimer = setTimeout(
         () => reject('error loading samples'),
@@ -41,21 +29,14 @@ export const buildSamplers = (kit, sequenceKitName) =>
     }
   });
 
-const addSamplersToKit = (kit, sequenceKitName) => {
-  console.log('kit: ', kit);
+const addSamplersToKit = (kit, kitAssets) => {
   const promises = [];
-  const defaultKit = defaultKits[sequenceKitName];
-  for (let [i, sample] of defaultKit.samples.entries()) {
+  for (let [i, sample] of kitAssets.samples.entries()) {
     kit.samples[i] = {
-      ...defaultKit.samples,
-      samples: defaultKit.samples.map((sample) => ({ ...sample })),
+      ...kitAssets.samples,
+      samples: kitAssets.samples.map((sample) => ({ ...sample })),
     };
-    const sampleUrl =
-      sequenceKitName === 'defaultKit'
-        ? defaultUrls[sample.name]
-        : HOST + sample.path;
-    console.log(sampleUrl);
-    promises.push(connectSample(kit.samples[i], sampleUrl));
+    promises.push(connectSample(kit.samples[i], sample.path));
   }
   return promises;
 };

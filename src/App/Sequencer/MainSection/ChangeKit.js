@@ -1,51 +1,43 @@
 import cuid from 'cuid';
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import * as defaultKits from 'utils/defaultKits';
 import { Button } from 'App/shared/Button';
 import { useFadeIn } from 'utils/useFadeIn';
 import { CloudDownloadIcon } from 'assets/icons';
 import { useKitBtnState } from './useKitBtnState';
 import { VIEWS } from '../../reducers/appSlice';
 
-const kits = Object.values(defaultKits);
-
 export const ChangeKit = () => {
   const show = useSelector((state) => state.app.show);
   const showChangeKit = show === VIEWS.CHANGE_KIT;
   const { fadeInClass } = useFadeIn(showChangeKit);
+  const numKits = useSelector((state) => state.assets.numKits);
 
   const changeKitMemo = useMemo(() => {
     // console.log('rendering: ChangeKit');
     let grid = [];
-    for (let i = 0, len = kits.length; i < len; i++) {
+    for (let i = 0; i < numKits; i++) {
       grid.push(i);
     }
     return (
       <div id='changeKit' className={'changeKit' + fadeInClass}>
         <div className='kits'>
           {grid.map((i) => {
-            const available = kits[i].available;
-            const kitName = kits[i].name;
-            return (
-              <KitBtn
-                key={cuid.slug()}
-                kitName={kitName}
-                available={available}
-              />
-            );
+            return <KitBtn key={cuid.slug()} i={i} />;
           })}
         </div>
       </div>
     );
-  }, [fadeInClass]);
+  }, [fadeInClass, numKits]);
 
   return showChangeKit ? changeKitMemo : null;
 };
 
-const KitBtn = ({ kitName, available }) => {
-  const { state, functions } = useKitBtnState(kitName, available);
+const KitBtn = ({ i }) => {
+  const { state, functions } = useKitBtnState(i);
   const { classes } = state;
+  // console.log(kitName, ': ', state.ready);
+
   return (
     <Button
       classes={classes.btn}
@@ -53,8 +45,8 @@ const KitBtn = ({ kitName, available }) => {
       onClick={functions.onClick}
     >
       <p className={classes.ready}>ready!</p>
-      <p className={classes.name}>{kitName}</p>
-      {!state.ready ? (
+      <p className={classes.name}>{state.name}</p>
+      {!state.available ? (
         <CloudDownloadIcon addClass={classes.icon} />
       ) : state.selected ? (
         <p className='selected'>{'(selected)'}</p>

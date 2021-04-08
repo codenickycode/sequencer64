@@ -35,7 +35,7 @@ export const SequencerPage = () => {
           <div id='main'>
             <Grid />
             <ChangeKit />
-            <MobileConsole />
+            {/* <MobileConsole /> */}
             <div id='pastePatternPortal' />
           </div>
           <div id='samplePanel'>

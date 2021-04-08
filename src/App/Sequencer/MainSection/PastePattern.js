@@ -1,14 +1,13 @@
 import React, { useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import * as defaultKits from 'utils/defaultKits';
 import * as icons from 'assets/icons/kit';
 import { paste } from 'App/reducers/sequenceSlice';
 import { Button } from 'App/shared/Button';
 
 export const PastePattern = () => {
   const kit = useSelector((state) => state.sequence.present.kit);
-  const samples = defaultKits[kit].samples;
+  const samples = useSelector((state) => state.assets.kits[kit].samples);
 
   const pastePatternMemo = useMemo(() => {
     const portal = document.getElementById('pastePatternPortal');

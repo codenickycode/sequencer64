@@ -7,9 +7,7 @@ import {
   startSequence,
 } from 'App/reducers/toneSlice';
 import { Kit } from 'App/shared/KitProvider';
-import { setStatus } from 'App/reducers/appSlice';
 import { changeKit } from 'App/reducers/sequenceSlice';
-import { analog } from 'utils/defaultSequences';
 
 export const Transport = () => {
   const dispatch = useDispatch();
@@ -33,8 +31,7 @@ export const Transport = () => {
     console.log('loadingError: ', loadingError);
     if (loadingError) {
       if (loadingErrorCount > 3) throw new Error('Error loading samples');
-      dispatch(setStatus('Error loading samples, reverting to default kit'));
-      dispatch(changeKit('defaultKit'));
+      dispatch(changeKit('analog'));
     }
   }, [dispatch, loadingError, loadingErrorCount]);
 
