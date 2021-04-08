@@ -14,6 +14,7 @@ import { ReactComponent as Pitch } from 'assets/icons/pitch.svg';
 import { ReactComponent as Velocity } from 'assets/icons/velocity.svg';
 import { ReactComponent as Length } from 'assets/icons/length.svg';
 import { ReactComponent as Tap } from 'assets/icons/tap.svg';
+import { ReactComponent as PointLeft } from 'assets/icons/pointers/point-left.svg';
 import { ReactComponent as PointUp } from 'assets/icons/pointers/point-up.svg';
 import { ReactComponent as PointDown } from 'assets/icons/pointers/point-down.svg';
 import { ReactComponent as Paint } from 'assets/icons/paint.svg';
@@ -152,4 +153,8 @@ export const PointUpIcon = ({ addClass = '' }) => (
 
 export const PointDownIcon = ({ addClass = '' }) => (
   <PointDown className={addClass + ' icon'} />
+);
+
+export const PointLeftIcon = ({ addClass = '' }) => (
+  <PointLeft className={addClass + ' icon'} />
 );

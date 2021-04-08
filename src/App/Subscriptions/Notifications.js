@@ -24,7 +24,7 @@ export const Notifications = () => {
   const mode = useSelector((state) => state.editor.mode);
   const tapping = mode === MODES.TAP;
   useEffect(() => {
-    if (tapping) dispatch(setSpAlert('tap to play samples'));
+    if (tapping) dispatch(setSpAlert('Tap to play samples'));
   }, [dispatch, tapping]);
 
   return null;

@@ -37,7 +37,7 @@ export const loadInitialSequence = (_id, clearUrl) => async (dispatch) => {
 export const modCell = (step, noteOn) => (dispatch, getState) => {
   const selectedSample = getState().editor.selectedSample;
   if (selectedSample === -1) {
-    dispatch(setSpAlert('select a sample to edit'));
+    dispatch(setSpAlert('Select a sample to edit'));
     return;
   }
   const mode = getState().editor.mode;

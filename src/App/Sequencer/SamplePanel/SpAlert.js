@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { PointDownIcon, PointUpIcon } from 'assets/icons';
+import { PointDownIcon, PointUpIcon, PointLeftIcon } from 'assets/icons';
 
 export const SpAlert = () => {
   const message = useSelector((state) => state.editor.spAlert.message);
@@ -30,14 +30,21 @@ export const SpAlert = () => {
 
     const index = message.indexOf('#');
     const spAlert = message.substr(index + 1);
-    const up = spAlert.match(/Tap/);
-    const Icon = up ? PointUpIcon : PointDownIcon;
+    const pointToGrid = spAlert.match(/cell/);
+    const dir = pointToGrid ? (landscape ? 'left' : 'up') : 'down';
+    const Icon =
+      dir === 'up'
+        ? PointUpIcon
+        : dir === 'left'
+        ? PointLeftIcon
+        : PointDownIcon;
     return spAlert ? (
       <div className='spAlertWrapper'>
         <div id='spAlert' className={classes}>
           <span className='dummy' />
+          {dir === 'left' && <Icon addClass='left' />}
           <p className='alert'>{spAlert}</p>
-          {!landscape && <Icon addClass={up ? 'up' : ''} />}
+          {dir !== 'left' && <Icon addClass={dir === 'up' ? 'up' : ''} />}
           <span className='dummy' />
         </div>
       </div>

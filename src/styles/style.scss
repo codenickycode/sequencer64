@@ -181,6 +181,18 @@ p.dim-2 {
   }
 }
 
+@keyframes bounceLeft {
+  0% {
+    transform: translateX(25%);
+  }
+  20% {
+    transform: translateX(-25%);
+  }
+  100% {
+    transform: translateX(25%);
+  }
+}
+
 @keyframes slicing {
   0% {
     transform: rotate(0);
