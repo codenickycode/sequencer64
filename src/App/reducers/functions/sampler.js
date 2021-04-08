@@ -1,6 +1,17 @@
 import * as Tone from 'tone';
 import { HOST, NETWORK_TIMEOUT } from 'utils/network';
 import * as defaultKits from 'utils/defaultKits';
+import ch from 'assets/audio/analog/ch.mp3';
+import clp from 'assets/audio/analog/clp.mp3';
+import cym from 'assets/audio/analog/cym.mp3';
+import ht from 'assets/audio/analog/ht.mp3';
+import kick from 'assets/audio/analog/kick.mp3';
+import lt from 'assets/audio/analog/lt.mp3';
+import mt from 'assets/audio/analog/mt.mp3';
+import oh from 'assets/audio/analog/oh.mp3';
+import snr from 'assets/audio/analog/snr.mp3';
+
+const defaultUrls = { ch, clp, cym, ht, kick, lt, mt, oh, snr };
 
 export const disposeSamplers = (kit) => {
   for (let sample of kit.samples) {
@@ -22,15 +33,16 @@ export const buildSamplers = (kit, sequenceKitName) =>
       );
       await Promise.all(addSamplersPromises);
       clearTimeout(rejectTimer);
-      kit.name = sequenceKitName;
       console.log(`${kit.name} buffers loaded!`);
       resolve();
     } catch (e) {
+      console.log('buildSamplers: ', e);
       reject('error loading samples');
     }
   });
 
 const addSamplersToKit = (kit, sequenceKitName) => {
+  console.log('kit: ', kit);
   const promises = [];
   const defaultKit = defaultKits[sequenceKitName];
   for (let [i, sample] of defaultKit.samples.entries()) {
@@ -38,7 +50,11 @@ const addSamplersToKit = (kit, sequenceKitName) => {
       ...defaultKit.samples,
       samples: defaultKit.samples.map((sample) => ({ ...sample })),
     };
-    const sampleUrl = HOST + '/kits/' + sample.path;
+    const sampleUrl =
+      sequenceKitName === 'defaultKit'
+        ? defaultUrls[sample.name]
+        : HOST + sample.path;
+    console.log(sampleUrl);
     promises.push(connectSample(kit.samples[i], sampleUrl));
   }
   return promises;
@@ -57,6 +73,7 @@ const connectSample = (sample, url) => {
           channelCount: 2,
         }).toDestination();
         sample.sampler.connect(sample.channel);
+        console.log('resolved');
         resolve();
       },
     });

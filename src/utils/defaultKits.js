@@ -1,3 +1,73 @@
+export const defaultKit = {
+  name: 'defaultKit',
+  available: true,
+  samples: [
+    {
+      name: 'kick',
+      path: 'analog/kick.mp3',
+      key: 'num1',
+      color: 0,
+      icon: 'kick',
+    },
+    {
+      name: 'snr',
+      path: 'analog/snr.mp3',
+      key: 'num2',
+      color: 1,
+      icon: 'snr',
+    },
+    {
+      name: 'clp',
+      path: 'analog/clp.mp3',
+      key: 'num3',
+      color: 2,
+      icon: 'clp',
+    },
+    {
+      name: 'ch',
+      path: 'analog/ch.mp3',
+      key: 'num4',
+      color: 3,
+      icon: 'ch',
+    },
+    {
+      name: 'oh',
+      path: 'analog/oh.mp3',
+      key: 'num5',
+      color: 4,
+      icon: 'oh',
+    },
+    {
+      name: 'cym',
+      path: 'analog/cym.mp3',
+      key: 'num6',
+      color: 5,
+      icon: 'cym',
+    },
+    {
+      name: 'ht',
+      path: 'analog/ht.mp3',
+      key: 'num7',
+      color: 6,
+      icon: 'tom',
+    },
+    {
+      name: 'mt',
+      path: 'analog/mt.mp3',
+      key: 'num8',
+      color: 7,
+      icon: 'tom',
+    },
+    {
+      name: 'lt',
+      path: 'analog/lt.mp3',
+      key: 'num9',
+      color: 8,
+      icon: 'tom',
+    },
+  ],
+};
+
 export const analog = {
   name: 'analog',
   available: true,
@@ -490,76 +560,6 @@ export const anotherKit = {
 
 export const thumpy = {
   name: 'thumpy',
-  available: false,
-  samples: [
-    {
-      name: 'kick',
-      path: 'vinyl/kick.mp3',
-      key: 'num1',
-      color: 0,
-      icon: 'kick',
-    },
-    {
-      name: 'kick 2',
-      path: 'vinyl/kick2.mp3',
-      key: 'num2',
-      color: 1,
-      icon: 'kick2',
-    },
-    {
-      name: 'snr',
-      path: 'vinyl/snr.mp3',
-      key: 'num3',
-      color: 2,
-      icon: 'snr',
-    },
-    {
-      name: 'ch',
-      path: 'vinyl/ch.mp3',
-      key: 'num4',
-      color: 3,
-      icon: 'ch',
-    },
-    {
-      name: 'oh',
-      path: 'vinyl/oh.mp3',
-      key: 'num5',
-      color: 4,
-      icon: 'oh',
-    },
-    {
-      name: 'clp',
-      path: 'vinyl/clp.mp3',
-      key: 'num6',
-      color: 5,
-      icon: 'clp',
-    },
-    {
-      name: 'bass',
-      path: 'vinyl/bass.mp3',
-      key: 'num7',
-      color: 6,
-      icon: 'voc',
-    },
-    {
-      name: 'shk',
-      path: 'vinyl/shk.mp3',
-      key: 'num8',
-      color: 7,
-      icon: 'shk',
-    },
-    {
-      name: 'rim',
-      path: 'vinyl/rim.mp3',
-      key: 'num9',
-      color: 8,
-      icon: 'sticks',
-    },
-  ],
-};
-
-export const dope = {
-  name: 'dope',
   available: false,
   samples: [
     {

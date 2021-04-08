@@ -11,13 +11,14 @@ import {
   triggerStep,
 } from 'App/reducers/functions/sampler';
 import {
-  setLoadingBuffers,
+  setLoadingSamples,
   loadSamplesFinally,
   setStep,
   startSequenceFinally,
   stopSequenceFinally,
   setAudioContextReady,
 } from '../toneSlice';
+import { setStatus } from '../appSlice';
 
 export const startTone = (kit) => async (dispatch) => {
   await Tone.start();
@@ -30,18 +31,23 @@ export const startTone = (kit) => async (dispatch) => {
 export const loadSamples = (kit) => async (dispatch, getState) => {
   dispatch(stopSequence());
   const sequenceKitName = getState().sequence.present.kit;
-  let payload = { bufferedKit: kit.name };
-  dispatch(setLoadingBuffers(true));
+  dispatch(setStatus(`Loading samples: ${sequenceKitName}`));
+  let payload = { bufferedKit: kit.name, loadingError: false };
+  dispatch(setLoadingSamples(true));
+  console.log('wait');
+  await window.wait(2000);
+  console.log('ready');
   try {
     if (kit.samples[0].sampler) disposeSamplers(kit);
     await buildSamplers(kit, sequenceKitName);
-    payload.bufferedKit = kit.name;
+    payload.bufferedKit = sequenceKitName;
     payload.buffersLoaded = true;
   } catch (e) {
     console.log('loadSamples ->\n', e);
     payload.buffersLoaded = false;
+    payload.loadingError = true;
   } finally {
-    payload.loadingBuffers = false;
+    payload.loadingSamples = false;
     dispatch(loadSamplesFinally(payload));
   }
 };
@@ -56,7 +62,7 @@ export const schedulePattern = (dispatch, getState, kit) => {
       animateCell(time, document.getElementById(`cell-${step}`));
       animateSample(time, patternStep);
     } catch (e) {
-      console.log('scheduleRepeat passed buffer interupt');
+      console.log('scheduleRepeat passed buffer interrupt');
     }
     const length = getState().sequence.present.length;
     dispatch(setStep((step + 1) % length));

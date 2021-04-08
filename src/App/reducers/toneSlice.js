@@ -9,12 +9,13 @@ import * as toneThunks from './thunks/toneThunks';
 
 const INITIAL_STATE = {
   bufferedKit: null,
-  loadingbuffers: false,
   buffersLoaded: false,
+  loadingSamples: false,
   transportState: Tone.Transport.state,
   restarting: false,
   step: 0,
   audioContextReady: false,
+  loadingError: { error: false, count: 0 },
 };
 
 export const toneSlice = createSlice({
@@ -24,13 +25,15 @@ export const toneSlice = createSlice({
     setAudioContextReady: (state, { payload }) => {
       state.audioContextReady = payload;
     },
-    setLoadingBuffers: (state, { payload }) => {
-      state.loadingBuffers = payload;
+    setLoadingSamples: (state, { payload }) => {
+      state.loadingSamples = payload;
     },
     loadSamplesFinally: (state, { payload }) => {
-      state.loadingBuffers = payload.loadingBuffers;
+      state.loadingSamples = payload.loadingSamples;
       state.buffersLoaded = payload.buffersLoaded;
       state.bufferedKit = payload.bufferedKit;
+      state.loadingError.error = payload.loadingError;
+      if (payload.loadingError) state.loadingError.count++;
     },
     setStep: (state, { payload }) => {
       state.step = payload;
@@ -62,7 +65,7 @@ export const toneSlice = createSlice({
 
 export const {
   setAudioContextReady,
-  setLoadingBuffers,
+  setLoadingSamples,
   loadSamplesFinally,
   setStep,
   pauseSequence,

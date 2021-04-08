@@ -16,7 +16,7 @@ export const TransportPanel = () => {
   const { kitRef } = useContext(Kit);
 
   const transportState = useSelector((state) => state.tone.transportState);
-  const buffersLoaded = useSelector((state) => state.tone.buffersLoaded);
+  const loadingSamples = useSelector((state) => state.tone.loadingSamples);
 
   const bpm = useSelector((state) => state.sequence.present.bpm);
   useEffect(() => {
@@ -28,10 +28,8 @@ export const TransportPanel = () => {
 
   const [ready, setReady] = useState(true);
   useEffect(() => {
-    if (!ready && buffersLoaded) {
-      setReady(true);
-    }
-  }, [ready, buffersLoaded]);
+    setReady(!loadingSamples);
+  }, [loadingSamples]);
 
   const transportMemo = useMemo(() => {
     // console.log('rendering: TransportPanel');
@@ -54,7 +52,6 @@ export const TransportPanel = () => {
       if (transportState === 'started') {
         dispatch(pauseSequence());
       } else {
-        setReady(false);
         dispatch(startSequence(kitRef.current));
       }
     };

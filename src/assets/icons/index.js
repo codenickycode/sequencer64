@@ -1,6 +1,7 @@
 import { ReactComponent as Stop } from 'assets/icons/stop.svg';
 import { ReactComponent as Start } from 'assets/icons/start.svg';
 import { ReactComponent as Pause } from 'assets/icons/pause.svg';
+import { ReactComponent as Speed } from 'assets/icons/speed.svg';
 import { ReactComponent as Undo } from 'assets/icons/undo.svg';
 import { ReactComponent as Redo } from 'assets/icons/redo.svg';
 import { ReactComponent as EraseOne } from 'assets/icons/erase-one.svg';
@@ -51,6 +52,10 @@ export const StartIcon = ({ addClass = '' }) => (
 );
 export const PauseIcon = ({ addClass = '' }) => (
   <Pause className={addClass + ' icon'} />
+);
+
+export const SpeedIcon = ({ addClass = '' }) => (
+  <Speed className={addClass + ' icon'} />
 );
 
 export const UndoIcon = ({ addClass = '' }) => (

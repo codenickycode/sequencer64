@@ -143,9 +143,6 @@ export const sequenceSlice = createSlice({
       state.bpm = payload;
       state.undoStatus = `change bpm: `;
     },
-    setStart: (state, { payload }) => {
-      state.start = payload;
-    },
   },
 });
 
@@ -165,7 +162,6 @@ export const {
   changeKit,
   changeBpm,
   setInitialLoad,
-  setStart,
 } = sequenceSlice.actions;
 
 export const { loadInitialSequence, modCell } = sequenceThunks;

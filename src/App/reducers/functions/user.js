@@ -26,7 +26,7 @@ export const addIDBUserToPayload = async (payload) => {
     if (!payload.username) payload.username = idbUsername || '';
     const idbSeqs = await get('sequences');
     if (idbSeqs) seqs = idbSeqs;
-    if (!payload.message) payload.message = 'user data loaded from local';
+    if (!payload.message) payload.message = 'user data loaded from device';
   } catch (e) {
     console.log('getUserFromIDB ->\n', e);
   } finally {
