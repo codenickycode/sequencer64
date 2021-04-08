@@ -3,7 +3,9 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -76,10 +78,27 @@ const SampleEditMenu = ({ selectMode, onClose }) => {
     (state) => state.sequence.present.noteTally[selectedSample].empty
   );
 
-  const sampleEditMenuMemo = useMemo(() => {
+  const landscape = useSelector((state) => state.app.landscape);
+  const ref = useRef();
+  useLayoutEffect(() => {
+    if (!ref.current) return;
+    let isOverflown;
+    if (landscape) {
+      isOverflown = ref.current.scrollHeight > ref.current.clientHeight;
+    } else {
+      isOverflown = ref.current.scrollWidth > ref.current.clientWidth;
+    }
+    if (!isOverflown) {
+      ref.current.classList.add('flex');
+    } else {
+      ref.current.classList.remove('flex');
+    }
+  });
+
+  const memo = useMemo(() => {
     // console.log('rendering: SampleEditMenu');
     return (
-      <div className='editMenu'>
+      <div ref={ref} id='editMenu' className={'editMenu'}>
         <Button classes='close' onClick={onClose}>
           <CloseIcon />
         </Button>
@@ -131,7 +150,7 @@ const SampleEditMenu = ({ selectMode, onClose }) => {
       </div>
     );
   }, [disabled, onClose, selectMode]);
-  return sampleEditMenuMemo;
+  return memo;
 };
 
 const SampleBtns = () => {
@@ -181,12 +200,14 @@ const SampleBtn = ({ i, sample, selectSample }) => {
           1
         );
         setFlash(true);
-      } else {
-        selectSample(i);
       }
     },
-    [i, kitRef, selectSample, tapping]
+    [i, kitRef, tapping]
   );
+
+  const onClick = () => {
+    if (!tapping) selectSample(i);
+  };
 
   const { touchStart, mouseDown } = useTouchAndMouse(startFunc);
   return (
@@ -194,6 +215,7 @@ const SampleBtn = ({ i, sample, selectSample }) => {
       className={flash ? 'sampleBtn flash' : 'sampleBtn'}
       onTouchStart={touchStart}
       onMouseDown={mouseDown}
+      onClick={onClick}
       aria-label={sample.name}
     >
       {icons[sample.icon](sample.color)}
