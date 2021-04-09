@@ -66,8 +66,15 @@ const syncIDBSeqs = async (payload) => {
     const _id = idbSeq._id.toString();
     if (!(_id in mergedSeqs)) {
       mergedSeqs[_id] = idbSeq;
-      if (loggedIn) {
-        promises.push(apiSaveSequence(idbSeq));
+      const userId = payload._id.toString();
+      if (
+        idbSeq.author.toString() === userId ||
+        idbSeq.sharedWith.find((id) => id.toString() === userId)
+      ) {
+        if (loggedIn) {
+          mergedSeqs[_id].synched = true;
+          promises.push(apiSaveSequence(idbSeq));
+        }
       }
     }
   }

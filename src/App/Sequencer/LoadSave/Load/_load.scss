@@ -21,26 +21,84 @@
       @extend %borderBottomHalf;
     }
 
-    .columnTitles {
+    .sync,
+    .bpm {
+      justify-self: center;
+    }
+    .delete {
+      justify-self: end;
+    }
+
+    .defaultColumnTitles {
       width: 100%;
       margin: 0.25rem auto;
       max-width: 90%;
       padding: 0.5rem;
       display: grid;
-      grid-template-columns: 0.5fr 0.25fr 0.15fr 0.1fr;
+      grid-template-columns: 1fr 0.75fr 0.5fr 0.5fr;
       align-items: center;
       border-right: none !important;
       border-left: none !important;
     }
 
-    .sequence {
-      @extend %btnFull;
-      @extend %bgBtnFull;
+    .defaultSequence {
+      grid-template-columns: 1fr 0.75fr 0.5fr 0.5fr;
+    }
+
+    .userColumnTitles {
+      width: 100%;
       margin: 0.25rem auto;
       max-width: 90%;
+      padding: 0.5rem;
       display: grid;
-      grid-template-columns: 0.5fr 0.25fr 0.15fr 0.1fr;
+      grid-template-columns: 1fr 0.75fr 0.5fr 0.5fr;
+      justify-items: start;
+      border-right: none !important;
+      border-left: none !important;
+    }
+
+    .userSequence {
+      grid-template-columns: 1fr 0.75fr 0.5fr 0.5fr;
+
+      &.deleting {
+        opacity: 0.5;
+      }
+
+      .icon {
+        max-height: 1.75rem;
+        max-width: 1.75rem;
+
+        &.check {
+          fill: $green;
+          max-height: 1rem;
+        }
+
+        &.cloud {
+          &.uploading {
+            animation: flashing 400ms alternate linear;
+          }
+          &.unavailable {
+            opacity: 0.25;
+          }
+        }
+      }
+
+      .delete,
+      .sync {
+        background: transparent;
+        outline: none;
+        border: none;
+      }
+    }
+
+    .defaultSequence,
+    .userSequence {
+      @extend %btnFull;
+      @extend %bgBtnFull;
+      display: grid;
       align-items: center;
+      margin: 0.25rem auto;
+      max-width: 90%;
       transform: scale(1);
 
       &.selected {
@@ -50,23 +108,6 @@
       &.fetching {
         background: $green-dark;
         animation: flashing 400ms alternate infinite;
-      }
-
-      &.deleting {
-        opacity: 0.5;
-      }
-
-      .delete-btn {
-        background: transparent;
-        padding: 0.25rem;
-        outline: none;
-        border: none;
-
-        .icon {
-          max-height: 2rem;
-          width: 100%;
-          // fill: $white;
-        }
       }
     }
 

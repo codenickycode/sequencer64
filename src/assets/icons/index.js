@@ -29,6 +29,7 @@ import { ReactComponent as Delete } from 'assets/icons/delete.svg';
 import { ReactComponent as Kit } from 'assets/icons/kit.svg';
 import { ReactComponent as Eraser } from 'assets/icons/eraser.svg';
 import { ReactComponent as CloudDownload } from 'assets/icons/cloud-download.svg';
+import { ReactComponent as CloudUpload } from 'assets/icons/cloud-upload.svg';
 import { ReactComponent as Check } from 'assets/icons/check-bold.svg';
 import { ReactComponent as Twitter } from 'assets/icons/social/twitter.svg';
 import { ReactComponent as Facebook } from 'assets/icons/social/facebook.svg';
@@ -130,6 +131,10 @@ export const EraserIcon = ({ addClass = '' }) => (
 
 export const CloudDownloadIcon = ({ addClass = '' }) => (
   <CloudDownload className={addClass + ' icon'} />
+);
+
+export const CloudUploadIcon = ({ addClass = '' }) => (
+  <CloudUpload className={addClass + ' icon'} />
 );
 
 export const KitIcon = ({ addClass = '' }) => (

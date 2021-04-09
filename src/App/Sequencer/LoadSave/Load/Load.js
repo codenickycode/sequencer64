@@ -25,7 +25,7 @@ const UserSequences = (props) => {
         <p className='sub'>No user sequences</p>
       ) : (
         <>
-          <ColumnTitles />
+          <UserColumnTitles />
           {userSequences
             ?.map((sequence) => (
               <UserSequence key={cuid.slug()} sequence={sequence} {...props} />
@@ -44,7 +44,7 @@ const DefaultSequences = (props) => {
   return (
     <div className='defaultSequences'>
       <p className='title'>Default Sequences</p>
-      <ColumnTitles />
+      <DefaultColumnTitles />
       {defaultSequences.map((sequence) => (
         <DefaultSequence key={cuid.slug()} sequence={sequence} {...props} />
       ))}
@@ -52,13 +52,24 @@ const DefaultSequences = (props) => {
   );
 };
 
-const ColumnTitles = () => {
+const DefaultColumnTitles = () => {
   return (
-    <div className='columnTitles'>
+    <div className='defaultColumnTitles'>
       <p>Name</p>
-      <p className='p-left-25'>Kit</p>
-      <p>Bpm</p>
+      <p>Kit</p>
+      <p className='bpm'>Bpm</p>
       <p></p>
+    </div>
+  );
+};
+
+const UserColumnTitles = () => {
+  return (
+    <div className='userColumnTitles'>
+      <p>Name</p>
+      <p>Date</p>
+      <p className='sync'>Sync</p>
+      <p className='delete'>Delete</p>
     </div>
   );
 };

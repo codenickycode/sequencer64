@@ -9,12 +9,12 @@ export const DefaultSequence = ({ sequence, selectSequence, selectedId }) => {
     return (
       <div
         key={cuid.slug()}
-        className={selected ? 'sequence selected' : 'sequence'}
+        className={selected ? 'defaultSequence selected' : 'defaultSequence'}
         onClick={handleSelect}
       >
         <p>{name}</p>
-        <p className='p-left-25'>{kit}</p>
-        <p>{bpm}</p>
+        <p>{kit}</p>
+        <p className='bpm'>{bpm}</p>
         <p></p>
       </div>
     );

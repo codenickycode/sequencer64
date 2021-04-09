@@ -7,6 +7,7 @@ import { saveSequence } from 'App/reducers/appSlice';
 export const useSaveSequence = (idRef) => {
   const dispatch = useDispatch();
   const error = useSelector((state) => state.app.error);
+  const userId = useSelector((state) => state.app.user._id);
   const sequence = useSelector((state) => state.sequence.present);
 
   const [newName, setNewName] = useState('');
@@ -25,6 +26,9 @@ export const useSaveSequence = (idRef) => {
     const cleanName = newName.replace(/[^a-zA-Z0-9 ]/g, '');
     const newSequence = {
       _id: newId,
+      date: new Date().toLocaleDateString(),
+      author: userId,
+      sharedWith: [],
       name: cleanName,
       kit: sequence.kit,
       bpm: sequence.bpm,

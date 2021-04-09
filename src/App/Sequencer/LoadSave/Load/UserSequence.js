@@ -1,17 +1,13 @@
 import React, { useMemo } from 'react';
 import { DeleteIcon } from 'assets/icons';
 import { Button } from 'App/shared/Button';
-import { useUserSequenceState } from './useUserSequenceState';
+import { useUserSequence } from './useUserSequence';
 
 export const UserSequence = ({ sequence, selectSequence, selectedId }) => {
-  const selected = selectedId === sequence._id;
-  const { showConfirm, classes, functions, deleting } = useUserSequenceState(
-    sequence._id,
-    sequence.kit,
-    selected
-  );
+  const { classes, values, functions } = useUserSequence(sequence, selectedId);
   const memo = useMemo(() => {
-    const { _id, name, bpm, kit } = sequence;
+    const { _id, name, date, sync, showConfirm, deleting } = values;
+    const { cancelConfirm, handleUpload } = functions;
     const handleSelect = (e) => selectSequence(e, _id);
     return showConfirm ? (
       <ConfirmDelete {...functions} deleting={deleting} />
@@ -21,19 +17,17 @@ export const UserSequence = ({ sequence, selectSequence, selectedId }) => {
         disabled={deleting}
         onClick={handleSelect}
       >
-        <p>{`${deleting ? 'deleting ' : ''}${name}`}</p>
-        <p className='p-left-25'>{kit}</p>
-        <p>{bpm}</p>
-        <Button
-          classes='delete-btn'
-          disabled={deleting}
-          onClick={functions.cancelConfirm}
-        >
+        <p className='name'>{name}</p>
+        <p className='date'>{date}</p>
+        <Button classes='sync' onClick={handleUpload}>
+          {sync}
+        </Button>
+        <Button classes='delete' disabled={deleting} onClick={cancelConfirm}>
           <DeleteIcon />
         </Button>
       </div>
     );
-  }, [sequence, classes, deleting, functions, selectSequence, showConfirm]);
+  }, [classes, values, functions, selectSequence]);
   return memo;
 };
 

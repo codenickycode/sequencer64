@@ -39,9 +39,7 @@ export const assetsSlice = createSlice({
 export const checkCachedKits = () => async (dispatch, getState) => {
   const cacheKeys = await caches.keys();
   const kits = deepCopyKits(getState().assets.kits);
-  console.log(kits);
   cacheKeys.forEach((key) => {
-    console.log(key);
     if (kits[key]) kits[key].available = true;
   });
   dispatch(assetsSlice.actions.setKits(kits));
