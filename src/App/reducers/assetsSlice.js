@@ -2,8 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import * as remoteKits from 'assets/kits/remote/remoteKits';
 import * as localKits from 'assets/kits/local';
 import { defaultSequences } from 'assets/sequences';
+import { deepCopyKits } from './functions/assets';
 
-const INITIAL_KITS = { ...remoteKits, ...localKits };
+const INITIAL_KITS = {
+  ...deepCopyKits(remoteKits),
+  ...deepCopyKits(localKits),
+};
 
 const INITIAL_STATE = {
   kits: INITIAL_KITS,
@@ -16,6 +20,9 @@ export const assetsSlice = createSlice({
   name: 'assets',
   initialState: INITIAL_STATE,
   reducers: {
+    setKits: (state, { payload }) => {
+      state.kits = payload;
+    },
     setAvailable: (state, { payload: { kit, available } }) => {
       state.kits[kit].available = available;
     },
@@ -28,6 +35,17 @@ export const assetsSlice = createSlice({
     },
   },
 });
+
+export const checkCachedKits = () => async (dispatch, getState) => {
+  const cacheKeys = await caches.keys();
+  const kits = deepCopyKits(getState().assets.kits);
+  console.log(kits);
+  cacheKeys.forEach((key) => {
+    console.log(key);
+    if (kits[key]) kits[key].available = true;
+  });
+  dispatch(assetsSlice.actions.setKits(kits));
+};
 
 export const {
   setAvailable,

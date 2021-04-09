@@ -75,7 +75,8 @@ self.addEventListener('fetch', (e) => {
   const url = e.request.url;
   if (url.match('.mp3')) {
     let cachedResFunc = async function () {
-      const cache = await caches.open('kits');
+      const key = url.match(/(\w+)\/\w+\.mp3/)[1];
+      const cache = await caches.open(key);
       let cachedRes = await cache.match(e.request, { ignoreVary: true });
       if (cachedRes) {
         console.log('returning from cache:', cachedRes);

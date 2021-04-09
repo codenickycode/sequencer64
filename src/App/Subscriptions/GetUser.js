@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from 'App/reducers/appSlice';
+import { checkCachedKits } from 'App/reducers/assetsSlice';
 
 export const GetUser = () => {
   const dispatch = useDispatch();
@@ -8,6 +9,7 @@ export const GetUser = () => {
 
   useEffect(() => {
     dispatch(getUser());
+    dispatch(checkCachedKits());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
