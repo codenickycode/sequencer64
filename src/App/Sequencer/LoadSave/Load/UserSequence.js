@@ -4,9 +4,12 @@ import { Button } from 'App/shared/Button';
 import { useUserSequence } from './useUserSequence';
 
 export const UserSequence = ({ sequence, selectSequence, selectedId }) => {
-  const { classes, values, functions } = useUserSequence(sequence, selectedId);
+  const { classes, values, functions, Sync } = useUserSequence(
+    sequence,
+    selectedId
+  );
   const memo = useMemo(() => {
-    const { _id, name, date, sync, showConfirm, deleting } = values;
+    const { _id, name, date, showConfirm, deleting } = values;
     const { cancelConfirm, handleUpload } = functions;
     const handleSelect = (e) => selectSequence(e, _id);
     return showConfirm ? (
@@ -20,7 +23,7 @@ export const UserSequence = ({ sequence, selectSequence, selectedId }) => {
         <p className='name'>{name}</p>
         <p className='date'>{date}</p>
         <Button classes='sync' onClick={handleUpload}>
-          {sync}
+          <Sync />
         </Button>
         <Button classes='delete' disabled={deleting} onClick={cancelConfirm}>
           <DeleteIcon />

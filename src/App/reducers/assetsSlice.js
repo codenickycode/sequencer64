@@ -26,6 +26,12 @@ export const assetsSlice = createSlice({
     setAvailable: (state, { payload: { kit, available } }) => {
       state.kits[kit].available = available;
     },
+    setSynched: (state, { payload: { _id, synched } }) => {
+      const seqToUpdate = state.userSequences.find(
+        (seqId) => seqId._id === _id
+      );
+      seqToUpdate.synched = synched;
+    },
     setFetchingSamples: (state, { payload: { kit, fetching, available } }) => {
       state.kits[kit].fetching = fetching;
       if (available !== undefined) state.kits[kit].available = available;
@@ -47,6 +53,7 @@ export const checkCachedKits = () => async (dispatch, getState) => {
 
 export const {
   setAvailable,
+  setSynched,
   setFetchingSamples,
   setUserSequences,
 } = assetsSlice.actions;

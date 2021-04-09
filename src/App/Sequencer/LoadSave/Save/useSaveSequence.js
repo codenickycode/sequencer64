@@ -26,7 +26,7 @@ export const useSaveSequence = (idRef) => {
     const cleanName = newName.replace(/[^a-zA-Z0-9 ]/g, '');
     const newSequence = {
       _id: newId,
-      date: new Date().toLocaleDateString(),
+      date: new Date(),
       author: userId,
       sharedWith: [],
       name: cleanName,

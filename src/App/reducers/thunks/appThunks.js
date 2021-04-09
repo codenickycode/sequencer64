@@ -31,6 +31,7 @@ export const saveSequence = (sequence) => async (dispatch, getState) => {
     payload.confirmation = `succesfully saved ${sequence.name} to device`;
     await apiSaveSequence(sequence);
     payload.confirmation += ' and cloud';
+    sequence.synched = true;
   } catch (e) {
     if (!payload.message) {
       payload.message = 'unsuccessful :(';

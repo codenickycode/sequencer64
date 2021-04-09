@@ -53,6 +53,7 @@ const syncCloudSeqs = async (payload) => {
       promises.push(deleteSeqFromCloud(_id));
     } else {
       mergedSeqs[_id] = cloudSeq;
+      mergedSeqs[_id].synched = true;
       if (!(_id in idbSeqs)) {
         payload.idbUpdate = true;
       }
@@ -67,9 +68,10 @@ const syncIDBSeqs = async (payload) => {
     if (!(_id in mergedSeqs)) {
       mergedSeqs[_id] = idbSeq;
       const userId = payload._id.toString();
+      mergedSeqs[_id].synched = false;
       if (
-        idbSeq.author.toString() === userId ||
-        idbSeq.sharedWith.find((id) => id.toString() === userId)
+        idbSeq.author.toString() === userId.toString() ||
+        idbSeq.sharedWith.find((id) => id.toString() === userId.toString())
       ) {
         if (loggedIn) {
           mergedSeqs[_id].synched = true;

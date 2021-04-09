@@ -74,8 +74,8 @@
         }
 
         &.cloud {
-          &.uploading {
-            animation: flashing 400ms alternate linear;
+          &.fetching {
+            animation: flashing 400ms alternate infinite;
           }
           &.unavailable {
             opacity: 0.25;
