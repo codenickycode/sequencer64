@@ -1,11 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'styles/style.scss';
-import App from 'App/App';
 import * as serviceWorkerRegistration from 'serviceWorkerRegistration';
 import reportWebVitals from 'reportWebVitals';
+import 'styles/style.scss';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import { Preparing } from 'App/shared/Preparing';
+const App = React.lazy(() => import('App/App'));
+
+ReactDOM.render(
+  <React.Suspense fallback={<Preparing />}>
+    <App />
+  </React.Suspense>,
+  document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

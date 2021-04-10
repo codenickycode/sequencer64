@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Grid } from 'App/Sequencer/MainSection/Grid/Grid';
 import { SamplePanel } from 'App/Sequencer/SamplePanel/SamplePanel';
 import { Menu } from 'App/Sequencer/MenuBar/MenuBar';
-import { Preparing } from 'App/shared/Preparing';
 import { loadInitialSequence } from 'App/reducers/sequenceSlice';
 import { SpAlert } from 'App/Sequencer/SamplePanel/SpAlert';
 // import { MobileConsole } from 'App/MobileConsole';
@@ -24,9 +23,7 @@ export const SequencerPage = () => {
   }, [dispatch, history, initialLoad, shared]);
 
   // const initialLoad = true;
-  return initialLoad ? (
-    <Preparing />
-  ) : (
+  return initialLoad ? null : (
     <div id='sequencer'>
       <div className='mainContainer'>
         <div id='main'>
