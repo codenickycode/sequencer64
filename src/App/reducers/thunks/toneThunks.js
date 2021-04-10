@@ -47,16 +47,19 @@ export const loadSamples = (kit) => async (dispatch, getState) => {
     available = true;
     payload.bufferedKit = sequenceKitName;
     payload.buffersLoaded = true;
+    payload.message = sequenceKitName + ' samples loaded';
   } catch (e) {
     console.log('loadSamples ->\n', e);
     payload.buffersLoaded = false;
     payload.loadingError = true;
+    payload.message = `Error loading ${sequenceKitName} samples`;
   } finally {
     payload.loadingSamples = false;
     dispatch(loadSamplesFinally(payload));
     dispatch(
       setFetchingSamples({ kit: sequenceKitName, fetching: false, available })
     );
+    dispatch(setStatus(payload.message));
   }
 };
 

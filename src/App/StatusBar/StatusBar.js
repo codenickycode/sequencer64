@@ -14,6 +14,7 @@ export const StatusBar = () => {
     let fadeTimer;
     if (message) {
       setClasses('status fadeOut fadeOut2');
+      if (message.match('Loading samples')) return;
       onTimer = setTimeout(() => {
         setClasses('status');
       }, 1000);
