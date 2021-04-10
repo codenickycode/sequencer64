@@ -9,8 +9,12 @@ import { ChangeTheme } from './ChangeTheme';
 import { MODES, setMode } from 'App/reducers/editorSlice';
 import { setShow, VIEWS } from 'App/reducers/appSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { BASE_PATH } from 'App/App';
+import { useHistory, useLocation } from 'react-router';
 
 export const Menu = () => {
+  const history = useHistory();
+  const pathname = useLocation().pathname;
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.editor.mode);
   const show = useSelector((state) => state.app.show);
@@ -37,7 +41,7 @@ export const Menu = () => {
   const scrollEnd = useRef(null);
 
   const scroll = (dir) => {
-    enableScroll();
+    onScrollStart();
     clearTimeout(scrollEnd.current);
     const offset =
       dir === 'right'
@@ -48,10 +52,18 @@ export const Menu = () => {
     scrollEnd.current = setTimeout(() => disableScroll(), 500);
   };
 
-  const enableScroll = () => {
+  const onScrollStart = () => {
+    resetView();
+    enableScroll();
+  };
+
+  const resetView = () => {
     if (mode === MODES.TAP) dispatch(setMode(null));
-    if (show === VIEWS.THEMES || show === VIEWS.CHANGE_KIT)
-      dispatch(setShow(''));
+    if (show === VIEWS.THEMES) dispatch(setShow(''));
+    if (pathname.match(/kits/)) history.push(BASE_PATH);
+  };
+
+  const enableScroll = () => {
     rightRef.current.disabled = false;
     leftRef.current.disabled = false;
   };
@@ -69,7 +81,7 @@ export const Menu = () => {
   };
 
   const handleScroll = () => {
-    enableScroll();
+    onScrollStart();
     clearTimeout(scrollEnd.current);
     scrollEnd.current = setTimeout(() => disableScroll(), 100);
   };

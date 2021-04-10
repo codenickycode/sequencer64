@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Tone from 'tone';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route } from 'react-router-dom';
 import { LoginPage } from 'App/Login/LoginPage';
 import { SequencerPage } from 'App/Sequencer/Sequencer';
 import { StatusBar } from 'App/StatusBar/StatusBar';
@@ -12,6 +12,10 @@ import store from 'App/store';
 import { setLog, setOnline } from 'App/reducers/appSlice';
 import { setWidthAndHeight } from 'utils/calcScreen';
 import { startTone } from './reducers/thunks/toneThunks';
+import { ChangeKit } from './Sequencer/MainSection/ChangeKit';
+import { LoadSave } from './Sequencer/LoadSave/LoadSave';
+
+export const BASE_PATH = '/sequencer/session';
 
 export default function App() {
   // console.log('rendering: App');
@@ -21,18 +25,18 @@ export default function App() {
         <Provider store={store}>
           <KitProvider>
             <div id='themesPortal' />
-            <Switch>
-              <Route
-                path='/'
-                exact
-                render={() => <Redirect to='/sequencer/session' />}
-              />
-              <Route
-                path='/sequencer/:shared'
-                render={() => <SequencerPage />}
-              />
-              <Route path='/login' component={LoginPage} />
-            </Switch>
+            <Route path='/' exact render={() => <Redirect to={BASE_PATH} />} />
+            <Route path='/sequencer/:shared' component={SequencerPage} />
+            <Route path={`${BASE_PATH}/kits`} component={ChangeKit} />
+            <Route
+              path={`${BASE_PATH}/load`}
+              render={() => <LoadSave tab='load' />}
+            />
+            <Route
+              path={`${BASE_PATH}/save`}
+              render={() => <LoadSave tab='save' />}
+            />
+            <Route path='/login' component={LoginPage} />
             <StatusBar />
             <Subscriptions />
           </KitProvider>

@@ -1,16 +1,12 @@
 import cuid from 'cuid';
+import ReactDOM from 'react-dom';
 import React, { useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from 'App/shared/Button';
-import { useFadeIn } from 'utils/useFadeIn';
 import { CloudDownloadIcon } from 'assets/icons';
 import { useKitBtnState } from './useKitBtnState';
-import { VIEWS } from '../../reducers/appSlice';
 
 export const ChangeKit = () => {
-  const show = useSelector((state) => state.app.show);
-  const showChangeKit = show === VIEWS.CHANGE_KIT;
-  const { fadeInClass } = useFadeIn(showChangeKit);
   const numKits = useSelector((state) => state.assets.numKits);
 
   // track which kit to load after multiple presses
@@ -22,18 +18,24 @@ export const ChangeKit = () => {
     for (let i = 0; i < numKits; i++) {
       grid.push(i);
     }
-    return (
-      <div id='changeKit' className={'changeKit' + fadeInClass}>
-        <div className='kits'>
-          {grid.map((i) => {
-            return <KitBtn key={cuid.slug()} i={i} counterRef={counterRef} />;
-          })}
-        </div>
-      </div>
-    );
-  }, [fadeInClass, numKits]);
+    const portal = document.getElementById('changeKitPortal');
+    return portal
+      ? ReactDOM.createPortal(
+          <div id='changeKit' className='changeKit'>
+            <div className='kits'>
+              {grid.map((i) => {
+                return (
+                  <KitBtn key={cuid.slug()} i={i} counterRef={counterRef} />
+                );
+              })}
+            </div>
+          </div>,
+          portal
+        )
+      : null;
+  }, [numKits]);
 
-  return showChangeKit ? changeKitMemo : null;
+  return changeKitMemo;
 };
 
 const KitBtn = ({ i, counterRef }) => {

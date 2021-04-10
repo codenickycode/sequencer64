@@ -2,15 +2,17 @@ import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'App/shared/Button';
 import { KitIcon, TapIcon } from 'assets/icons';
-import { setShow, VIEWS } from '../../reducers/appSlice';
 import { MODES, setMode } from 'App/reducers/editorSlice';
+import { useHistory, useLocation } from 'react-router';
+import { BASE_PATH } from 'App/App';
 
 export const KitAndTapModeBtn = () => {
+  const history = useHistory();
+  const pathname = useLocation().pathname;
+  const showingKits = pathname.match(/kits/);
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.editor.mode);
   const tapping = mode === MODES.TAP;
-  const show = useSelector((state) => state.app.show);
-  const showChangeKit = show === VIEWS.CHANGE_KIT;
 
   useEffect(() => {
     const spBorder = document.getElementById('samplePanelBorder');
@@ -24,12 +26,12 @@ export const KitAndTapModeBtn = () => {
     // console.log('rendering: ChangeKitBtn');
 
     const changeKit = () => {
-      if (showChangeKit) {
-        dispatch(setShow(''));
+      if (showingKits) {
         dispatch(setMode(null));
+        history.push(BASE_PATH);
       } else {
-        dispatch(setShow(VIEWS.CHANGE_KIT));
         dispatch(setMode(MODES.TAP));
+        history.push(pathname + '/kits');
       }
     };
 
@@ -41,7 +43,7 @@ export const KitAndTapModeBtn = () => {
       <>
         <Button
           id='changeKitBtn'
-          classes={showChangeKit ? 'menuBtn active kit' : 'menuBtn kit'}
+          classes={showingKits ? 'menuBtn active kit' : 'menuBtn kit'}
           onClick={changeKit}
         >
           <KitIcon />
@@ -50,7 +52,7 @@ export const KitAndTapModeBtn = () => {
         <Button
           id='tapModeBtn'
           classes={tapping ? 'menuBtn active tap' : 'menuBtn tap'}
-          disabled={showChangeKit}
+          disabled={showingKits}
           onClick={tapMode}
         >
           <TapIcon />
@@ -58,6 +60,6 @@ export const KitAndTapModeBtn = () => {
         </Button>
       </>
     );
-  }, [dispatch, showChangeKit, tapping]);
+  }, [dispatch, history, pathname, showingKits, tapping]);
   return memo;
 };

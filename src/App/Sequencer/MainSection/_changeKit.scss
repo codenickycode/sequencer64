@@ -2,6 +2,10 @@
 @use 'styles/placeholders' as *;
 @use 'styles/colors' as *;
 
+#changeKitPortal {
+  @extend %noEventsLayerAbs;
+}
+
 .changeKit {
   @extend %fullAbs;
   @extend %bg90;

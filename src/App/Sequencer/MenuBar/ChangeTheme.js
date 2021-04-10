@@ -9,26 +9,26 @@ import { setTheme } from 'App/reducers/appSlice';
 export const ChangeTheme = () => {
   const dispatch = useDispatch();
   const show = useSelector((state) => state.app.show);
-  const showThemes = show === VIEWS.THEMES;
+  const showingThemes = show === VIEWS.THEMES;
 
   const memo = useMemo(() => {
     const onClick = () => {
-      dispatch(setShow(showThemes ? '' : VIEWS.THEMES));
+      dispatch(setShow(showingThemes ? '' : VIEWS.THEMES));
     };
     return (
       <>
         <Button
           id='changeTheme'
-          classes={showThemes ? 'menuBtn active' : 'menuBtn'}
+          classes={showingThemes ? 'menuBtn active' : 'menuBtn'}
           onClick={onClick}
         >
           <PaletteIcon />
           <label htmlFor='changeTheme'>theme</label>
         </Button>
-        <Themes showThemes={showThemes} />
+        <Themes showingThemes={showingThemes} />
       </>
     );
-  }, [dispatch, showThemes]);
+  }, [dispatch, showingThemes]);
   return memo;
 };
 
@@ -40,7 +40,7 @@ const THEMES = {
   WHITE: 'White',
 };
 
-const Themes = ({ showThemes }) => {
+const Themes = ({ showingThemes }) => {
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.app.theme);
 
@@ -48,7 +48,7 @@ const Themes = ({ showThemes }) => {
     dispatch(setTheme(newTheme));
   };
   return ReactDOM.createPortal(
-    <div className={showThemes ? 'themes show' : 'themes'}>
+    <div className={showingThemes ? 'themes show' : 'themes'}>
       <Button
         id={`${THEMES.JOKER}Theme`}
         classes={theme === THEMES.JOKER ? 'themeBtn active' : 'themeBtn'}

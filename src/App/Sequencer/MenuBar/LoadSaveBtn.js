@@ -1,15 +1,28 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { Button } from 'App/shared/Button';
 import { OpenIcon, SaveIcon } from 'assets/icons';
-import { setShow } from 'App/reducers/appSlice';
+import { useHistory, useLocation } from 'react-router';
+import { BASE_PATH } from 'App/App';
 
 export const LoadSaveBtn = () => {
-  const dispatch = useDispatch();
+  const history = useHistory();
+  const pathname = useLocation().pathname;
 
   const onClick = (type) => {
-    if (type === 'load') dispatch(setShow('load'));
-    if (type === 'save') dispatch(setShow('save'));
+    if (type === 'load') {
+      if (pathname.match(/save/)) {
+        history.push(pathname.split(/save/) + 'load');
+      } else {
+        history.push(BASE_PATH + '/load');
+      }
+    }
+    if (type === 'save') {
+      if (pathname.match(/load/)) {
+        history.push(pathname.split(/load/) + 'save');
+      } else {
+        history.push(BASE_PATH + '/save');
+      }
+    }
     document.getElementById('root').scrollTop = 0;
   };
 

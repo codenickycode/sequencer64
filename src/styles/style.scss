@@ -41,11 +41,11 @@ body {
   @extend %text;
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
+  overflow-x: hidden;
 }
 
 #root {
   @extend %full;
-  // max-width: 800px;
   background: $black;
   color: $white;
 

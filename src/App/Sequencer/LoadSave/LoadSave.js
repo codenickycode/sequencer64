@@ -1,55 +1,53 @@
 import React, { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import ReactDOM from 'react-dom';
 import { Load } from 'App/Sequencer/LoadSave/Load/Load';
 import { Save } from 'App/Sequencer/LoadSave/Save/Save';
-import { setShow } from 'App/reducers/appSlice';
 import { Button } from 'App/shared/Button';
 import { LoginSection } from './LoginSection';
-import { useFadeIn } from 'utils/useFadeIn';
+import { useHistory } from 'react-router';
+import { BASE_PATH } from 'App/App';
 
-export const LoadSave = () => {
-  const dispatch = useDispatch();
-  const show = useSelector((state) => state.app.show);
-  const showLoadSave = show === 'save' || show === 'load';
-  const { fadeInClass, fadeOutThen } = useFadeIn(showLoadSave);
+export const LoadSave = ({ tab }) => {
+  const history = useHistory();
 
-  const loadSaveSequenceMemo = useMemo(() => {
-    const onClose = () => fadeOutThen(() => dispatch(setShow('')));
+  const memo = useMemo(() => {
+    const onClose = () => history.push(BASE_PATH);
     const onClick = (e) => {
       if (e.target.id && e.target.id === 'loadSave') onClose();
     };
-    return (
-      <>
-        <div
-          id='loadSave'
-          className={'loadSave' + fadeInClass}
-          onClick={onClick}
-        >
-          <div className='top'>
-            <Tabs show={show} />
-            <LoginSection />
-          </div>
-          {show === 'save' && <Save />}
-          {show === 'load' && <Load />}
-        </div>
-        <div className={'bottomBtn' + fadeInClass}>
-          <Button onClick={onClose}>Close</Button>
-        </div>
-      </>
-    );
-  }, [dispatch, fadeInClass, fadeOutThen, show]);
-  return showLoadSave ? loadSaveSequenceMemo : null;
+
+    const portal = document.getElementById('fullScreenPortal');
+    return portal
+      ? ReactDOM.createPortal(
+          <>
+            <div id='loadSave' className={'loadSave'} onClick={onClick}>
+              <div className='top'>
+                <Tabs tab={tab} />
+                <LoginSection />
+              </div>
+              {tab === 'save' && <Save />}
+              {tab === 'load' && <Load />}
+            </div>
+            <div className={'bottomBtn'}>
+              <Button onClick={onClose}>Close</Button>
+            </div>
+          </>,
+          portal
+        )
+      : null;
+  }, [history, tab]);
+  return memo;
 };
 
-const Tabs = ({ show }) => {
-  const dispatch = useDispatch();
+const Tabs = ({ tab }) => {
+  const history = useHistory();
   const changeTab = ({ target: { value } }) => {
-    dispatch(setShow(value));
+    history.push(BASE_PATH + '/' + value);
   };
   let loadClasses = 'tab';
   let saveClasses = loadClasses;
-  if (show === 'load') loadClasses += ' selected';
-  if (show === 'save') saveClasses += ' selected';
+  if (tab === 'load') loadClasses += ' selected';
+  if (tab === 'save') saveClasses += ' selected';
   return (
     <div className='tabs'>
       <input

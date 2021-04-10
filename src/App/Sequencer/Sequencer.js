@@ -2,9 +2,7 @@ import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid } from 'App/Sequencer/MainSection/Grid/Grid';
-import { ChangeKit } from 'App/Sequencer/MainSection/ChangeKit';
 import { SamplePanel } from 'App/Sequencer/SamplePanel/SamplePanel';
-import { LoadSave } from 'App/Sequencer/LoadSave/LoadSave';
 import { Menu } from 'App/Sequencer/MenuBar/MenuBar';
 import { Preparing } from 'App/shared/Preparing';
 import { loadInitialSequence } from 'App/reducers/sequenceSlice';
@@ -34,9 +32,9 @@ export const SequencerPage = () => {
         <div className='mainContainer'>
           <div id='main'>
             <Grid />
-            <ChangeKit />
-            {/* <MobileConsole /> */}
+            <div id='changeKitPortal' />
             <div id='pastePatternPortal' />
+            {/* <MobileConsole /> */}
           </div>
           <div id='samplePanel'>
             <SpAlert />
@@ -45,7 +43,7 @@ export const SequencerPage = () => {
         </div>
         <Menu />
       </div>
-      <LoadSave />
+      <div id='fullScreenPortal' />
     </>
   );
 };

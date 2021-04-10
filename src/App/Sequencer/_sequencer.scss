@@ -13,6 +13,11 @@
   overflow: hidden;
 }
 
+#fullScreenPortal {
+  @extend %noEventsLayerAbs;
+  top: 0;
+}
+
 #screenInfo {
   @extend %noEventsLayerAbs;
   top: 0;

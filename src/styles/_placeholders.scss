@@ -117,6 +117,7 @@
 }
 
 %bottomBtn {
+  pointer-events: initial;
   cursor: pointer;
   position: fixed;
   z-index: 101;

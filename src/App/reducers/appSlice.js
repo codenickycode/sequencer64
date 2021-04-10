@@ -3,9 +3,6 @@ import { getLS, getSS } from 'utils/storage';
 import * as appThunks from './thunks/appThunks';
 
 export const VIEWS = {
-  SAVE: 'save',
-  LOAD: 'load',
-  CHANGE_KIT: 'CHANGE_KIT',
   THEMES: 'THEMES',
 };
 

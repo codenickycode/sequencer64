@@ -3,9 +3,7 @@
 @use 'styles/colors' as *;
 
 .loadSave {
-  position: absolute;
-  z-index: 101;
-  top: 0;
+  pointer-events: initial;
   min-height: 100%;
   width: 100%;
   padding-top: 2.5rem;
