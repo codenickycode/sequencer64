@@ -51,9 +51,14 @@ window.addEventListener('blur', () => {
 });
 
 let resizeTimer;
+let prevWidth = window.innerWidth;
+const root = document.getElementById('root')
+const preparingPortal = document.getElementById('preparingPortal')
 function handleResize() {
+  if (window.innerWidth === prevWidth) return;
   clearTimeout(resizeTimer);
-  document.body.style.display = 'none';
+  root.style.display = 'none';
+  preparingPortal.style.display = 'initial'
   resizeTimer = setTimeout(redraw, 350);
 }
 
@@ -63,11 +68,14 @@ function afterRotate() {
 }
 
 function redraw() {
-  document.body.style.display = 'none';
   setTimeout(function () {
+    preparingPortal.style.display = 'none'
+    root.style.display = 'initial'
+    document.body.style.display = 'none';
     document.body.style.display = 'initial';
     setWidthAndHeight();
-  }, 100);
+    prevWidth = window.innerWidth;
+  }, 350);
   window.removeEventListener('focus', redraw);
 }
 setWidthAndHeight();

@@ -1,30 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import googleImg from 'App/Login/img/google.png';
-import twitterImg from 'App/Login/img/twitter.png';
-import githubImg from 'App/Login/img/github.png';
-import facebookImg from 'App/Login/img/facebook.png';
 import { Button } from 'App/shared/Button';
 import { HOST } from 'utils/network';
 import { useHistory } from 'react-router';
+import { img } from 'assets/img/social';
 
 export const LoginPage = () => {
   const history = useHistory();
+  const [rage, setRage] = useState(false);
 
-  const googleLogin = () => {
-    window.open(HOST + '/auth/google', '_self');
-  };
-
-  const twitterLogin = () => {
-    window.open(HOST + '/auth/twitter', '_self');
-  };
-
-  const facebookLogin = () => {
-    window.open(HOST + '/auth/facebook', '_self');
-  };
-
-  const githubLogin = () => {
-    window.open(HOST + '/auth/github', '_self');
+  const login = (type) => {
+    setRage(true);
+    window.open(`${HOST}/auth/${type}`, '_self');
   };
 
   const handleGoBack = (e) => {
@@ -39,34 +26,10 @@ export const LoginPage = () => {
         <div id='loginPage' className='loginPage' onClick={handleGoBack}>
           <h1>Login to save and share your sequences</h1>
           <div className='loginMethods'>
-            <button
-              className='methodBtn'
-              id='login-google'
-              onClick={googleLogin}
-            >
-              <img src={googleImg} alt='Google Logo' />
-            </button>
-            <button
-              className='methodBtn'
-              id='login-twitter'
-              onClick={twitterLogin}
-            >
-              <img src={twitterImg} alt='Twitter Logo' />
-            </button>
-            <button
-              className='methodBtn'
-              id='login-facebook'
-              onClick={facebookLogin}
-            >
-              <img src={facebookImg} alt='Facebook Logo' />
-            </button>
-            <button
-              className='methodBtn'
-              id='login-github'
-              onClick={githubLogin}
-            >
-              <img src={githubImg} alt='Github Logo' />
-            </button>
+            <MethodBtn type='google' login={login} rage={rage} />
+            <MethodBtn type='twitter' login={login} rage={rage} />
+            <MethodBtn type='facebook' login={login} rage={rage} />
+            <MethodBtn type='github' login={login} rage={rage} />
           </div>
           <div className='bottom-btn show'>
             <div className='bottomBtn' to='/?load=true'>
@@ -78,4 +41,17 @@ export const LoginPage = () => {
         </div>,
         portal
       );
+};
+
+const MethodBtn = ({ type, login, rage }) => {
+  return (
+    <button
+      className='methodBtn'
+      id={`login-${type}`}
+      disabled={rage}
+      onClick={() => login(type)}
+    >
+      <img src={img[type]} alt={`${type} logo`} />
+    </button>
+  );
 };

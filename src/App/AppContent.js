@@ -17,8 +17,6 @@ export const AppContent = () => {
       <Route path={PATHS.LOAD} render={() => <LoadSave tab='load' />} />
       <Route path={PATHS.SAVE} render={() => <LoadSave tab='save' />} />
       <Route path={PATHS.LOGIN} component={LoginPage} />
-      <div id='themesPortal' />
-      <div id='fullScreenPortal' />
       <StatusBar />
       <Preparing />
     </>

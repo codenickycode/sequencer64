@@ -2,18 +2,21 @@
 
 .loginPage {
   pointer-events: initial;
-  @extend %full;
+  height: auto;
+  min-height: 100%;
+  width: 100%;
   @extend %bg90;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow-y: scroll;
 }
 
 h1 {
   max-width: 600px;
   padding: 1rem;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .loginMethods {
@@ -26,8 +29,9 @@ h1 {
 
 .methodBtn {
   margin: 1rem 0;
+  padding: 1rem;
   @extend %bg90;
-  height: 5rem;
+  max-height: 5rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -37,6 +41,7 @@ h1 {
 
 .methodBtn img {
   height: 2rem;
+  max-height: 50px;
 }
 
 .methodBtn p {

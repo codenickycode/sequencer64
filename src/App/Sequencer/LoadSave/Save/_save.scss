@@ -112,6 +112,10 @@
         margin-left: 0.5rem;
         font-size: 1.25rem;
         color: $green;
+
+        &.error {
+          color: $red;
+        }
       }
     }
   }

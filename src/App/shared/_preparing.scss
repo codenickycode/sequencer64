@@ -4,32 +4,49 @@
 @use 'styles/spectrum' as *;
 
 #preparingPortal {
-  @extend %fullAbs;
+  position: fixed;
   top: 0;
-  @include flex;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
   @extend %bg3q;
 }
 
 #preparing {
-  @extend %full;
-  max-width: 600px;
-  max-height: 600px;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;
   @include flex(column, space-evenly);
 
+  .prepHeader {
+    font-size: 1.25rem;
+    margin: 1rem 0;
+  }
+
   .prepMsgContainer {
-    width: 100%;
+    margin: 1rem 0;
+    padding: 1rem;
   }
   .prepMsg {
     display: inline-block;
-    width: 60%;
-    text-align: right;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
   }
 
   .prepGrid {
     width: 50%;
-    height: calc(50vw * 0.5);
+    max-width: 300px;
+    height: 50vw;
     max-height: 300px;
+
+    @media (orientation: landscape) {
+      width: 50vh;
+      height: 50%;
+    }
+
     padding: 0.5rem;
     @include grid(3, 3, 0.25rem, 1fr, 1fr);
     border-radius: 0.5rem;

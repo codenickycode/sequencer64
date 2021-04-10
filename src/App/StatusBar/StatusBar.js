@@ -53,5 +53,5 @@ export const StatusBar = () => {
       </div>
     );
   }, [bpm, classes, kitName, message, sequenceName]);
-  return memo;
+  return message ? memo : null;
 };

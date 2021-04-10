@@ -6,7 +6,7 @@ import { SamplePanel } from 'App/Sequencer/SamplePanel/SamplePanel';
 import { Menu } from 'App/Sequencer/MenuBar/MenuBar';
 import { loadInitialSequence } from 'App/reducers/sequenceSlice';
 import { SpAlert } from 'App/Sequencer/SamplePanel/SpAlert';
-import { MobileConsole } from 'App/MobileConsole';
+// import { MobileConsole } from 'App/MobileConsole';
 import { PATHS } from 'utils/useGoTo';
 
 export const SequencerPage = () => {
@@ -39,7 +39,7 @@ export const SequencerPage = () => {
             <Grid />
             <div id='changeKitPortal' />
             <div id='pastePatternPortal' />
-            <MobileConsole />
+            {/* <MobileConsole /> */}
           </div>
           <div id='samplePanel'>
             <SpAlert />
