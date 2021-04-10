@@ -28,6 +28,10 @@
   user-select: none;
 }
 
+html {
+  border: 1px solid green;
+}
+
 html,
 body {
   @extend %full;

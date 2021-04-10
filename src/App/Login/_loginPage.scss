@@ -1,21 +1,32 @@
+@use 'styles/placeholders' as *;
+
 .loginPage {
-  margin: 0 auto;
-  height: 100%;
-  width: 100%;
-  max-width: 600px;
+  pointer-events: initial;
+  @extend %full;
+  @extend %bg90;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+h1 {
+  max-width: 600px;
+  padding: 1rem;
+  font-size: 1.5rem;
+}
+
 .loginMethods {
+  padding: 1rem;
   width: 100%;
+  max-width: 600px;
+  @extend %bg;
+  border-radius: 0.5rem;
 }
 
 .methodBtn {
   margin: 1rem 0;
-  background: transparent;
+  @extend %bg90;
   height: 5rem;
   width: 100%;
   display: flex;

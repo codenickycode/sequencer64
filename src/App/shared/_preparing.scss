@@ -1,79 +1,97 @@
 @use 'styles/placeholders' as *;
 @use 'styles/mixins' as *;
 @use 'styles/colors' as *;
+@use 'styles/spectrum' as *;
+
+#preparingPortal {
+  @extend %fullAbs;
+  top: 0;
+  @include flex;
+  @extend %bg3q;
+}
 
 #preparing {
   @extend %full;
+  max-width: 600px;
+  max-height: 600px;
   @include flex(column, space-evenly);
 
-  .messageContainer {
+  .prepMsgContainer {
     width: 100%;
   }
-  .message {
+  .prepMsg {
     display: inline-block;
     width: 60%;
     text-align: right;
     font-size: 1.5rem;
   }
-  .dots {
-    font-size: 1.5rem;
-  }
 
-  .grid {
+  .prepGrid {
     width: 50%;
-    height: 50vw;
+    height: calc(50vw * 0.5);
+    max-height: 300px;
     padding: 0.5rem;
-    @include grid(3, 3, 0.25, 1fr, 1fr);
+    @include grid(3, 3, 0.25rem, 1fr, 1fr);
     border-radius: 0.5rem;
     @extend %border;
 
-    .cell {
+    .prepCell {
       @extend %full;
       border-radius: 0.25rem;
+      @extend %bgCellOff;
     }
   }
 
-  .bgColor {
+  .prepBgColor {
     animation: colorScroll 1.5s infinite;
     @extend %full;
     transition: none;
     opacity: 0;
   }
 
-  .bg0 {
+  .prepBg0 {
     animation-delay: 1ms;
+    @extend %bg0;
   }
 
-  .bg1 {
+  .prepBg1 {
     animation-delay: 150ms;
+    @extend %bg1;
   }
 
-  .bg2 {
+  .prepBg2 {
     animation-delay: 300ms;
+    @extend %bg2;
   }
 
-  .bg3 {
+  .prepBg3 {
     animation-delay: 450ms;
+    @extend %bg3;
   }
 
-  .bg4 {
+  .prepBg4 {
     animation-delay: 600ms;
+    @extend %bg4;
   }
 
-  .bg5 {
+  .prepBg5 {
     animation-delay: 750ms;
+    @extend %bg5;
   }
 
-  .bg6 {
+  .prepBg6 {
     animation-delay: 900ms;
+    @extend %bg6;
   }
 
-  .bg7 {
+  .prepBg7 {
     animation-delay: 1050ms;
+    @extend %bg7;
   }
 
-  .bg8 {
+  .prepBg8 {
     animation-delay: 1200ms;
+    @extend %bg8;
   }
 }
 

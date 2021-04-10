@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from 'App/reducers/appSlice';
-import { stopSequence } from 'App/reducers/toneSlice';
 import { Button } from 'App/shared/Button';
+import { PATHS, useGoTo } from 'utils/useGoTo';
 
 export const LoginSection = () => {
   const loggedIn = useSelector((state) => state.app.user.loggedIn);
@@ -32,21 +31,17 @@ const LoggedIn = ({ fetching, classes, values }) => {
 };
 
 const NotLoggedIn = ({ values, fetching }) => {
-  const dispatch = useDispatch();
-  const handleStopSequence = () => {
-    dispatch(stopSequence());
-  };
+  const goTo = useGoTo();
   return (
     <div className='notLoggedIn'>
       <p className='sub'>{values.sub}</p>
-      <Link
-        className='login-btn'
-        onTouchStart={handleStopSequence}
-        to='/login'
+      <Button
+        classes='loginBtn'
+        onClick={() => goTo(PATHS.LOGIN)}
         disabled={fetching}
       >
         {values.loginBtn}
-      </Link>
+      </Button>
     </div>
   );
 };

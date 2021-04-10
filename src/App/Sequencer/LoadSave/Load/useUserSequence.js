@@ -55,11 +55,6 @@ export const useUserSequence = (sequence, selectedId) => {
     }
   };
 
-  const dateString =
-    typeof date === 'string'
-      ? new Date(date).toLocaleDateString()
-      : date.toLocaleDateString();
-
   const classes = { sequence: 'userSequence select ' };
   if (selected && fetching) classes.sequence += 'fetching';
   if (selected && !fetching) classes.sequence += 'selected';
@@ -67,7 +62,7 @@ export const useUserSequence = (sequence, selectedId) => {
 
   const values = {
     _id,
-    date: dateString,
+    date,
     name: deleting ? 'deleting ' : '' + name,
     showConfirm,
     deleting,
