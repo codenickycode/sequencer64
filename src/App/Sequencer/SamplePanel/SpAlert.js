@@ -1,11 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { PointDownIcon, PointUpIcon, PointLeftIcon } from 'assets/icons';
+import { useLocation } from 'react-router';
 
 export const SpAlert = () => {
   const message = useSelector((state) => state.editor.spAlert.message);
   const [classes, setClasses] = useState('spAlert');
   const landscape = useSelector((state) => state.app.landscape);
+  const pathname = useLocation().pathname;
 
   useEffect(() => {
     let onTimer;
@@ -23,7 +25,7 @@ export const SpAlert = () => {
       clearTimeout(onTimer);
       clearTimeout(fadeTimer);
     };
-  }, [message]);
+  }, [message, pathname]);
 
   const spAlertMemo = useMemo(() => {
     // console.log('rendering: SpAlert');

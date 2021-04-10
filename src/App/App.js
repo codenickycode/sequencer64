@@ -14,8 +14,7 @@ import { setWidthAndHeight } from 'utils/calcScreen';
 import { startTone } from './reducers/thunks/toneThunks';
 import { ChangeKit } from './Sequencer/MainSection/ChangeKit';
 import { LoadSave } from './Sequencer/LoadSave/LoadSave';
-
-export const BASE_PATH = '/sequencer/session';
+import { PATHS } from 'utils/useGoTo';
 
 export default function App() {
   // console.log('rendering: App');
@@ -24,19 +23,14 @@ export default function App() {
       <ErrorBoundary>
         <Provider store={store}>
           <KitProvider>
-            <div id='themesPortal' />
-            <Route path='/' exact render={() => <Redirect to={BASE_PATH} />} />
+            <Route path='/' exact render={() => <Redirect to={PATHS.BASE} />} />
             <Route path='/sequencer/:shared' component={SequencerPage} />
-            <Route path={`${BASE_PATH}/kits`} component={ChangeKit} />
-            <Route
-              path={`${BASE_PATH}/load`}
-              render={() => <LoadSave tab='load' />}
-            />
-            <Route
-              path={`${BASE_PATH}/save`}
-              render={() => <LoadSave tab='save' />}
-            />
-            <Route path='/login' component={LoginPage} />
+            <Route path={PATHS.CHANGE_KIT} component={ChangeKit} />
+            <Route path={PATHS.LOAD} render={() => <LoadSave tab='load' />} />
+            <Route path={PATHS.SAVE} render={() => <LoadSave tab='save' />} />
+            <Route path={PATHS.LOGIN} component={LoginPage} />
+            <div id='themesPortal' />
+            <div id='fullScreenPortal' />
             <StatusBar />
             <Subscriptions />
           </KitProvider>

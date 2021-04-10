@@ -1,28 +1,13 @@
 import React from 'react';
 import { Button } from 'App/shared/Button';
 import { OpenIcon, SaveIcon } from 'assets/icons';
-import { useHistory, useLocation } from 'react-router';
-import { BASE_PATH } from 'App/App';
+import { PATHS, useGoTo } from 'utils/useGoTo';
 
 export const LoadSaveBtn = () => {
-  const history = useHistory();
-  const pathname = useLocation().pathname;
+  const goTo = useGoTo();
 
-  const onClick = (type) => {
-    if (type === 'load') {
-      if (pathname.match(/save/)) {
-        history.push(pathname.split(/save/) + 'load');
-      } else {
-        history.push(BASE_PATH + '/load');
-      }
-    }
-    if (type === 'save') {
-      if (pathname.match(/load/)) {
-        history.push(pathname.split(/load/) + 'save');
-      } else {
-        history.push(BASE_PATH + '/save');
-      }
-    }
+  const onClick = (path) => {
+    goTo(path);
     document.getElementById('root').scrollTop = 0;
   };
 
@@ -32,7 +17,7 @@ export const LoadSaveBtn = () => {
       <Button
         id='load-sequence'
         classes='menuBtn'
-        onClick={() => onClick('load')}
+        onClick={() => onClick(PATHS.LOAD)}
       >
         <OpenIcon />
         <label htmlFor='load-sequence'>load</label>
@@ -40,7 +25,7 @@ export const LoadSaveBtn = () => {
       <Button
         id='save-sequence'
         classes='menuBtn'
-        onClick={() => onClick('save')}
+        onClick={() => onClick(PATHS.SAVE)}
       >
         <SaveIcon />
         <label htmlFor='save-sequence'>save</label>

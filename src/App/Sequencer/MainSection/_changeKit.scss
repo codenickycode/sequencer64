@@ -9,6 +9,7 @@
 .changeKit {
   @extend %fullAbs;
   @extend %bg90;
+
   .kits {
     @extend %full;
     @include grid(3, 3, 5px);

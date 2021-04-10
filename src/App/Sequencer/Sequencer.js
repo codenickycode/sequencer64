@@ -27,23 +27,20 @@ export const SequencerPage = () => {
   return initialLoad ? (
     <Preparing />
   ) : (
-    <>
-      <div id='sequencer'>
-        <div className='mainContainer'>
-          <div id='main'>
-            <Grid />
-            <div id='changeKitPortal' />
-            <div id='pastePatternPortal' />
-            {/* <MobileConsole /> */}
-          </div>
-          <div id='samplePanel'>
-            <SpAlert />
-            <SamplePanel />
-          </div>
+    <div id='sequencer'>
+      <div className='mainContainer'>
+        <div id='main'>
+          <Grid />
+          <div id='changeKitPortal' />
+          <div id='pastePatternPortal' />
+          {/* <MobileConsole /> */}
         </div>
-        <Menu />
+        <div id='samplePanel'>
+          <SpAlert />
+          <SamplePanel />
+        </div>
       </div>
-      <div id='fullScreenPortal' />
-    </>
+      <Menu />
+    </div>
   );
 };

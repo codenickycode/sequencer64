@@ -4,14 +4,13 @@ import { Load } from 'App/Sequencer/LoadSave/Load/Load';
 import { Save } from 'App/Sequencer/LoadSave/Save/Save';
 import { Button } from 'App/shared/Button';
 import { LoginSection } from './LoginSection';
-import { useHistory } from 'react-router';
-import { BASE_PATH } from 'App/App';
+import { PATHS, useGoTo } from 'utils/useGoTo';
 
 export const LoadSave = ({ tab }) => {
-  const history = useHistory();
+  const goTo = useGoTo();
 
   const memo = useMemo(() => {
-    const onClose = () => history.push(BASE_PATH);
+    const onClose = () => goTo(PATHS.BASE);
     const onClick = (e) => {
       if (e.target.id && e.target.id === 'loadSave') onClose();
     };
@@ -20,7 +19,7 @@ export const LoadSave = ({ tab }) => {
     return portal
       ? ReactDOM.createPortal(
           <>
-            <div id='loadSave' className={'loadSave'} onClick={onClick}>
+            <div id='loadSave' className='loadSave' onClick={onClick}>
               <div className='top'>
                 <Tabs tab={tab} />
                 <LoginSection />
@@ -35,14 +34,15 @@ export const LoadSave = ({ tab }) => {
           portal
         )
       : null;
-  }, [history, tab]);
+  }, [goTo, tab]);
   return memo;
 };
 
 const Tabs = ({ tab }) => {
-  const history = useHistory();
+  const goTo = useGoTo();
   const changeTab = ({ target: { value } }) => {
-    history.push(BASE_PATH + '/' + value);
+    if (value === 'load') goTo(PATHS.LOAD);
+    if (value === 'save') goTo(PATHS.SAVE);
   };
   let loadClasses = 'tab';
   let saveClasses = loadClasses;

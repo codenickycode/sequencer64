@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'App/shared/Button';
 import { KitIcon, TapIcon } from 'assets/icons';
 import { MODES, setMode } from 'App/reducers/editorSlice';
-import { useHistory, useLocation } from 'react-router';
-import { BASE_PATH } from 'App/App';
+import { useLocation } from 'react-router';
+import { PATHS, useGoTo } from 'utils/useGoTo';
 
 export const KitAndTapModeBtn = () => {
-  const history = useHistory();
+  const goTo = useGoTo();
   const pathname = useLocation().pathname;
-  const showingKits = pathname.match(/kits/);
+  const showingKits = pathname === PATHS.CHANGE_KIT;
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.editor.mode);
   const tapping = mode === MODES.TAP;
@@ -27,11 +27,9 @@ export const KitAndTapModeBtn = () => {
 
     const changeKit = () => {
       if (showingKits) {
-        dispatch(setMode(null));
-        history.push(BASE_PATH);
+        goTo(PATHS.BASE, () => dispatch(setMode(null)));
       } else {
-        dispatch(setMode(MODES.TAP));
-        history.push(pathname + '/kits');
+        goTo(PATHS.CHANGE_KIT, () => dispatch(setMode(MODES.TAP)));
       }
     };
 
@@ -60,6 +58,6 @@ export const KitAndTapModeBtn = () => {
         </Button>
       </>
     );
-  }, [dispatch, history, pathname, showingKits, tapping]);
+  }, [dispatch, goTo, showingKits, tapping]);
   return memo;
 };

@@ -4,14 +4,14 @@ import * as localKits from 'assets/kits/local';
 import { defaultSequences } from 'assets/sequences';
 import { deepCopyKits } from './functions/assets';
 
-const INITIAL_KITS = {
+const INITIAL_CHANGE_KIT = {
   ...deepCopyKits(remoteKits),
   ...deepCopyKits(localKits),
 };
 
 const INITIAL_STATE = {
-  kits: INITIAL_KITS,
-  numKits: Object.values(INITIAL_KITS).length,
+  kits: INITIAL_CHANGE_KIT,
+  numKits: Object.values(INITIAL_CHANGE_KIT).length,
   defaultSequences,
   userSequences: [],
 };

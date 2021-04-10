@@ -13,7 +13,7 @@ export const useFadeIn = (show) => {
     setTimeout(cb, FADE_TIMEOUT);
   };
 
-  const fadeInClass = fadeIn ? ' fade-in ' : ' fadeOut';
+  const fadeInClass = fadeIn ? ' fadeIn ' : ' fadeOut';
   return { fadeInClass, fadeOutThen };
 };
 

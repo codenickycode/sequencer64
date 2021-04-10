@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { PATHS } from 'utils/useGoTo';
 
 export const MODES = {
   TAP: 'TAP',
@@ -44,7 +45,9 @@ export const editorSlice = createSlice({
     },
     setSpAlert: (state, { payload }) => {
       state.spAlert.count++;
-      state.spAlert.message = `${state.spAlert.count}#${payload}`;
+      if (window.location.pathname === PATHS.CHANGE_KIT)
+        state.spAlert.message = '';
+      else state.spAlert.message = `${state.spAlert.count}#${payload}`;
     },
     setModVal: (state, { payload }) => {
       state.mods[state.mode] = payload;

@@ -14,7 +14,7 @@ export const Save = () => {
   const { link, copyLink } = useShareLink(idRef);
   // console.log('rendering: SaveSequence');
   return (
-    <div className='saveSequence'>
+    <div id='saveSequence' className='saveSequence'>
       <ShareJSX
         link={link}
         copyLink={copyLink}
