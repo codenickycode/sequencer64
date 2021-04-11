@@ -1,4 +1,3 @@
-// @use 'styles/colors' as *;
 @use 'styles/colors' as *;
 @use 'styles/spectrum' as *;
 @use 'styles/mixins' as *;
@@ -15,6 +14,7 @@
 @use 'App/Sequencer/MainSection/changeKit';
 @use 'App/Sequencer/SamplePanel/sampleEdit';
 @use 'App/Sequencer/SamplePanel/samplePanel';
+@use 'App/Sequencer/SamplePanel/analyzer';
 @use 'App/Sequencer/MenuBar/menuBar';
 @use 'App/Sequencer/MenuBar/menuItems';
 @use 'App/Login/loginPage';

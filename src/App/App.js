@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import store from 'App/store';
 import { setLog, setOnline } from 'App/reducers/appSlice';
 import { setWidthAndHeight } from 'utils/calcScreen';
-import { startTone } from './reducers/thunks/toneThunks';
 import { AppContent } from './AppContent';
 
 export default function App() {
@@ -29,14 +28,6 @@ window.wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 window.addEventListener('online', () => store.dispatch(setOnline(true)));
 window.addEventListener('offline', () => store.dispatch(setOnline(false)));
-
-const initialClick = async () => {
-  store.dispatch(startTone());
-  document.removeEventListener('touchstart', initialClick);
-  document.removeEventListener('mousedown', initialClick);
-};
-document.addEventListener('touchstart', initialClick);
-document.addEventListener('mousedown', initialClick);
 
 window.addEventListener('resize', handleResize);
 window.addEventListener('orientationchange', afterRotate);

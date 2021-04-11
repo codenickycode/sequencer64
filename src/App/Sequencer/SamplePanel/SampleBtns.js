@@ -1,7 +1,7 @@
 import * as Tone from 'tone';
 import { edit, MODES } from 'App/reducers/editorSlice';
-import { Kit } from 'App/reducers/toneSlice';
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { Kit } from 'App/Tone';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTouchAndMouse } from 'utils/useTouchAndMouse';
 import * as icons from 'assets/icons/kit';

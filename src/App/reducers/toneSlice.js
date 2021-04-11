@@ -18,14 +18,6 @@ const INITIAL_STATE = {
   loadingError: { error: false, count: 0 },
 };
 
-const mainBus = Tone.getDestination();
-mainBus.volume.value = -12;
-export const fft = new Tone.FFT(64);
-mainBus.chain(fft);
-console.log(fft.getValue());
-
-export const Kit = { name: 'init', samples: [{}] };
-
 export const toneSlice = createSlice({
   name: 'tone',
   initialState: INITIAL_STATE,

@@ -20,7 +20,7 @@ import {
 } from '../toneSlice';
 import { setFetchingSamples } from '../assetsSlice';
 import { setStatus } from '../appSlice';
-import { Kit } from 'App/reducers/toneSlice';
+import { Kit } from 'App/Tone';
 
 export const startTone = (start) => async (dispatch) => {
   await Tone.start();

@@ -1,6 +1,6 @@
 import * as Tone from 'tone';
 import { NETWORK_TIMEOUT } from 'utils/network';
-import { Kit } from 'App/reducers/toneSlice';
+import { Kit } from 'App/Tone';
 
 export const disposeSamplers = () => {
   for (let sample of Kit.samples) {
