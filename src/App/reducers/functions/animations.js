@@ -1,4 +1,7 @@
+import store from 'App/store';
+import { fft } from 'App/Tone';
 import * as Tone from 'tone';
+import { startSequence } from '../toneSlice';
 
 export const startFlashing = () => {
   const flashingCells = document.querySelectorAll('.flashing');
@@ -51,3 +54,42 @@ export const animateSample = (time, step) => {
     });
   }, time);
 };
+
+let freqs, spectrum, i, db, prevDb, newDb;
+const prevDbs = new Array(36);
+let drawAnalyzer;
+export const startAnalyzer = () => {
+  freqs = document.querySelectorAll('.freq');
+  drawAnalyzer = requestAnimationFrame(animateAnalyzer);
+};
+export const stopAnalyzer = () => cancelAnimationFrame(drawAnalyzer);
+
+let fps = 60;
+let interval = 1000 / fps;
+let then = Date.now();
+let now, elapsed;
+function animateAnalyzer() {
+  now = Date.now();
+  elapsed = now - then;
+  if (elapsed > interval) {
+    then = now;
+    spectrum = fft.getValue();
+    freqs.forEach((freq, index) => {
+      i = index + 3;
+      db = spectrum[i] * 1000;
+      if (db > 1) db = 1;
+      prevDb = prevDbs[i] + 0.25;
+      newDb = db < prevDb ? 0 : db;
+      prevDbs[i] = db;
+      if (newDb !== prevDb) {
+        freq.style.transitionDuration = newDb ? '60ms' : '2s';
+        freq.style.transform = `scale(${newDb})`;
+      }
+    });
+  }
+  requestAnimationFrame(animateAnalyzer);
+}
+
+document.addEventListener('keydown', () => {
+  store.dispatch(startSequence());
+});

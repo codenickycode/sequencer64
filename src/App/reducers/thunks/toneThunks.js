@@ -4,6 +4,7 @@ import {
   animateSample,
   removeCursor,
   startFlashing,
+  stopAnalyzer,
 } from 'App/reducers/functions/animations';
 import {
   buildSamplers,
@@ -90,6 +91,7 @@ export const startSequence = () => async (dispatch, getState) => {
 
 export const stopSequence = () => (dispatch, getState) => {
   stopAndCancelEvents();
+  stopAnalyzer();
   removeCursor(getState().sequence.present.length, getState().tone.step);
   startFlashing();
   dispatch(stopSequenceFinally());

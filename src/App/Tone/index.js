@@ -11,10 +11,10 @@ document.addEventListener('touchstart', initialClick);
 document.addEventListener('mousedown', initialClick);
 
 const mainBus = Tone.getDestination();
-mainBus.volume.value = -12;
+mainBus.volume.value = -6;
 
-export const fft = new Tone.FFT({ size: 64, normalRange: true, smoothing: 1 });
-export const meter = new Tone.Meter({ normalRange: true });
-mainBus.chain(fft, meter);
+export const fft = new Tone.FFT({ size: 32, normalRange: true });
+export const limiter = new Tone.Limiter(-20);
+mainBus.chain(limiter, fft);
 
 export const Kit = { name: 'init', samples: [{}] };

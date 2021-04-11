@@ -7,19 +7,20 @@
   z-index: 2;
   top: 0;
   border-radius: 0;
-  @extend %bg90;
+  background: $black;
 
-  .overlay {
-    position: absolute;
-    z-index: 3;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 1rem;
-    @extend %bg90;
-  }
+  // .overlay {
+  //   position: absolute;
+  //   z-index: 3;
+  //   top: 50%;
+  //   left: 50%;
+  //   transform: translate(-50%, -50%);
+  //   padding: 1rem;
+  //   @extend %bg90;
+  // }
 
   .freqs {
+    // border: 1px solid red;
     @extend %full;
     @include flex;
     overflow: hidden;
@@ -27,11 +28,10 @@
 
   .freq {
     @extend %full;
-    @extend %bg;
-    margin: 0 2px;
     border-radius: 0;
-    transform: scaleY(0);
     transform-origin: bottom;
-    transition-timing-function: ease;
+    transition-timing-function: ease-out;
+    border-radius: 0%;
+    transform: scale(0.02);
   }
 }

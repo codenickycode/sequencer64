@@ -12,6 +12,12 @@ export const INITIAL_USER = {
   loggedIn: false,
 };
 
+export const getBigEnough = () => {
+  const samplePanel = document.getElementById('samplePanel');
+  const enoughSpace = samplePanel?.clientHeight > 700;
+  return enoughSpace;
+};
+
 const INITIAL_STATE = {
   user: { ...INITIAL_USER },
   status: { count: 0, message: 'loading' },
@@ -23,6 +29,7 @@ const INITIAL_STATE = {
   serviceWorkerActive: false,
   theme: getLS('theme') || 'Joker',
   landscape: window.innerWidth > window.innerHeight,
+  bigEnough: getBigEnough(),
   log: { count: 0, message: '' },
 };
 
@@ -65,6 +72,9 @@ export const appSlice = createSlice({
     setLandscape: (state, { payload }) => {
       state.landscape = payload;
     },
+    setBigEnough: (state, { payload }) => {
+      state.bigEnough = payload;
+    },
     setLog: (state, { payload }) => {
       state.log.count++;
       state.log.message = payload;
@@ -104,6 +114,7 @@ export const {
   setServiceWorkerActive,
   setTheme,
   setLandscape,
+  setBigEnough,
   setLog,
   updateSequencesFinally,
   getUserFinally,
