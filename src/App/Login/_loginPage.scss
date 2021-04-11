@@ -1,18 +1,16 @@
 @use 'styles/placeholders' as *;
+@use 'styles/mixins' as *;
 
 .loginPage {
   position: absolute;
   z-index: 201;
   pointer-events: initial;
-  height: auto;
+  // height: auto;
   min-height: 100%;
   width: 100%;
   @extend %bg90;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow-y: scroll;
+  @include flex(column);
+  // overflow-y: scroll;
 }
 
 h1 {

@@ -16,7 +16,13 @@ export const Analyzer = () => {
     return (
       <div
         id='analyzer'
-        className={!splitSamplePanel ? 'analyzer overGrid' : 'analyzer'}
+        className={
+          !splitSamplePanel
+            ? analyzerOn
+              ? 'analyzer overGrid show'
+              : 'analyzer overGrid'
+            : 'analyzer'
+        }
       >
         <div className={showOverlay ? 'overlay show' : 'overlay'}>
           {tapping ? (

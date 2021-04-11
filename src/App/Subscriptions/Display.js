@@ -2,6 +2,7 @@ import {
   getSplitSamplePanel,
   setSplitSamplePanel,
   setAnalyzerOn,
+  setShowDisplayMenu,
 } from 'App/reducers/appSlice';
 import { MODES } from 'App/reducers/editorSlice';
 import { useEffect } from 'react';
@@ -13,6 +14,23 @@ export const Display = () => {
   const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
   const analyzerOn = useSelector((state) => state.app.analyzerOn);
   const mode = useSelector((state) => state.editor.mode);
+  const showDisplayMenu = useSelector((state) => state.app.showDisplayMenu);
+
+  useEffect(() => {
+    if (!showDisplayMenu) return;
+    function closeDisplayMenu(e) {
+      if (
+        !e.target.classList.contains('displayMenuBtn') &&
+        !e.target.classList.contains('displayMenuSub')
+      )
+        dispatch(setShowDisplayMenu(false));
+    }
+
+    document.addEventListener('click', closeDisplayMenu);
+    return () => {
+      document.removeEventListener('click', closeDisplayMenu);
+    };
+  }, [dispatch, showDisplayMenu]);
 
   useEffect(() => {
     const newSplitSamplePanel = getSplitSamplePanel();
@@ -26,10 +44,10 @@ export const Display = () => {
     if (!splitSamplePanel && analyzerOn) {
       const analyzer = document.getElementById('analyzer');
       if (!mode || mode === MODES.TAP) {
-        if (analyzer) analyzer.style.display = 'initial';
+        if (analyzer) analyzer.style.opacity = 1;
       }
       if (mode && mode !== MODES.TAP) {
-        if (analyzer) analyzer.style.display = 'none';
+        if (analyzer) analyzer.style.opacity = 0;
       }
     }
   });

@@ -13,13 +13,21 @@ export const Display = () => {
   const dispatch = useDispatch();
   const showDisplayMenu = useSelector((state) => state.app.showDisplayMenu);
 
+  const onClick = useCallback(
+    (e) => {
+      console.log(e);
+      dispatch(setShowDisplayMenu(!showDisplayMenu));
+    },
+    [dispatch, showDisplayMenu]
+  );
+
   const memo = useMemo(() => {
     return (
       <div className='displayBtnWrapper'>
         <Button
           id='displayBtn'
           classes={showDisplayMenu ? 'menuBtn active' : 'menuBtn'}
-          onClick={() => dispatch(setShowDisplayMenu(!showDisplayMenu))}
+          onClick={onClick}
         >
           <TVIcon />
           <label htmlFor='displayBtn'>display</label>
@@ -27,7 +35,7 @@ export const Display = () => {
         <Themes />
       </div>
     );
-  }, [dispatch, showDisplayMenu]);
+  }, [onClick, showDisplayMenu]);
   return memo;
 };
 
@@ -64,7 +72,7 @@ const Themes = () => {
   const memo = useMemo(() => {
     return (
       <div className={showDisplayMenu ? 'displayMenu show' : 'displayMenu'}>
-        <div className='sub'>Themes</div>
+        <div className='displayMenuSub'>Themes</div>
         <Button
           id={`${THEMES.JOKER}Theme`}
           classes={
@@ -110,7 +118,7 @@ const Themes = () => {
         >
           <label htmlFor={`${THEMES.WHITE}Theme`}>{THEMES.WHITE}</label>
         </Button>
-        <div className='sub'>Analyzer</div>
+        <div className='displayMenuSub'>Analyzer</div>
         <Button
           id='toggleAnalyzer'
           classes={analyzerOn ? 'displayMenuBtn active' : 'displayMenuBtn'}

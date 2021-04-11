@@ -12,7 +12,12 @@
 
   &.overGrid {
     position: absolute;
-    @extend %bg3q;
+    display: none;
+
+    &.show {
+      display: flex;
+      @extend %bg3q;
+    }
 
     .freqs {
       transform: rotate(-90deg);
@@ -49,7 +54,7 @@
     transform-origin: center;
     transition-timing-function: ease-out;
     border-radius: 0;
-    transform: scale(0.1, 0);
+    transform: scale(0.1, 0.02);
     @extend %bgGradient;
 
     &.pause {
