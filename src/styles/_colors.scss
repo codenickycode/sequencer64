@@ -255,6 +255,24 @@ $red: rgb(232, 12, 48);
   }
 }
 
+%bgMenuBarHalf {
+  .themeJoker & {
+    background: $joker-darkest-half;
+  }
+  .themeNES & {
+    background: $nes-grey-darkest-half;
+  }
+  .themeTMNT & {
+    background: $tmnt-grey-darkest-half;
+  }
+  .themeBlack & {
+    background: $black-half;
+  }
+  .themeWhite & {
+    background: $white-half;
+  }
+}
+
 %bgGradient {
   .themeJoker & {
     background: linear-gradient($joker-dark, $joker, $joker-dark);
@@ -309,6 +327,12 @@ $red: rgb(232, 12, 48);
 }
 .borderActive {
   @extend %borderActive;
+}
+@mixin borderActive {
+  border: 1px solid $white;
+  .themeWhite & {
+    border: 1px solid $black;
+  }
 }
 
 %borderHalf {

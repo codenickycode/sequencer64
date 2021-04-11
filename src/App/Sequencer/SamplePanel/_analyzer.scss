@@ -10,6 +10,15 @@
   @extend %bgBlack;
   @include flex;
 
+  &.overGrid {
+    position: absolute;
+    @extend %bg3q;
+
+    .freqs {
+      transform: rotate(-90deg);
+    }
+  }
+
   .overlay {
     @extend %fullAbs;
     top: 0;

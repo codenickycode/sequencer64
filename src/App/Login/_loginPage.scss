@@ -1,6 +1,8 @@
 @use 'styles/placeholders' as *;
 
 .loginPage {
+  position: absolute;
+  z-index: 201;
   pointer-events: initial;
   height: auto;
   min-height: 100%;

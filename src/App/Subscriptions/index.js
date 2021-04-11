@@ -1,7 +1,7 @@
 import { Notifications } from './Notifications';
 import { GetUser } from './GetUser';
 import { Storage } from './Storage';
-import { Theme } from './Theme';
+import { Display } from './Display';
 import { Transport } from './Transport';
 
 export const Subscriptions = () => {
@@ -11,7 +11,7 @@ export const Subscriptions = () => {
       <GetUser />
       <Storage />
       <Transport />
-      <Theme />
+      <Display />
     </>
   );
 };

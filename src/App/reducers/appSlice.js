@@ -1,10 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getLS, getSS } from 'utils/storage';
+import { getLS } from 'utils/storage';
 import * as appThunks from './thunks/appThunks';
-
-export const VIEWS = {
-  THEMES: 'THEMES',
-};
 
 export const INITIAL_USER = {
   _id: '',
@@ -12,7 +8,7 @@ export const INITIAL_USER = {
   loggedIn: false,
 };
 
-export const getBigEnough = () => {
+export const getSplitSamplePanel = () => {
   const samplePanel = document.getElementById('samplePanel');
   const enoughSpace = samplePanel?.clientHeight > 500;
   return enoughSpace;
@@ -21,7 +17,6 @@ export const getBigEnough = () => {
 const INITIAL_STATE = {
   user: { ...INITIAL_USER },
   status: { count: 0, message: 'loading' },
-  show: getSS('show') || '',
   fetching: false,
   confirmation: '',
   error: '',
@@ -29,7 +24,9 @@ const INITIAL_STATE = {
   serviceWorkerActive: false,
   theme: getLS('theme') || 'Joker',
   landscape: window.innerWidth > window.innerHeight,
-  bigEnough: getBigEnough(),
+  splitSamplePanel: null,
+  analyzerOn: null,
+  showDisplayMenu: false,
   log: { count: 0, message: '' },
 };
 
@@ -37,11 +34,6 @@ export const appSlice = createSlice({
   name: 'app',
   initialState: INITIAL_STATE,
   reducers: {
-    setShow: (state, { payload }) => {
-      state.show = payload;
-      state.confirmation = '';
-      state.error = '';
-    },
     setUser: (state, { payload: { user, message } }) => {
       state.user = user;
       state.status.count++;
@@ -72,8 +64,14 @@ export const appSlice = createSlice({
     setLandscape: (state, { payload }) => {
       state.landscape = payload;
     },
-    setBigEnough: (state, { payload }) => {
-      state.bigEnough = payload;
+    setSplitSamplePanel: (state, { payload }) => {
+      state.splitSamplePanel = payload;
+    },
+    setAnalyzerOn: (state, { payload }) => {
+      state.analyzerOn = payload;
+    },
+    setShowDisplayMenu: (state, { payload }) => {
+      state.showDisplayMenu = payload;
     },
     setLog: (state, { payload }) => {
       state.log.count++;
@@ -104,7 +102,7 @@ export const appSlice = createSlice({
 });
 
 export const {
-  setShow,
+  setAnalyzerOn,
   setUser,
   setStatus,
   setFetching,
@@ -113,8 +111,9 @@ export const {
   setOnline,
   setServiceWorkerActive,
   setTheme,
+  setShowDisplayMenu,
   setLandscape,
-  setBigEnough,
+  setSplitSamplePanel,
   setLog,
   updateSequencesFinally,
   getUserFinally,

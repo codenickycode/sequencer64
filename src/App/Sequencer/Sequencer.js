@@ -7,10 +7,12 @@ import { Menu } from 'App/Sequencer/MenuBar/MenuBar';
 import { loadInitialSequence } from 'App/reducers/sequenceSlice';
 // import { MobileConsole } from 'App/MobileConsole';
 import { PATHS } from 'utils/useGoTo';
+import { Analyzer } from './SamplePanel/Analyzer';
 
 export const SequencerPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
   const { shared } = useParams();
   const pathname = useLocation().pathname;
   const initialLoad = useSelector(
@@ -36,6 +38,7 @@ export const SequencerPage = () => {
         <div className='mainContainer'>
           <div id='main'>
             <Grid />
+            {!splitSamplePanel && <Analyzer />}
             <div id='changeKitPortal' />
             <div id='pastePatternPortal' />
             {/* <MobileConsole /> */}
@@ -47,6 +50,6 @@ export const SequencerPage = () => {
         <Menu />
       </div>
     );
-  }, [initialLoad]);
+  }, [initialLoad, splitSamplePanel]);
   return memo;
 };

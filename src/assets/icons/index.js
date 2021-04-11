@@ -34,6 +34,7 @@ import { ReactComponent as CloudOffline } from 'assets/icons/cloud-offline.svg';
 import { ReactComponent as Check } from 'assets/icons/check-bold.svg';
 import { ReactComponent as Twitter } from 'assets/icons/social/twitter.svg';
 import { ReactComponent as Facebook } from 'assets/icons/social/facebook.svg';
+import { ReactComponent as TV } from 'assets/icons/tv.svg';
 
 export const ChevronDownIcon = ({ addClass = '' }) => (
   <ChevronDown className={addClass + ' icon chevron-down'} />
@@ -160,6 +161,10 @@ export const FacebookIcon = ({ addClass = '' }) => (
 
 export const TapIcon = ({ addClass = '' }) => (
   <Tap className={addClass + ' icon'} />
+);
+
+export const TVIcon = ({ addClass = '' }) => (
+  <TV className={addClass + ' icon'} />
 );
 
 export const PointUpIcon = ({ addClass = '' }) => (

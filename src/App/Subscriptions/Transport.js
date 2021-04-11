@@ -7,6 +7,7 @@ import {
   startSequence,
 } from 'App/reducers/toneSlice';
 import { changeKit } from 'App/reducers/sequenceSlice';
+import { startAnalyzer, stopAnalyzer } from 'App/reducers/functions/animations';
 
 export const Transport = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,14 @@ export const Transport = () => {
   const loadingSamples = useSelector((state) => state.tone.loadingSamples);
   const sequenceBpm = useSelector((state) => state.sequence.present.bpm);
   const sequenceKitName = useSelector((state) => state.sequence.present.kit);
+
+  const transportState = useSelector((state) => state.tone.transportState);
+  const analyzerOn = useSelector((state) => state.app.analyzerOn);
+
+  useEffect(() => {
+    if (transportState === 'started' && analyzerOn) startAnalyzer();
+    if (transportState !== 'started' && analyzerOn) stopAnalyzer();
+  }, [analyzerOn, transportState]);
 
   useEffect(() => {
     Tone.Transport.bpm.value = sequenceBpm;

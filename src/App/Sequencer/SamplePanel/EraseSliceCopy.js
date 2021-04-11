@@ -11,6 +11,7 @@ export const Erase = ({ onReturn, landscape }) => {
   const disabled = useSelector(
     (state) => state.sequence.present.noteTally[selectedSample].empty
   );
+  const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
 
   useEffect(() => {
     if (disabled) onReturn();
@@ -22,7 +23,7 @@ export const Erase = ({ onReturn, landscape }) => {
 
   // console.log('rendering: Erase');
   return (
-    <div className='detail'>
+    <div className={splitSamplePanel ? 'detail' : 'detail dark'}>
       <Button classes='close' onClick={onReturn}>
         <ChevronLeftIcon />
       </Button>
@@ -42,13 +43,14 @@ export const Erase = ({ onReturn, landscape }) => {
 export const Slice = ({ onReturn, landscape }) => {
   const dispatch = useDispatch();
   const selectedSample = useSelector((state) => state.editor.selectedSample);
+  const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
 
   // console.log('rendering: Slice');
   const onReset = () => {
     dispatch(resetSlice(selectedSample));
   };
   return (
-    <div className='detail'>
+    <div className={splitSamplePanel ? 'detail' : 'detail dark'}>
       <Button classes='close' onClick={onReturn}>
         <ChevronLeftIcon />
       </Button>
@@ -64,8 +66,10 @@ export const Slice = ({ onReturn, landscape }) => {
 };
 
 export const Copy = ({ onReturn, landscape }) => {
+  const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
+
   return (
-    <div className='detail'>
+    <div className={splitSamplePanel ? 'detail' : 'detail dark'}>
       <Button classes='close' onClick={onReturn}>
         <ChevronLeftIcon />
       </Button>

@@ -75,6 +75,7 @@
   .editMenu {
     @extend %fullAbs;
     top: 0;
+    left: 0;
     z-index: 5;
     @extend %bg3q;
     white-space: nowrap;
@@ -82,6 +83,10 @@
     overflow-y: hidden;
     @extend %borderHalf;
     border-radius: 0;
+
+    &.dark {
+      @extend %bg90;
+    }
 
     &.flex {
       @include flex(row, space-evenly);
@@ -104,7 +109,7 @@
       &.dummy {
         min-height: 100%;
         width: 3.5rem;
-        border-color: red;
+        border: none !important;
       }
 
       @media (hover: hover) {

@@ -5,9 +5,9 @@ import { EraseBtn } from 'App/Sequencer/MenuBar/EraseBtn';
 import { LoadSaveBtn } from 'App/Sequencer/MenuBar/LoadSaveBtn';
 import { KitAndTapModeBtn } from 'App/Sequencer/MenuBar/KitAndTapModeBtn';
 import { ScrollLeft, ScrollRight } from 'App/shared/Button';
-import { ChangeTheme } from './ChangeTheme';
+import { Display } from './Display';
 import { MODES, setMode } from 'App/reducers/editorSlice';
-import { setShow, VIEWS } from 'App/reducers/appSlice';
+import { setShowDisplayMenu } from 'App/reducers/appSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { PATHS, useGoTo } from 'utils/useGoTo';
@@ -17,7 +17,7 @@ export const Menu = () => {
   const pathname = useLocation().pathname;
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.editor.mode);
-  const show = useSelector((state) => state.app.show);
+  const showDisplayMenu = useSelector((state) => state.app.showDisplayMenu);
 
   const menuRef = useRef(null);
   const scrollbarRef = useRef(null);
@@ -59,7 +59,8 @@ export const Menu = () => {
 
   const resetView = () => {
     if (mode === MODES.TAP) dispatch(setMode(null));
-    if (show === VIEWS.THEMES) dispatch(setShow(''));
+
+    if (showDisplayMenu) dispatch(setShowDisplayMenu(false));
     if (pathname === PATHS.CHANGE_KIT) goTo(PATHS.BASE);
   };
 
@@ -98,7 +99,7 @@ export const Menu = () => {
         <UndoRedoBtn />
         <EraseBtn />
         <div className='dummy'>|</div>
-        <ChangeTheme />
+        <Display />
       </div>
       <div ref={scrollbarRef} className='scrollbar'>
         <ScrollLeft fwdRef={leftRef} onClick={() => scroll('left')} />

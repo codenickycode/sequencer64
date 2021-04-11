@@ -1,15 +1,9 @@
-import { VIEWS } from 'App/reducers/appSlice';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { setLS, setSS } from 'utils/storage';
+import { setLS } from 'utils/storage';
 
 export const Storage = () => {
-  const show = useSelector((state) => state.app.show);
   const theme = useSelector((state) => state.app.theme);
-
-  useEffect(() => {
-    if (show !== VIEWS.THEMES && show !== VIEWS.CHANGE_KIT) setSS('show', show);
-  }, [show]);
 
   useEffect(() => {
     setLS('theme', theme);

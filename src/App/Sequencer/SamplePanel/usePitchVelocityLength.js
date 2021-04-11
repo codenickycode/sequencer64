@@ -11,6 +11,8 @@ export const usePitchVelocityLength = (mode) => {
   const [value, setValue] = useState(
     mode === MODES.MOD_PITCH ? MIDI_NOTES[24] : 0.5
   );
+  const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
+  const detailClass = splitSamplePanel ? 'detail col' : 'detail col dark';
 
   const dispatchModAll = useCallback(() => {
     dispatch(
@@ -64,5 +66,13 @@ export const usePitchVelocityLength = (mode) => {
     dispatch(resetMods({ selectedSample, type: mode }));
   };
 
-  return { value, onChange, onTouchEnd, onReset, toggleAll, editAll };
+  return {
+    detailClass,
+    value,
+    onChange,
+    onTouchEnd,
+    onReset,
+    toggleAll,
+    editAll,
+  };
 };

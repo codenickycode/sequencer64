@@ -24,7 +24,6 @@
     width: 2rem;
     text-align: center;
     font-style: initial;
-    // border: 1px solid red;
   }
 
   .menuBtn {
@@ -34,10 +33,6 @@
     height: 100%;
     background: transparent;
     border: none;
-
-    @media (orientation: landscape) {
-      // flex-direction: row;
-    }
 
     &.tap,
     &.kit {
@@ -56,7 +51,6 @@
       }
       &.tap {
         border-color: $green;
-        // animation: flashing 400ms alternate infinite;
       }
     }
 
@@ -143,46 +137,60 @@
   }
 }
 
-#themesPortal {
-  pointer-events: none;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  z-index: 1000;
-  bottom: 10%;
+.displayBtnWrapper {
+  @extend %btn;
+  @include flex(column);
+  margin: 0 0.5rem;
+  height: 100%;
+  background: transparent;
+  border-color: $color-none;
+  padding: 0;
 }
 
-.themes {
+.displayMenu {
   pointer-events: initial;
-  position: absolute;
-  bottom: 0;
+  position: fixed;
+  bottom: 10%;
   right: 0;
-  width: 50%;
+  width: 100%;
   max-width: 250px;
   @include flex(column);
-  @extend %bgMenuBar;
+  @extend %bgMenuBarHalf;
   opacity: 0;
   transform: scaleY(0);
   transform-origin: bottom;
   transition: 150ms;
+  z-index: 1000;
 
   &.show {
     opacity: 1;
     transform: scaleY(1);
   }
 
-  .themeBtn {
+  .displayMenuBtn {
     @extend %btn;
-    @extend %bgMenuBar;
-    border: none;
+    @extend %bgMenuBarHalf;
+    border: 1px solid $color-none;
     border-radius: 0;
     margin-bottom: 0.5rem;
     width: 100%;
 
     &.active {
-      @extend %borderActive;
+      // @extend %borderActive;
       @extend %bgBtnFull;
     }
+
+    @media (hover: hover) {
+      &:hover {
+        @include borderActive;
+      }
+    }
+  }
+
+  .sub {
+    cursor: initial;
+    padding: 0.5rem;
+    align-self: flex-start;
   }
 }
 

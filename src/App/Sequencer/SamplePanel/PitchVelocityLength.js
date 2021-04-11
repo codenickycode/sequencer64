@@ -8,6 +8,7 @@ import { useTouchAndMouse } from 'utils/useTouchAndMouse';
 
 export const PitchVelocityLength = ({ onReturn, mode }) => {
   const {
+    detailClass,
     value,
     onChange,
     onTouchEnd,
@@ -23,7 +24,7 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
   );
 
   return (
-    <div className='detail col'>
+    <div className={detailClass}>
       <Button classes='close' onClick={onReturn}>
         <ChevronLeftIcon />
       </Button>
@@ -68,8 +69,7 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
             />
             <div className='modValueWrapper'>
               <label htmlFor='modSlider' className='modLabel'>
-                {mode && mode.substr(0, 1).toUpperCase() + mode.substr(1)}{' '}
-                Value:
+                Apply value:
               </label>
               <p className='mod-value'>{value}</p>
             </div>

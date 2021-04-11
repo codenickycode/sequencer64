@@ -3,9 +3,7 @@ import * as Tone from 'tone';
 import {
   addCursor,
   pauseFlashing,
-  startAnalyzer,
   startFlashing,
-  stopAnalyzer,
 } from 'App/reducers/functions/animations';
 import * as toneThunks from './thunks/toneThunks';
 
@@ -46,7 +44,6 @@ export const toneSlice = createSlice({
     },
     pauseSequence: (state) => {
       Tone.Transport.pause();
-      stopAnalyzer();
       pauseFlashing();
       addCursor(state.step);
       startFlashing();
@@ -62,7 +59,6 @@ export const toneSlice = createSlice({
       state.restarting = false;
       state.transportState = 'started';
       Tone.Transport.start();
-      startAnalyzer();
     },
     stopSequenceFinally: (state) => {
       state.step = 0;

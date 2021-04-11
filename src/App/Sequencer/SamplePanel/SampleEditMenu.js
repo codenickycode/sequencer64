@@ -12,16 +12,12 @@ import {
 import { useLayoutEffect, useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
-export const SampleEditMenu = ({
-  selectMode,
-  onClose,
-  bigEnough,
-  showingAnalyzer,
-}) => {
+export const SampleEditMenu = ({ selectMode, onClose }) => {
   const selectedSample = useSelector((state) => state.editor.selectedSample);
   const disabled = useSelector(
     (state) => state.sequence.present.noteTally[selectedSample].empty
   );
+  const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
 
   const ref = useRef();
   useLayoutEffect(() => {
@@ -37,13 +33,15 @@ export const SampleEditMenu = ({
   const memo = useMemo(() => {
     // console.log('rendering: SampleEditMenu');
     return (
-      <div ref={ref} id='editMenu' className={'editMenu'}>
-        {!showingAnalyzer && (
-          <Button classes='close' onClick={onClose}>
-            <CloseIcon />
-          </Button>
-        )}
-        {!bigEnough && <div className='sampleMenuBtn dummy' />}
+      <div
+        ref={ref}
+        id='editMenu'
+        className={!splitSamplePanel ? 'editMenu dark' : 'editMenu'}
+      >
+        <Button classes='close' onClick={onClose}>
+          <CloseIcon />
+        </Button>
+        <div className='sampleMenuBtn dummy' />
         <Button
           classes='sampleMenuBtn'
           disabled={disabled}
@@ -90,6 +88,6 @@ export const SampleEditMenu = ({
         </Button>
       </div>
     );
-  }, [bigEnough, disabled, onClose, selectMode, showingAnalyzer]);
+  }, [disabled, onClose, selectMode, splitSamplePanel]);
   return memo;
 };

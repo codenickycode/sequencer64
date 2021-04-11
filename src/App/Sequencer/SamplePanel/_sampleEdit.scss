@@ -11,10 +11,15 @@
   .detail {
     @extend %fullAbs;
     top: 0;
+    left: 0;
     z-index: 5;
     @extend %bg3q;
     @include flex(row, space-evenly);
     overflow: hidden;
+
+    &.dark {
+      @extend %bg90;
+    }
 
     @media (orientation: landscape) {
       .dummy {
