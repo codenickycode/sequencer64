@@ -9,6 +9,10 @@
     // border: 1px solid red;
   }
 
+  .spTop {
+    @extend %full;
+  }
+
   #samplePanelBorder {
     @extend %noEventsLayerAbs;
     @extend %borderActive;
@@ -21,7 +25,6 @@
 
   .menu {
     @extend %full;
-    max-height: 250px;
     padding: 0.25rem;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -69,17 +72,14 @@
     }
   }
 
-  .editMenuWrapper {
-    @extend %full;
-    max-height: 250px;
-  }
-
   .editMenu {
-    @extend %full;
+    @extend %fullAbs;
+    top: 0;
+    z-index: 5;
+    @extend %bg3q;
     white-space: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
-    @extend %bg;
     @extend %borderHalf;
     border-radius: 0;
 

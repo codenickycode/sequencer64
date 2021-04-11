@@ -94,7 +94,8 @@ function animateAnalyzer() {
       if (newDb !== prevDb) {
         freq.style.transitionDuration = newDb ? '60ms' : '1s';
         freq.style.transform = `scale(.2, ${newDb})`;
-        freq.style.filter = `blur(${50 - newDb * 50}px)`;
+        const blur = 50 - newDb * 100;
+        freq.style.filter = `blur(${blur < 0 ? 0 : blur}px)`;
         freq.style.opacity = newDb + 0.5;
       }
     });

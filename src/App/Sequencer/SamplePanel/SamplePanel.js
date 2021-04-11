@@ -39,29 +39,27 @@ export const SamplePanel = () => {
 
     return bigEnough ? (
       <>
-        <div className='editMenuWrapper'>
+        <div className='spTop'>
           <Analyzer />
-        </div>
-        {mode === MODES.PAINT ? (
-          <div className='editMenuWrapper'>
+          {mode === MODES.PAINT ? (
             <SampleEditMenu
               selectMode={selectMode}
               onClose={onClose}
               bigEnough={bigEnough}
               showingAnalyzer={!mode}
             />
-          </div>
-        ) : mode === MODES.ERASE ? (
-          <Erase onReturn={onReturn} landscape={landscape} />
-        ) : mode === MODES.SLICE ? (
-          <Slice onReturn={onReturn} landscape={landscape} />
-        ) : mode === MODES.COPY ? (
-          <Copy onReturn={onReturn} landscape={landscape} />
-        ) : mode === MODES.MOD_PITCH ||
-          mode === MODES.MOD_VELOCITY ||
-          mode === MODES.MOD_LENGTH ? (
-          <PitchVelocityLength onReturn={onReturn} mode={mode} />
-        ) : null}
+          ) : mode === MODES.ERASE ? (
+            <Erase onReturn={onReturn} landscape={landscape} />
+          ) : mode === MODES.SLICE ? (
+            <Slice onReturn={onReturn} landscape={landscape} />
+          ) : mode === MODES.COPY ? (
+            <Copy onReturn={onReturn} landscape={landscape} />
+          ) : mode === MODES.MOD_PITCH ||
+            mode === MODES.MOD_VELOCITY ||
+            mode === MODES.MOD_LENGTH ? (
+            <PitchVelocityLength onReturn={onReturn} mode={mode} />
+          ) : null}
+        </div>
         <SampleBtns />
       </>
     ) : (

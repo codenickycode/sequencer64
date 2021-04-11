@@ -9,23 +9,14 @@
   }
 
   .detail {
-    @extend %full;
-    max-height: 250px;
+    @extend %fullAbs;
+    top: 0;
+    z-index: 5;
+    @extend %bg3q;
     @include flex(row, space-evenly);
-    padding: 0.5rem;
     overflow: hidden;
-    @extend %bg;
-    @extend %borderHalf;
-    border-radius: 0;
 
     @media (orientation: landscape) {
-      // top: 50%;
-      // transform: translateY(-50%);
-      // flex-direction: column-reverse;
-      // padding: 1rem;
-      // min-width: 100%;
-      // max-height: 500px;
-
       .dummy {
         display: none;
       }
@@ -39,9 +30,6 @@
         max-width: 2rem;
       }
     }
-    // .icon {
-    //   max-width: 5rem;
-    // }
 
     &.col {
       flex-direction: column;
