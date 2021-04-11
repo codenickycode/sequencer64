@@ -3,6 +3,12 @@
 @use 'styles/colors' as *;
 
 #samplePanel {
+  @include flex(column, space-evenly);
+
+  * {
+    // border: 1px solid red;
+  }
+
   #samplePanelBorder {
     @extend %noEventsLayerAbs;
     @extend %borderActive;
@@ -15,7 +21,7 @@
 
   .menu {
     @extend %full;
-    // max-height: 350px;
+    max-height: 350px;
     padding: 0.25rem;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -28,7 +34,6 @@
       @include flex();
       @extend %border;
       @extend %bgSampleBtn;
-      border: 2px solid red;
 
       @media (hover: hover) {
         &:hover {
@@ -66,35 +71,20 @@
 
   .editMenu {
     @extend %full;
+    max-height: 350px;
     white-space: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
     @extend %bg;
     @extend %borderHalf;
     border-radius: 0;
-    padding-left: 4rem;
 
     &.flex {
       @include flex(row, space-evenly);
     }
 
-    @media (orientation: landscape) {
-      white-space: initial;
-      overflow-x: hidden;
-      overflow-y: auto;
-
-      &.flex {
-        @include flex(column, space-evenly);
-      }
-    }
-
     .close.btn {
       @extend %closeBtnSmall;
-    }
-    .dummy {
-      position: absolute;
-      left: 0;
-      @extend %dummySmall;
     }
 
     .sampleMenuBtn {
@@ -102,9 +92,16 @@
       height: 100%;
       @include flex(column);
       display: inline-flex;
+      vertical-align: top;
       background: transparent;
-      border: none;
+      border: 1px solid $color-none;
       border-radius: 0.5rem;
+
+      &.dummy {
+        min-height: 100%;
+        width: 3.5rem;
+        border-color: red;
+      }
 
       @media (hover: hover) {
         &:hover {
@@ -112,26 +109,27 @@
         }
       }
 
-      @media (orientation: landscape) {
-        width: 100%;
-        height: 5rem;
-        margin-bottom: 0.5rem;
-        flex-direction: row;
-      }
-
       .icon {
         max-height: 4rem;
       }
 
       p {
+        padding: 0.25rem;
         width: 100%;
         @extend %text;
-
-        @media (orientation: landscape) {
-          text-align: left;
-        }
       }
     }
+  }
+}
+
+.sampleEditMenuOverlay {
+  @extend %noEventsLayerAbs;
+  z-index: 2;
+  @extend %bg90;
+  @include flex(column, space-evenly);
+  p {
+    padding: 1rem;
+    @extend %bg90;
   }
 }
 

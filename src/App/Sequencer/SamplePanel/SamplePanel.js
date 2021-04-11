@@ -1,37 +1,23 @@
-import * as Tone from 'tone';
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useLayoutEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { close, edit, setMode, MODES } from 'App/reducers/editorSlice';
-import {
-  CloseIcon,
-  CopyIcon,
-  LengthIcon,
-  EraserIcon,
-  PitchIcon,
-  SawIcon,
-  VelocityIcon,
-} from 'assets/icons';
-import * as icons from 'assets/icons/kit';
-import { Button } from 'App/shared/Button';
+import { close, setMode, MODES } from 'App/reducers/editorSlice';
 import { Erase, Slice, Copy } from 'App/Sequencer/SamplePanel/EraseSliceCopy';
 import { PitchVelocityLength } from 'App/Sequencer/SamplePanel/PitchVelocityLength';
 import { showEditable, hideEditable } from 'utils/toggleClasses';
-import { Kit } from 'App/shared/KitProvider';
-import { useTouchAndMouse } from 'utils/useTouchAndMouse';
+import { SampleEditMenu } from './SampleEditMenu';
+import { SampleBtns } from './SampleBtns';
 
 export const SamplePanel = () => {
   const dispatch = useDispatch();
 
   const mode = useSelector((state) => state.editor.mode);
   const landscape = useSelector((state) => state.app.landscape);
+
+  const [bigEnough, setBigEnough] = useState(false);
+  useLayoutEffect(() => {
+    const newBigEnough = getBigEnough();
+    if (newBigEnough !== bigEnough) setBigEnough(newBigEnough);
+  }, [bigEnough]);
 
   const spMemo = useMemo(() => {
     // console.log('rendering: SamplePanel');
@@ -49,10 +35,36 @@ export const SamplePanel = () => {
       dispatch(setMode(mode));
     };
 
-    return (
+    return bigEnough ? (
+      <>
+        {mode === MODES.PAINT || !mode ? (
+          <SampleEditMenu
+            selectMode={selectMode}
+            onClose={onClose}
+            bigEnough={bigEnough}
+            showingOverlay={!mode}
+          />
+        ) : mode === MODES.ERASE ? (
+          <Erase onReturn={onReturn} landscape={landscape} />
+        ) : mode === MODES.SLICE ? (
+          <Slice onReturn={onReturn} landscape={landscape} />
+        ) : mode === MODES.COPY ? (
+          <Copy onReturn={onReturn} landscape={landscape} />
+        ) : mode === MODES.MOD_PITCH ||
+          mode === MODES.MOD_VELOCITY ||
+          mode === MODES.MOD_LENGTH ? (
+          <PitchVelocityLength onReturn={onReturn} mode={mode} />
+        ) : null}
+        <SampleBtns />
+      </>
+    ) : (
       <>
         {mode === MODES.PAINT ? (
-          <SampleEditMenu selectMode={selectMode} onClose={onClose} />
+          <SampleEditMenu
+            selectMode={selectMode}
+            onClose={onClose}
+            bigEnough={bigEnough}
+          />
         ) : mode === MODES.ERASE ? (
           <Erase onReturn={onReturn} landscape={landscape} />
         ) : mode === MODES.SLICE ? (
@@ -66,160 +78,13 @@ export const SamplePanel = () => {
         )}
       </>
     );
-  }, [dispatch, landscape, mode]);
+  }, [bigEnough, dispatch, landscape, mode]);
 
   return spMemo;
 };
 
-const SampleEditMenu = ({ selectMode, onClose }) => {
-  const selectedSample = useSelector((state) => state.editor.selectedSample);
-  const disabled = useSelector(
-    (state) => state.sequence.present.noteTally[selectedSample].empty
-  );
-
-  const landscape = useSelector((state) => state.app.landscape);
-  const ref = useRef();
-  useLayoutEffect(() => {
-    if (!ref.current) return;
-    let isOverflown;
-    if (landscape) {
-      isOverflown = ref.current.scrollHeight > ref.current.clientHeight;
-    } else {
-      isOverflown = ref.current.scrollWidth > ref.current.clientWidth;
-    }
-    if (!isOverflown) {
-      ref.current.classList.add('flex');
-    } else {
-      ref.current.classList.remove('flex');
-    }
-  });
-
-  const memo = useMemo(() => {
-    // console.log('rendering: SampleEditMenu');
-    return (
-      <div ref={ref} id='editMenu' className={'editMenu'}>
-        <Button classes='close' onClick={onClose}>
-          <CloseIcon />
-        </Button>
-        <div className='dummy' />
-        <Button
-          classes='sampleMenuBtn'
-          disabled={disabled}
-          onClick={() => selectMode(MODES.ERASE)}
-        >
-          <EraserIcon />
-          <p>Erase</p>
-        </Button>
-        <Button
-          classes='sampleMenuBtn'
-          disabled={disabled}
-          onClick={() => selectMode(MODES.SLICE)}
-        >
-          <SawIcon />
-          <p>Slice</p>
-        </Button>
-        <Button classes='sampleMenuBtn' onClick={() => selectMode(MODES.COPY)}>
-          <CopyIcon />
-          <p>Copy</p>
-        </Button>
-        <Button
-          classes='sampleMenuBtn'
-          disabled={disabled}
-          onClick={() => selectMode(MODES.MOD_VELOCITY)}
-        >
-          <VelocityIcon />
-          <p>Velocity</p>
-        </Button>
-        <Button
-          classes='sampleMenuBtn'
-          disabled={disabled}
-          onClick={() => selectMode(MODES.MOD_LENGTH)}
-        >
-          <LengthIcon />
-          <p>Length</p>
-        </Button>
-        <Button
-          classes='sampleMenuBtn'
-          disabled={disabled}
-          onClick={() => selectMode(MODES.MOD_PITCH)}
-        >
-          <PitchIcon />
-          <p>Pitch</p>
-        </Button>
-      </div>
-    );
-  }, [disabled, onClose, selectMode]);
-  return memo;
-};
-
-const SampleBtns = () => {
-  const dispatch = useDispatch();
-  const sequenceKitName = useSelector((state) => state.sequence.present.kit);
-  const kit = useSelector((state) => state.assets.kits[sequenceKitName]);
-
-  const sampleBtnsMemo = useMemo(() => {
-    // console.log('rendering: SampleBtns');
-    const selectSample = (i) => {
-      dispatch(edit({ sample: i }));
-    };
-    return (
-      <div className='menu'>
-        {kit &&
-          kit.samples.map((sample, i) => (
-            <SampleBtn
-              key={`sample-menu-${sample.name}`}
-              i={i}
-              sample={sample}
-              selectSample={selectSample}
-            />
-          ))}
-        <div id='samplePanelBorder' />
-      </div>
-    );
-  }, [dispatch, kit]);
-  return sampleBtnsMemo;
-};
-
-const SampleBtn = ({ i, sample, selectSample }) => {
-  const { kitRef } = useContext(Kit);
-  const mode = useSelector((state) => state.editor.mode);
-  const tapping = mode === MODES.TAP;
-
-  const [flash, setFlash] = useState(false);
-  useEffect(() => {
-    if (flash) setTimeout(() => setFlash(false), 100);
-  }, [flash]);
-
-  const startFunc = useCallback(
-    (e) => {
-      if (tapping) {
-        kitRef.current.samples[i].sampler.triggerAttack(
-          'C2',
-          Tone.immediate(),
-          1
-        );
-        setFlash(true);
-      }
-    },
-    [i, kitRef, tapping]
-  );
-
-  const onClick = () => {
-    if (!tapping) selectSample(i);
-  };
-
-  const { touchStart, mouseDown } = useTouchAndMouse(startFunc);
-  return (
-    <div
-      className={flash ? 'sampleBtn flash' : 'sampleBtn'}
-      onTouchStart={touchStart}
-      onMouseDown={mouseDown}
-      onClick={onClick}
-      aria-label={sample.name}
-    >
-      {icons[sample.icon](sample.color)}
-      <div className={`border border${i}`} />
-      <div className='bgFlash' />
-    </div>
-  );
+const getBigEnough = () => {
+  const samplePanel = document.getElementById('samplePanel');
+  const enoughSpace = samplePanel?.clientHeight > 700;
+  return enoughSpace;
 };

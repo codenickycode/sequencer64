@@ -1,6 +1,7 @@
 @use 'styles/placeholders' as *;
 @use 'styles/mixins' as *;
 @use 'styles/colors' as *;
+@use 'styles/responsiveFont' as *;
 
 #samplePanel {
   * {
@@ -9,6 +10,7 @@
 
   .detail {
     @extend %full;
+    max-height: 350px;
     @include flex(row, space-evenly);
     padding: 0.5rem;
     overflow: hidden;
@@ -17,29 +19,29 @@
     border-radius: 0;
 
     @media (orientation: landscape) {
-      top: 50%;
-      transform: translateY(-50%);
-      flex-direction: column-reverse;
-      padding: 1rem;
-      min-width: 100%;
-      max-height: 500px;
+      // top: 50%;
+      // transform: translateY(-50%);
+      // flex-direction: column-reverse;
+      // padding: 1rem;
+      // min-width: 100%;
+      // max-height: 500px;
 
       .dummy {
         display: none;
       }
-
-      .icon {
-        height: auto;
-        &.chevron-down {
-          max-height: 2rem;
-          max-width: 2rem;
-        }
-      }
     }
 
     .icon {
+      height: auto;
       max-width: 5rem;
+      &.chevron-down {
+        max-height: 2rem;
+        max-width: 2rem;
+      }
     }
+    // .icon {
+    //   max-width: 5rem;
+    // }
 
     &.col {
       flex-direction: column;
@@ -77,9 +79,10 @@
   .modWrapper {
     @extend %full;
     @include flex(column, space-evenly);
-    @media (orientation: landscape) {
-      max-height: 70%;
-    }
+    // @media (orientation: landscape) {
+    //   max-height: 70%;
+    // }
+    @include responsiveFont(4vw, 14px, 20px);
 
     #modSlider {
       width: 50%;
