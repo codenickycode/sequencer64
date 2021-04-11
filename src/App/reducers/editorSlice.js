@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { PATHS } from 'utils/useGoTo';
 
 export const MODES = {
   TAP: 'TAP',
@@ -21,7 +20,6 @@ export const INITIAL_MODS = {
 const INITIAL_STATE = {
   selectedSample: -1,
   mode: null,
-  spAlert: { count: 0, message: '' },
   mods: { ...INITIAL_MODS },
   tapCellById: {},
   toggleOn: true,
@@ -38,16 +36,9 @@ export const editorSlice = createSlice({
     edit: (state, { payload: { sample } }) => {
       state.selectedSample = sample;
       state.mode = MODES.PAINT;
-      state.spAlert = { ...INITIAL_STATE.spAlert };
     },
     setMode: (state, { payload }) => {
       state.mode = payload;
-    },
-    setSpAlert: (state, { payload }) => {
-      state.spAlert.count++;
-      if (window.location.pathname === PATHS.CHANGE_KIT)
-        state.spAlert.message = '';
-      else state.spAlert.message = `${state.spAlert.count}#${payload}`;
     },
     setModVal: (state, { payload }) => {
       state.mods[state.mode] = payload;
@@ -65,7 +56,6 @@ export const {
   close,
   edit,
   setMode,
-  setSpAlert,
   setModVal,
   setTapCellById,
   setToggleOn,

@@ -10,7 +10,7 @@ import {
   modCellFinally,
   INITIAL_SEQUENCE,
 } from '../sequenceSlice';
-import { MODES, setSpAlert } from '../editorSlice';
+import { MODES } from '../editorSlice';
 
 export const loadInitialSequence = (_id, clearUrl) => async (dispatch) => {
   dispatch(setFetching(true));
@@ -36,10 +36,6 @@ export const loadInitialSequence = (_id, clearUrl) => async (dispatch) => {
 
 export const modCell = (step, noteOn) => (dispatch, getState) => {
   const selectedSample = getState().editor.selectedSample;
-  if (selectedSample === -1) {
-    dispatch(setSpAlert('Select a sample to edit'));
-    return;
-  }
   const mode = getState().editor.mode;
   switch (mode) {
     case MODES.PAINT:
