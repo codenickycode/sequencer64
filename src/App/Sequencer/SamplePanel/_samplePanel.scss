@@ -21,7 +21,7 @@
 
   .menu {
     @extend %full;
-    max-height: 350px;
+    max-height: 250px;
     padding: 0.25rem;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -71,7 +71,7 @@
 
   .editMenuWrapper {
     @extend %full;
-    max-height: 350px;
+    max-height: 250px;
   }
 
   .editMenu {

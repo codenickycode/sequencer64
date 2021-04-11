@@ -35,7 +35,7 @@ html {
 html,
 body {
   @extend %fullAbs;
-  background: $black;
+  @extend %bgBlack;
   touch-action: pan-y;
 }
 
@@ -50,7 +50,7 @@ body {
 
 #root {
   @extend %full;
-  background: $black;
+  @extend %bgBlack;
   color: $white;
 
   &.themeWhite {

@@ -39,11 +39,10 @@ export const SamplePanel = () => {
 
     return bigEnough ? (
       <>
-        {!mode ? (
-          <div className='editMenuWrapper'>
-            <Analyzer />
-          </div>
-        ) : mode === MODES.PAINT ? (
+        <div className='editMenuWrapper'>
+          <Analyzer />
+        </div>
+        {mode === MODES.PAINT ? (
           <div className='editMenuWrapper'>
             <SampleEditMenu
               selectMode={selectMode}

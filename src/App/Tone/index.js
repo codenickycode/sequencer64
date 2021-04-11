@@ -13,7 +13,10 @@ document.addEventListener('mousedown', initialClick);
 const mainBus = Tone.getDestination();
 mainBus.volume.value = -6;
 
-export const fft = new Tone.FFT({ size: 32, normalRange: true });
+export const fft = new Tone.FFT({
+  size: 32,
+  normalRange: true,
+});
 export const limiter = new Tone.Limiter(-20);
 mainBus.chain(limiter, fft);
 

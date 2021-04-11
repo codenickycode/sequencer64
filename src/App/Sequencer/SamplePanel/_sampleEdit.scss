@@ -10,7 +10,7 @@
 
   .detail {
     @extend %full;
-    max-height: 350px;
+    max-height: 250px;
     @include flex(row, space-evenly);
     padding: 0.5rem;
     overflow: hidden;

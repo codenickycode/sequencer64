@@ -14,7 +14,7 @@ export const INITIAL_USER = {
 
 export const getBigEnough = () => {
   const samplePanel = document.getElementById('samplePanel');
-  const enoughSpace = samplePanel?.clientHeight > 700;
+  const enoughSpace = samplePanel?.clientHeight > 500;
   return enoughSpace;
 };
 

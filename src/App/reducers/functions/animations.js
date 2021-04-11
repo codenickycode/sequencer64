@@ -55,14 +55,24 @@ export const animateSample = (time, step) => {
   }, time);
 };
 
-let freqs, spectrum, i, db, prevDb, newDb;
+let freqs, spectrum, average, i, db, prevDb, newDb;
 const prevDbs = new Array(36);
 let drawAnalyzer;
 export const startAnalyzer = () => {
   freqs = document.querySelectorAll('.freq');
-  drawAnalyzer = requestAnimationFrame(animateAnalyzer);
+  drawAnalyzer = true;
+  requestAnimationFrame(animateAnalyzer);
 };
-export const stopAnalyzer = () => cancelAnimationFrame(drawAnalyzer);
+export const stopAnalyzer = () => {
+  drawAnalyzer = false;
+  setTimeout(() => {
+    freqs = document.querySelectorAll('.freq');
+    freqs.forEach((freq) => {
+      freq.style.removeProperty('transform');
+      freq.style.removeProperty('filter');
+    });
+  }, 20);
+};
 
 let fps = 60;
 let interval = 1000 / fps;
@@ -74,20 +84,22 @@ function animateAnalyzer() {
   if (elapsed > interval) {
     then = now;
     spectrum = fft.getValue();
+    average = spectrum.reduce((acc, curr) => acc + curr) / spectrum.length;
     freqs.forEach((freq, index) => {
-      i = index + 3;
-      db = spectrum[i] * 1000;
-      if (db > 1) db = 1;
-      prevDb = prevDbs[i] + 0.25;
-      newDb = db < prevDb ? 0 : db;
+      i = index + 2;
+      db = Math.abs(spectrum[i] + average) * 100;
+      prevDb = prevDbs[i] + 0.15;
+      newDb = db < prevDb ? 0 : db > 1 ? 1 : db;
       prevDbs[i] = db;
       if (newDb !== prevDb) {
-        freq.style.transitionDuration = newDb ? '60ms' : '2s';
-        freq.style.transform = `scale(${newDb})`;
+        freq.style.transitionDuration = newDb ? '60ms' : '1s';
+        freq.style.transform = `scale(.2, ${newDb})`;
+        freq.style.filter = `blur(${50 - newDb * 50}px)`;
+        freq.style.opacity = newDb + 0.5;
       }
     });
   }
-  requestAnimationFrame(animateAnalyzer);
+  if (drawAnalyzer) requestAnimationFrame(animateAnalyzer);
 }
 
 document.addEventListener('keydown', () => {

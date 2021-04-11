@@ -131,6 +131,13 @@ $red: rgb(232, 12, 48);
   }
 }
 
+%bgBlack {
+  background: $black;
+  .themeWhite & {
+    background: $white;
+  }
+}
+
 %bg {
   background: $black;
   .themeJoker & {
@@ -245,6 +252,28 @@ $red: rgb(232, 12, 48);
   }
   .themeWhite & {
     background: $white;
+  }
+}
+
+%bgGradient {
+  .themeJoker & {
+    background: linear-gradient($joker-dark, $joker, $joker-dark);
+  }
+  .themeNES & {
+    background: linear-gradient($nes-dark2, $nes, $nes-dark2);
+  }
+  .themeTMNT & {
+    background: linear-gradient(
+      $tmnt-blue-dark-quarter,
+      $tmnt-blue,
+      $tmnt-blue-dark-quarter
+    );
+  }
+  .themeBlack & {
+    background: linear-gradient($black, $white, $black);
+  }
+  .themeWhite & {
+    background: linear-gradient($white, $black, $white);
   }
 }
 
