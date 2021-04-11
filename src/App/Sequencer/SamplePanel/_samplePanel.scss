@@ -69,9 +69,13 @@
     }
   }
 
-  .editMenu {
+  .editMenuWrapper {
     @extend %full;
     max-height: 350px;
+  }
+
+  .editMenu {
+    @extend %full;
     white-space: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
@@ -122,14 +126,23 @@
   }
 }
 
-.sampleEditMenuOverlay {
+.analyzer {
   @extend %noEventsLayerAbs;
   z-index: 2;
+  top: 0;
+  border-radius: 0;
   @extend %bg90;
-  @include flex(column, space-evenly);
-  p {
+  .overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     padding: 1rem;
     @extend %bg90;
+  }
+
+  .freq {
+    @extend %full;
   }
 }
 

@@ -1,6 +1,6 @@
 import * as Tone from 'tone';
 import { edit, MODES } from 'App/reducers/editorSlice';
-import { Kit } from 'App/shared/KitProvider';
+import { Kit } from 'App/reducers/toneSlice';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTouchAndMouse } from 'utils/useTouchAndMouse';
@@ -35,7 +35,6 @@ export const SampleBtns = () => {
 };
 
 const SampleBtn = ({ i, sample, selectSample }) => {
-  const { kitRef } = useContext(Kit);
   const mode = useSelector((state) => state.editor.mode);
   const tapping = mode === MODES.TAP;
 
@@ -47,15 +46,11 @@ const SampleBtn = ({ i, sample, selectSample }) => {
   const startFunc = useCallback(
     (e) => {
       if (tapping) {
-        kitRef.current.samples[i].sampler.triggerAttack(
-          'C2',
-          Tone.immediate(),
-          1
-        );
+        Kit.samples[i].sampler.triggerAttack('C2', Tone.immediate(), 1);
         setFlash(true);
       }
     },
-    [i, kitRef, tapping]
+    [i, tapping]
   );
 
   const onClick = () => {

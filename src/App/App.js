@@ -1,9 +1,7 @@
 import React from 'react';
-import * as Tone from 'tone';
 import { BrowserRouter } from 'react-router-dom';
 import ErrorBoundary from 'App/ErrorBoundary/ErrorBoundary';
 import { Subscriptions } from 'App/Subscriptions';
-import { KitProvider } from 'App/shared/KitProvider';
 import { Provider } from 'react-redux';
 import store from 'App/store';
 import { setLog, setOnline } from 'App/reducers/appSlice';
@@ -18,10 +16,8 @@ export default function App() {
     <BrowserRouter basename='/'>
       <ErrorBoundary>
         <Provider store={store}>
-          <KitProvider>
             <AppContent />
             <Subscriptions />
-          </KitProvider>
         </Provider>
       </ErrorBoundary>
     </BrowserRouter>
@@ -41,8 +37,6 @@ const initialClick = async () => {
 };
 document.addEventListener('touchstart', initialClick);
 document.addEventListener('mousedown', initialClick);
-
-Tone.getDestination().volume.value = -12;
 
 window.addEventListener('resize', handleResize);
 window.addEventListener('orientationchange', afterRotate);

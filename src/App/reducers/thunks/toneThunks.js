@@ -20,16 +20,17 @@ import {
 } from '../toneSlice';
 import { setFetchingSamples } from '../assetsSlice';
 import { setStatus } from '../appSlice';
+import { Kit } from 'App/reducers/toneSlice';
 
-export const startTone = (kit) => async (dispatch) => {
+export const startTone = (start) => async (dispatch) => {
   await Tone.start();
   dispatch(setAudioContextReady(true));
   console.log('audio ready');
   window.log('audio ready');
-  if (kit) dispatch(startSequence(kit));
+  if (start) dispatch(startSequence());
 };
 
-export const loadSamples = (kit) => async (dispatch, getState) => {
+export const loadSamples = () => async (dispatch, getState) => {
   dispatch(stopSequence());
   const sequenceKitName = getState().sequence.present.kit;
   const kits = getState().assets.kits;
@@ -39,11 +40,11 @@ export const loadSamples = (kit) => async (dispatch, getState) => {
   dispatch(
     setFetchingSamples({ kit: sequenceKitName, fetching: true, available })
   );
-  let payload = { bufferedKit: kit.name, loadingError: false };
+  let payload = { bufferedKit: Kit.name, loadingError: false };
   dispatch(setLoadingSamples(true));
   try {
-    if (kit.samples[0].sampler) disposeSamplers(kit);
-    await buildSamplers(kit, kitAssets);
+    if (Kit.samples[0].sampler) disposeSamplers();
+    await buildSamplers(kitAssets);
     available = true;
     payload.bufferedKit = sequenceKitName;
     payload.buffersLoaded = true;
@@ -63,13 +64,12 @@ export const loadSamples = (kit) => async (dispatch, getState) => {
   }
 };
 
-export const schedulePattern = (dispatch, getState, kit) => {
+export const schedulePattern = (dispatch, getState) => {
   Tone.Transport.scheduleRepeat((time) => {
     const step = getState().tone.step;
     const patternStep = getState().sequence.present.pattern[step];
-    const samples = kit.samples;
     try {
-      triggerStep(time, patternStep, samples);
+      triggerStep(time, patternStep);
       animateCell(time, document.getElementById(`cell-${step}`));
       animateSample(time, patternStep);
     } catch (e) {
@@ -80,12 +80,11 @@ export const schedulePattern = (dispatch, getState, kit) => {
   }, '16n');
 };
 
-export const startSequence = (kit) => async (dispatch, getState) => {
+export const startSequence = () => async (dispatch, getState) => {
   const audioContextReady = getState().tone.audioContextReady;
-  if (!audioContextReady) return dispatch(startTone(kit));
+  if (!audioContextReady) return dispatch(startTone(true));
   removeCursor(getState().sequence.present.length, getState().tone.step);
-  if (Tone.Transport.state === 'stopped')
-    schedulePattern(dispatch, getState, kit);
+  if (Tone.Transport.state === 'stopped') schedulePattern(dispatch, getState);
   dispatch(startSequenceFinally());
 };
 

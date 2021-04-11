@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'App/shared/Button';
 import { StopIcon, StartIcon, PauseIcon, CheckIcon } from 'assets/icons';
@@ -8,12 +8,9 @@ import {
   startSequence,
   stopSequence,
 } from 'App/reducers/toneSlice';
-import { Kit } from 'App/shared/KitProvider';
 
 export const TransportPanel = () => {
   const dispatch = useDispatch();
-
-  const { kitRef } = useContext(Kit);
 
   const transportState = useSelector((state) => state.tone.transportState);
   const loadingSamples = useSelector((state) => state.tone.loadingSamples);
@@ -52,7 +49,7 @@ export const TransportPanel = () => {
       if (transportState === 'started') {
         dispatch(pauseSequence());
       } else {
-        dispatch(startSequence(kitRef.current));
+        dispatch(startSequence());
       }
     };
 
@@ -111,6 +108,6 @@ export const TransportPanel = () => {
         </div>
       </div>
     );
-  }, [bpm, bpmEdited, dispatch, kitRef, ready, tempBpm, transportState]);
+  }, [bpm, bpmEdited, dispatch, ready, tempBpm, transportState]);
   return transportMemo;
 };

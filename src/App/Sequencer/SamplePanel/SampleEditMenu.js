@@ -16,7 +16,7 @@ export const SampleEditMenu = ({
   selectMode,
   onClose,
   bigEnough,
-  showingOverlay,
+  showingAnalyzer,
 }) => {
   const selectedSample = useSelector((state) => state.editor.selectedSample);
   const disabled = useSelector(
@@ -38,9 +38,7 @@ export const SampleEditMenu = ({
     // console.log('rendering: SampleEditMenu');
     return (
       <div ref={ref} id='editMenu' className={'editMenu'}>
-        {showingOverlay ? (
-          <Overlay />
-        ) : (
+        {!showingAnalyzer && (
           <Button classes='close' onClick={onClose}>
             <CloseIcon />
           </Button>
@@ -92,14 +90,6 @@ export const SampleEditMenu = ({
         </Button>
       </div>
     );
-  }, [bigEnough, disabled, onClose, selectMode, showingOverlay]);
+  }, [bigEnough, disabled, onClose, selectMode, showingAnalyzer]);
   return memo;
-};
-
-const Overlay = () => {
-  return (
-    <div className='sampleEditMenuOverlay'>
-      <p>Select a sample to edit</p>
-    </div>
-  );
 };

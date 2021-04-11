@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Tone from 'tone';
 import {
@@ -6,12 +6,10 @@ import {
   setRestarting,
   startSequence,
 } from 'App/reducers/toneSlice';
-import { Kit } from 'App/shared/KitProvider';
 import { changeKit } from 'App/reducers/sequenceSlice';
 
 export const Transport = () => {
   const dispatch = useDispatch();
-  const { kitRef } = useContext(Kit);
 
   const loadingError = useSelector((state) => state.tone.loadingError.error);
   const loadingErrorCount = useSelector(
@@ -39,31 +37,17 @@ export const Transport = () => {
     if (loadingSamples) return;
     if (bufferedKit !== sequenceKitName) {
       if (Tone.Transport.state === 'started') dispatch(setRestarting(true));
-      dispatch(loadSamples(kitRef.current));
+      dispatch(loadSamples());
     }
-  }, [
-    bufferedKit,
-    dispatch,
-    sequenceKitName,
-    loadingSamples,
-    kitRef,
-    loadingError,
-  ]);
+  }, [bufferedKit, dispatch, sequenceKitName, loadingSamples, loadingError]);
 
   // after loadSequence && loadSamples ↑
   useEffect(() => {
     if (loadingSamples) return;
     if (bufferedKit === sequenceKitName && restarting) {
-      dispatch(startSequence(kitRef.current));
+      dispatch(startSequence());
     }
-  }, [
-    bufferedKit,
-    dispatch,
-    kitRef,
-    loadingSamples,
-    restarting,
-    sequenceKitName,
-  ]);
+  }, [bufferedKit, dispatch, loadingSamples, restarting, sequenceKitName]);
 
   return null;
 };

@@ -6,6 +6,7 @@ import { PitchVelocityLength } from 'App/Sequencer/SamplePanel/PitchVelocityLeng
 import { showEditable, hideEditable } from 'utils/toggleClasses';
 import { SampleEditMenu } from './SampleEditMenu';
 import { SampleBtns } from './SampleBtns';
+import { Analyzer } from './Analyzer';
 
 export const SamplePanel = () => {
   const dispatch = useDispatch();
@@ -38,12 +39,15 @@ export const SamplePanel = () => {
     return bigEnough ? (
       <>
         {mode === MODES.PAINT || !mode ? (
-          <SampleEditMenu
-            selectMode={selectMode}
-            onClose={onClose}
-            bigEnough={bigEnough}
-            showingOverlay={!mode}
-          />
+          <div className='editMenuWrapper'>
+            <SampleEditMenu
+              selectMode={selectMode}
+              onClose={onClose}
+              bigEnough={bigEnough}
+              showingAnalyzer={!mode}
+            />
+            {!mode && <Analyzer />}
+          </div>
         ) : mode === MODES.ERASE ? (
           <Erase onReturn={onReturn} landscape={landscape} />
         ) : mode === MODES.SLICE ? (
