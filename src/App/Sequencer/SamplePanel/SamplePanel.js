@@ -6,7 +6,7 @@ import { PitchVelocityLength } from 'App/Sequencer/SamplePanel/PitchVelocityLeng
 import { showEditable, hideEditable } from 'utils/toggleClasses';
 import { SampleEditMenu } from './SampleEditMenu';
 import { SampleBtns } from './SampleBtns';
-import { Analyzer } from './Analyzer';
+import { VisualPanel } from 'App/Sequencer/VisualPanel/VisualPanel';
 
 export const SamplePanel = () => {
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ export const SamplePanel = () => {
     return (
       <>
         <div className={splitSamplePanel ? 'spTop' : 'noSplit'}>
-          {splitSamplePanel && <Analyzer />}
+          {splitSamplePanel && <VisualPanel />}
           {mode === MODES.PAINT ? (
             <SampleEditMenu selectMode={selectMode} onClose={onClose} />
           ) : mode === MODES.ERASE ? (

@@ -16,8 +16,9 @@ export const getSplitSamplePanel = () => {
 
 const INITIAL_STATE = {
   user: { ...INITIAL_USER },
-  status: { count: 0, message: 'loading' },
   fetching: false,
+  status: { count: 0, message: 'loading' },
+  alert: '',
   confirmation: '',
   error: '',
   online: window.navigator.onLine,
@@ -27,6 +28,7 @@ const INITIAL_STATE = {
   splitSamplePanel: null,
   analyzerOn: null,
   showDisplayMenu: false,
+  showTapMenu: false,
   log: { count: 0, message: '' },
 };
 
@@ -42,6 +44,9 @@ export const appSlice = createSlice({
     setStatus: (state, { payload }) => {
       state.status.count++;
       state.status.message = `${state.status.count}#${payload}`;
+    },
+    setAlert: (state, { payload }) => {
+      state.alert = '';
     },
     setFetching: (state, { payload }) => {
       state.fetching = payload;
@@ -72,6 +77,9 @@ export const appSlice = createSlice({
     },
     setShowDisplayMenu: (state, { payload }) => {
       state.showDisplayMenu = payload;
+    },
+    setShowTapMenu: (state, { payload }) => {
+      state.showTapMenu = payload;
     },
     setLog: (state, { payload }) => {
       state.log.count++;
@@ -105,6 +113,7 @@ export const {
   setAnalyzerOn,
   setUser,
   setStatus,
+  setAlert,
   setFetching,
   setConfirmation,
   setError,
@@ -112,6 +121,7 @@ export const {
   setServiceWorkerActive,
   setTheme,
   setShowDisplayMenu,
+  setShowTapMenu,
   setLandscape,
   setSplitSamplePanel,
   setLog,

@@ -2,7 +2,7 @@
 @use 'styles/mixins' as *;
 @use 'styles/colors' as *;
 
-.analyzer {
+.visualPanel {
   @extend %noEventsLayer;
   top: 0;
   z-index: 0;
@@ -19,7 +19,7 @@
       @extend %bg3q;
     }
 
-    .freqs {
+    .analyzer {
       transform: rotate(-90deg);
     }
   }
@@ -41,7 +41,8 @@
     }
   }
 
-  .freqs {
+  .analyzer {
+    pointer-events: none;
     @extend %full;
     @include flex;
     padding: 0;

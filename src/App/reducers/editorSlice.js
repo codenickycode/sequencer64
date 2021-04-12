@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const MODES = {
   TAP: 'TAP',
+  TAP_RECORD: 'TAP_RECORD',
   PAINT: 'PAINT',
   ERASE: 'ERASE',
   SLICE: 'SLICE',

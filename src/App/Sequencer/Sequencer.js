@@ -7,7 +7,7 @@ import { Menu } from 'App/Sequencer/MenuBar/MenuBar';
 import { loadInitialSequence } from 'App/reducers/sequenceSlice';
 // import { MobileConsole } from 'App/MobileConsole';
 import { PATHS } from 'utils/useGoTo';
-import { Analyzer } from './SamplePanel/Analyzer';
+import { VisualPanel } from 'App/Sequencer/VisualPanel/VisualPanel';
 
 export const SequencerPage = () => {
   const history = useHistory();
@@ -38,7 +38,7 @@ export const SequencerPage = () => {
         <div className='mainContainer'>
           <div id='main'>
             <Grid />
-            {!splitSamplePanel && <Analyzer />}
+            {!splitSamplePanel && <VisualPanel />}
             <div id='changeKitPortal' />
             <div id='pastePatternPortal' />
             {/* <MobileConsole /> */}

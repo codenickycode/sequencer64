@@ -3,6 +3,7 @@ import {
   setSplitSamplePanel,
   setAnalyzerOn,
   setShowDisplayMenu,
+  setShowTapMenu,
 } from 'App/reducers/appSlice';
 import { MODES } from 'App/reducers/editorSlice';
 import { useEffect } from 'react';
@@ -15,6 +16,27 @@ export const Display = () => {
   const analyzerOn = useSelector((state) => state.app.analyzerOn);
   const mode = useSelector((state) => state.editor.mode);
   const showDisplayMenu = useSelector((state) => state.app.showDisplayMenu);
+  const showTapMenu = useSelector((state) => state.app.showTapMenu);
+  const tapping = mode === MODES.TAP || mode === MODES.TAP_RECORD;
+
+  useEffect(() => {
+    if (!showTapMenu) return;
+    function closeTapMenu(e) {
+      dispatch(setShowTapMenu(false));
+    }
+    document.addEventListener('click', closeTapMenu);
+    return () => {
+      document.removeEventListener('click', closeTapMenu);
+    };
+  }, [dispatch, showTapMenu]);
+
+  useEffect(() => {
+    const spBorder = document.getElementById('samplePanelBorder');
+    if (spBorder) {
+      if (tapping) spBorder.classList.add('highlight');
+      if (!tapping) spBorder.classList.remove('highlight');
+    }
+  }, [tapping]);
 
   useEffect(() => {
     if (!showDisplayMenu) return;
@@ -43,10 +65,10 @@ export const Display = () => {
   useEffect(() => {
     if (!splitSamplePanel && analyzerOn) {
       const analyzer = document.getElementById('analyzer');
-      if (!mode || mode === MODES.TAP) {
+      if (!mode || tapping) {
         if (analyzer) analyzer.style.opacity = 1;
       }
-      if (mode && mode !== MODES.TAP) {
+      if (mode && !tapping) {
         if (analyzer) analyzer.style.opacity = 0;
       }
     }

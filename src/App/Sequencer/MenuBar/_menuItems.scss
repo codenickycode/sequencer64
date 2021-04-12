@@ -39,6 +39,15 @@
       border: 1px solid $color-none;
     }
 
+    label {
+      letter-spacing: initial;
+    }
+
+    .icon {
+      max-width: 2rem;
+      min-width: 1rem;
+    }
+
     &.active {
       label {
         color: $green;
@@ -49,19 +58,22 @@
       &.kit {
         border-color: $green;
       }
-      &.tap {
-        border-color: $green;
+    }
+
+    &.active.tap {
+      border-color: $green;
+      animation: flashTapBtn 400ms alternate infinite;
+    }
+    &.active.tap.record {
+      @extend %bgBlack;
+      border-color: $red;
+      label {
+        color: $red;
+      }
+      .icon {
+        fill: $red;
       }
     }
-
-    label {
-      letter-spacing: initial;
-    }
-  }
-
-  .icon {
-    max-width: 2rem;
-    min-width: 1rem;
   }
 }
 
@@ -137,7 +149,7 @@
   }
 }
 
-.displayBtnWrapper {
+.menuBtnWrapper {
   @extend %btn;
   @include flex(column);
   margin: 0 0.5rem;
@@ -147,7 +159,7 @@
   padding: 0;
 }
 
-.displayMenu {
+.menuItem {
   pointer-events: initial;
   position: fixed;
   bottom: 10%;
@@ -167,7 +179,7 @@
     transform: scaleY(1);
   }
 
-  .displayMenuBtn {
+  .menuItemBtn {
     @extend %btn;
     @extend %bgMenuBarHalf;
     border: 1px solid $color-none;
@@ -187,7 +199,7 @@
     }
   }
 
-  .displayMenuSub {
+  .menuItemSub {
     cursor: initial;
     padding: 0.5rem;
     align-self: flex-start;

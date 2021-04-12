@@ -36,7 +36,7 @@ export const SampleBtns = () => {
 
 const SampleBtn = ({ i, sample, selectSample }) => {
   const mode = useSelector((state) => state.editor.mode);
-  const tapping = mode === MODES.TAP;
+  const tapping = mode === MODES.TAP || mode === MODES.TAP_RECORD;
 
   const [flash, setFlash] = useState(false);
   useEffect(() => {

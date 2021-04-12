@@ -3,10 +3,10 @@ import { TransportPanel } from 'App/Sequencer/MenuBar/TransportPanel';
 import { UndoRedoBtn } from 'App/Sequencer/MenuBar/UndoRedoBtn';
 import { EraseBtn } from 'App/Sequencer/MenuBar/EraseBtn';
 import { LoadSaveBtn } from 'App/Sequencer/MenuBar/LoadSaveBtn';
-import { KitAndTapModeBtn } from 'App/Sequencer/MenuBar/KitAndTapModeBtn';
+import { KitBtn } from 'App/Sequencer/MenuBar/KitBtn';
+import { TapBtn } from 'App/Sequencer/MenuBar/TapBtn';
 import { ScrollLeft, ScrollRight } from 'App/shared/Button';
 import { Display } from './Display';
-import { MODES, setMode } from 'App/reducers/editorSlice';
 import { setShowDisplayMenu } from 'App/reducers/appSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
@@ -16,7 +16,6 @@ export const Menu = () => {
   const goTo = useGoTo();
   const pathname = useLocation().pathname;
   const dispatch = useDispatch();
-  const mode = useSelector((state) => state.editor.mode);
   const showDisplayMenu = useSelector((state) => state.app.showDisplayMenu);
 
   const menuRef = useRef(null);
@@ -58,8 +57,6 @@ export const Menu = () => {
   };
 
   const resetView = () => {
-    if (mode === MODES.TAP) dispatch(setMode(null));
-
     if (showDisplayMenu) dispatch(setShowDisplayMenu(false));
     if (pathname === PATHS.CHANGE_KIT) goTo(PATHS.BASE);
   };
@@ -92,7 +89,8 @@ export const Menu = () => {
     <div ref={menuRef} id='menuBar' onScroll={handleScroll}>
       <div className='menuItems'>
         <LoadSaveBtn />
-        <KitAndTapModeBtn />
+        <KitBtn />
+        <TapBtn />
       </div>
       <TransportPanel />
       <div className='menuItems'>

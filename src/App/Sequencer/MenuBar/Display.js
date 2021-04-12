@@ -13,17 +13,13 @@ export const Display = () => {
   const dispatch = useDispatch();
   const showDisplayMenu = useSelector((state) => state.app.showDisplayMenu);
 
-  const onClick = useCallback(
-    (e) => {
-      console.log(e);
-      dispatch(setShowDisplayMenu(!showDisplayMenu));
-    },
-    [dispatch, showDisplayMenu]
-  );
+  const onClick = useCallback(() => {
+    dispatch(setShowDisplayMenu(!showDisplayMenu));
+  }, [dispatch, showDisplayMenu]);
 
   const memo = useMemo(() => {
     return (
-      <div className='displayBtnWrapper'>
+      <div className='menuBtnWrapper'>
         <Button
           id='displayBtn'
           classes={showDisplayMenu ? 'menuBtn active' : 'menuBtn'}
@@ -54,6 +50,7 @@ const Themes = () => {
   const analyzerOn = useSelector((state) => state.app.analyzerOn);
   const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
   const mode = useSelector((state) => state.editor.mode);
+  const tapping = mode === MODES.TAP || mode === MODES.TAP_RECORD;
 
   const changeTheme = useCallback(
     (newTheme) => {
@@ -65,18 +62,17 @@ const Themes = () => {
   const toggleAnalyzer = useCallback(() => {
     const newAnalyzerOn = !analyzerOn;
     dispatch(setAnalyzerOn(newAnalyzerOn));
-    if (!splitSamplePanel && mode && mode !== MODES.TAP)
-      dispatch(setMode(null));
-  }, [analyzerOn, dispatch, mode, splitSamplePanel]);
+    if (!splitSamplePanel && mode && !tapping) dispatch(setMode(null));
+  }, [analyzerOn, dispatch, mode, splitSamplePanel, tapping]);
 
   const memo = useMemo(() => {
     return (
-      <div className={showDisplayMenu ? 'displayMenu show' : 'displayMenu'}>
-        <div className='displayMenuSub'>Themes</div>
+      <div className={showDisplayMenu ? 'menuItem show' : 'menuItem'}>
+        <div className='menuItemSub'>Themes</div>
         <Button
           id={`${THEMES.JOKER}Theme`}
           classes={
-            theme === THEMES.JOKER ? 'displayMenuBtn active' : 'displayMenuBtn'
+            theme === THEMES.JOKER ? 'menuItemBtn active' : 'menuItemBtn'
           }
           onClick={() => changeTheme(THEMES.JOKER)}
         >
@@ -84,18 +80,14 @@ const Themes = () => {
         </Button>
         <Button
           id={`${THEMES.NES}Theme`}
-          classes={
-            theme === THEMES.NES ? 'displayMenuBtn active' : 'displayMenuBtn'
-          }
+          classes={theme === THEMES.NES ? 'menuItemBtn active' : 'menuItemBtn'}
           onClick={() => changeTheme(THEMES.NES)}
         >
           <label htmlFor={`${THEMES.NES}Theme`}>{THEMES.NES}</label>
         </Button>
         <Button
           id={`${THEMES.TMNT}Theme`}
-          classes={
-            theme === THEMES.TMNT ? 'displayMenuBtn active' : 'displayMenuBtn'
-          }
+          classes={theme === THEMES.TMNT ? 'menuItemBtn active' : 'menuItemBtn'}
           onClick={() => changeTheme(THEMES.TMNT)}
         >
           <label htmlFor={`${THEMES.TMNT}Theme`}>{THEMES.TMNT}</label>
@@ -103,7 +95,7 @@ const Themes = () => {
         <Button
           id={`${THEMES.BLACK}Theme`}
           classes={
-            theme === THEMES.BLACK ? 'displayMenuBtn active' : 'displayMenuBtn'
+            theme === THEMES.BLACK ? 'menuItemBtn active' : 'menuItemBtn'
           }
           onClick={() => changeTheme(THEMES.BLACK)}
         >
@@ -112,16 +104,16 @@ const Themes = () => {
         <Button
           id={`${THEMES.WHITE}Theme`}
           classes={
-            theme === THEMES.WHITE ? 'displayMenuBtn active' : 'displayMenuBtn'
+            theme === THEMES.WHITE ? 'menuItemBtn active' : 'menuItemBtn'
           }
           onClick={() => changeTheme(THEMES.WHITE)}
         >
           <label htmlFor={`${THEMES.WHITE}Theme`}>{THEMES.WHITE}</label>
         </Button>
-        <div className='displayMenuSub'>Analyzer</div>
+        <div className='menuItemSub'>Analyzer</div>
         <Button
           id='toggleAnalyzer'
-          classes={analyzerOn ? 'displayMenuBtn active' : 'displayMenuBtn'}
+          classes={analyzerOn ? 'menuItemBtn active' : 'menuItemBtn'}
           onClick={toggleAnalyzer}
         >
           <label htmlFor='toggleAnalyzer'>

@@ -14,7 +14,7 @@
 @use 'App/Sequencer/MainSection/changeKit';
 @use 'App/Sequencer/SamplePanel/sampleEdit';
 @use 'App/Sequencer/SamplePanel/samplePanel';
-@use 'App/Sequencer/SamplePanel/analyzer';
+@use 'App/Sequencer/VisualPanel/visualPanel';
 @use 'App/Sequencer/MenuBar/menuBar';
 @use 'App/Sequencer/MenuBar/menuItems';
 @use 'App/Login/loginPage';
@@ -158,6 +158,15 @@ p.dim-2 {
   }
   100% {
     opacity: 0.5;
+  }
+}
+
+@keyframes flashTapBtn {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.75;
   }
 }
 
