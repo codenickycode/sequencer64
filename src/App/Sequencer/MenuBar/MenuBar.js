@@ -6,7 +6,7 @@ import { LoadSaveBtn } from 'App/Sequencer/MenuBar/LoadSaveBtn';
 import { KitBtn } from 'App/Sequencer/MenuBar/KitBtn';
 import { TapMenu } from 'App/Sequencer/MenuBar/TapMenu';
 import { ScrollLeft, ScrollRight } from 'App/shared/Button';
-import { Display } from './Display';
+import { DisplayMenu } from './DisplayMenu';
 import { setShowDisplayMenu } from 'App/reducers/appSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
@@ -114,7 +114,7 @@ export const Menu = () => {
           <UndoRedoBtn />
           <EraseBtn />
           <div className='dummy'>|</div>
-          <Display />
+          <DisplayMenu />
         </div>
         <div ref={scrollbarRef} className='scrollbar' style={menuBarStyle}>
           <ScrollLeft fwdRef={leftRef} onClick={() => scroll('left')} />

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 const MENU_TRANSITION = 150;
 
-export const usePopupMenu = (substrToKeepOpen) => {
+export const usePopupMenu = (keepOpenOnSelect) => {
   const [btnClasses, setBtnClasses] = useState('menuBtn'); // active border when menu open
   const [menuClasses, setMenuClasses] = useState('popupMenu'); // initial class is hidden
   const [renderMenu, setRenderMenu] = useState(false); // react: render the component
@@ -34,6 +34,11 @@ export const usePopupMenu = (substrToKeepOpen) => {
   }, [showMenu]);
 
   const closeMenu = (e) => {
+    if (keepOpenOnSelect) {
+      for (let className of e.target.classList) {
+        if (className.match(/popup/)) return;
+      }
+    }
     document.removeEventListener('click', closeMenu);
     setShowMenu(false);
   };
@@ -67,9 +72,3 @@ const getMenuLeft = (btnNode) => {
   else if (menuLeft + 250 > vw) menuLeft = vw - 250;
   return menuLeft;
 };
-
-// if (substrToKeepOpen) {
-//   e.target.classList.forEach((className) => {
-//     if (className.match(substrToKeepOpen)) keepOpen = true;
-//   });
-// }
