@@ -86,23 +86,26 @@ export const Menu = () => {
 
   // console.log('rendering: Menu');
   return (
-    <div ref={menuRef} id='menuBar' onScroll={handleScroll}>
-      <div className='menuItems'>
-        <LoadSaveBtn />
-        <KitBtn />
-        <TapBtn />
+    <>
+      <div id='menuPortal' />
+      <div ref={menuRef} id='menuBar' onScroll={handleScroll}>
+        <div className='menuItems'>
+          <LoadSaveBtn />
+          <KitBtn />
+          <TapBtn />
+        </div>
+        <TransportPanel />
+        <div className='menuItems'>
+          <UndoRedoBtn />
+          <EraseBtn />
+          <div className='dummy'>|</div>
+          <Display />
+        </div>
+        <div ref={scrollbarRef} className='scrollbar'>
+          <ScrollLeft fwdRef={leftRef} onClick={() => scroll('left')} />
+          <ScrollRight fwdRef={rightRef} onClick={() => scroll('right')} />
+        </div>
       </div>
-      <TransportPanel />
-      <div className='menuItems'>
-        <UndoRedoBtn />
-        <EraseBtn />
-        <div className='dummy'>|</div>
-        <Display />
-      </div>
-      <div ref={scrollbarRef} className='scrollbar'>
-        <ScrollLeft fwdRef={leftRef} onClick={() => scroll('left')} />
-        <ScrollRight fwdRef={rightRef} onClick={() => scroll('right')} />
-      </div>
-    </div>
+    </>
   );
 };

@@ -16,19 +16,7 @@ export const Display = () => {
   const analyzerOn = useSelector((state) => state.app.analyzerOn);
   const mode = useSelector((state) => state.editor.mode);
   const showDisplayMenu = useSelector((state) => state.app.showDisplayMenu);
-  const showTapMenu = useSelector((state) => state.app.showTapMenu);
   const tapping = mode === MODES.TAP || mode === MODES.TAP_RECORD;
-
-  useEffect(() => {
-    if (!showTapMenu) return;
-    function closeTapMenu(e) {
-      dispatch(setShowTapMenu(false));
-    }
-    document.addEventListener('click', closeTapMenu);
-    return () => {
-      document.removeEventListener('click', closeTapMenu);
-    };
-  }, [dispatch, showTapMenu]);
 
   useEffect(() => {
     const spBorder = document.getElementById('samplePanelBorder');

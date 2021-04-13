@@ -3,7 +3,6 @@
 @use 'styles/colors' as *;
 
 .menuItems {
-  position: relative;
   @extend %full;
   scroll-snap-align: start;
   @include flex(row, center);
@@ -161,17 +160,14 @@
 
 .menuItem {
   pointer-events: initial;
-  position: fixed;
-  bottom: 10%;
-  right: 0;
-  width: 100%;
-  max-width: 250px;
+  position: absolute;
+  width: 250px;
   @include flex(column);
   @extend %bgMenuBarHalf;
   opacity: 0;
   transform: scaleY(0);
   transform-origin: bottom;
-  transition: 150ms;
+  transition: 1000ms;
   z-index: 1000;
 
   &.show {
@@ -188,7 +184,6 @@
     width: 100%;
 
     &.active {
-      // @extend %borderActive;
       @extend %bgBtnFull;
     }
 

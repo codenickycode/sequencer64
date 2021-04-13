@@ -24,6 +24,8 @@ const INITIAL_STATE = {
   online: window.navigator.onLine,
   serviceWorkerActive: false,
   theme: getLS('theme') || 'Joker',
+  vw: document.documentElement.clientWidth,
+  vh: document.documentElement.clientHeight,
   landscape: window.innerWidth > window.innerHeight,
   splitSamplePanel: null,
   analyzerOn: null,
@@ -66,8 +68,10 @@ export const appSlice = createSlice({
     setTheme: (state, { payload }) => {
       state.theme = payload;
     },
-    setLandscape: (state, { payload }) => {
-      state.landscape = payload;
+    setDimensions: (state, { payload: { vw, vh } }) => {
+      state.vw = vw;
+      state.vh = vh;
+      state.landscape = vw > vh;
     },
     setSplitSamplePanel: (state, { payload }) => {
       state.splitSamplePanel = payload;
@@ -122,7 +126,7 @@ export const {
   setTheme,
   setShowDisplayMenu,
   setShowTapMenu,
-  setLandscape,
+  setDimensions,
   setSplitSamplePanel,
   setLog,
   updateSequencesFinally,

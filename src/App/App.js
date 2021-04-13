@@ -4,8 +4,7 @@ import ErrorBoundary from 'App/ErrorBoundary/ErrorBoundary';
 import { Subscriptions } from 'App/Subscriptions';
 import { Provider } from 'react-redux';
 import store from 'App/store';
-import { setLog, setOnline } from 'App/reducers/appSlice';
-import { setWidthAndHeight } from 'utils/calcScreen';
+import { setLog, setOnline, setDimensions } from 'App/reducers/appSlice';
 import { AppContent } from './AppContent';
 
 export default function App() {
@@ -36,11 +35,11 @@ window.addEventListener('blur', () => {
 });
 
 let resizeTimer;
-let prevWidth = window.innerWidth;
+let prevWidth = document.documentElement.clientWidth;
 const root = document.getElementById('root')
 const preparingPortal = document.getElementById('preparingPortal')
 function handleResize() {
-  if (window.innerWidth === prevWidth) return;
+  if (document.documentElement.clientWidth === prevWidth) return;
   clearTimeout(resizeTimer);
   root.style.display = 'none';
   preparingPortal.style.display = 'initial'
@@ -59,8 +58,24 @@ function redraw() {
     document.body.style.display = 'none';
     document.body.style.display = 'initial';
     setWidthAndHeight();
-    prevWidth = window.innerWidth;
   }, 350);
   window.removeEventListener('focus', redraw);
 }
+
+const getWidthAndHeight = () => {
+  let vw = document.documentElement.clientWidth;
+  let vh = document.documentElement.clientHeight;
+  document.documentElement.style.setProperty('--100vw', `${vw}px`);
+  document.documentElement.style.setProperty('--100vh', `${vh}px`);
+  document.documentElement.style.setProperty('--10vh', `${vh * 0.1}px`);
+  document.documentElement.style.setProperty('--15vh', `${vh * 0.15}px`);
+  return {vw, vh}
+};
+
+const setWidthAndHeight =() => {
+  const {vw, vh} =getWidthAndHeight();
+  store.dispatch(setDimensions({vw, vh}));
+    prevWidth = document.documentElement.clientWidth;
+}
+
 setWidthAndHeight();
