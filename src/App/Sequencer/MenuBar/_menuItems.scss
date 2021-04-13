@@ -1,6 +1,8 @@
 @use 'styles/placeholders' as *;
 @use 'styles/mixins' as *;
 @use 'styles/colors' as *;
+@use './transport' as *;
+@use './popupMenu' as *;
 
 .menuItems {
   @extend %full;
@@ -25,14 +27,21 @@
     font-style: initial;
   }
 
-  .menuBtn {
+  .menuBtn,
+  .menuBtnWrapper {
     @extend %btn;
     @include flex(column);
-    margin: 0 0.5rem;
     height: 100%;
     background: transparent;
     border: 1px solid $color-none;
+  }
 
+  .menuBtnWrapper {
+    margin: 0 0.5rem;
+    padding: 0;
+  }
+
+  .menuBtn {
     label {
       letter-spacing: initial;
     }
@@ -72,140 +81,5 @@
         fill: $red;
       }
     }
-  }
-}
-
-.transportWrapper {
-  width: 100%;
-  @include flex;
-
-  .btn {
-    max-width: 4rem;
-    min-width: 2rem;
-    max-height: 2rem;
-    min-height: 1rem;
-    margin: 0 0.25rem;
-
-    .icon {
-      height: 1rem;
-    }
-
-    &#stop {
-      @extend %bgBright;
-    }
-    &#start {
-      @extend %bgBright;
-      &.flashing {
-        animation: dim-flashing 300ms alternate infinite;
-      }
-    }
-  }
-
-  .inputWrapper {
-    margin-left: 0.25rem;
-    width: 7rem;
-    @include flex;
-
-    .input {
-      @extend %input;
-      max-width: 4rem;
-      min-width: 2rem;
-      max-height: 2rem;
-      min-height: 1rem;
-      padding: 0.25rem;
-      overflow: hidden;
-      text-align: center;
-      font-size: 1.25rem;
-
-      &.edited {
-        animation: flashing 300ms alternate infinite;
-      }
-    }
-
-    .bpmOrBtn {
-      width: 3rem;
-      @include flex;
-
-      label {
-        display: inline-block;
-        width: 100%;
-        font-style: normal;
-        padding: 0.5rem;
-      }
-
-      .btn {
-        background: none;
-        @extend %borderWhite;
-        border-radius: 0.5rem;
-        outline: none;
-
-        .icon {
-          fill: $green;
-        }
-      }
-    }
-  }
-}
-
-.menuBtnWrapper {
-  @extend %btn;
-  @include flex(column);
-  margin: 0 0.5rem;
-  height: 100%;
-  background: transparent;
-  border-color: $color-none;
-  padding: 0;
-}
-
-.menuItem {
-  pointer-events: initial;
-  position: absolute;
-  width: 250px;
-  @include flex(column);
-  @extend %bgMenuBarHalf;
-  opacity: 0;
-  // transform: scaleY(0);
-  // transform-origin: bottom;
-  transform: translateY(100%);
-  transition: 150ms ease;
-
-  &.show {
-    opacity: 1;
-    // transform: scaleY(1);
-    transform: translateY(0);
-  }
-
-  .menuItemBtn {
-    @extend %btn;
-    @extend %bgMenuBarHalf;
-    border: 1px solid $color-none;
-    border-radius: 0;
-    margin-bottom: 0.5rem;
-    width: 100%;
-
-    &.active {
-      @extend %bgBtnFull;
-    }
-
-    @media (hover: hover) {
-      &:hover {
-        @include borderActive;
-      }
-    }
-  }
-
-  .menuItemSub {
-    cursor: initial;
-    width: 100%;
-    padding: 0.5rem;
-    align-self: flex-start;
-    @extend %borderBottomHalf;
-  }
-}
-
-#stop,
-#start {
-  .icon {
-    @extend %fillMenuBar;
   }
 }

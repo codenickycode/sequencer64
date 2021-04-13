@@ -2,7 +2,7 @@
 @use 'styles/mixins' as *;
 @use 'styles/colors' as *;
 
-#menuPortal {
+#popupMenuPortal {
   @extend %noEventsLayerAbs;
   top: 0;
   z-index: 1000;

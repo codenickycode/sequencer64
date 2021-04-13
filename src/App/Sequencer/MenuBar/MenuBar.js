@@ -4,7 +4,7 @@ import { UndoRedoBtn } from 'App/Sequencer/MenuBar/UndoRedoBtn';
 import { EraseBtn } from 'App/Sequencer/MenuBar/EraseBtn';
 import { LoadSaveBtn } from 'App/Sequencer/MenuBar/LoadSaveBtn';
 import { KitBtn } from 'App/Sequencer/MenuBar/KitBtn';
-import { TapBtn } from 'App/Sequencer/MenuBar/TapBtn';
+import { TapMenu } from 'App/Sequencer/MenuBar/TapMenu';
 import { ScrollLeft, ScrollRight } from 'App/shared/Button';
 import { Display } from './Display';
 import { setShowDisplayMenu } from 'App/reducers/appSlice';
@@ -21,7 +21,7 @@ export const Menu = () => {
   const mainContainerHeight = useSelector(
     (state) => state.screen.dimensions.mainContainerHeight
   );
-  const menuPortalStyle = { maxHeight: mainContainerHeight };
+  const popupMenuPortalStyle = { maxHeight: mainContainerHeight };
 
   const vh = useSelector((state) => state.screen.dimensions.vh);
   const menuBarHeight = vh * 0.1;
@@ -97,7 +97,7 @@ export const Menu = () => {
   // console.log('rendering: Menu');
   return (
     <>
-      <div id='menuPortal' style={menuPortalStyle} />
+      <div id='popupMenuPortal' style={popupMenuPortalStyle} />
       <div
         ref={menuRef}
         id='menuBar'
@@ -107,7 +107,7 @@ export const Menu = () => {
         <div className='menuItems'>
           <LoadSaveBtn />
           <KitBtn />
-          <TapBtn />
+          <TapMenu />
         </div>
         <TransportPanel />
         <div className='menuItems'>

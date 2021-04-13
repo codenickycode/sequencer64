@@ -1,16 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 const MENU_TRANSITION = 150;
 
-export const useMenu = (substrToKeepOpen) => {
-  const [btnClasses, setBtnClasses] = useState('menuBtn');
-  const [menuClasses, setMenuClasses] = useState('menuItem'); // initial class is hidden
+export const usePopupMenu = (substrToKeepOpen) => {
+  const [btnClasses, setBtnClasses] = useState('menuBtn'); // active border when menu open
+  const [menuClasses, setMenuClasses] = useState('popupMenu'); // initial class is hidden
   const [renderMenu, setRenderMenu] = useState(false); // react: render the component
   const [showMenu, setShowMenu] = useState(false); // css: show the menu when rendered
 
   useEffect(() => {
-    if (renderMenu) setMenuClasses('menuItem show'); // once rendered, then animate in
+    if (renderMenu) setMenuClasses('popupMenu show');
   }, [renderMenu]);
 
   useEffect(() => {
@@ -20,15 +19,15 @@ export const useMenu = (substrToKeepOpen) => {
 
   useEffect(() => {
     if (!renderMenu) return;
-    if (!showMenu) setMenuClasses('menuItem'); // animate out
-    if (showMenu && renderMenu) setMenuClasses('menuItem show'); // caught during animate out
+    if (!showMenu) setMenuClasses('popupMenu'); // animate out
+    if (showMenu && renderMenu) setMenuClasses('popupMenu show'); // caught during animate out
   }, [renderMenu, showMenu]);
 
+  // render or unload after animate out
   useEffect(() => {
     let timer;
     if (showMenu) return setRenderMenu(true); // initial render call
     timer = setTimeout(() => {
-      // animate out then unload component
       setRenderMenu(false);
     }, MENU_TRANSITION);
     return () => clearTimeout(timer);
@@ -45,17 +44,20 @@ export const useMenu = (substrToKeepOpen) => {
     setShowMenu(!showMenu);
   };
 
-  const mainContainerHeight = useSelector(
-    (state) => state.app.mainContainerHeight
-  );
   const btnRef = useRef();
   const menuStyle = getMenuStyle(btnRef.current);
-  if (menuStyle) menuStyle.menuBottom = mainContainerHeight;
   return { btnRef, onClick, btnClasses, menuStyle, menuClasses, renderMenu };
 };
 
-const getMenuPosition = (btnNode) => {
-  if (!btnNode) return;
+const getMenuStyle = (btnNode) => {
+  return {
+    left: `${getMenuLeft(btnNode)}px`,
+    bottom: 0,
+  };
+};
+
+const getMenuLeft = (btnNode) => {
+  if (!btnNode) return 0;
   const { left: btnLeft, width: btnWidth } = btnNode.getBoundingClientRect();
   const vw = document.documentElement.clientWidth;
   const btnCenter = btnLeft + btnWidth / 2;
@@ -63,23 +65,8 @@ const getMenuPosition = (btnNode) => {
   if (vw < 450) menuLeft = vw / 2 - 125;
   else if (menuLeft < 0) menuLeft = 0;
   else if (menuLeft + 250 > vw) menuLeft = vw - 250;
-  return { menuLeft };
+  return menuLeft;
 };
-
-const getMenuStyle = (btnNode) => {
-  const menuPosition = getMenuPosition(btnNode);
-  let menuStyle;
-  if (menuPosition) {
-    menuStyle = {
-      bottom: `${menuPosition.menuBottom}px`,
-      left: `${menuPosition.menuLeft}px`,
-    };
-  }
-  return menuStyle;
-};
-
-// on close menu:     // if fadeOut, closeMenu in progress;
-// if (fadeOutRef.current) return;
 
 // if (substrToKeepOpen) {
 //   e.target.classList.forEach((className) => {

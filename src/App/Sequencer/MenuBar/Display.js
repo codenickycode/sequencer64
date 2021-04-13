@@ -66,12 +66,12 @@ const Themes = () => {
 
   const memo = useMemo(() => {
     return (
-      <div className={showDisplayMenu ? 'menuItem show' : 'menuItem'}>
-        <div className='menuItemSub'>Themes</div>
+      <div className={showDisplayMenu ? 'popupMenu show' : 'popupMenu'}>
+        <div className='popupMenuSub'>Themes</div>
         <Button
           id={`${THEMES.JOKER}Theme`}
           classes={
-            theme === THEMES.JOKER ? 'menuItemBtn active' : 'menuItemBtn'
+            theme === THEMES.JOKER ? 'popupMenuBtn active' : 'popupMenuBtn'
           }
           onClick={() => changeTheme(THEMES.JOKER)}
         >
@@ -79,14 +79,18 @@ const Themes = () => {
         </Button>
         <Button
           id={`${THEMES.NES}Theme`}
-          classes={theme === THEMES.NES ? 'menuItemBtn active' : 'menuItemBtn'}
+          classes={
+            theme === THEMES.NES ? 'popupMenuBtn active' : 'popupMenuBtn'
+          }
           onClick={() => changeTheme(THEMES.NES)}
         >
           <label htmlFor={`${THEMES.NES}Theme`}>{THEMES.NES}</label>
         </Button>
         <Button
           id={`${THEMES.TMNT}Theme`}
-          classes={theme === THEMES.TMNT ? 'menuItemBtn active' : 'menuItemBtn'}
+          classes={
+            theme === THEMES.TMNT ? 'popupMenuBtn active' : 'popupMenuBtn'
+          }
           onClick={() => changeTheme(THEMES.TMNT)}
         >
           <label htmlFor={`${THEMES.TMNT}Theme`}>{THEMES.TMNT}</label>
@@ -94,7 +98,7 @@ const Themes = () => {
         <Button
           id={`${THEMES.BLACK}Theme`}
           classes={
-            theme === THEMES.BLACK ? 'menuItemBtn active' : 'menuItemBtn'
+            theme === THEMES.BLACK ? 'popupMenuBtn active' : 'popupMenuBtn'
           }
           onClick={() => changeTheme(THEMES.BLACK)}
         >
@@ -103,16 +107,16 @@ const Themes = () => {
         <Button
           id={`${THEMES.WHITE}Theme`}
           classes={
-            theme === THEMES.WHITE ? 'menuItemBtn active' : 'menuItemBtn'
+            theme === THEMES.WHITE ? 'popupMenuBtn active' : 'popupMenuBtn'
           }
           onClick={() => changeTheme(THEMES.WHITE)}
         >
           <label htmlFor={`${THEMES.WHITE}Theme`}>{THEMES.WHITE}</label>
         </Button>
-        <div className='menuItemSub'>Analyzer</div>
+        <div className='popupMenuSub'>Analyzer</div>
         <Button
           id='toggleAnalyzer'
-          classes={analyzerOn ? 'menuItemBtn active' : 'menuItemBtn'}
+          classes={analyzerOn ? 'popupMenuBtn active' : 'popupMenuBtn'}
           onClick={toggleAnalyzer}
         >
           <label htmlFor='toggleAnalyzer'>

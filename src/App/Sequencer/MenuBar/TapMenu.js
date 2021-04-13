@@ -6,9 +6,9 @@ import { TapIcon } from 'assets/icons';
 import { MODES, setMode } from 'App/reducers/editorSlice';
 import { useLocation } from 'react-router';
 import { PATHS } from 'utils/useGoTo';
-import { useMenu } from 'utils/useMenu';
+import { usePopupMenu } from 'utils/usePopupMenu';
 
-export const TapBtn = () => {
+export const TapMenu = () => {
   const pathname = useLocation().pathname;
   const showingKits = pathname === PATHS.CHANGE_KIT;
   const mode = useSelector((state) => state.editor.mode);
@@ -22,7 +22,7 @@ export const TapBtn = () => {
     menuStyle,
     menuClasses,
     renderMenu,
-  } = useMenu();
+  } = usePopupMenu();
   // console.log('rendering: ChangeKitBtn');
   let addClasses = ' tap';
   if (tapping) addClasses += ' active';
@@ -30,47 +30,47 @@ export const TapBtn = () => {
   return (
     <div ref={btnRef} className='menuBtnWrapper'>
       <Button
-        id='tapModeBtn'
+        id='tapMenuBtn'
         classes={btnClasses + addClasses}
         disabled={showingKits}
         onClick={onClick}
       >
         <TapIcon />
-        <label htmlFor='tapModeBtn'>tap</label>
+        <label htmlFor='tapMenuBtn'>tap</label>
       </Button>
       {renderMenu && (
-        <TapMenu menuStyle={menuStyle} menuClasses={menuClasses} />
+        <TapPopupMenu menuStyle={menuStyle} menuClasses={menuClasses} />
       )}
     </div>
   );
 };
 
-const TapMenu = ({ menuStyle, menuClasses }) => {
+const TapPopupMenu = ({ menuStyle, menuClasses }) => {
   const dispatch = useDispatch();
 
-  const portal = document.getElementById('menuPortal');
+  const portal = document.getElementById('popupMenuPortal');
   return !portal
     ? null
     : ReactDOM.createPortal(
         <div style={menuStyle} className={menuClasses}>
-          <div className='menuItemSub'>Tap Modes</div>
+          <div className='popupMenuSub'>Tap Modes</div>
           <Button
             id='tapMode'
-            classes='menuItemBtn'
+            classes='popupMenuBtn'
             onClick={() => dispatch(setMode(MODES.TAP))}
           >
             <label htmlFor='tapMode'>Play</label>
           </Button>
           <Button
             id='tapRecordMode'
-            classes='menuItemBtn'
+            classes='popupMenuBtn'
             onClick={() => dispatch(setMode(MODES.TAP_RECORD))}
           >
             <label htmlFor='tapRecordMode'>Record</label>
           </Button>
           <Button
             id='tapModeOff'
-            classes='menuItemBtn'
+            classes='popupMenuBtn'
             onClick={() => dispatch(setMode(null))}
           >
             <label htmlFor='tapModeOff'>Off</label>

@@ -1,0 +1,46 @@
+@use 'styles/placeholders' as *;
+@use 'styles/mixins' as *;
+@use 'styles/colors' as *;
+
+.popupMenu {
+  pointer-events: initial;
+  position: absolute;
+  width: 250px;
+  @include flex(column);
+  @extend %bgMenuBarHalf;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: 150ms ease;
+
+  &.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .popupMenuBtn {
+    @extend %btn;
+    @extend %bgMenuBarHalf;
+    border: 1px solid $color-none;
+    border-radius: 0;
+    margin-bottom: 0.5rem;
+    width: 100%;
+
+    &.active {
+      @extend %bgBtnFull;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        @include borderActive;
+      }
+    }
+  }
+
+  .popupMenuSub {
+    cursor: initial;
+    width: 100%;
+    padding: 0.5rem;
+    align-self: flex-start;
+    @extend %borderBottomHalf;
+  }
+}
