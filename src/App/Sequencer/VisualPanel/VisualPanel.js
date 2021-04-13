@@ -1,4 +1,5 @@
 import { MODES } from 'App/reducers/editorSlice';
+import { ANALYZER_MODES } from 'App/reducers/screenSlice';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -6,7 +7,7 @@ export const VisualPanel = () => {
   const splitSamplePanel = useSelector(
     (state) => state.screen.splitSamplePanel
   );
-  const analyzerOn = useSelector((state) => state.screen.analyzerOn);
+  const analyzerOn = useSelector((state) => state.screen.analyzer.on);
   const mode = useSelector((state) => state.editor.mode);
 
   let visualPanelClasses = 'visualPanel';
@@ -17,11 +18,11 @@ export const VisualPanel = () => {
   const memo = useMemo(() => {
     return (
       <div id='visualPanel' className={visualPanelClasses}>
-        <Info analyzerOn={analyzerOn} />
-        <Analyzer analyzerOn={analyzerOn} />
+        <Info />
+        <Analyzer />
       </div>
     );
-  }, [analyzerOn, visualPanelClasses]);
+  }, [visualPanelClasses]);
   return memo;
 };
 
@@ -29,7 +30,7 @@ const Info = () => {
   const splitSamplePanel = useSelector(
     (state) => state.screen.splitSamplePanel
   );
-  const analyzerOn = useSelector((state) => state.screen.analyzerOn);
+  const analyzerOn = useSelector((state) => state.screen.analyzer.on);
   const transportState = useSelector((state) => state.tone.transportState);
   const mode = useSelector((state) => state.editor.mode);
   const tapRecording = mode === MODES.TAP_RECORD;
@@ -46,7 +47,10 @@ const Info = () => {
 };
 
 const Analyzer = () => {
-  const analyzerOn = useSelector((state) => state.screen.analyzerOn);
+  const analyzerOn = useSelector((state) => state.screen.analyzer.on);
+  const analyzerMode = useSelector((state) => state.screen.analyzer.mode);
+  const scaleX = analyzerMode === ANALYZER_MODES.WAVE ? 0.2 : 1;
+  const blur = analyzerMode === ANALYZER_MODES.WAVE ? 50 : 0;
 
   const memo = useMemo(() => {
     const grid = [];
@@ -54,18 +58,21 @@ const Analyzer = () => {
       grid.push(i);
     }
     return (
-      <div className='analyzer'>
+      <div className={'analyzer ' + analyzerMode}>
         {grid.map((i) => {
           return (
             <div
               key={`freq-${i + 3}`}
               className='freq'
+              data-scalex={scaleX}
+              data-blur={blur}
+              data-i={i}
               style={{ '--order': i }}
             />
           );
         })}
       </div>
     );
-  }, []);
+  }, [analyzerMode, blur, scaleX]);
   return analyzerOn ? memo : null;
 };

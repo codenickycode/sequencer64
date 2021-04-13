@@ -1,6 +1,10 @@
 import ReactDOM from 'react-dom';
 import { setTheme } from 'App/reducers/appSlice';
-import { setAnalyzerOn } from 'App/reducers/screenSlice';
+import {
+  ANALYZER_MODES,
+  setAnalyzerMode,
+  setAnalyzerOn,
+} from 'App/reducers/screenSlice';
 import { MODES, setMode } from 'App/reducers/editorSlice';
 import { Button } from 'App/shared/Button';
 import { TVIcon } from 'assets/icons';
@@ -42,7 +46,8 @@ const THEMES = {
 const DisplayPopupMenu = ({ menuStyle, menuClasses }) => {
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.app.theme);
-  const analyzerOn = useSelector((state) => state.screen.analyzerOn);
+  const analyzerOn = useSelector((state) => state.screen.analyzer.on);
+  const analyzerMode = useSelector((state) => state.screen.analyzer.mode);
   const splitSamplePanel = useSelector(
     (state) => state.screen.splitSamplePanel
   );
@@ -53,11 +58,16 @@ const DisplayPopupMenu = ({ menuStyle, menuClasses }) => {
     dispatch(setTheme(newTheme));
   };
 
-  const toggleAnalyzer = useCallback(() => {
+  const toggleAnalyzer = () => {
     const newAnalyzerOn = !analyzerOn;
     dispatch(setAnalyzerOn(newAnalyzerOn));
     if (!splitSamplePanel && mode && !tapping) dispatch(setMode(null));
-  }, [analyzerOn, dispatch, mode, splitSamplePanel, tapping]);
+  };
+
+  const changeAnalyzerMode = (newMode) => {
+    if (newMode === analyzerMode) return;
+    dispatch(setAnalyzerMode(newMode));
+  };
 
   const portal = document.getElementById('popupMenuPortal');
   return !portal
@@ -111,6 +121,28 @@ const DisplayPopupMenu = ({ menuStyle, menuClasses }) => {
             <label htmlFor={`${THEMES.WHITE}Theme`}>{THEMES.WHITE}</label>
           </Button>
           <div className='popupMenuSub'>Analyzer</div>
+          <Button
+            id={'analyzerMode' + ANALYZER_MODES.BARS}
+            classes={
+              analyzerMode === ANALYZER_MODES.BARS
+                ? 'popupMenuBtn active'
+                : 'popupMenuBtn'
+            }
+            onClick={() => changeAnalyzerMode(ANALYZER_MODES.BARS)}
+          >
+            <label htmlFor='toggleAnalyzer'>Bars</label>
+          </Button>
+          <Button
+            id={'analyzerMode' + ANALYZER_MODES.WAVE}
+            classes={
+              analyzerMode === ANALYZER_MODES.WAVE
+                ? 'popupMenuBtn active'
+                : 'popupMenuBtn'
+            }
+            onClick={() => changeAnalyzerMode(ANALYZER_MODES.WAVE)}
+          >
+            <label htmlFor='toggleAnalyzer'>Wave</label>
+          </Button>
           <Button
             id='toggleAnalyzer'
             classes={analyzerOn ? 'popupMenuBtn active' : 'popupMenuBtn'}

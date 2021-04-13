@@ -7,7 +7,7 @@ export const Display = () => {
   const splitSamplePanel = useSelector(
     (state) => state.screen.splitSamplePanel
   );
-  const analyzerOn = useSelector((state) => state.screen.analyzerOn);
+  const analyzerOn = useSelector((state) => state.screen.analyzer.on);
   const mode = useSelector((state) => state.editor.mode);
 
   const tapping = mode === MODES.TAP || mode === MODES.TAP_RECORD;

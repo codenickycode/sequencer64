@@ -86,16 +86,20 @@ function animateAnalyzer() {
     spectrum = fft.getValue();
     average = spectrum.reduce((acc, curr) => acc + curr) / spectrum.length;
     freqs.forEach((freq, index) => {
-      i = index + 2;
+      i = index + 2; // first two freqs of fft are hyped
       db = Math.abs(spectrum[i] + average) * 100;
       prevDb = prevDbs[i] + 0.15;
       newDb = db < prevDb ? 0 : db > 1 ? 1 : db;
       prevDbs[i] = db;
       if (newDb !== prevDb) {
         freq.style.transitionDuration = newDb ? '60ms' : '1s';
-        freq.style.transform = `scale(.2, ${newDb})`;
-        const blur = 50 - newDb * 100;
-        freq.style.filter = `blur(${blur < 0 ? 0 : blur}px)`;
+        let scaleX = freq.dataset.scalex;
+        if (scaleX !== '1') scaleX = newDb * 0.25;
+        let transform = `scale(${scaleX}, ${newDb})`;
+        freq.style.transform = transform;
+        let blur = freq.dataset.blur - newDb * 100;
+        if (blur < 0) blur = 0;
+        freq.style.filter = `blur(${blur}px)`;
         freq.style.opacity = newDb + 0.5;
       }
     });

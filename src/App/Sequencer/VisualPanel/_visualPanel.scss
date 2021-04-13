@@ -52,14 +52,26 @@
 
   .freq {
     @extend %full;
-    transform-origin: center;
     transition-timing-function: ease-out;
     border-radius: 0;
-    transform: scale(0.1, 0.02);
+    transform: scale(1, 0.02) translate(0, 0);
+    transform-origin: center;
     @extend %bgGradient;
+    transition-property: opacity, transform, filter;
+    opacity: 1;
 
     &.pause {
       animation: none;
+    }
+  }
+  .analyzer.wave {
+    .freq {
+      transform: scale(0.2, 0.02) translate(0, 0);
+    }
+  }
+  .analyzer.bars {
+    .freq {
+      transform-origin: bottom;
     }
   }
 }

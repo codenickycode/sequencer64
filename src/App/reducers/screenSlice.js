@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import store from 'App/store';
 
+export const ANALYZER_MODES = {
+  BARS: 'bars',
+  WAVE: 'wave',
+};
+
 export const getDimensions = () => {
   const vw = document.documentElement.clientWidth;
   const vh = document.documentElement.clientHeight;
@@ -17,7 +22,7 @@ const INITIAL_SPLIT =
 const INITIAL_STATE = {
   dimensions: INITIAL_DIMENSIONS,
   splitSamplePanel: INITIAL_SPLIT,
-  analyzerOn: INITIAL_SPLIT,
+  analyzer: { on: INITIAL_SPLIT, mode: ANALYZER_MODES.BARS },
 };
 console.log(INITIAL_STATE);
 
@@ -32,12 +37,19 @@ export const screenSlice = createSlice({
         state.dimensions.landscape;
     },
     setAnalyzerOn: (state, { payload }) => {
-      state.analyzerOn = payload;
+      state.analyzer.on = payload;
+    },
+    setAnalyzerMode: (state, { payload }) => {
+      state.analyzer.mode = payload;
     },
   },
 });
 
-export const { setDimensions, setAnalyzerOn } = screenSlice.actions;
+export const {
+  setDimensions,
+  setAnalyzerOn,
+  setAnalyzerMode,
+} = screenSlice.actions;
 
 export default screenSlice.reducer;
 
