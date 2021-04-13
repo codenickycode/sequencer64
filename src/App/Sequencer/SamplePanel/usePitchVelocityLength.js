@@ -11,7 +11,9 @@ export const usePitchVelocityLength = (mode) => {
   const [value, setValue] = useState(
     mode === MODES.MOD_PITCH ? MIDI_NOTES[24] : 0.5
   );
-  const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
+  const splitSamplePanel = useSelector(
+    (state) => state.screen.splitSamplePanel
+  );
   const detailClass = splitSamplePanel ? 'detail col' : 'detail col dark';
 
   const dispatchModAll = useCallback(() => {

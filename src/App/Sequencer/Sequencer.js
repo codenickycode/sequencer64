@@ -12,7 +12,9 @@ import { VisualPanel } from 'App/Sequencer/VisualPanel/VisualPanel';
 export const SequencerPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
+  const splitSamplePanel = useSelector(
+    (state) => state.screen.splitSamplePanel
+  );
   const { shared } = useParams();
   const pathname = useLocation().pathname;
   const initialLoad = useSelector(
@@ -31,11 +33,16 @@ export const SequencerPage = () => {
       document.getElementById('preparingPortal').style.display = 'none';
   });
 
+  const mainContainerHeight = useSelector(
+    (state) => state.screen.dimensions.mainContainerHeight
+  );
+
   // const initialLoad = true;
   const memo = useMemo(() => {
+    const mainContainerStyle = { height: mainContainerHeight };
     return initialLoad ? null : (
       <div id='sequencer'>
-        <div className='mainContainer'>
+        <div className='mainContainer' style={mainContainerStyle}>
           <div id='main'>
             <Grid />
             {!splitSamplePanel && <VisualPanel />}
@@ -50,6 +57,6 @@ export const SequencerPage = () => {
         <Menu />
       </div>
     );
-  }, [initialLoad, splitSamplePanel]);
+  }, [initialLoad, mainContainerHeight, splitSamplePanel]);
   return memo;
 };

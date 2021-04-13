@@ -11,7 +11,9 @@ export const Erase = ({ onReturn, landscape }) => {
   const disabled = useSelector(
     (state) => state.sequence.present.noteTally[selectedSample].empty
   );
-  const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
+  const splitSamplePanel = useSelector(
+    (state) => state.screen.splitSamplePanel
+  );
 
   useEffect(() => {
     if (disabled) onReturn();
@@ -43,7 +45,9 @@ export const Erase = ({ onReturn, landscape }) => {
 export const Slice = ({ onReturn, landscape }) => {
   const dispatch = useDispatch();
   const selectedSample = useSelector((state) => state.editor.selectedSample);
-  const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
+  const splitSamplePanel = useSelector(
+    (state) => state.screen.splitSamplePanel
+  );
 
   // console.log('rendering: Slice');
   const onReset = () => {
@@ -66,7 +70,9 @@ export const Slice = ({ onReturn, landscape }) => {
 };
 
 export const Copy = ({ onReturn, landscape }) => {
-  const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
+  const splitSamplePanel = useSelector(
+    (state) => state.screen.splitSamplePanel
+  );
 
   return (
     <div className={splitSamplePanel ? 'detail' : 'detail dark'}>

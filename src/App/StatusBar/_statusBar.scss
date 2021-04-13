@@ -5,17 +5,13 @@
 .statusBar {
   pointer-events: none;
   position: fixed;
-  top: 0;
   height: 2.5rem;
   width: 100%;
   z-index: 201;
-
-  @media (orientation: landscape) and (min-height: 754px) {
-    top: initial;
-    bottom: var(--10vh);
-  }
+  @include flex;
 
   .status {
+    display: inline-block;
     padding: 0.5rem;
     font-size: 1rem;
     font-family: Orbitron, Roboto, sans-serif;

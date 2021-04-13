@@ -18,6 +18,16 @@ export const Menu = () => {
   const dispatch = useDispatch();
   const showDisplayMenu = useSelector((state) => state.app.showDisplayMenu);
 
+  const mainContainerHeight = useSelector(
+    (state) => state.screen.dimensions.mainContainerHeight
+  );
+  const menuPortalStyle = { maxHeight: mainContainerHeight };
+
+  const vh = useSelector((state) => state.screen.dimensions.vh);
+  const menuBarHeight = vh * 0.1;
+  let menuBarStyle = { height: menuBarHeight };
+  if (menuBarStyle.height > 100) menuBarStyle.height = 100;
+
   const menuRef = useRef(null);
   const scrollbarRef = useRef(null);
 
@@ -87,8 +97,13 @@ export const Menu = () => {
   // console.log('rendering: Menu');
   return (
     <>
-      <div id='menuPortal' />
-      <div ref={menuRef} id='menuBar' onScroll={handleScroll}>
+      <div id='menuPortal' style={menuPortalStyle} />
+      <div
+        ref={menuRef}
+        id='menuBar'
+        style={menuBarStyle}
+        onScroll={handleScroll}
+      >
         <div className='menuItems'>
           <LoadSaveBtn />
           <KitBtn />
@@ -101,7 +116,7 @@ export const Menu = () => {
           <div className='dummy'>|</div>
           <Display />
         </div>
-        <div ref={scrollbarRef} className='scrollbar'>
+        <div ref={scrollbarRef} className='scrollbar' style={menuBarStyle}>
           <ScrollLeft fwdRef={leftRef} onClick={() => scroll('left')} />
           <ScrollRight fwdRef={rightRef} onClick={() => scroll('right')} />
         </div>

@@ -15,16 +15,23 @@ export const TapBtn = () => {
   const tapping = mode === MODES.TAP;
   const tapRecording = mode === MODES.TAP_RECORD;
 
-  const { btnRef, onClick, menuStyle, menuClasses, renderMenu } = useMenu();
+  const {
+    btnClasses,
+    btnRef,
+    onClick,
+    menuStyle,
+    menuClasses,
+    renderMenu,
+  } = useMenu();
   // console.log('rendering: ChangeKitBtn');
-  let btnClasses = 'menuBtn tap';
-  if (tapping) btnClasses += ' active';
-  if (tapRecording) btnClasses += ' active record';
+  let addClasses = ' tap';
+  if (tapping) addClasses += ' active';
+  if (tapRecording) addClasses += ' active record';
   return (
     <div ref={btnRef} className='menuBtnWrapper'>
       <Button
         id='tapModeBtn'
-        classes={btnClasses}
+        classes={btnClasses + addClasses}
         disabled={showingKits}
         onClick={onClick}
       >

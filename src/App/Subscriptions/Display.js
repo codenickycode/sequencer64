@@ -1,21 +1,15 @@
-import {
-  getSplitSamplePanel,
-  setSplitSamplePanel,
-  setAnalyzerOn,
-  setShowDisplayMenu,
-  setShowTapMenu,
-} from 'App/reducers/appSlice';
 import { MODES } from 'App/reducers/editorSlice';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 export const Display = () => {
-  const dispatch = useDispatch();
   const theme = useSelector((state) => state.app.theme);
-  const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
-  const analyzerOn = useSelector((state) => state.app.analyzerOn);
+  const splitSamplePanel = useSelector(
+    (state) => state.screen.splitSamplePanel
+  );
+  const analyzerOn = useSelector((state) => state.screen.analyzerOn);
   const mode = useSelector((state) => state.editor.mode);
-  const showDisplayMenu = useSelector((state) => state.app.showDisplayMenu);
+
   const tapping = mode === MODES.TAP || mode === MODES.TAP_RECORD;
 
   useEffect(() => {
@@ -25,30 +19,6 @@ export const Display = () => {
       if (!tapping) spBorder.classList.remove('highlight');
     }
   }, [tapping]);
-
-  useEffect(() => {
-    if (!showDisplayMenu) return;
-    function closeDisplayMenu(e) {
-      if (
-        !e.target.classList.contains('displayMenuBtn') &&
-        !e.target.classList.contains('displayMenuSub')
-      )
-        dispatch(setShowDisplayMenu(false));
-    }
-
-    document.addEventListener('click', closeDisplayMenu);
-    return () => {
-      document.removeEventListener('click', closeDisplayMenu);
-    };
-  }, [dispatch, showDisplayMenu]);
-
-  useEffect(() => {
-    const newSplitSamplePanel = getSplitSamplePanel();
-    if (newSplitSamplePanel !== splitSamplePanel)
-      dispatch(setSplitSamplePanel(newSplitSamplePanel));
-    if (newSplitSamplePanel && analyzerOn === null)
-      dispatch(setAnalyzerOn(true));
-  }, [analyzerOn, dispatch, splitSamplePanel]);
 
   useEffect(() => {
     if (!splitSamplePanel && analyzerOn) {
@@ -65,5 +35,6 @@ export const Display = () => {
   useEffect(() => {
     document.getElementById('root').className = `theme${theme}`;
   }, [theme]);
+
   return null;
 };

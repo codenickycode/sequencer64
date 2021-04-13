@@ -12,8 +12,10 @@ export const SamplePanel = () => {
   const dispatch = useDispatch();
 
   const mode = useSelector((state) => state.editor.mode);
-  const landscape = useSelector((state) => state.app.landscape);
-  const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
+  const landscape = useSelector((state) => state.screen.dimensions.landscape);
+  const splitSamplePanel = useSelector(
+    (state) => state.screen.splitSamplePanel
+  );
 
   const spMemo = useMemo(() => {
     // console.log('rendering: SamplePanel');

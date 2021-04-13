@@ -1,8 +1,5 @@
-import {
-  setTheme,
-  setShowDisplayMenu,
-  setAnalyzerOn,
-} from 'App/reducers/appSlice';
+import { setTheme, setShowDisplayMenu } from 'App/reducers/appSlice';
+import { setAnalyzerOn } from 'App/reducers/screenSlice';
 import { MODES, setMode } from 'App/reducers/editorSlice';
 import { Button } from 'App/shared/Button';
 import { TVIcon } from 'assets/icons';
@@ -47,8 +44,10 @@ const Themes = () => {
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.app.theme);
   const showDisplayMenu = useSelector((state) => state.app.showDisplayMenu);
-  const analyzerOn = useSelector((state) => state.app.analyzerOn);
-  const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
+  const analyzerOn = useSelector((state) => state.screen.analyzerOn);
+  const splitSamplePanel = useSelector(
+    (state) => state.screen.splitSamplePanel
+  );
   const mode = useSelector((state) => state.editor.mode);
   const tapping = mode === MODES.TAP || mode === MODES.TAP_RECORD;
 

@@ -4,6 +4,7 @@ import editorReducer from 'App/reducers/editorSlice';
 import toneReducer from 'App/reducers/toneSlice';
 import appReducer from 'App/reducers/appSlice';
 import assetsReducer from 'App/reducers/assetsSlice';
+import screenReducer from 'App/reducers/screenSlice';
 
 export default configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export default configureStore({
     sequence: sequenceReducer,
     editor: editorReducer,
     app: appReducer,
+    screen: screenReducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({

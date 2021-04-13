@@ -3,8 +3,10 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 export const VisualPanel = () => {
-  const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
-  const analyzerOn = useSelector((state) => state.app.analyzerOn);
+  const splitSamplePanel = useSelector(
+    (state) => state.screen.splitSamplePanel
+  );
+  const analyzerOn = useSelector((state) => state.screen.analyzerOn);
   const mode = useSelector((state) => state.editor.mode);
 
   let visualPanelClasses = 'visualPanel';
@@ -24,8 +26,10 @@ export const VisualPanel = () => {
 };
 
 const Info = () => {
-  const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
-  const analyzerOn = useSelector((state) => state.app.analyzerOn);
+  const splitSamplePanel = useSelector(
+    (state) => state.screen.splitSamplePanel
+  );
+  const analyzerOn = useSelector((state) => state.screen.analyzerOn);
   const transportState = useSelector((state) => state.tone.transportState);
   const mode = useSelector((state) => state.editor.mode);
   const tapRecording = mode === MODES.TAP_RECORD;
@@ -42,7 +46,7 @@ const Info = () => {
 };
 
 const Analyzer = () => {
-  const analyzerOn = useSelector((state) => state.app.analyzerOn);
+  const analyzerOn = useSelector((state) => state.screen.analyzerOn);
 
   const memo = useMemo(() => {
     const grid = [];

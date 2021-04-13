@@ -6,16 +6,13 @@
   @extend %noEventsLayerAbs;
   top: 0;
   z-index: 1000;
-  border: 2px solid gold;
+  overflow: hidden;
 }
 
 #menuBar {
   position: fixed;
-  z-index: 10;
   bottom: 0;
   margin: 0 auto;
-  height: var(--10vh);
-  max-height: 100px;
   width: 100%;
   max-width: 1440px;
   scroll-snap-type: x mandatory;
@@ -25,19 +22,8 @@
   scroll-behavior: smooth;
   @extend %bgMenuBar;
 
-  @media (orientation: landscape) {
-    height: var(--15vh);
-  }
-
   @media (min-width: 768px) {
     overflow-x: hidden;
-  }
-
-  * {
-    // border: 1px solid red;
-  }
-
-  @media (min-width: 768px) {
     padding: 0.25rem;
     display: flex;
   }
@@ -46,15 +32,9 @@
 .scrollbar {
   pointer-events: none;
   position: fixed;
-  height: var(--10vh);
-  max-height: 100px;
   width: 100%;
   max-width: 1440px;
   bottom: 0;
-
-  @media (orientation: landscape) {
-    height: var(--15vh);
-  }
 
   @media (min-width: 768px) {
     display: none;

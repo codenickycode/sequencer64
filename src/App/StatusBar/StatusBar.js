@@ -7,6 +7,8 @@ export const StatusBar = () => {
   const bpm = useSelector((state) => state.sequence.present.bpm);
   const kitName = useSelector((state) => state.sequence.present.kit);
   const sequenceName = useSelector((state) => state.sequence.present.name);
+  const vh = useSelector((state) => state.screen.dimensions.vh);
+  const landscape = useSelector((state) => state.screen.dimensions.landscape);
 
   const [classes, setClasses] = useState('status');
   useEffect(() => {
@@ -29,6 +31,7 @@ export const StatusBar = () => {
   }, [message, count]);
 
   const memo = useMemo(() => {
+    // console.log('rendering: StatusBar');
     let index, status;
     if (message) {
       index = message.indexOf('#');
@@ -44,14 +47,16 @@ export const StatusBar = () => {
     } else if (status.match(/sequence/)) {
       if (!status.match(/erase/)) status += sequenceName;
     }
-    // console.log('rendering: StatusBar');
+
+    let statusBarStyle = { top: 0 };
+    if (landscape && vh >= 754) statusBarStyle = { bottom: vh * 0.1 };
     return (
-      <div className='statusBar'>
+      <div className='statusBar' style={statusBarStyle}>
         <p className={classes} id='status'>
           {status}
         </p>
       </div>
     );
-  }, [bpm, classes, kitName, message, sequenceName]);
+  }, [bpm, classes, kitName, landscape, message, sequenceName, vh]);
   return message ? memo : null;
 };

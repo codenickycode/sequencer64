@@ -31,12 +31,7 @@
     margin: 0 0.5rem;
     height: 100%;
     background: transparent;
-    border: none;
-
-    &.tap,
-    &.kit {
-      border: 1px solid $color-none;
-    }
+    border: 1px solid $color-none;
 
     label {
       letter-spacing: initial;
@@ -45,6 +40,10 @@
     .icon {
       max-width: 2rem;
       min-width: 1rem;
+    }
+
+    &.menuOpen {
+      @extend %borderActive;
     }
 
     &.active {
@@ -165,14 +164,15 @@
   @include flex(column);
   @extend %bgMenuBarHalf;
   opacity: 0;
-  transform: scaleY(0);
-  transform-origin: bottom;
-  transition: 1000ms;
-  z-index: 1000;
+  // transform: scaleY(0);
+  // transform-origin: bottom;
+  transform: translateY(100%);
+  transition: 150ms ease;
 
   &.show {
     opacity: 1;
-    transform: scaleY(1);
+    // transform: scaleY(1);
+    transform: translateY(0);
   }
 
   .menuItemBtn {
@@ -196,8 +196,10 @@
 
   .menuItemSub {
     cursor: initial;
+    width: 100%;
     padding: 0.5rem;
     align-self: flex-start;
+    @extend %borderBottomHalf;
   }
 }
 

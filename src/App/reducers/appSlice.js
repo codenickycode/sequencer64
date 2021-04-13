@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import store from 'App/store';
 import { getLS } from 'utils/storage';
 import * as appThunks from './thunks/appThunks';
 
@@ -6,12 +7,6 @@ export const INITIAL_USER = {
   _id: '',
   username: '',
   loggedIn: false,
-};
-
-export const getSplitSamplePanel = () => {
-  const samplePanel = document.getElementById('samplePanel');
-  const enoughSpace = samplePanel?.clientHeight > 500;
-  return enoughSpace;
 };
 
 const INITIAL_STATE = {
@@ -24,13 +19,6 @@ const INITIAL_STATE = {
   online: window.navigator.onLine,
   serviceWorkerActive: false,
   theme: getLS('theme') || 'Joker',
-  vw: document.documentElement.clientWidth,
-  vh: document.documentElement.clientHeight,
-  landscape: window.innerWidth > window.innerHeight,
-  splitSamplePanel: null,
-  analyzerOn: null,
-  showDisplayMenu: false,
-  showTapMenu: false,
   log: { count: 0, message: '' },
 };
 
@@ -68,17 +56,6 @@ export const appSlice = createSlice({
     setTheme: (state, { payload }) => {
       state.theme = payload;
     },
-    setDimensions: (state, { payload: { vw, vh } }) => {
-      state.vw = vw;
-      state.vh = vh;
-      state.landscape = vw > vh;
-    },
-    setSplitSamplePanel: (state, { payload }) => {
-      state.splitSamplePanel = payload;
-    },
-    setAnalyzerOn: (state, { payload }) => {
-      state.analyzerOn = payload;
-    },
     setShowDisplayMenu: (state, { payload }) => {
       state.showDisplayMenu = payload;
     },
@@ -114,7 +91,6 @@ export const appSlice = createSlice({
 });
 
 export const {
-  setAnalyzerOn,
   setUser,
   setStatus,
   setAlert,
@@ -126,8 +102,6 @@ export const {
   setTheme,
   setShowDisplayMenu,
   setShowTapMenu,
-  setDimensions,
-  setSplitSamplePanel,
   setLog,
   updateSequencesFinally,
   getUserFinally,
@@ -136,3 +110,6 @@ export const {
 export const { saveSequence, deleteSequence, getUser, logout } = appThunks;
 
 export default appSlice.reducer;
+
+window.addEventListener('online', () => store.dispatch(setOnline(true)));
+window.addEventListener('offline', () => store.dispatch(setOnline(false)));

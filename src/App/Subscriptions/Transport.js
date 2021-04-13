@@ -23,7 +23,7 @@ export const Transport = () => {
   const sequenceKitName = useSelector((state) => state.sequence.present.kit);
 
   const transportState = useSelector((state) => state.tone.transportState);
-  const analyzerOn = useSelector((state) => state.app.analyzerOn);
+  const analyzerOn = useSelector((state) => state.screen.analyzerOn);
 
   useEffect(() => {
     if (transportState === 'started' && analyzerOn) startAnalyzer();

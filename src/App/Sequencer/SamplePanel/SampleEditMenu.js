@@ -17,7 +17,9 @@ export const SampleEditMenu = ({ selectMode, onClose }) => {
   const disabled = useSelector(
     (state) => state.sequence.present.noteTally[selectedSample].empty
   );
-  const splitSamplePanel = useSelector((state) => state.app.splitSamplePanel);
+  const splitSamplePanel = useSelector(
+    (state) => state.screen.splitSamplePanel
+  );
 
   const ref = useRef();
   useLayoutEffect(() => {
