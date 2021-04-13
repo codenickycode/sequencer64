@@ -10,14 +10,16 @@ export const PastePattern = () => {
   const samples = useSelector((state) => state.assets.kits[kit].samples);
 
   const pastePatternMemo = useMemo(() => {
-    const portal = document.getElementById('pastePatternPortal');
     // console.log('rendering: PastePattern');
     let grid = [];
     for (let i = 0, len = samples.length; i < len; i++) {
       grid.push(i);
     }
-    return portal
-      ? ReactDOM.createPortal(
+
+    const portal = document.getElementById('pastePatternPortal');
+    return !portal
+      ? null
+      : ReactDOM.createPortal(
           <div id='paste-pattern' className={'paste-pattern'}>
             <div className='samples'>
               {grid.map((i) => {
@@ -33,8 +35,7 @@ export const PastePattern = () => {
             </div>
           </div>,
           portal
-        )
-      : null;
+        );
   }, [samples]);
   return pastePatternMemo;
 };

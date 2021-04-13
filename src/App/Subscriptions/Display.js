@@ -23,10 +23,10 @@ export const Display = () => {
   useEffect(() => {
     if (!splitSamplePanel && analyzerOn) {
       const analyzer = document.getElementById('analyzer');
-      if (!mode || tapping) {
+      if (mode === MODES.INIT || tapping) {
         if (analyzer) analyzer.style.opacity = 1;
       }
-      if (mode && !tapping) {
+      if (mode !== MODES.INIT && !tapping) {
         if (analyzer) analyzer.style.opacity = 0;
       }
     }

@@ -51,7 +51,7 @@ export const usePopupMenu = (keepOpenOnSelect) => {
 
   const btnRef = useRef();
   const menuStyle = getMenuStyle(btnRef.current);
-  return { btnRef, onClick, btnClasses, menuStyle, menuClasses, renderMenu };
+  return { btnClasses, btnRef, onClick, renderMenu, menuStyle, menuClasses };
 };
 
 const getMenuStyle = (btnNode) => {

@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const MODES = {
-  TAP: 'TAP',
-  TAP_RECORD: 'TAP_RECORD',
+  INIT: 'Off',
+  TAP: 'Play',
+  TAP_RECORD: 'Record',
   PAINT: 'PAINT',
   ERASE: 'ERASE',
   SLICE: 'SLICE',
@@ -20,7 +21,7 @@ export const INITIAL_MODS = {
 
 const INITIAL_STATE = {
   selectedSample: -1,
-  mode: null,
+  mode: MODES.INIT,
   mods: { ...INITIAL_MODS },
   tapCellById: {},
   toggleOn: true,

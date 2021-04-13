@@ -28,6 +28,12 @@
     &.active {
       @extend %bgBtnFull;
     }
+    &:disabled {
+      opacity: 1;
+      &:hover {
+        border-color: $color-none;
+      }
+    }
 
     @media (hover: hover) {
       &:hover {

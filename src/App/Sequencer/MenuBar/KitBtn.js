@@ -17,7 +17,7 @@ export const KitBtn = () => {
 
     const changeKit = () => {
       if (showingKits) {
-        goTo(PATHS.BASE, () => dispatch(setMode(null)));
+        goTo(PATHS.BASE, () => dispatch(setMode(MODES.INIT)));
       } else {
         goTo(PATHS.CHANGE_KIT, () => dispatch(setMode(MODES.TAP)));
       }

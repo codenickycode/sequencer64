@@ -19,8 +19,9 @@ export const ChangeKit = () => {
       grid.push(i);
     }
     const portal = document.getElementById('changeKitPortal');
-    return portal
-      ? ReactDOM.createPortal(
+    return !portal
+      ? null
+      : ReactDOM.createPortal(
           <div id='changeKit' className='changeKit'>
             <div className='kits'>
               {grid.map((i) => {
@@ -31,8 +32,7 @@ export const ChangeKit = () => {
             </div>
           </div>,
           portal
-        )
-      : null;
+        );
   }, [numKits]);
 
   return changeKitMemo;

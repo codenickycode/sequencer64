@@ -1,158 +1,69 @@
-import ReactDOM from 'react-dom';
-import { setTheme } from 'App/reducers/appSlice';
-import {
-  ANALYZER_MODES,
-  setAnalyzerMode,
-  setAnalyzerOn,
-} from 'App/reducers/screenSlice';
-import { MODES, setMode } from 'App/reducers/editorSlice';
-import { Button } from 'App/shared/Button';
+import React from 'react';
+import { setTheme, THEMES } from 'App/reducers/appSlice';
+import { ANALYZER_MODES } from 'App/reducers/screenSlice';
 import { TVIcon } from 'assets/icons';
-import React, { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { usePopupMenu } from 'utils/usePopupMenu';
+import { MenuItem, MenuItemToggle, PopupMenu } from './PopupMenu/PopupMenu';
+import { useAnalyzerMenu } from './useAnalyzerMenu';
 
 export const DisplayMenu = () => {
-  const {
-    btnClasses,
-    btnRef,
-    onClick,
-    menuStyle,
-    menuClasses,
-    renderMenu,
-  } = usePopupMenu(true);
-
   return (
-    <div ref={btnRef} className='menuBtnWrapper'>
-      <Button id='displayBtn' classes={btnClasses} onClick={onClick}>
-        <TVIcon />
-        <label htmlFor='displayBtn'>display</label>
-      </Button>
-      {renderMenu && (
-        <DisplayPopupMenu menuStyle={menuStyle} menuClasses={menuClasses} />
-      )}
-    </div>
+    <PopupMenu name='display' Icon={TVIcon} keepOpenOnSelect={true}>
+      <Themes />
+      <Analyzer />
+    </PopupMenu>
   );
 };
 
-const THEMES = {
-  JOKER: 'Joker',
-  NES: 'NES',
-  TMNT: 'TMNT',
-  BLACK: 'Black',
-  WHITE: 'White',
-};
-
-const DisplayPopupMenu = ({ menuStyle, menuClasses }) => {
+const themes = Object.values(THEMES);
+const Themes = () => {
   const dispatch = useDispatch();
-  const theme = useSelector((state) => state.app.theme);
-  const analyzerOn = useSelector((state) => state.screen.analyzer.on);
-  const analyzerMode = useSelector((state) => state.screen.analyzer.mode);
-  const splitSamplePanel = useSelector(
-    (state) => state.screen.splitSamplePanel
-  );
-  const mode = useSelector((state) => state.editor.mode);
-  const tapping = mode === MODES.TAP || mode === MODES.TAP_RECORD;
-
+  const currentTheme = useSelector((state) => state.app.theme);
   const changeTheme = (newTheme) => {
     dispatch(setTheme(newTheme));
   };
+  return (
+    <>
+      <div className='popupMenuSub'>Themes</div>
+      {themes.map((theme) => {
+        const selected = theme === currentTheme;
+        return (
+          <MenuItem
+            key={`selectTheme${theme}`}
+            item={theme}
+            selected={selected}
+            onClick={changeTheme}
+          />
+        );
+      })}
+    </>
+  );
+};
 
-  const toggleAnalyzer = () => {
-    const newAnalyzerOn = !analyzerOn;
-    dispatch(setAnalyzerOn(newAnalyzerOn));
-    if (!splitSamplePanel && mode && !tapping) dispatch(setMode(null));
-  };
+const analyzerModes = Object.values(ANALYZER_MODES);
+const Analyzer = () => {
+  const { currentMode, changeMode, toggle, on } = useAnalyzerMenu();
 
-  const changeAnalyzerMode = (newMode) => {
-    if (newMode === analyzerMode) return;
-    dispatch(setAnalyzerMode(newMode));
-  };
-
-  const portal = document.getElementById('popupMenuPortal');
-  return !portal
-    ? null
-    : ReactDOM.createPortal(
-        <div style={menuStyle} className={menuClasses}>
-          <div className='popupMenuSub'>Themes</div>
-          <Button
-            id={`${THEMES.JOKER}Theme`}
-            classes={
-              theme === THEMES.JOKER ? 'popupMenuBtn active' : 'popupMenuBtn'
-            }
-            onClick={() => changeTheme(THEMES.JOKER)}
-          >
-            <label htmlFor={`${THEMES.JOKER}Theme`}>{THEMES.JOKER}</label>
-          </Button>
-          <Button
-            id={`${THEMES.NES}Theme`}
-            classes={
-              theme === THEMES.NES ? 'popupMenuBtn active' : 'popupMenuBtn'
-            }
-            onClick={() => changeTheme(THEMES.NES)}
-          >
-            <label htmlFor={`${THEMES.NES}Theme`}>{THEMES.NES}</label>
-          </Button>
-          <Button
-            id={`${THEMES.TMNT}Theme`}
-            classes={
-              theme === THEMES.TMNT ? 'popupMenuBtn active' : 'popupMenuBtn'
-            }
-            onClick={() => changeTheme(THEMES.TMNT)}
-          >
-            <label htmlFor={`${THEMES.TMNT}Theme`}>{THEMES.TMNT}</label>
-          </Button>
-          <Button
-            id={`${THEMES.BLACK}Theme`}
-            classes={
-              theme === THEMES.BLACK ? 'popupMenuBtn active' : 'popupMenuBtn'
-            }
-            onClick={() => changeTheme(THEMES.BLACK)}
-          >
-            <label htmlFor={`${THEMES.BLACK}Theme`}>{THEMES.BLACK}</label>
-          </Button>
-          <Button
-            id={`${THEMES.WHITE}Theme`}
-            classes={
-              theme === THEMES.WHITE ? 'popupMenuBtn active' : 'popupMenuBtn'
-            }
-            onClick={() => changeTheme(THEMES.WHITE)}
-          >
-            <label htmlFor={`${THEMES.WHITE}Theme`}>{THEMES.WHITE}</label>
-          </Button>
-          <div className='popupMenuSub'>Analyzer</div>
-          <Button
-            id={'analyzerMode' + ANALYZER_MODES.BARS}
-            classes={
-              analyzerMode === ANALYZER_MODES.BARS
-                ? 'popupMenuBtn active'
-                : 'popupMenuBtn'
-            }
-            onClick={() => changeAnalyzerMode(ANALYZER_MODES.BARS)}
-          >
-            <label htmlFor='toggleAnalyzer'>Bars</label>
-          </Button>
-          <Button
-            id={'analyzerMode' + ANALYZER_MODES.WAVE}
-            classes={
-              analyzerMode === ANALYZER_MODES.WAVE
-                ? 'popupMenuBtn active'
-                : 'popupMenuBtn'
-            }
-            onClick={() => changeAnalyzerMode(ANALYZER_MODES.WAVE)}
-          >
-            <label htmlFor='toggleAnalyzer'>Wave</label>
-          </Button>
-          <Button
-            id='toggleAnalyzer'
-            classes={analyzerOn ? 'popupMenuBtn active' : 'popupMenuBtn'}
-            onClick={toggleAnalyzer}
-          >
-            <label htmlFor='toggleAnalyzer'>
-              Power: {analyzerOn ? 'on' : 'off'}
-            </label>
-          </Button>
-        </div>,
-        portal
-      );
+  return (
+    <>
+      <div className='popupMenuSub'>Analyzer</div>
+      {analyzerModes.map((mode) => {
+        const selected = mode === currentMode;
+        return (
+          <MenuItem
+            key={`selectAnalyzerMode${mode}`}
+            item={mode}
+            selected={selected}
+            onClick={changeMode}
+          />
+        );
+      })}
+      <MenuItemToggle
+        item={'Analyzer'}
+        on={on}
+        onClick={toggle}
+        label={`Power: ${on ? 'on' : 'off'}`}
+      />
+    </>
+  );
 };

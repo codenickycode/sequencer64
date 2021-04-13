@@ -3,6 +3,14 @@ import store from 'App/store';
 import { getLS } from 'utils/storage';
 import * as appThunks from './thunks/appThunks';
 
+export const THEMES = {
+  JOKER: 'Joker',
+  NES: 'NES',
+  TMNT: 'TMNT',
+  BLACK: 'Black',
+  WHITE: 'White',
+};
+
 export const INITIAL_USER = {
   _id: '',
   username: '',
@@ -18,7 +26,7 @@ const INITIAL_STATE = {
   error: '',
   online: window.navigator.onLine,
   serviceWorkerActive: false,
-  theme: getLS('theme') || 'Joker',
+  theme: getLS('theme') || THEMES.JOKER,
   log: { count: 0, message: '' },
 };
 

@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { TransportPanel } from 'App/Sequencer/MenuBar/TransportPanel';
 import { UndoRedoBtn } from 'App/Sequencer/MenuBar/UndoRedoBtn';
 import { EraseBtn } from 'App/Sequencer/MenuBar/EraseBtn';
@@ -49,27 +55,30 @@ export const Menu = () => {
   const rightRef = useRef(null);
   const scrollEnd = useRef(null);
 
-  const scroll = (dir) => {
-    onScrollStart();
-    clearTimeout(scrollEnd.current);
-    const offset =
-      dir === 'right'
-        ? scrollbarRef.current.clientWidth
-        : scrollbarRef.current.clientWidth * -1;
-    const start = menuRef.current.scrollLeft;
-    menuRef.current.scrollTo({ left: start + offset, behavior: 'smooth' });
-    scrollEnd.current = setTimeout(() => disableScroll(), 500);
-  };
-
-  const onScrollStart = () => {
-    resetView();
-    enableScroll();
-  };
-
-  const resetView = () => {
+  const resetView = useCallback(() => {
     if (showDisplayMenu) dispatch(setShowDisplayMenu(false));
     if (pathname === PATHS.CHANGE_KIT) goTo(PATHS.BASE);
-  };
+  }, [dispatch, goTo, pathname, showDisplayMenu]);
+
+  const onScrollStart = useCallback(() => {
+    resetView();
+    enableScroll();
+  }, [resetView]);
+
+  const scroll = useCallback(
+    (dir) => {
+      onScrollStart();
+      clearTimeout(scrollEnd.current);
+      const offset =
+        dir === 'right'
+          ? scrollbarRef.current.clientWidth
+          : scrollbarRef.current.clientWidth * -1;
+      const start = menuRef.current.scrollLeft;
+      menuRef.current.scrollTo({ left: start + offset, behavior: 'smooth' });
+      scrollEnd.current = setTimeout(() => disableScroll(), 500);
+    },
+    [onScrollStart]
+  );
 
   const enableScroll = () => {
     rightRef.current.disabled = false;
@@ -88,39 +97,42 @@ export const Menu = () => {
     }
   };
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     onScrollStart();
     clearTimeout(scrollEnd.current);
     scrollEnd.current = setTimeout(() => disableScroll(), 100);
-  };
+  }, [onScrollStart]);
 
-  // console.log('rendering: Menu');
-  return (
-    <>
-      <div id='popupMenuPortal' style={popupMenuPortalStyle} />
-      <div
-        ref={menuRef}
-        id='menuBar'
-        style={menuBarStyle}
-        onScroll={handleScroll}
-      >
-        <div className='menuItems'>
-          <LoadSaveBtn />
-          <KitBtn />
-          <TapMenu />
+  const memo = useMemo(() => {
+    console.log('rendering: Menu');
+    return (
+      <>
+        <div id='popupMenuPortal' style={popupMenuPortalStyle} />
+        <div
+          ref={menuRef}
+          id='menuBar'
+          style={menuBarStyle}
+          onScroll={handleScroll}
+        >
+          <div className='menuItems'>
+            <LoadSaveBtn />
+            <KitBtn />
+            <TapMenu />
+          </div>
+          <TransportPanel />
+          <div className='menuItems'>
+            <UndoRedoBtn />
+            <EraseBtn />
+            <div className='dummy'>|</div>
+            <DisplayMenu />
+          </div>
+          <div ref={scrollbarRef} className='scrollbar' style={menuBarStyle}>
+            <ScrollLeft fwdRef={leftRef} onClick={() => scroll('left')} />
+            <ScrollRight fwdRef={rightRef} onClick={() => scroll('right')} />
+          </div>
         </div>
-        <TransportPanel />
-        <div className='menuItems'>
-          <UndoRedoBtn />
-          <EraseBtn />
-          <div className='dummy'>|</div>
-          <DisplayMenu />
-        </div>
-        <div ref={scrollbarRef} className='scrollbar' style={menuBarStyle}>
-          <ScrollLeft fwdRef={leftRef} onClick={() => scroll('left')} />
-          <ScrollRight fwdRef={rightRef} onClick={() => scroll('right')} />
-        </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }, [handleScroll, menuBarStyle, popupMenuPortalStyle, scroll]);
+  return memo;
 };

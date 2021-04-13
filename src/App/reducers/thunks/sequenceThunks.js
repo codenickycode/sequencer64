@@ -37,15 +37,12 @@ export const loadInitialSequence = (_id, clearUrl) => async (dispatch) => {
 export const modCell = (step, noteOn) => (dispatch, getState) => {
   const selectedSample = getState().editor.selectedSample;
   const mode = getState().editor.mode;
-  const tapping = mode === MODES.TAP || mode === MODES.TAP_RECORDING;
-  if (selectedSample === -1) {
-    if (tapping)
+  switch (mode) {
+    case MODES.INIT:
       dispatch(
         setAlert('Disable Tap Mode and select a sample to edit the grid')
       );
-    return;
-  }
-  switch (mode) {
+      break;
     case MODES.PAINT:
       const toggleOn = getState().editor.toggleOn;
       if ((toggleOn && !noteOn) || (!toggleOn && noteOn))

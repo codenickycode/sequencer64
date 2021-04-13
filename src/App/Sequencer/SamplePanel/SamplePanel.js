@@ -31,7 +31,8 @@ export const SamplePanel = () => {
     };
 
     const selectMode = (mode) => {
-      if (mode && mode !== MODES.PAINT && mode !== MODES.COPY) showEditable();
+      if (mode !== MODES.INIT && mode !== MODES.PAINT && mode !== MODES.COPY)
+        showEditable();
       dispatch(setMode(mode));
     };
 

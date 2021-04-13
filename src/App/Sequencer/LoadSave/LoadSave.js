@@ -16,8 +16,9 @@ export const LoadSave = ({ tab }) => {
     };
 
     const portal = document.getElementById('fullScreenPortal');
-    return portal
-      ? ReactDOM.createPortal(
+    return !portal
+      ? null
+      : ReactDOM.createPortal(
           <>
             <div id='loadSave' className='loadSave' onClick={onClick}>
               <div className='top'>
@@ -32,8 +33,7 @@ export const LoadSave = ({ tab }) => {
             </div>
           </>,
           portal
-        )
-      : null;
+        );
   }, [goTo, tab]);
   return memo;
 };

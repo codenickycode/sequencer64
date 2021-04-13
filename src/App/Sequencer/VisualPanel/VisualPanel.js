@@ -13,7 +13,8 @@ export const VisualPanel = () => {
   let visualPanelClasses = 'visualPanel';
   if (!splitSamplePanel) {
     visualPanelClasses += ' overGrid';
-    if (analyzerOn && !mode) visualPanelClasses += ' overGrid show';
+    if (analyzerOn && mode === MODES.INIT)
+      visualPanelClasses += ' overGrid show';
   }
   const memo = useMemo(() => {
     return (
@@ -35,7 +36,8 @@ const Info = () => {
   const mode = useSelector((state) => state.editor.mode);
   const tapRecording = mode === MODES.TAP_RECORD;
   const tapping = mode === MODES.TAP;
-  let showInfo = splitSamplePanel && (!mode || tapping || tapRecording);
+  let showInfo =
+    splitSamplePanel && (mode === MODES.INIT || tapping || tapRecording);
   if (transportState === 'started' && analyzerOn) showInfo = false;
   return (
     <div className={showInfo ? 'overlay show' : 'overlay'}>
