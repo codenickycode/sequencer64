@@ -124,4 +124,9 @@ const countIn = () =>
     await wait(beat - 100, resolve);
   });
 
-const click = (note) => metronome.triggerAttack(note, Tone.immediate());
+const click = (note) => {
+  const cell0 = document.getElementById('cell-0');
+  cell0.classList.add('flash');
+  setTimeout(() => cell0.classList.remove('flash'), 100);
+  metronome.triggerAttack(note, Tone.immediate());
+};

@@ -39,11 +39,13 @@
     }
 
     .bg {
+      @extend %bgBright;
       opacity: 0;
       transform-origin: left;
     }
     &.flash {
       .bg {
+        transition: none;
         @extend %turnOn;
       }
     }
@@ -56,6 +58,7 @@
     .border {
       @extend %borderActive;
       opacity: 0;
+      background: transparent;
     }
     &.flashing {
       .border {
