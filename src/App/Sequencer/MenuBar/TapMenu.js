@@ -6,6 +6,7 @@ import { useLocation } from 'react-router';
 import { PATHS } from 'utils/useGoTo';
 import { MenuItem, PopupMenu } from './PopupMenu/PopupMenu';
 import { useStopPropEventListener } from 'utils/useStopPropEventListener';
+import { startRecord } from 'App/reducers/thunks/toneThunks';
 
 export const TapMenu = () => {
   const pathname = useLocation().pathname;
@@ -39,6 +40,7 @@ const TapMenuItems = () => {
 
   const changeMode = (newMode) => {
     dispatch(setMode(newMode));
+    if (newMode === MODES.TAP_RECORD) dispatch(startRecord());
     eventListener('tapBtn', 'click', deactivate);
   };
 
