@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react';
-import ReactDOM from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import * as icons from 'assets/icons/kit';
 import { paste } from 'App/reducers/sequenceSlice';
 import { Button } from 'App/shared/Button';
+import { Portal } from 'App/shared/Portal';
 
 export const PastePattern = () => {
   const kit = useSelector((state) => state.sequence.present.kit);
@@ -15,27 +15,24 @@ export const PastePattern = () => {
     for (let i = 0, len = samples.length; i < len; i++) {
       grid.push(i);
     }
-
-    const portal = document.getElementById('pastePatternPortal');
-    return !portal
-      ? null
-      : ReactDOM.createPortal(
-          <div id='paste-pattern' className={'paste-pattern'}>
-            <div className='samples'>
-              {grid.map((i) => {
-                return (
-                  <SampleBtn
-                    key={`paste-pattern-${samples[i].name}`}
-                    i={i}
-                    icon={samples[i].icon}
-                    color={samples[i].color}
-                  />
-                );
-              })}
-            </div>
-          </div>,
-          portal
-        );
+    return (
+      <Portal targetId='pastePatternPortal'>
+        <div id='pastePattern' className={'pastePattern'}>
+          <div className='samples'>
+            {grid.map((i) => {
+              return (
+                <SampleBtn
+                  key={`pastePattern-${samples[i].name}`}
+                  i={i}
+                  icon={samples[i].icon}
+                  color={samples[i].color}
+                />
+              );
+            })}
+          </div>
+        </div>
+      </Portal>
+    );
   }, [samples]);
   return pastePatternMemo;
 };
@@ -67,7 +64,7 @@ const SampleBtn = ({ i, icon, color }) => {
       <div className={flashClass}>
         {pattern.map((step, s) => {
           const classes = step[i].noteOn ? `cell bg${i} on` : 'cell';
-          return <div key={`paste-pattern-${s}-${i}`} className={classes} />;
+          return <div key={`pastePattern-${s}-${i}`} className={classes} />;
         })}
       </div>
     </Button>

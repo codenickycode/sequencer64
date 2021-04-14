@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import { Button } from 'App/shared/Button';
 import { HOST } from 'utils/network';
 import { useHistory } from 'react-router';
 import { img } from 'assets/img/social';
+import { Portal } from 'App/shared/Portal';
 
 export const LoginPage = () => {
   const history = useHistory();
@@ -19,28 +19,26 @@ export const LoginPage = () => {
     if (e.target.id === 'loginPage' || e.target.id === 'goBack')
       history.goBack();
   };
-  const portal = document.getElementById('fullScreenPortal');
-  return !portal
-    ? null
-    : ReactDOM.createPortal(
-        <div id='loginPage' className='loginPage' onClick={handleGoBack}>
-          <h1>Login to save and share your sequences</h1>
-          <div className='loginMethods'>
-            <MethodBtn type='google' login={login} rage={rage} />
-            <MethodBtn type='twitter' login={login} rage={rage} />
-            <MethodBtn type='facebook' login={login} rage={rage} />
-            <MethodBtn type='github' login={login} rage={rage} />
+  return (
+    <Portal targetId='fullScreenPortal'>
+      <div id='loginPage' className='loginPage' onClick={handleGoBack}>
+        <h1>Login to save and share your sequences</h1>
+        <div className='loginMethods'>
+          <MethodBtn type='google' login={login} rage={rage} />
+          <MethodBtn type='twitter' login={login} rage={rage} />
+          <MethodBtn type='facebook' login={login} rage={rage} />
+          <MethodBtn type='github' login={login} rage={rage} />
+        </div>
+        <div className='bottom-btn show'>
+          <div className='bottomBtn' to='/?load=true'>
+            <Button id='goBack' onClick={handleGoBack}>
+              <label htmlFor='goBack'>Go Back</label>
+            </Button>
           </div>
-          <div className='bottom-btn show'>
-            <div className='bottomBtn' to='/?load=true'>
-              <Button id='goBack' onClick={handleGoBack}>
-                <label htmlFor='goBack'>Go Back</label>
-              </Button>
-            </div>
-          </div>
-        </div>,
-        portal
-      );
+        </div>
+      </div>
+    </Portal>
+  );
 };
 
 const MethodBtn = ({ type, login, rage }) => {

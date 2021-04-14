@@ -1,10 +1,10 @@
 import cuid from 'cuid';
-import ReactDOM from 'react-dom';
 import React, { useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from 'App/shared/Button';
 import { CloudDownloadIcon } from 'assets/icons';
 import { useKitBtnState } from './useKitBtnState';
+import { Portal } from 'App/shared/Portal';
 
 export const ChangeKit = () => {
   const numKits = useSelector((state) => state.assets.numKits);
@@ -18,21 +18,18 @@ export const ChangeKit = () => {
     for (let i = 0; i < numKits; i++) {
       grid.push(i);
     }
-    const portal = document.getElementById('changeKitPortal');
-    return !portal
-      ? null
-      : ReactDOM.createPortal(
-          <div id='changeKit' className='changeKit'>
-            <div className='kits'>
-              {grid.map((i) => {
-                return (
-                  <KitBtn key={cuid.slug()} i={i} counterRef={counterRef} />
-                );
-              })}
-            </div>
-          </div>,
-          portal
-        );
+
+    return (
+      <Portal targetId='changeKitPortal'>
+        <div id='changeKit' className='changeKit'>
+          <div className='kits'>
+            {grid.map((i) => {
+              return <KitBtn key={cuid.slug()} i={i} counterRef={counterRef} />;
+            })}
+          </div>
+        </div>
+      </Portal>
+    );
   }, [numKits]);
 
   return changeKitMemo;
@@ -41,7 +38,6 @@ export const ChangeKit = () => {
 const KitBtn = ({ i, counterRef }) => {
   const { state, functions } = useKitBtnState(i, counterRef);
   const { classes } = state;
-  // console.log(kitName, ': ', state.ready);
 
   return (
     <Button

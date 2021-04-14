@@ -6,7 +6,7 @@
   @extend %noEventsLayerAbs;
 }
 
-.paste-pattern {
+.pastePattern {
   @extend %full;
   pointer-events: initial;
   @extend %bg90;

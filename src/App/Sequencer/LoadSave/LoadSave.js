@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
-import ReactDOM from 'react-dom';
 import { Load } from 'App/Sequencer/LoadSave/Load/Load';
 import { Save } from 'App/Sequencer/LoadSave/Save/Save';
 import { Button } from 'App/shared/Button';
 import { LoginSection } from './LoginSection';
 import { PATHS, useGoTo } from 'utils/useGoTo';
+import { Portal } from 'App/shared/Portal';
 
 export const LoadSave = ({ tab }) => {
   const goTo = useGoTo();
@@ -15,25 +15,23 @@ export const LoadSave = ({ tab }) => {
       if (e.target.id && e.target.id === 'loadSave') onClose();
     };
 
-    const portal = document.getElementById('fullScreenPortal');
-    return !portal
-      ? null
-      : ReactDOM.createPortal(
-          <>
-            <div id='loadSave' className='loadSave' onClick={onClick}>
-              <div className='top'>
-                <Tabs tab={tab} />
-                <LoginSection />
-              </div>
-              {tab === 'save' && <Save />}
-              {tab === 'load' && <Load />}
+    return (
+      <Portal targetId='fullScreenPortal'>
+        <>
+          <div id='loadSave' className='loadSave' onClick={onClick}>
+            <div className='top'>
+              <Tabs tab={tab} />
+              <LoginSection />
             </div>
-            <div className={'bottomBtn'}>
-              <Button onClick={onClose}>Close</Button>
-            </div>
-          </>,
-          portal
-        );
+            {tab === 'save' && <Save />}
+            {tab === 'load' && <Load />}
+          </div>
+          <div className={'bottomBtn'}>
+            <Button onClick={onClose}>Close</Button>
+          </div>
+        </>
+      </Portal>
+    );
   }, [goTo, tab]);
   return memo;
 };

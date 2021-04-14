@@ -1,6 +1,6 @@
-import ReactDOM from 'react-dom';
 import { Button } from 'App/shared/Button';
 import { usePopupMenu } from './usePopupMenu';
+import { Portal } from 'App/shared/Portal';
 
 export const PopupMenu = ({
   name,
@@ -41,13 +41,12 @@ export const PopupMenu = ({
 
 const PopupMenuItems = ({ renderMenu, menuStyle, menuClasses, children }) => {
   if (!renderMenu) return null;
-  const portal = document.getElementById('popupMenuPortal');
-  if (!portal) return null;
-  return ReactDOM.createPortal(
-    <div style={menuStyle} className={menuClasses}>
-      {children}
-    </div>,
-    portal
+  return (
+    <Portal targetId='popupMenuPortal'>
+      <div style={menuStyle} className={menuClasses}>
+        {children}
+      </div>
+    </Portal>
   );
 };
 
