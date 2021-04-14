@@ -95,7 +95,9 @@ function animateAnalyzer() {
         freq.style.transitionDuration = newDb ? '60ms' : '1s';
         let scaleX = freq.dataset.scalex;
         if (scaleX !== '1') scaleX = newDb * 0.25;
-        let transform = `scale(${scaleX}, ${newDb})`;
+        let scaleY = freq.dataset.scaley;
+        if (scaleY !== '1') scaleY = newDb;
+        let transform = `scale(${scaleX}, ${scaleY})`;
         freq.style.transform = transform;
         let blur = freq.dataset.blur - newDb * 100;
         if (blur < 0) blur = 0;

@@ -4,6 +4,7 @@ import store from 'App/store';
 export const ANALYZER_MODES = {
   BARS: 'bars',
   WAVE: 'wave',
+  RIPPLE: 'ripple',
 };
 
 export const getDimensions = () => {

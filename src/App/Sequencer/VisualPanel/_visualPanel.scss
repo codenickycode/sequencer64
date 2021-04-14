@@ -7,7 +7,7 @@
   top: 0;
   z-index: 0;
   border-radius: 0;
-  @extend %bgBlack;
+  background: transparent;
   @include flex;
 
   &.overGrid {
@@ -46,7 +46,6 @@
     @extend %full;
     @include flex;
     padding: 0;
-    overflow: hidden;
     border-radius: 0;
   }
 
@@ -62,11 +61,6 @@
 
     &.pause {
       animation: none;
-    }
-  }
-  .analyzer.wave {
-    .freq {
-      transform: scale(0.2, 0.02) translate(0, 0);
     }
   }
   .analyzer.bars {

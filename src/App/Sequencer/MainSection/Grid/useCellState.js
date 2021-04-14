@@ -8,30 +8,29 @@ export const useCellState = (id, step, prevCellRef) => {
 
   const selectedSample = useSelector((state) => state.editor.selectedSample);
   const mode = useSelector((state) => state.editor.mode);
-  const noEdits = mode === MODES.INIT;
 
   const noteOn = useSelector((state) =>
-    !noEdits
+    selectedSample !== -1
       ? state.sequence.present.pattern[step][selectedSample].noteOn
       : false
   );
   const slice = useSelector((state) =>
-    !noEdits
+    selectedSample !== -1
       ? state.sequence.present.pattern[step][selectedSample].notes.length
       : 1
   );
   const pitch = useSelector((state) =>
-    !noEdits
+    selectedSample !== -1
       ? state.sequence.present.pattern[step][selectedSample].notes[0].pitch
       : 24
   );
   const length = useSelector((state) =>
-    !noEdits
+    selectedSample !== -1
       ? state.sequence.present.pattern[step][selectedSample].notes[0].length
       : 1
   );
   const velocity = useSelector((state) =>
-    !noEdits
+    selectedSample !== -1
       ? state.sequence.present.pattern[step][selectedSample].notes[0].velocity
       : 1
   );

@@ -52,7 +52,8 @@ const Analyzer = () => {
   const analyzerOn = useSelector((state) => state.screen.analyzer.on);
   const analyzerMode = useSelector((state) => state.screen.analyzer.mode);
   const scaleX = analyzerMode === ANALYZER_MODES.WAVE ? 0.2 : 1;
-  const blur = analyzerMode === ANALYZER_MODES.WAVE ? 50 : 0;
+  const scaleY = analyzerMode === ANALYZER_MODES.RIPPLE ? 1 : 0;
+  const blur = analyzerMode === ANALYZER_MODES.BARS ? 0 : 50;
 
   const memo = useMemo(() => {
     const grid = [];
@@ -67,6 +68,7 @@ const Analyzer = () => {
               key={`freq-${i + 3}`}
               className='freq'
               data-scalex={scaleX}
+              data-scaley={scaleY}
               data-blur={blur}
               data-i={i}
               style={{ '--order': i }}
@@ -75,6 +77,6 @@ const Analyzer = () => {
         })}
       </div>
     );
-  }, [analyzerMode, blur, scaleX]);
+  }, [analyzerMode, blur, scaleX, scaleY]);
   return analyzerOn ? memo : null;
 };

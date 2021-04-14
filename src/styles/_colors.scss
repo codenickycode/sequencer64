@@ -288,10 +288,10 @@ $red: rgb(232, 12, 48);
     );
   }
   .themeBlack & {
-    background: linear-gradient($black, $white, $black);
+    background: linear-gradient($grey, $white, $grey);
   }
   .themeWhite & {
-    background: linear-gradient($white, $black, $white);
+    background: linear-gradient($grey, $black, $grey);
   }
 }
 
