@@ -31,7 +31,7 @@ export const inc = (noteTally, sample) => {
   noteTally[sample].count++;
   noteTally[sample].empty = false;
   noteTally.total.count++;
-  noteTally.total.count = false;
+  noteTally.total.empty = false;
 };
 
 export const dec = (noteTally, sample) => {

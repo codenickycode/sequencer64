@@ -8,6 +8,7 @@ import {
 import {
   buildSamplers,
   disposeSamplers,
+  triggerMetronome,
   triggerStep,
 } from 'App/reducers/functions/sampler';
 import {
@@ -71,8 +72,10 @@ export const schedulePattern = (dispatch, getState) => {
   Tone.Transport.scheduleRepeat((time) => {
     const step = getState().tone.step;
     const patternStep = getState().sequence.present.pattern[step];
+    const recording = getState().editor.mode === MODES.TAP_RECORD;
     try {
       triggerStep(time, patternStep);
+      if (recording) triggerMetronome(time, step);
       animateCell(time, document.getElementById(`cell-${step}`));
       animateSample(time, patternStep);
     } catch (e) {
@@ -86,9 +89,10 @@ export const schedulePattern = (dispatch, getState) => {
 export const startSequence = () => async (dispatch, getState) => {
   const audioContextReady = getState().tone.audioContextReady;
   if (!audioContextReady) return dispatch(startTone(true));
+  const mode = getState().editor.mode;
   removeCursor(getState().sequence.present.length, getState().tone.step);
   if (Tone.Transport.state === 'stopped') schedulePattern(dispatch, getState);
-  if (getState().editor.mode === MODES.TAP_RECORD) await countIn();
+  if (mode === MODES.TAP_RECORD) await countIn();
   dispatch(startSequenceFinally());
 };
 

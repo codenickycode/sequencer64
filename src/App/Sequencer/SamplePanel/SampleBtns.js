@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTouchAndMouse } from 'utils/useTouchAndMouse';
 import * as icons from 'assets/icons/kit';
+import { recordSample } from 'App/reducers/sequenceSlice';
 
 export const SampleBtns = () => {
   const dispatch = useDispatch();
@@ -37,8 +38,10 @@ export const SampleBtns = () => {
 };
 
 const SampleBtn = ({ i, sample, selectSample, selected }) => {
+  const dispatch = useDispatch();
   const mode = useSelector((state) => state.editor.mode);
-  const tapping = mode === MODES.TAP || mode === MODES.TAP_RECORD;
+  const tapRecording = mode === MODES.TAP_RECORD;
+  const tapping = mode === MODES.TAP || tapRecording;
 
   const [flash, setFlash] = useState(false);
   useEffect(() => {
@@ -47,12 +50,15 @@ const SampleBtn = ({ i, sample, selectSample, selected }) => {
 
   const startFunc = useCallback(
     (e) => {
+      if (tapRecording) {
+        dispatch(recordSample(i));
+      }
       if (tapping) {
         Kit.samples[i].sampler.triggerAttack('C2', Tone.immediate(), 1);
         setFlash(true);
       }
     },
-    [i, tapping]
+    [dispatch, i, tapRecording, tapping]
   );
 
   const onClick = () => {

@@ -87,5 +87,8 @@
   .icon {
     min-height: 3rem;
     @extend %fillRed;
+    &.restart {
+      min-height: 1.5rem;
+    }
   }
 }

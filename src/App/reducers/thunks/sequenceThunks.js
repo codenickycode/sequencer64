@@ -4,13 +4,15 @@ import { setAlert, setFetching } from '../appSlice';
 import { getPatternFromStr } from '../functions/sequence';
 import {
   loadSequence,
-  paintCell,
   eraseCell,
   sliceCell,
   modCellFinally,
   INITIAL_SEQUENCE,
+  recordSampleFinally,
+  paintCell,
 } from '../sequenceSlice';
 import { MODES } from '../editorSlice';
+import { wait } from 'utils/wait';
 
 export const loadInitialSequence = (_id, clearUrl) => async (dispatch) => {
   dispatch(setFetching(true));
@@ -32,6 +34,17 @@ export const loadInitialSequence = (_id, clearUrl) => async (dispatch) => {
   dispatch(setFetching(false));
   dispatch(ActionCreators.clearHistory());
   clearUrl();
+};
+
+export const recordSample = (sample) => (dispatch, getState) => {
+  if (getState().tone.transportState !== 'started') return;
+  const sequence = getState().sequence.present;
+  let step = getState().tone.step - 1;
+  if (step === -1) step = getState().sequence.present.length - 1;
+  const cell = sequence.pattern[step][sample];
+  const prevNoteOn = cell.noteOn;
+  if (!prevNoteOn)
+    wait(150, () => dispatch(recordSampleFinally({ sample, step })));
 };
 
 export const modCell = (step, noteOn) => (dispatch, getState) => {

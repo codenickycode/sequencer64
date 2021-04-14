@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import * as Tone from 'tone';
 
 export const MODES = {
   INIT: 'INIT',
@@ -41,6 +42,11 @@ export const editorSlice = createSlice({
     },
     setMode: (state, { payload }) => {
       state.mode = payload;
+      const tapping =
+        state.mode === MODES.TAP || state.mode === MODES.TAP_RECORD;
+      if (tapping) {
+        state.selectedSample = -1;
+      }
     },
     setModVal: (state, { payload }) => {
       state.mods[state.mode] = payload;

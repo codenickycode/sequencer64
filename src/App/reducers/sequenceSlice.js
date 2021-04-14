@@ -95,6 +95,11 @@ export const sequenceSlice = createSlice({
       state.noteTally.total.empty = true;
       state.undoStatus = `erase sequence`;
     },
+    recordSampleFinally: (state, { payload: { sample, step } }) => {
+      state.pattern[step][sample].noteOn = true;
+      inc(state.noteTally, sample);
+      state.undoStatus = `record`;
+    },
     modCellFinally: (
       state,
       { payload: { selectedSample, type, value, step } }
@@ -154,6 +159,7 @@ export const {
   eraseCell,
   eraseSample,
   eraseAll,
+  recordSampleFinally,
   modCellFinally,
   modAll,
   resetMods,
@@ -164,7 +170,7 @@ export const {
   setInitialLoad,
 } = sequenceSlice.actions;
 
-export const { loadInitialSequence, modCell } = sequenceThunks;
+export const { loadInitialSequence, modCell, recordSample } = sequenceThunks;
 
 const reducer = undoable(sequenceSlice.reducer, {
   groupBy: groupByActionTypes([
@@ -172,6 +178,7 @@ const reducer = undoable(sequenceSlice.reducer, {
     'sequence/eraseCell',
     'sequence/sliceCell',
     'sequence/modCell',
+    'sequence/recordSampleFinally',
   ]),
   limit: 100,
 });

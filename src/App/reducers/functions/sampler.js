@@ -1,6 +1,6 @@
 import * as Tone from 'tone';
 import { NETWORK_TIMEOUT } from 'utils/network';
-import { Kit } from 'App/Tone';
+import { Kit, metronome } from 'App/Tone';
 
 export const disposeSamplers = () => {
   for (let sample of Kit.samples) {
@@ -59,6 +59,11 @@ const connectSample = (sample, url) => {
       },
     });
   });
+};
+
+export const triggerMetronome = (time, step) => {
+  if (step % 16 === 0) metronome.triggerAttack('C2', time);
+  else if (step % 4 === 0) metronome.triggerAttack('C1', time);
 };
 
 export const triggerStep = (time, step) => {

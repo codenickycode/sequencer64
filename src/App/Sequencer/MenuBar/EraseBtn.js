@@ -8,7 +8,11 @@ import { Button } from 'App/shared/Button';
 export const EraseBtn = () => {
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.editor.mode);
-  const editing = mode !== MODES.INIT && mode !== MODES.PAINT;
+  const editing =
+    mode !== MODES.INIT &&
+    mode !== MODES.PAINT &&
+    mode !== MODES.TAP &&
+    mode !== MODES.TAP_RECORDING;
   const disabled = useSelector(
     (state) => state.sequence.present.noteTally.total.empty
   );

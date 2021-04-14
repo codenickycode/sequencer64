@@ -8,6 +8,7 @@ import {
   CheckIcon,
   RecordIcon,
   RecordPauseIcon,
+  RestartIcon,
 } from 'assets/icons';
 import { changeBpm } from 'App/reducers/sequenceSlice';
 import {
@@ -98,11 +99,7 @@ export const TransportPanel = () => {
               aria-label='record'
               onClick={onRecord}
             >
-              {transportState === 'started' ? (
-                <RecordPauseIcon />
-              ) : (
-                <RecordIcon />
-              )}
+              {transportState === 'started' ? <RestartIcon /> : <RecordIcon />}
             </Button>
           ) : (
             <Button
