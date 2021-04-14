@@ -9,12 +9,13 @@ export const VisualPanel = () => {
   );
   const analyzerOn = useSelector((state) => state.screen.analyzer.on);
   const mode = useSelector((state) => state.editor.mode);
+  const showAnalyzer =
+    mode === MODES.INIT || mode === MODES.TAP || mode === MODES.TAP_RECORD;
 
   let visualPanelClasses = 'visualPanel';
   if (!splitSamplePanel) {
     visualPanelClasses += ' overGrid';
-    if (analyzerOn && mode === MODES.INIT)
-      visualPanelClasses += ' overGrid show';
+    if (analyzerOn && showAnalyzer) visualPanelClasses += ' overGrid show';
   }
   const memo = useMemo(() => {
     return (

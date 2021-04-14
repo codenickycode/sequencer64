@@ -35,12 +35,14 @@ const TapMenuItems = () => {
   const dispatch = useDispatch();
   const eventListener = useStopPropEventListener();
   const currentMode = useSelector((state) => state.editor.mode);
+  const transportState = useSelector((state) => state.tone.transportState);
 
   const deactivate = () => dispatch(setMode(MODES.INIT));
 
   const changeMode = (newMode) => {
     dispatch(setMode(newMode));
-    if (newMode === MODES.TAP_RECORD) dispatch(startRecord());
+    if (newMode === MODES.TAP_RECORD && transportState !== 'started')
+      dispatch(startRecord());
     eventListener('tapBtn', 'click', deactivate);
   };
 

@@ -44,6 +44,7 @@ export const screenSlice = createSlice({
     },
     setAnalyzerMode: (state, { payload }) => {
       state.analyzer.mode = payload;
+      state.analyzer.on = true;
     },
   },
 });

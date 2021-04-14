@@ -19,7 +19,8 @@
       @extend %bg3q;
     }
 
-    .analyzer {
+    .analyzer.wave,
+    .analyzer.ripple {
       transform: rotate(-90deg);
     }
   }
