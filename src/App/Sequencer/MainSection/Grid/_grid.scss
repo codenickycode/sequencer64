@@ -43,7 +43,8 @@
       opacity: 0;
       transform-origin: left;
     }
-    &.flash {
+    &.flash,
+    &.countIn {
       .bg {
         transition: none;
         @extend %turnOn;

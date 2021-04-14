@@ -126,7 +126,7 @@ const countIn = () =>
 
 const click = (note) => {
   const cell0 = document.getElementById('cell-0');
-  cell0.classList.add('flash');
-  setTimeout(() => cell0.classList.remove('flash'), 100);
+  cell0.classList.add('countIn');
+  setTimeout(() => cell0.classList.remove('countIn'), 100);
   metronome.triggerAttack(note, Tone.immediate());
 };
