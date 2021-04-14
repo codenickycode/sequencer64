@@ -19,7 +19,6 @@ export const Analyzer = () => {
 
   const editMode =
     mode !== MODES.INIT && mode !== MODES.TAP && mode !== MODES.TAP_RECORD;
-  const hideOverGrid = !splitSamplePanel && !analyzerOn;
   const memo = useMemo(() => {
     const grid = [];
     for (let i = 0; i < 16; i++) {
@@ -29,7 +28,7 @@ export const Analyzer = () => {
     let analyzerClasses = 'analyzer ' + analyzerMode;
     if (!splitSamplePanel) {
       analyzerClasses += ' bg3q';
-      if (editMode) analyzerClasses += ' hide';
+      if (editMode || !analyzerOn) analyzerClasses += ' hide';
     }
     return (
       <div className={analyzerClasses}>
@@ -47,6 +46,14 @@ export const Analyzer = () => {
         })}
       </div>
     );
-  }, [analyzerMode, blur, editMode, scaleX, scaleY, splitSamplePanel]);
-  return hideOverGrid ? null : memo;
+  }, [
+    analyzerMode,
+    analyzerOn,
+    blur,
+    editMode,
+    scaleX,
+    scaleY,
+    splitSamplePanel,
+  ]);
+  return memo;
 };

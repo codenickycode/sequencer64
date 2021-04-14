@@ -19,9 +19,6 @@ const INFO_TEXT = {
 };
 
 const Info = () => {
-  const splitSamplePanel = useSelector(
-    (state) => state.screen.splitSamplePanel
-  );
   const analyzerOn = useSelector((state) => state.screen.analyzer.on);
   const transportState = useSelector((state) => state.tone.transportState);
   const mode = useSelector((state) => state.editor.mode);
@@ -29,8 +26,7 @@ const Info = () => {
   const tapping = mode === MODES.TAP;
   const countIn = useSelector((state) => state.tone.countIn);
   const flashInfo = useSelector((state) => state.app.flashInfo);
-  let showInfo =
-    splitSamplePanel && (mode === MODES.INIT || tapping || tapRecording);
+  let showInfo = mode === MODES.INIT || tapping || tapRecording;
 
   const [countInClasses, setCountInClasses] = useState('countIn');
   useEffect(() => {
