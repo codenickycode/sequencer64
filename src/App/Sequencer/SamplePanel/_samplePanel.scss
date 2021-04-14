@@ -45,6 +45,8 @@
       }
 
       .icon {
+        position: relative;
+        z-index: 2;
         height: 5vw;
         max-height: 2rem;
         width: 5vw;
@@ -52,7 +54,8 @@
       }
 
       .border,
-      .bgFlash {
+      .bgFlash,
+      .bgSelected {
         @extend %noEventsLayerAbs;
         opacity: 0;
         transition: 400ms;
@@ -61,6 +64,9 @@
       .bgFlash {
         @extend %bgBright;
       }
+      .bgSelected {
+        transition: none;
+      }
     }
     .sampleBtn.flash,
     .sampleBtn.pulse {
@@ -68,6 +74,15 @@
       .bgFlash {
         transition: none;
         opacity: 1;
+      }
+    }
+    .sampleBtn.selected {
+      .bgSelected {
+        transition: none;
+        opacity: 1;
+      }
+      .icon {
+        @extend %iconFill;
       }
     }
   }

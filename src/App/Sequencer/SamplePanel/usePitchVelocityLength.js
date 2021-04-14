@@ -3,14 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { INITIAL_MODS, MODES, setModVal } from 'App/reducers/editorSlice';
 import { modAll, resetMods } from 'App/reducers/sequenceSlice';
 import { showEditable, hideEditable } from 'utils/toggleClasses';
-import { MIDI_NOTES } from 'utils/MIDI_NOTES';
 
 export const usePitchVelocityLength = (mode) => {
   const dispatch = useDispatch();
   const selectedSample = useSelector((state) => state.editor.selectedSample);
-  const [value, setValue] = useState(
-    mode === MODES.MOD_PITCH ? MIDI_NOTES[24] : 0.5
-  );
+  const [value, setValue] = useState(INITIAL_MODS[mode]);
   const splitSamplePanel = useSelector(
     (state) => state.screen.splitSamplePanel
   );
@@ -26,7 +23,7 @@ export const usePitchVelocityLength = (mode) => {
     );
   }, [dispatch, mode, selectedSample, value]);
 
-  const [editAll, setEditAll] = useState(false);
+  const [editAll, setEditAll] = useState(true);
 
   useEffect(() => {
     if (mode === MODES.MOD_PITCH) {
@@ -64,6 +61,7 @@ export const usePitchVelocityLength = (mode) => {
   };
 
   const onReset = () => {
+    setValue(INITIAL_MODS[mode]);
     dispatch(setModVal(INITIAL_MODS[mode]));
     dispatch(resetMods({ selectedSample, type: mode }));
   };

@@ -5,7 +5,7 @@ import { MODES, setMode } from 'App/reducers/editorSlice';
 import { useLocation } from 'react-router';
 import { PATHS } from 'utils/useGoTo';
 import { MenuItem, PopupMenu } from './PopupMenu/PopupMenu';
-import { useEventListener } from 'utils/useEventListener';
+import { useStopPropEventListener } from 'utils/useStopPropEventListener';
 
 export const TapMenu = () => {
   const pathname = useLocation().pathname;
@@ -32,7 +32,7 @@ export const TapMenu = () => {
 const modes = [MODES.TAP, MODES.TAP_RECORD];
 const TapMenuItems = () => {
   const dispatch = useDispatch();
-  const eventListener = useEventListener();
+  const eventListener = useStopPropEventListener();
   const currentMode = useSelector((state) => state.editor.mode);
 
   const deactivate = () => dispatch(setMode(MODES.INIT));

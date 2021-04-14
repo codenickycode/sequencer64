@@ -2,6 +2,7 @@ import { ReactComponent as Stop } from 'assets/icons/stop.svg';
 import { ReactComponent as Start } from 'assets/icons/start.svg';
 import { ReactComponent as Pause } from 'assets/icons/pause.svg';
 import { ReactComponent as Record } from 'assets/icons/record.svg';
+import { ReactComponent as RecordPause } from 'assets/icons/record-pause.svg';
 import { ReactComponent as Speed } from 'assets/icons/speed.svg';
 import { ReactComponent as Undo } from 'assets/icons/undo.svg';
 import { ReactComponent as Redo } from 'assets/icons/redo.svg';
@@ -58,7 +59,10 @@ export const PauseIcon = ({ addClass = '' }) => (
   <Pause className={addClass + ' icon'} />
 );
 export const RecordIcon = ({ addClass = '' }) => (
-  <Record className={addClass + ' icon'} />
+  <Record className={addClass + ' icon record'} />
+);
+export const RecordPauseIcon = ({ addClass = '' }) => (
+  <RecordPause className={addClass + ' icon'} />
 );
 
 export const SpeedIcon = ({ addClass = '' }) => (

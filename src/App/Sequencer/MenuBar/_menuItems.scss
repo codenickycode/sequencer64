@@ -1,8 +1,6 @@
 @use 'styles/placeholders' as *;
 @use 'styles/mixins' as *;
 @use 'styles/colors' as *;
-@use './transport' as *;
-@use './PopupMenu/popupMenu' as *;
 
 .menuItems {
   @extend %full;

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const MODES = {
-  INIT: 'Off',
+  INIT: 'INIT',
   TAP: 'Play',
   TAP_RECORD: 'Record',
   PAINT: 'PAINT',

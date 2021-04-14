@@ -57,6 +57,10 @@ $red: rgb(232, 12, 48);
   }
 }
 
+%fillRed {
+  fill: $red;
+}
+
 %sliceStroke {
   .themeJoker & {
     stroke: $joker-dark;

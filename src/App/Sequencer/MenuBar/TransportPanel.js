@@ -1,17 +1,26 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'App/shared/Button';
-import { StopIcon, StartIcon, PauseIcon, CheckIcon } from 'assets/icons';
+import {
+  StopIcon,
+  StartIcon,
+  PauseIcon,
+  CheckIcon,
+  RecordIcon,
+  RecordPauseIcon,
+} from 'assets/icons';
 import { changeBpm } from 'App/reducers/sequenceSlice';
 import {
   pauseSequence,
   startSequence,
   stopSequence,
 } from 'App/reducers/toneSlice';
+import { MODES } from 'App/reducers/editorSlice';
 
 export const TransportPanel = () => {
   const dispatch = useDispatch();
 
+  const mode = useSelector((state) => state.editor.mode);
   const transportState = useSelector((state) => state.tone.transportState);
   const loadingSamples = useSelector((state) => state.tone.loadingSamples);
 
@@ -75,15 +84,31 @@ export const TransportPanel = () => {
           >
             <StopIcon />
           </Button>
-          <Button
-            id='start'
-            classes={!ready ? 'menuBtn flashing' : 'menuBtn'}
-            disabled={!ready}
-            aria-label='start'
-            onClick={onStart}
-          >
-            {transportState === 'started' ? <PauseIcon /> : <StartIcon />}
-          </Button>
+          {mode === MODES.TAP_RECORD ? (
+            <Button
+              id='record'
+              classes={!ready ? 'menuBtn flashing' : 'menuBtn'}
+              disabled={!ready}
+              aria-label='record'
+              onClick={onStart}
+            >
+              {transportState === 'started' ? (
+                <RecordPauseIcon />
+              ) : (
+                <RecordIcon />
+              )}
+            </Button>
+          ) : (
+            <Button
+              id='start'
+              classes={!ready ? 'menuBtn flashing' : 'menuBtn'}
+              disabled={!ready}
+              aria-label='start'
+              onClick={onStart}
+            >
+              {transportState === 'started' ? <PauseIcon /> : <StartIcon />}
+            </Button>
+          )}
           <div className='inputWrapper'>
             <input
               id='bpm'
@@ -108,6 +133,6 @@ export const TransportPanel = () => {
         </div>
       </div>
     );
-  }, [bpm, bpmEdited, dispatch, ready, tempBpm, transportState]);
+  }, [bpm, bpmEdited, dispatch, mode, ready, tempBpm, transportState]);
   return transportMemo;
 };

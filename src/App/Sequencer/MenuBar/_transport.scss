@@ -80,3 +80,12 @@
     @extend %fillMenuBar;
   }
 }
+
+#record {
+  @extend %bgBlack;
+  border: 1px solid $red;
+  .icon {
+    min-height: 3rem;
+    @extend %fillRed;
+  }
+}

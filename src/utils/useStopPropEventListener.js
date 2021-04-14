@@ -1,4 +1,4 @@
-export const useEventListener = () => {
+export const useStopPropEventListener = () => {
   const eventListener = (elementId, event, func) => {
     const element = document.getElementById(elementId);
     const callback = (e) => {

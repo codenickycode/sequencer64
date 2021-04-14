@@ -10,6 +10,7 @@ export const SampleBtns = () => {
   const dispatch = useDispatch();
   const sequenceKitName = useSelector((state) => state.sequence.present.kit);
   const kit = useSelector((state) => state.assets.kits[sequenceKitName]);
+  const selectedSample = useSelector((state) => state.editor.selectedSample);
 
   const sampleBtnsMemo = useMemo(() => {
     // console.log('rendering: SampleBtns');
@@ -25,16 +26,17 @@ export const SampleBtns = () => {
               i={i}
               sample={sample}
               selectSample={selectSample}
+              selected={selectedSample === i}
             />
           ))}
         <div id='samplePanelBorder' />
       </div>
     );
-  }, [dispatch, kit]);
+  }, [dispatch, kit, selectedSample]);
   return sampleBtnsMemo;
 };
 
-const SampleBtn = ({ i, sample, selectSample }) => {
+const SampleBtn = ({ i, sample, selectSample, selected }) => {
   const mode = useSelector((state) => state.editor.mode);
   const tapping = mode === MODES.TAP || mode === MODES.TAP_RECORD;
 
@@ -58,9 +60,13 @@ const SampleBtn = ({ i, sample, selectSample }) => {
   };
 
   const { touchStart, mouseDown } = useTouchAndMouse(startFunc);
+
+  let classes = 'sampleBtn';
+  if (selected) classes += ' selected';
+  if (flash) classes += ' flash';
   return (
     <div
-      className={flash ? 'sampleBtn flash' : 'sampleBtn'}
+      className={classes}
       onTouchStart={touchStart}
       onMouseDown={mouseDown}
       onClick={onClick}
@@ -69,6 +75,7 @@ const SampleBtn = ({ i, sample, selectSample }) => {
       {icons[sample.icon](sample.color)}
       <div className={`border border${i}`} />
       <div className='bgFlash' />
+      <div className={`bgSelected bg${i}`} />
     </div>
   );
 };

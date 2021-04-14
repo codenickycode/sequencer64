@@ -17,12 +17,6 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
     editAll,
   } = usePitchVelocityLength(mode);
 
-  const { touchStart, touchEnd, mouseUp } = useTouchAndMouse(
-    null,
-    null,
-    onTouchEnd
-  );
-
   return (
     <div className={detailClass}>
       <Button classes='close' onClick={onReturn}>
@@ -30,50 +24,13 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
       </Button>
       <div className='modWrapper'>
         {mode === MODES.MOD_PITCH ? (
-          <>
-            <label htmlFor='pitchSelect' className='selectLabel'>
-              Select Pitch:
-            </label>
-            <div className='customSelectWrapper'>
-              <select
-                id='pitchSelect'
-                className='customSelect'
-                value={value}
-                onChange={onChange}
-              >
-                {/* limit C1-C3 */}
-                {MIDI_NOTES.slice(12, 37).map((note) => {
-                  return (
-                    <option key={`pitch-${note}`} value={note}>
-                      {note}
-                    </option>
-                  );
-                })}
-              </select>
-              <ChevronDownIcon />
-            </div>
-          </>
+          <Pitch value={value} onChange={onChange} />
         ) : (
-          <>
-            <input
-              type='range'
-              id='modSlider'
-              min={0.1}
-              max={1}
-              step={0.01}
-              value={value}
-              onTouchStart={touchStart}
-              onTouchEnd={touchEnd}
-              onMouseUp={mouseUp}
-              onChange={onChange}
-            />
-            <div className='modValueWrapper'>
-              <label htmlFor='modSlider' className='modLabel'>
-                Apply value:
-              </label>
-              <p className='mod-value'>{value}</p>
-            </div>
-          </>
+          <VelocityAndLength
+            onTouchEnd={onTouchEnd}
+            value={value}
+            onChange={onChange}
+          />
         )}
         <div className='modBtns'>
           <Button onClick={onReset}>Reset All</Button>
@@ -83,5 +40,64 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
         </div>
       </div>
     </div>
+  );
+};
+
+const Pitch = ({ value, onChange }) => {
+  return (
+    <>
+      <label htmlFor='pitchSelect' className='selectLabel'>
+        Select Pitch:
+      </label>
+      <div className='customSelectWrapper'>
+        <select
+          id='pitchSelect'
+          className='customSelect'
+          value={value}
+          onChange={onChange}
+        >
+          {/* limit C1-C3 */}
+          {MIDI_NOTES.slice(12, 37).map((note) => {
+            return (
+              <option key={`pitch-${note}`} value={note}>
+                {note}
+              </option>
+            );
+          })}
+        </select>
+        <ChevronDownIcon />
+      </div>
+    </>
+  );
+};
+
+const VelocityAndLength = ({ onTouchEnd, value, onChange }) => {
+  const { touchStart, touchEnd, mouseUp } = useTouchAndMouse(
+    null,
+    null,
+    onTouchEnd
+  );
+
+  return (
+    <>
+      <input
+        type='range'
+        id='modSlider'
+        min={0.1}
+        max={1}
+        step={0.01}
+        value={value}
+        onTouchStart={touchStart}
+        onTouchEnd={touchEnd}
+        onMouseUp={mouseUp}
+        onChange={onChange}
+      />
+      <div className='modValueWrapper'>
+        <label htmlFor='modSlider' className='modLabel'>
+          Apply value:
+        </label>
+        <p className='mod-value'>{value}</p>
+      </div>
+    </>
   );
 };

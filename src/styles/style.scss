@@ -17,6 +17,8 @@
 @use 'App/Sequencer/VisualPanel/visualPanel';
 @use 'App/Sequencer/MenuBar/menuBar';
 @use 'App/Sequencer/MenuBar/menuItems';
+@use 'App/Sequencer/MenuBar/transport' as *;
+@use 'App/Sequencer/MenuBar/PopupMenu/popupMenu' as *;
 @use 'App/Login/loginPage';
 @use 'App/ErrorBoundary/errorBoundary';
 @use 'App/mobileConsole';
