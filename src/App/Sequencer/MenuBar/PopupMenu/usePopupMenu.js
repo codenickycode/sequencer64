@@ -41,12 +41,16 @@ export const usePopupMenu = (keepOpenOnSelect) => {
       }
     }
     document.removeEventListener('click', closeMenu);
+    document.getElementById('menuBar').removeEventListener('scroll', closeMenu);
     setShowMenu(false);
   };
 
   const onClick = (e) => {
     e.stopPropagation();
-    if (!showMenu) document.addEventListener('click', closeMenu);
+    if (!showMenu) {
+      document.addEventListener('click', closeMenu);
+      document.getElementById('menuBar').addEventListener('scroll', closeMenu);
+    }
     setShowMenu(!showMenu);
   };
 
