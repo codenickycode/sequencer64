@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import store from 'App/store';
+import { startAnalyzer, stopAnalyzer } from './functions/animations';
 
 export const ANALYZER_MODES = {
   BARS: 'bars',
@@ -27,7 +28,6 @@ const INITIAL_STATE = {
   splitSamplePanel: INITIAL_SPLIT,
   analyzer: { on: INITIAL_SPLIT, mode: ANALYZER_MODES.BARS },
 };
-console.log(INITIAL_STATE);
 
 export const screenSlice = createSlice({
   name: 'screen',
@@ -39,8 +39,9 @@ export const screenSlice = createSlice({
         state.dimensions.mainContainerHeight > 500 &&
         state.dimensions.landscape;
     },
-    setAnalyzerOn: (state, { payload }) => {
+    setAnalyzerOnFinally: (state, { payload }) => {
       state.analyzer.on = payload;
+      console.log(payload);
     },
     setAnalyzerMode: (state, { payload }) => {
       state.analyzer.mode = payload;
@@ -49,11 +50,13 @@ export const screenSlice = createSlice({
   },
 });
 
-export const {
-  setDimensions,
-  setAnalyzerOn,
-  setAnalyzerMode,
-} = screenSlice.actions;
+export const { setDimensions, setAnalyzerMode } = screenSlice.actions;
+
+export const setAnalyzerOn = (newOn) => async (dispatch, getState) => {
+  dispatch(screenSlice.actions.setAnalyzerOnFinally(newOn));
+  if (newOn) startAnalyzer();
+  else stopAnalyzer();
+};
 
 export default screenSlice.reducer;
 

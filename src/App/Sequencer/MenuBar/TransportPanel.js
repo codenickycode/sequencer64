@@ -25,7 +25,8 @@ export const TransportPanel = () => {
   const mode = useSelector((state) => state.editor.mode);
   const transportState = useSelector((state) => state.tone.transportState);
   const loadingSamples = useSelector((state) => state.tone.loadingSamples);
-  const countingIn = useSelector((state) => state.tone.countingIn);
+  const countIn = useSelector((state) => state.tone.countIn);
+  const countingIn = countIn !== '';
 
   const bpm = useSelector((state) => state.sequence.present.bpm);
   useEffect(() => {

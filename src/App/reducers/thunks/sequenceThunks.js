@@ -1,6 +1,6 @@
 import { ActionCreators } from 'redux-undo';
 import { apiGetSequence } from 'api';
-import { setAlert, setFetching } from '../appSlice';
+import { setFetching, setFlashInfo } from '../appSlice';
 import { getPatternFromStr } from '../functions/sequence';
 import {
   loadSequence,
@@ -52,9 +52,10 @@ export const modCell = (step, noteOn) => (dispatch, getState) => {
   const mode = getState().editor.mode;
   switch (mode) {
     case MODES.INIT:
-      dispatch(
-        setAlert('Disable Tap Mode and select a sample to edit the grid')
-      );
+    case MODES.TAP:
+    case MODES.TAP_RECORD:
+      dispatch(setFlashInfo(true));
+      setTimeout(() => dispatch(setFlashInfo(false)), 0);
       break;
     case MODES.PAINT:
       const toggleOn = getState().editor.toggleOn;

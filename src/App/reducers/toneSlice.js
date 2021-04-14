@@ -16,7 +16,7 @@ const INITIAL_STATE = {
   step: 0,
   audioContextReady: false,
   loadingError: { error: false, count: 0 },
-  countingIn: false,
+  countIn: '',
 };
 
 export const toneSlice = createSlice({
@@ -66,8 +66,8 @@ export const toneSlice = createSlice({
       state.step = 0;
       state.transportState = 'stopped';
     },
-    setCountingIn: (state, { payload }) => {
-      state.countingIn = payload;
+    setCountIn: (state, { payload }) => {
+      state.countIn = payload;
     },
   },
 });
@@ -82,7 +82,7 @@ export const {
   setRestarting,
   startSequenceFinally,
   stopSequenceFinally,
-  setCountingIn,
+  setCountIn,
 } = toneSlice.actions;
 
 export const {

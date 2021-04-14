@@ -21,7 +21,7 @@ const INITIAL_STATE = {
   user: { ...INITIAL_USER },
   fetching: false,
   status: { count: 0, message: 'loading' },
-  alert: '',
+  flashInfo: false,
   confirmation: '',
   error: '',
   online: window.navigator.onLine,
@@ -43,8 +43,8 @@ export const appSlice = createSlice({
       state.status.count++;
       state.status.message = `${state.status.count}#${payload}`;
     },
-    setAlert: (state, { payload }) => {
-      state.alert = '';
+    setFlashInfo: (state, { payload }) => {
+      state.flashInfo = payload;
     },
     setFetching: (state, { payload }) => {
       state.fetching = payload;
@@ -101,7 +101,7 @@ export const appSlice = createSlice({
 export const {
   setUser,
   setStatus,
-  setAlert,
+  setFlashInfo,
   setFetching,
   setConfirmation,
   setError,

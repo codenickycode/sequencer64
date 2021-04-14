@@ -8,6 +8,7 @@ import {
 } from 'App/reducers/toneSlice';
 import { changeKit } from 'App/reducers/sequenceSlice';
 import { startAnalyzer, stopAnalyzer } from 'App/reducers/functions/animations';
+import { MODES } from 'App/reducers/editorSlice';
 
 export const Transport = () => {
   const dispatch = useDispatch();
@@ -25,10 +26,14 @@ export const Transport = () => {
   const transportState = useSelector((state) => state.tone.transportState);
   const analyzerOn = useSelector((state) => state.screen.analyzer.on);
 
+  const mode = useSelector((state) => state.editor.mode);
+  const tapping = mode === MODES.TAP || mode === MODES.TAP_RECORD;
+
   useEffect(() => {
-    if (transportState === 'started' && analyzerOn) startAnalyzer();
-    if (transportState !== 'started' && analyzerOn) stopAnalyzer();
-  }, [analyzerOn, transportState]);
+    if (!analyzerOn) return;
+    if (transportState === 'started') startAnalyzer();
+    else if (transportState !== 'started' && !tapping) stopAnalyzer();
+  }, [analyzerOn, tapping, transportState]);
 
   useEffect(() => {
     Tone.Transport.bpm.value = sequenceBpm;

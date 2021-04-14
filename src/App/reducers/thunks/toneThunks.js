@@ -18,13 +18,14 @@ import {
   startSequenceFinally,
   stopSequenceFinally,
   setAudioContextReady,
-  setCountingIn,
+  setCountIn,
 } from '../toneSlice';
 import { setFetchingSamples } from '../assetsSlice';
 import { setStatus } from '../appSlice';
 import { Kit, metronome } from 'App/Tone';
 import { MODES } from '../editorSlice';
 import { wait } from 'utils/wait';
+import store from 'App/store';
 
 export const startTone = (start) => async (dispatch) => {
   await Tone.start();
@@ -113,7 +114,7 @@ const stopAndCancelEvents = () => {
 };
 
 export const startRecord = () => (dispatch) => {
-  dispatch(setCountingIn(true));
+  dispatch(setCountIn('...'));
   dispatch(stopSequence());
   dispatch(startSequence());
 };
@@ -122,10 +123,15 @@ const countIn = () =>
   new Promise(async (resolve) => {
     const beat = 60000 / Tone.Transport.bpm.value;
     await wait(0, () => click('C2'));
+    store.dispatch(setCountIn(4));
     await wait(beat, () => click('C1'));
+    store.dispatch(setCountIn(3));
     await wait(beat, () => click('C1'));
+    store.dispatch(setCountIn(2));
     await wait(beat, () => click('C1'));
+    store.dispatch(setCountIn(1));
     await wait(beat - 100, resolve);
+    store.dispatch(setCountIn(''));
   });
 
 const click = (note) => {

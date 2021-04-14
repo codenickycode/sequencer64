@@ -59,6 +59,7 @@ let freqs, spectrum, average, i, db, prevDb, newDb;
 const prevDbs = new Array(36);
 let drawAnalyzer;
 export const startAnalyzer = () => {
+  if (drawAnalyzer) return;
   freqs = document.querySelectorAll('.freq');
   drawAnalyzer = true;
   requestAnimationFrame(animateAnalyzer);
@@ -70,6 +71,7 @@ export const stopAnalyzer = () => {
     freqs.forEach((freq) => {
       freq.style.removeProperty('transform');
       freq.style.removeProperty('filter');
+      freq.style.removeProperty('opacity');
     });
   }, 20);
 };

@@ -1,31 +1,21 @@
 import { MODES } from 'App/reducers/editorSlice';
-import { ANALYZER_MODES } from 'App/reducers/screenSlice';
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Analyzer } from './Analyzer';
 
 export const VisualPanel = () => {
-  const splitSamplePanel = useSelector(
-    (state) => state.screen.splitSamplePanel
+  return (
+    <div id='visualPanel' className='visualPanel'>
+      <Info />
+      <Analyzer />
+    </div>
   );
-  const analyzerOn = useSelector((state) => state.screen.analyzer.on);
-  const mode = useSelector((state) => state.editor.mode);
-  const showAnalyzer =
-    mode === MODES.INIT || mode === MODES.TAP || mode === MODES.TAP_RECORD;
+};
 
-  let visualPanelClasses = 'visualPanel';
-  if (!splitSamplePanel) {
-    visualPanelClasses += ' overGrid';
-    if (analyzerOn && showAnalyzer) visualPanelClasses += ' overGrid show';
-  }
-  const memo = useMemo(() => {
-    return (
-      <div id='visualPanel' className={visualPanelClasses}>
-        <Info />
-        <Analyzer />
-      </div>
-    );
-  }, [visualPanelClasses]);
-  return memo;
+const INFO_TEXT = {
+  [MODES.TAP]: 'Tap to play samples',
+  [MODES.TAP_RECORD]: 'Tap to record samples',
+  [MODES.INIT]: 'Select a sample to edit',
 };
 
 const Info = () => {
@@ -37,47 +27,43 @@ const Info = () => {
   const mode = useSelector((state) => state.editor.mode);
   const tapRecording = mode === MODES.TAP_RECORD;
   const tapping = mode === MODES.TAP;
+  const countIn = useSelector((state) => state.tone.countIn);
+  const flashInfo = useSelector((state) => state.app.flashInfo);
   let showInfo =
     splitSamplePanel && (mode === MODES.INIT || tapping || tapRecording);
+
+  const [countInClasses, setCountInClasses] = useState('countIn');
+  useEffect(() => {
+    if (countIn) {
+      setCountInClasses('countIn show');
+      setTimeout(() => setCountInClasses('countIn'), 100);
+    }
+  }, [countIn]);
+
+  const [infoText, setInfoText] = useState(INFO_TEXT[mode]);
+  useEffect(() => {
+    if (transportState === 'started') setInfoText('');
+    else setInfoText(INFO_TEXT[mode]);
+  }, [mode, transportState]);
+
+  const [infoTextClasses, setInfoTextClasses] = useState('infoText');
+  useEffect(() => {
+    setInfoTextClasses('infoText show');
+    setTimeout(() => setInfoTextClasses('infoText'), 2000);
+  }, [infoText]);
+  useEffect(() => {
+    if (flashInfo) setInfoTextClasses('infoText show');
+    setTimeout(() => setInfoTextClasses('infoText'), 2000);
+  }, [flashInfo]);
+
   if (transportState === 'started' && analyzerOn) showInfo = false;
   return (
-    <div className={showInfo ? 'overlay show' : 'overlay'}>
-      {tapping && <p>Tap to play samples</p>}
-      {tapRecording && <p>Tap to record samples</p>}
-      {!tapping && !tapRecording && <p>Select a sample to edit</p>}
+    <div className={showInfo ? 'info show' : 'info'}>
+      {countIn ? (
+        <p className={countInClasses}>{countIn}</p>
+      ) : (
+        <p className={infoTextClasses}>{infoText}</p>
+      )}
     </div>
   );
-};
-
-const Analyzer = () => {
-  const analyzerOn = useSelector((state) => state.screen.analyzer.on);
-  const analyzerMode = useSelector((state) => state.screen.analyzer.mode);
-  const scaleX = analyzerMode === ANALYZER_MODES.WAVE ? 0.2 : 1;
-  const scaleY = analyzerMode === ANALYZER_MODES.RIPPLE ? 1 : 0;
-  const blur = analyzerMode === ANALYZER_MODES.BARS ? 0 : 50;
-
-  const memo = useMemo(() => {
-    const grid = [];
-    for (let i = 0; i < 16; i++) {
-      grid.push(i);
-    }
-    return (
-      <div className={'analyzer ' + analyzerMode}>
-        {grid.map((i) => {
-          return (
-            <div
-              key={`freq-${i + 3}`}
-              className='freq'
-              data-scalex={scaleX}
-              data-scaley={scaleY}
-              data-blur={blur}
-              data-i={i}
-              style={{ '--order': i }}
-            />
-          );
-        })}
-      </div>
-    );
-  }, [analyzerMode, blur, scaleX, scaleY]);
-  return analyzerOn ? memo : null;
 };
