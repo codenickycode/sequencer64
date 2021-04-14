@@ -24,6 +24,7 @@ export const TransportPanel = () => {
   const mode = useSelector((state) => state.editor.mode);
   const transportState = useSelector((state) => state.tone.transportState);
   const loadingSamples = useSelector((state) => state.tone.loadingSamples);
+  const countingIn = useSelector((state) => state.tone.countingIn);
 
   const bpm = useSelector((state) => state.sequence.present.bpm);
   useEffect(() => {
@@ -84,6 +85,7 @@ export const TransportPanel = () => {
             id='stop'
             classes='menuBtn'
             aria-label='stop'
+            disabled={countingIn}
             onClick={onStop}
           >
             <StopIcon />
@@ -92,7 +94,7 @@ export const TransportPanel = () => {
             <Button
               id='record'
               classes={!ready ? 'menuBtn flashing' : 'menuBtn'}
-              disabled={!ready}
+              disabled={!ready || countingIn}
               aria-label='record'
               onClick={onRecord}
             >
@@ -137,6 +139,15 @@ export const TransportPanel = () => {
         </div>
       </div>
     );
-  }, [bpm, bpmEdited, dispatch, mode, ready, tempBpm, transportState]);
+  }, [
+    bpm,
+    bpmEdited,
+    countingIn,
+    dispatch,
+    mode,
+    ready,
+    tempBpm,
+    transportState,
+  ]);
   return transportMemo;
 };

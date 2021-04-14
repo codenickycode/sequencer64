@@ -17,6 +17,7 @@ import {
   startSequenceFinally,
   stopSequenceFinally,
   setAudioContextReady,
+  setCountingIn,
 } from '../toneSlice';
 import { setFetchingSamples } from '../assetsSlice';
 import { setStatus } from '../appSlice';
@@ -108,6 +109,7 @@ const stopAndCancelEvents = () => {
 };
 
 export const startRecord = () => (dispatch) => {
+  dispatch(setCountingIn(true));
   dispatch(stopSequence());
   dispatch(startSequence());
 };
