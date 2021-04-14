@@ -4,6 +4,7 @@
 
 #popupMenuPortal {
   @extend %noEventsLayerAbs;
+  max-width: 1440px;
   top: 0;
   z-index: 1000;
   overflow: hidden;

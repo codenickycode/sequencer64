@@ -29,13 +29,13 @@ export const TapMenu = () => {
 };
 
 const modes = [MODES.TAP, MODES.TAP_RECORD, MODES.INIT];
-const TapMenuItems = ({ menuStyle, menuClasses }) => {
+const TapMenuItems = () => {
   const dispatch = useDispatch();
   const currentMode = useSelector((state) => state.editor.mode);
   const changeMode = (newMode) => dispatch(setMode(newMode));
 
   return (
-    <div style={menuStyle} className={menuClasses}>
+    <>
       <div className='popupMenuSub'>Tap Modes</div>
       {modes.map((mode) => {
         const selected = mode === currentMode;
@@ -48,6 +48,6 @@ const TapMenuItems = ({ menuStyle, menuClasses }) => {
           />
         );
       })}
-    </div>
+    </>
   );
 };

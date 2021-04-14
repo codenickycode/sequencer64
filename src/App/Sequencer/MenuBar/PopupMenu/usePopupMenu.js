@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const MENU_TRANSITION = 150;
 
@@ -50,25 +51,24 @@ export const usePopupMenu = (keepOpenOnSelect) => {
   };
 
   const btnRef = useRef();
-  const menuStyle = getMenuStyle(btnRef.current);
+  const dimensions = useSelector((state) => state.screen.dimensions);
+  const menuStyle = getMenuStyle(btnRef.current, dimensions);
   return { btnClasses, btnRef, onClick, renderMenu, menuStyle, menuClasses };
 };
 
-const getMenuStyle = (btnNode) => {
-  return {
-    left: `${getMenuLeft(btnNode)}px`,
-    bottom: 0,
-  };
+const getMenuStyle = (btnNode, { vw, appRight }) => {
+  const menuX = getMenuX(btnNode, appRight, vw);
+  return { ...menuX, bottom: 0 };
 };
 
-const getMenuLeft = (btnNode) => {
-  if (!btnNode) return 0;
+const getMenuX = (btnNode, appRight, vw) => {
+  if (!btnNode) return { left: 0 };
   const { left: btnLeft, width: btnWidth } = btnNode.getBoundingClientRect();
-  const vw = document.documentElement.clientWidth;
   const btnCenter = btnLeft + btnWidth / 2;
   let menuLeft = btnCenter - 125;
-  if (vw < 450) menuLeft = vw / 2 - 125;
+  if (appRight < 450) menuLeft = appRight / 2 - 125;
   else if (menuLeft < 0) menuLeft = 0;
-  else if (menuLeft + 250 > vw) menuLeft = vw - 250;
-  return menuLeft;
+  else if (appRight < vw) menuLeft -= (vw - appRight) / 2;
+  const menuRight = menuLeft + 250 > appRight ? 0 : null;
+  return menuRight === 0 ? { right: menuRight } : { left: menuLeft };
 };

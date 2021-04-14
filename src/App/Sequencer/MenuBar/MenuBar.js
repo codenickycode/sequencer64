@@ -27,7 +27,6 @@ export const Menu = () => {
   const mainContainerHeight = useSelector(
     (state) => state.screen.dimensions.mainContainerHeight
   );
-  const popupMenuPortalStyle = { maxHeight: mainContainerHeight };
 
   const vh = useSelector((state) => state.screen.dimensions.vh);
   const menuBarHeight = vh * 0.1;
@@ -105,6 +104,9 @@ export const Menu = () => {
 
   const memo = useMemo(() => {
     console.log('rendering: Menu');
+
+    const popupMenuPortalStyle = { maxHeight: mainContainerHeight };
+
     return (
       <>
         <div id='popupMenuPortal' style={popupMenuPortalStyle} />
@@ -133,6 +135,6 @@ export const Menu = () => {
         </div>
       </>
     );
-  }, [handleScroll, menuBarStyle, popupMenuPortalStyle, scroll]);
+  }, [handleScroll, mainContainerHeight, menuBarStyle, scroll]);
   return memo;
 };

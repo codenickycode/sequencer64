@@ -12,7 +12,9 @@ export const getDimensions = () => {
   const landscape = vw > vh;
   let mainContainerHeight = landscape ? vh * 0.85 : vh * 0.9;
   if (mainContainerHeight < vh - 100) mainContainerHeight = vh - 100;
-  return { vw, vh, landscape, mainContainerHeight };
+  let appRight = vw;
+  if (vw > 1440) appRight = vw - (vw - 1440);
+  return { vw, vh, appRight, landscape, mainContainerHeight };
 };
 
 const INITIAL_DIMENSIONS = getDimensions();
