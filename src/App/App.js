@@ -23,4 +23,3 @@ export default function App() {
 }
 
 window.log = (message) => store.dispatch(setLog(message));
-window.wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

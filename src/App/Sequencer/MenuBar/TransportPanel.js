@@ -16,6 +16,7 @@ import {
   stopSequence,
 } from 'App/reducers/toneSlice';
 import { MODES } from 'App/reducers/editorSlice';
+import { startRecord } from 'App/reducers/thunks/toneThunks';
 
 export const TransportPanel = () => {
   const dispatch = useDispatch();
@@ -54,12 +55,15 @@ export const TransportPanel = () => {
     const onStop = () => {
       if (transportState !== 'stopped') dispatch(stopSequence());
     };
-    const onStart = async () => {
+    const onStart = () => {
       if (transportState === 'started') {
         dispatch(pauseSequence());
       } else {
         dispatch(startSequence());
       }
+    };
+    const onRecord = () => {
+      dispatch(startRecord());
     };
 
     const handleBpm = () => {
@@ -90,7 +94,7 @@ export const TransportPanel = () => {
               classes={!ready ? 'menuBtn flashing' : 'menuBtn'}
               disabled={!ready}
               aria-label='record'
-              onClick={onStart}
+              onClick={onRecord}
             >
               {transportState === 'started' ? (
                 <RecordPauseIcon />

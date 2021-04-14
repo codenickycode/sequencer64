@@ -20,7 +20,9 @@ import {
 } from '../toneSlice';
 import { setFetchingSamples } from '../assetsSlice';
 import { setStatus } from '../appSlice';
-import { Kit } from 'App/Tone';
+import { Kit, metronome } from 'App/Tone';
+import { MODES } from '../editorSlice';
+import { wait } from 'utils/wait';
 
 export const startTone = (start) => async (dispatch) => {
   await Tone.start();
@@ -85,6 +87,7 @@ export const startSequence = () => async (dispatch, getState) => {
   if (!audioContextReady) return dispatch(startTone(true));
   removeCursor(getState().sequence.present.length, getState().tone.step);
   if (Tone.Transport.state === 'stopped') schedulePattern(dispatch, getState);
+  if (getState().editor.mode === MODES.TAP_RECORD) await countIn();
   dispatch(startSequenceFinally());
 };
 
@@ -103,3 +106,20 @@ const stopAndCancelEvents = () => {
   const scheduledEvents = Tone.Transport._scheduledEvents;
   Object.keys(scheduledEvents).forEach((id) => Tone.Transport.clear(id));
 };
+
+export const startRecord = () => (dispatch) => {
+  dispatch(stopSequence());
+  dispatch(startSequence());
+};
+
+const countIn = () =>
+  new Promise(async (resolve) => {
+    const beat = 60000 / Tone.Transport.bpm.value;
+    await wait(0, () => click('C2'));
+    await wait(beat, () => click('C1'));
+    await wait(beat, () => click('C1'));
+    await wait(beat, () => click('C1'));
+    await wait(beat - 100, resolve);
+  });
+
+const click = (note) => metronome.triggerAttack(note, Tone.immediate());
