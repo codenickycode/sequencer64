@@ -5,6 +5,7 @@ import { Portal } from 'App/shared/Portal';
 export const PopupMenu = ({
   name,
   Icon,
+  disabled = false,
   addBtnClasses = '',
   keepOpenOnSelect,
   children,
@@ -23,6 +24,7 @@ export const PopupMenu = ({
       <Button
         id={btnId}
         classes={btnClasses + ' ' + addBtnClasses}
+        disabled={disabled}
         onClick={onClick}
       >
         <Icon />
