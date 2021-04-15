@@ -45,11 +45,11 @@ const Info = () => {
   const [infoTextClasses, setInfoTextClasses] = useState('infoText');
   useEffect(() => {
     setInfoTextClasses('infoText show');
-    setTimeout(() => setInfoTextClasses('infoText'), 2000);
+    setTimeout(() => setInfoTextClasses('infoText'), 3000);
   }, [infoText]);
   useEffect(() => {
     if (flashInfo) setInfoTextClasses('infoText show');
-    setTimeout(() => setInfoTextClasses('infoText'), 2000);
+    setTimeout(() => setInfoTextClasses('infoText'), 3000);
   }, [flashInfo]);
 
   if (transportState === 'started' && analyzerOn) showInfo = false;

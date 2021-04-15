@@ -3,7 +3,7 @@ import { edit, MODES } from 'App/reducers/editorSlice';
 import { Kit } from 'App/Tone';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTouchAndMouse } from 'utils/useTouchAndMouse';
+import { useTouchAndMouse } from 'utils/hooks/useTouchAndMouse';
 import * as icons from 'assets/icons/kit';
 import { recordSample } from 'App/reducers/sequenceSlice';
 

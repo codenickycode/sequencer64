@@ -4,7 +4,7 @@ import { Button } from 'App/shared/Button';
 import { KitIcon } from 'assets/icons';
 import { MODES, setMode } from 'App/reducers/editorSlice';
 import { useLocation } from 'react-router';
-import { PATHS, useGoTo } from 'utils/useGoTo';
+import { PATHS, useGoTo } from 'utils/hooks/useGoTo';
 
 export const KitBtn = () => {
   const goTo = useGoTo();

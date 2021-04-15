@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { SliceIcon } from 'assets/icons';
 import { useCellState } from './useCellState';
-import { useTouchAndMouse } from 'utils/useTouchAndMouse';
+import { useTouchAndMouse } from 'utils/hooks/useTouchAndMouse';
 
 export const Cell = ({ id, step, prevCellRef }) => {
   const { state, onTouchStart } = useCellState(id, step, prevCellRef);

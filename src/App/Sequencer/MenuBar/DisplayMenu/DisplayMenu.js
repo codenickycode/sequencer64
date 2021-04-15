@@ -3,7 +3,11 @@ import { setTheme, THEMES } from 'App/reducers/appSlice';
 import { ANALYZER_MODES } from 'App/reducers/screenSlice';
 import { TVIcon } from 'assets/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { MenuItem, MenuItemToggle, PopupMenu } from './PopupMenu/PopupMenu';
+import {
+  MenuItem,
+  MenuItemToggle,
+  PopupMenu,
+} from 'App/shared/PopupMenu/PopupMenu';
 import { useAnalyzerMenu } from './useAnalyzerMenu';
 
 export const DisplayMenu = () => {

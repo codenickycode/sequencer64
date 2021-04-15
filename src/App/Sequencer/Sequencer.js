@@ -6,7 +6,7 @@ import { SamplePanel } from 'App/Sequencer/SamplePanel/SamplePanel';
 import { MenuBar } from 'App/Sequencer/MenuBar/MenuBar';
 import { loadInitialSequence } from 'App/reducers/sequenceSlice';
 // import { MobileConsole } from 'App/MobileConsole';
-import { PATHS } from 'utils/useGoTo';
+import { PATHS } from 'utils/hooks/useGoTo';
 import { VisualPanel } from 'App/Sequencer/VisualPanel/VisualPanel';
 
 export const SequencerPage = () => {

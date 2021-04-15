@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TapIcon } from 'assets/icons';
 import { MODES, setMode } from 'App/reducers/editorSlice';
 import { useLocation } from 'react-router';
-import { PATHS } from 'utils/useGoTo';
-import { MenuItem, PopupMenu } from './PopupMenu/PopupMenu';
-import { useStopPropEventListener } from 'utils/useStopPropEventListener';
+import { PATHS } from 'utils/hooks/useGoTo';
+import { MenuItem, PopupMenu } from 'App/shared/PopupMenu/PopupMenu';
+import { useStopPropEventListener } from 'utils/hooks/useStopPropEventListener';
 import { startRecord } from 'App/reducers/thunks/toneThunks';
 
 export const TapMenu = () => {

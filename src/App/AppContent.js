@@ -5,7 +5,7 @@ import { SequencerPage } from 'App/Sequencer/Sequencer';
 import { StatusBar } from 'App/StatusBar/StatusBar';
 import { ChangeKit } from './Sequencer/MainSection/ChangeKit';
 import { LoadSave } from './Sequencer/LoadSave/LoadSave';
-import { PATHS } from 'utils/useGoTo';
+import { PATHS } from 'utils/hooks/useGoTo';
 import { Preparing } from './shared/Preparing';
 
 export const AppContent = () => {

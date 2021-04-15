@@ -16,8 +16,8 @@
 @use 'App/Sequencer/SamplePanel/samplePanel';
 @use 'App/Sequencer/VisualPanel/visualPanel';
 @use 'App/Sequencer/MenuBar/menuItems';
-@use 'App/Sequencer/MenuBar/transport';
-@use 'App/Sequencer/MenuBar/PopupMenu/popupMenu';
+@use 'App/Sequencer/MenuBar/Transport/transport';
+@use 'App/shared/PopupMenu/popupMenu';
 @use 'App/shared/Scrollable/scrollable';
 @use 'App/Login/loginPage';
 @use 'App/ErrorBoundary/errorBoundary';

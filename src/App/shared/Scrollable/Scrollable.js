@@ -6,7 +6,7 @@ import {
   useInitialScroll,
 } from './scrollHelpers';
 import { Button } from 'App/shared/Button';
-import { useCallWhenDone } from 'utils/useCallWhenDone';
+import { useCallWhenDone } from 'utils/hooks/useCallWhenDone';
 
 export const Scrollable = ({ id, style, children }) => {
   const containerRef = useRef(null);

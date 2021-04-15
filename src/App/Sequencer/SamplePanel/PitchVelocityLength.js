@@ -4,7 +4,7 @@ import { Button } from 'App/shared/Button';
 import { ChevronLeftIcon, ChevronDownIcon } from 'assets/icons';
 import { MIDI_NOTES } from 'utils/MIDI_NOTES';
 import { usePitchVelocityLength } from './usePitchVelocityLength';
-import { useTouchAndMouse } from 'utils/useTouchAndMouse';
+import { useTouchAndMouse } from 'utils/hooks/useTouchAndMouse';
 
 export const PitchVelocityLength = ({ onReturn, mode }) => {
   const {

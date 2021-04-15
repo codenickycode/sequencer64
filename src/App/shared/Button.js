@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import cuid from 'cuid';
-import { useTouchAndMouse } from 'utils/useTouchAndMouse';
+import { useTouchAndMouse } from 'utils/hooks/useTouchAndMouse';
 
 export const Button = ({
   fwdRef,

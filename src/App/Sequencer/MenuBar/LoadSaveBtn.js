@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'App/shared/Button';
 import { OpenIcon, SaveIcon } from 'assets/icons';
-import { PATHS, useGoTo } from 'utils/useGoTo';
+import { PATHS, useGoTo } from 'utils/hooks/useGoTo';
 
 export const LoadSaveBtn = () => {
   const goTo = useGoTo();
