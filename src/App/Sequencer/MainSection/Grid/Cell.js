@@ -1,17 +1,17 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { SliceIcon } from 'assets/icons';
-import { useCellState } from './useCellState';
+import { useCell } from './useCell';
 import { useTouchAndMouse } from 'utils/hooks/useTouchAndMouse';
+import { getGrid } from 'utils/getGrid';
 
 export const Cell = ({ id, step, prevCellRef }) => {
-  const { state, onTouchStart } = useCellState(id, step, prevCellRef);
+  const { state, onTouchStart } = useCell(id, step, prevCellRef);
   const { classes, styles, values } = state;
 
   const { touchStart, mouseDown } = useTouchAndMouse(onTouchStart);
 
   const cellMemo = useMemo(() => {
-    // console.log('rendering: Cell');
     return (
       <div className='cellWrapper'>
         <div
@@ -49,11 +49,7 @@ const SampleCells = ({ id, step }) => {
   const length = useSelector((state) => state.assets.kits[kit].samples.length);
 
   const sampleCellsMemo = useMemo(() => {
-    // console.log('rendering: SampleCells');
-    let grid = [];
-    for (let i = 0; i < length; i++) {
-      grid.push(i);
-    }
+    const grid = getGrid(length);
     return (
       <div className='sample-cells'>
         {grid.map((i) => {
@@ -67,22 +63,13 @@ const SampleCells = ({ id, step }) => {
 };
 
 const SampleCell = ({ id, step, i }) => {
-  const noteOn = useSelector(
-    (state) => state.sequence.present.pattern[step][i].noteOn
-  );
+  const noteOn = useSelector((state) => state.sequence.present.pattern[step][i].noteOn);
   const velocity = useSelector(
     (state) => state.sequence.present.pattern[step][i].notes[0].velocity
   );
   const scMemo = useMemo(() => {
-    // console.log('rendering: SampleCell');
     const classes = `sample-cell bg${i}`;
-    return (
-      <div
-        id={id}
-        className={classes}
-        style={{ opacity: noteOn ? velocity : 0 }}
-      />
-    );
+    return <div id={id} className={classes} style={{ opacity: noteOn ? velocity : 0 }} />;
   }, [i, id, noteOn, velocity]);
   return scMemo;
 };

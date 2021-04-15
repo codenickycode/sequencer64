@@ -1,10 +1,10 @@
-import { MODES, setTapCellById, setToggleOn } from 'App/reducers/editorSlice';
+import { setTapCellById, setToggleOn } from 'App/reducers/editorSlice';
 import { modCell } from 'App/reducers/sequenceSlice';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAbstractState } from 'utils/hooks/useAbstractState';
 
-export const useCellState = (id, step, prevCellRef) => {
+export const useCell = (id, step, prevCellRef) => {
   const dispatch = useDispatch();
 
   const selectedSample = useSelector((state) => state.editor.selectedSample);
