@@ -3,10 +3,10 @@ import { Redirect, Route } from 'react-router-dom';
 import { LoginPage } from 'App/Login/LoginPage';
 import { SequencerPage } from 'App/Sequencer/Sequencer';
 import { StatusBar } from 'App/StatusBar/StatusBar';
-import { ChangeKit } from './Sequencer/MainSection/ChangeKit';
+import { ChangeKit } from './Sequencer/MainSection/ChangeKit/ChangeKit';
 import { LoadSave } from './Sequencer/LoadSave/LoadSave';
 import { PATHS } from 'utils/hooks/useGoTo';
-import { Preparing } from './shared/Preparing';
+import { Preparing } from './shared/Preparing/Preparing';
 
 export const AppContent = () => {
   return (

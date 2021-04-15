@@ -2,56 +2,48 @@ import { MODES, setTapCellById, setToggleOn } from 'App/reducers/editorSlice';
 import { modCell } from 'App/reducers/sequenceSlice';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useAbstractState } from 'utils/hooks/useAbstractState';
 
 export const useCellState = (id, step, prevCellRef) => {
   const dispatch = useDispatch();
 
   const selectedSample = useSelector((state) => state.editor.selectedSample);
-  const mode = useSelector((state) => state.editor.mode);
+  const { editing, modPitchMode } = useAbstractState();
 
   const noteOn = useSelector((state) =>
-    selectedSample !== -1
-      ? state.sequence.present.pattern[step][selectedSample].noteOn
-      : false
+    editing ? state.sequence.present.pattern[step][selectedSample].noteOn : false
   );
   const slice = useSelector((state) =>
-    selectedSample !== -1
-      ? state.sequence.present.pattern[step][selectedSample].notes.length
-      : 1
+    editing ? state.sequence.present.pattern[step][selectedSample].notes.length : 1
   );
   const pitch = useSelector((state) =>
-    selectedSample !== -1
-      ? state.sequence.present.pattern[step][selectedSample].notes[0].pitch
-      : 24
+    editing ? state.sequence.present.pattern[step][selectedSample].notes[0].pitch : 24
   );
   const length = useSelector((state) =>
-    selectedSample !== -1
-      ? state.sequence.present.pattern[step][selectedSample].notes[0].length
-      : 1
+    editing ? state.sequence.present.pattern[step][selectedSample].notes[0].length : 1
   );
   const velocity = useSelector((state) =>
-    selectedSample !== -1
-      ? state.sequence.present.pattern[step][selectedSample].notes[0].velocity
-      : 1
+    editing ? state.sequence.present.pattern[step][selectedSample].notes[0].velocity : 1
   );
 
   const tapCell = useCallback(() => {
     dispatch(modCell(step, noteOn));
   }, [dispatch, noteOn, step]);
 
-  const tapCellAlert = useSelector((state) => state.editor.tapCellById[id]);
+  // dragging: tap flag sent from Grid onTouchMove/onMouseMove
+  const tapThisCell = useSelector((state) => state.editor.tapCellById[id]);
   useEffect(() => {
-    if (tapCellAlert) {
+    if (tapThisCell) {
       tapCell();
       dispatch(setTapCellById({ id, val: false }));
     }
-  }, [dispatch, id, tapCell, tapCellAlert]);
+  }, [dispatch, id, tapCell, tapThisCell]);
 
   const onTouchStart = useCallback(
     (e) => {
       e.stopPropagation();
-      dispatch(setToggleOn(!noteOn));
-      prevCellRef.current = id;
+      dispatch(setToggleOn(!noteOn)); // set dragging effect
+      prevCellRef.current = id; // don't double tap on drag
       tapCell();
     },
     [dispatch, id, noteOn, prevCellRef, tapCell]
@@ -62,24 +54,18 @@ export const useCellState = (id, step, prevCellRef) => {
     const styles = {};
     const values = {};
 
-    values.midiNote = noteOn && mode === MODES.MOD_PITCH ? pitch : null;
+    values.midiNote = noteOn && modPitchMode ? pitch : null;
 
     classes.cell = noteOn ? 'cell on' : 'cell';
     classes.bg = noteOn ? `bg bg${selectedSample}` : 'bg';
-    classes.slice1 =
-      mode === MODES.MOD_PITCH
-        ? 'slice'
-        : noteOn && slice === 2
-        ? 'slice slice-2'
-        : noteOn && slice === 3
-        ? 'slice slice-3'
-        : 'slice';
-    classes.slice2 =
-      mode === MODES.MOD_PITCH
-        ? 'slice'
-        : noteOn && slice > 2
-        ? 'slice slice-2'
-        : 'slice';
+    classes.slice1 = modPitchMode
+      ? 'slice'
+      : noteOn && slice === 2
+      ? 'slice slice-2'
+      : noteOn && slice === 3
+      ? 'slice slice-3'
+      : 'slice';
+    classes.slice2 = modPitchMode ? 'slice' : noteOn && slice > 2 ? 'slice slice-2' : 'slice';
 
     styles.bg = {
       transform: length >= 1 ? 'scaleX(1)' : `scaleX(${length * 3})`,
@@ -87,7 +73,7 @@ export const useCellState = (id, step, prevCellRef) => {
     if (noteOn) styles.bg.opacity = velocity;
 
     return { classes, styles, values };
-  }, [length, mode, noteOn, pitch, selectedSample, slice, velocity]);
+  }, [length, modPitchMode, noteOn, pitch, selectedSample, slice, velocity]);
 
   return { state, onTouchStart };
 };

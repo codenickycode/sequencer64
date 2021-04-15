@@ -5,12 +5,10 @@ import { setFetchingSamples } from 'App/reducers/assetsSlice';
 import { setStatus } from 'App/reducers/appSlice';
 import { preFetchSamples } from 'api';
 
-export const useKitBtnState = (i, counterRef) => {
+export const useKitSelection = (i, counterRef) => {
   const dispatch = useDispatch();
 
-  const serviceWorkerActive = useSelector(
-    (state) => state.app.serviceWorkerActive
-  );
+  const serviceWorkerActive = useSelector((state) => state.app.serviceWorkerActive);
   const sequenceKit = useSelector((state) => state.sequence.present.kit);
   const kit = useSelector((state) => {
     return Object.values(state.assets.kits)[i];
@@ -19,16 +17,15 @@ export const useKitBtnState = (i, counterRef) => {
   const btnDisabled = fetching;
   const selected = kit.name === sequenceKit;
 
+  // flash 'ready' after kit dl'd from server
   const prevAvailRef = useRef(available);
   const [readyClasses, setReadyClasses] = useState('ready');
   useEffect(() => {
-    let timer;
     if (available && !prevAvailRef.current) {
       prevAvailRef.current = true;
       setReadyClasses('ready show');
-      timer = setTimeout(() => setReadyClasses('ready'), 1500);
+      setTimeout(() => setReadyClasses('ready'), 1500);
     }
-    return () => clearTimeout(timer);
   }, [available, name]);
 
   const classes = {
@@ -38,16 +35,18 @@ export const useKitBtnState = (i, counterRef) => {
     icon: fetching ? 'flashing' : '',
   };
 
-  const onClick = async () => {
+  const onClick = () => {
     if (available || !serviceWorkerActive) return dispatch(changeKit(name));
+    handleChangeKit();
+  };
+
+  const handleChangeKit = async () => {
     dispatch(setFetchingSamples({ kit: name, fetching: true }));
     const thisClick = ++counterRef.current;
     const [received, error] = await preFetchSamples(kit.samples);
     if (received && thisClick === counterRef.current) dispatch(changeKit(name));
     if (error) dispatch(setStatus('Error loading kit: ', name));
-    dispatch(
-      setFetchingSamples({ kit: name, fetching: false, available: received })
-    );
+    dispatch(setFetchingSamples({ kit: name, fetching: false, available: received }));
   };
 
   const state = { selected, available, classes, btnDisabled, name };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Portal } from './Portal';
+import { Portal } from '../Portal';
 
 export const Preparing = () => {
   let grid = [];

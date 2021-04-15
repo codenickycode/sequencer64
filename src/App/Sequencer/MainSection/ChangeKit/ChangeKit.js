@@ -3,7 +3,7 @@ import React, { useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from 'App/shared/Button';
 import { CloudDownloadIcon } from 'assets/icons';
-import { useKitBtnState } from './useKitBtnState';
+import { useKitSelection } from './useKitSelection';
 import { Portal } from 'App/shared/Portal';
 
 export const ChangeKit = () => {
@@ -24,7 +24,7 @@ export const ChangeKit = () => {
         <div id='changeKit' className='changeKit'>
           <div className='kits'>
             {grid.map((i) => {
-              return <KitBtn key={cuid.slug()} i={i} counterRef={counterRef} />;
+              return <KitSelection key={cuid.slug()} i={i} counterRef={counterRef} />;
             })}
           </div>
         </div>
@@ -35,16 +35,12 @@ export const ChangeKit = () => {
   return changeKitMemo;
 };
 
-const KitBtn = ({ i, counterRef }) => {
-  const { state, functions } = useKitBtnState(i, counterRef);
+const KitSelection = ({ i, counterRef }) => {
+  const { state, functions } = useKitSelection(i, counterRef);
   const { classes } = state;
 
   return (
-    <Button
-      classes={classes.btn}
-      disabled={state.btnDisabled}
-      onClick={functions.onClick}
-    >
+    <Button classes={classes.btn} disabled={state.btnDisabled} onClick={functions.onClick}>
       <p className={classes.ready}>ready!</p>
       <p className={classes.name}>{state.name}</p>
       {!state.available ? (

@@ -4,7 +4,7 @@ import * as serviceWorkerRegistration from 'serviceWorkerRegistration';
 import reportWebVitals from 'reportWebVitals';
 import 'styles/style.scss';
 
-import { Preparing } from 'App/shared/Preparing';
+import { Preparing } from 'App/shared/Preparing/Preparing';
 const App = React.lazy(() => import('App/App'));
 
 ReactDOM.render(

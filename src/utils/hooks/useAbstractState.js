@@ -10,6 +10,7 @@ export const useAbstractState = () => {
   state.started = transportState === 'started';
 
   const editorMode = useSelector((state) => state.editor.mode);
+  state.modPitchMode = editorMode === MODES.MOD_PITCH;
   state.tapRecordMode = editorMode === MODES.TAP_RECORD;
   state.tapPlayMode = editorMode === MODES.TAP;
   state.tapMode = state.tapRecordMode || state.tapPlayMode;
