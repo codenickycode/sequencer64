@@ -15,11 +15,19 @@ export const KitBtn = () => {
   const memo = useMemo(() => {
     // console.log('rendering: ChangeKitBtn');
 
+    const goToBase = () => {
+      goTo(PATHS.BASE, () => dispatch(setMode(MODES.INIT)));
+      document
+        .getElementById('menuBar')
+        .removeEventListener('scroll', goToBase);
+    };
+
     const changeKit = () => {
       if (showingKits) {
-        goTo(PATHS.BASE, () => dispatch(setMode(MODES.INIT)));
+        goToBase();
       } else {
         goTo(PATHS.CHANGE_KIT, () => dispatch(setMode(MODES.TAP)));
+        document.getElementById('menuBar').addEventListener('scroll', goToBase);
       }
     };
 
