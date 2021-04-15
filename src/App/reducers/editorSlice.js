@@ -42,9 +42,9 @@ export const editorSlice = createSlice({
     },
     setMode: (state, { payload }) => {
       state.mode = payload;
-      const tapping =
+      const tapMode =
         state.mode === MODES.TAP || state.mode === MODES.TAP_RECORD;
-      if (tapping) {
+      if (tapMode || state.mode === MODES.INIT) {
         state.selectedSample = -1;
       }
     },
