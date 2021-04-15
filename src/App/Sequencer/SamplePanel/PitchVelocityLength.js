@@ -5,10 +5,8 @@ import { ChevronLeftIcon, ChevronDownIcon } from 'assets/icons';
 import { MIDI_NOTES } from 'utils/MIDI_NOTES';
 import { usePitchVelocityLength } from './usePitchVelocityLength';
 import { useTouchAndMouse } from 'utils/hooks/useTouchAndMouse';
-import { useEditorState } from 'App/reducers/useAbstractState/useEditorState';
 
-export const PitchVelocityLength = ({ onReturn }) => {
-  const { editorMode, modPitchMode } = useEditorState();
+export const PitchVelocityLength = ({ onReturn, editorMode, modPitchMode }) => {
   const {
     detailClass,
     value,
@@ -18,7 +16,6 @@ export const PitchVelocityLength = ({ onReturn }) => {
     toggleAll,
     editAll,
   } = usePitchVelocityLength(editorMode, modPitchMode);
-
   return (
     <div className={detailClass}>
       <Button classes='close' onClick={onReturn}>

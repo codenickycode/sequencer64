@@ -52,7 +52,7 @@ const ModeBtn = ({ mode }) => {
     return (
       <Button classes='sampleMenuBtn' disabled={disabled} onClick={() => selectMode(mode)}>
         <Icon />
-        <p>{mode}</p>
+        <p>{mode.toLowerCase()}</p>
       </Button>
     );
   }, [disabled, dispatch, mode]);

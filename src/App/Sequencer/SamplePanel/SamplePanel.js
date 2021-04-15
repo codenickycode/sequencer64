@@ -12,11 +12,10 @@ import { hideEditable, showEditable } from 'utils/toggleClasses';
 export const SamplePanel = () => {
   const dispatch = useDispatch();
 
-  const { editorMode, cellsEditable, paintMode } = useEditorState();
+  const { editorMode, cellsEditable, paintMode, modPitchMode } = useEditorState();
   if (cellsEditable) showEditable();
   if (paintMode) hideEditable();
 
-  const landscape = useSelector((state) => state.screen.dimensions.landscape);
   const splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);
 
   const spMemo = useMemo(() => {
@@ -28,21 +27,25 @@ export const SamplePanel = () => {
           {editorMode === MODES.PAINT ? (
             <SampleEditMenu />
           ) : editorMode === MODES.ERASE ? (
-            <Erase onReturn={onReturn} landscape={landscape} />
+            <Erase onReturn={onReturn} />
           ) : editorMode === MODES.SLICE ? (
-            <Slice onReturn={onReturn} landscape={landscape} />
+            <Slice onReturn={onReturn} />
           ) : editorMode === MODES.COPY ? (
-            <Copy onReturn={onReturn} landscape={landscape} />
+            <Copy onReturn={onReturn} />
           ) : editorMode === MODES.MOD_PITCH ||
             editorMode === MODES.MOD_VELOCITY ||
             editorMode === MODES.MOD_LENGTH ? (
-            <PitchVelocityLength onReturn={onReturn} editorMode={editorMode} />
+            <PitchVelocityLength
+              onReturn={onReturn}
+              editorMode={editorMode}
+              modPitchMode={modPitchMode}
+            />
           ) : null}
         </div>
         <SampleBtns />
       </>
     );
-  }, [splitSamplePanel, editorMode, landscape, dispatch]);
+  }, [splitSamplePanel, editorMode, modPitchMode, dispatch]);
 
   return spMemo;
 };

@@ -1,11 +1,12 @@
 import * as Tone from 'tone';
-import { edit, MODES } from 'App/reducers/editorSlice';
+import { edit } from 'App/reducers/editorSlice';
 import { Kit } from 'App/Tone';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTouchAndMouse } from 'utils/hooks/useTouchAndMouse';
 import * as icons from 'assets/icons/kit';
 import { recordSample } from 'App/reducers/sequenceSlice';
+import { useEditorState } from 'App/reducers/useAbstractState/useEditorState';
 
 export const SampleBtns = () => {
   const dispatch = useDispatch();
@@ -38,9 +39,7 @@ export const SampleBtns = () => {
 
 const SampleBtn = ({ i, sample, selectSample, selected }) => {
   const dispatch = useDispatch();
-  const mode = useSelector((state) => state.editor.mode);
-  const tapRecording = mode === MODES.TAP_RECORD;
-  const tapping = mode === MODES.TAP || tapRecording;
+  const { tapRecording, tapModes } = useEditorState();
 
   const [flash, setFlash] = useState(false);
   useEffect(() => {
@@ -49,19 +48,17 @@ const SampleBtn = ({ i, sample, selectSample, selected }) => {
 
   const startFunc = useCallback(
     (e) => {
-      if (tapRecording) {
-        dispatch(recordSample(i));
-      }
-      if (tapping) {
+      if (tapRecording) dispatch(recordSample(i));
+      if (tapModes) {
         Kit.samples[i].sampler.triggerAttack('C2', Tone.immediate(), 1);
         setFlash(true);
       }
     },
-    [dispatch, i, tapRecording, tapping]
+    [dispatch, i, tapRecording, tapModes]
   );
 
   const onClick = () => {
-    if (!tapping) selectSample(i);
+    if (!tapModes) selectSample(i);
   };
 
   const { touchStart, mouseDown } = useTouchAndMouse(startFunc);

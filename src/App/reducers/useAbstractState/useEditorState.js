@@ -12,8 +12,8 @@ export const useEditorState = () => {
   state.copyMode = editorMode === MODES.COPY;
   state.tapRecordMode = editorMode === MODES.TAP_RECORD;
   state.tapPlayMode = editorMode === MODES.TAP;
-  state.tapMode = state.tapRecordMode || state.tapPlayMode;
-  state.editing = editorMode !== MODES.INIT && !state.tapMode;
+  state.tapModes = state.tapRecordMode || state.tapPlayMode;
+  state.editing = editorMode !== MODES.INIT && !state.tapModes;
   state.deepEditing = state.editing && !state.paintMode;
   state.cellsEditable = state.eraseMode || state.sliceMode;
 

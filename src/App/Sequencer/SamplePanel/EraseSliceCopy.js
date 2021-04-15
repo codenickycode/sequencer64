@@ -5,13 +5,12 @@ import { Button } from 'App/shared/Button';
 import { ChevronLeftIcon, CopyIcon, EraserIcon, SawIcon } from 'assets/icons';
 import { PastePattern } from 'App/Sequencer/MainSection/PastePattern/PastePattern';
 
-export const Erase = ({ onReturn, landscape }) => {
+export const Erase = ({ onReturn }) => {
   const dispatch = useDispatch();
   const selectedSample = useSelector((state) => state.editor.selectedSample);
   const disabled = useSelector(
     (state) => state.sequence.present.noteTally[selectedSample].empty
   );
-  const splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);
 
   useEffect(() => {
     if (disabled) onReturn();
@@ -20,50 +19,57 @@ export const Erase = ({ onReturn, landscape }) => {
   const onEraseAll = () => {
     dispatch(eraseSample({ selectedSample }));
   };
-
+  const instruction = ' Click and drag to erase cells';
   return (
-    <div className={splitSamplePanel ? 'detail' : 'detail dark'}>
-      <Button classes='close' onClick={onReturn}>
-        <ChevronLeftIcon />
-      </Button>
-      <div className='dummy' />
-      <div className='middle'>
-        {landscape && <EraserIcon />}
-        <p className=''>Click and drag to erase cells</p>
-        <Button disabled={disabled} onClick={onEraseAll}>
-          Erase All
-        </Button>
-      </div>
-      {!landscape && <EraserIcon />}
-    </div>
+    <ModeDetail
+      onReturn={onReturn}
+      Icon={EraserIcon}
+      instruction={instruction}
+      btnClick={onEraseAll}
+      btnLabel='Erase All'
+    />
   );
 };
 
-export const Slice = ({ onReturn, landscape }) => {
+export const Slice = ({ onReturn }) => {
   const dispatch = useDispatch();
   const selectedSample = useSelector((state) => state.editor.selectedSample);
-  const splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);
 
   const onReset = () => {
     dispatch(resetSlice(selectedSample));
   };
+  const instruction = 'Click each cell to slice into halves or thirds';
   return (
-    <div className={splitSamplePanel ? 'detail' : 'detail dark'}>
-      <Button classes='close' onClick={onReturn}>
-        <ChevronLeftIcon />
-      </Button>
-      <div className='dummy' />
-      <div className='middle'>
-        {landscape && <SawIcon addClass='slicing' />}
-        <p>Click each cell to slice into halves or thirds</p>
-        <Button onClick={onReset}>Reset All</Button>
-      </div>
-      {!landscape && <SawIcon addClass='slicing' />}
-    </div>
+    <ModeDetail
+      onReturn={onReturn}
+      Icon={SawIcon}
+      addIconClass='slicing'
+      instruction={instruction}
+      btnClick={onReset}
+      btnLabel='Reset All'
+    />
   );
 };
 
-export const Copy = ({ onReturn, landscape }) => {
+export const Copy = ({ onReturn }) => {
+  const instruction = "Click to paste current samples's pattern";
+  return (
+    <ModeDetail onReturn={onReturn} Icon={CopyIcon} instruction={instruction}>
+      <PastePattern />
+    </ModeDetail>
+  );
+};
+
+const ModeDetail = ({
+  onReturn,
+  Icon,
+  addIconClass = '',
+  instruction,
+  btnClick,
+  btnLabel,
+  children,
+}) => {
+  const landscape = useSelector((state) => state.screen.landscape);
   const splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);
 
   return (
@@ -73,11 +79,12 @@ export const Copy = ({ onReturn, landscape }) => {
       </Button>
       <div className='dummy' />
       <div className='middle'>
-        {landscape && <CopyIcon />}
-        <p>Click to paste current sample's pattern</p>
+        {landscape && <Icon addClass={addIconClass} />}
+        <p>{instruction}</p>
+        {btnClick && <Button onClick={btnClick}>{btnLabel}</Button>}
       </div>
-      {!landscape && <CopyIcon />}
-      <PastePattern />
+      {!landscape && <Icon addClass={addIconClass} />}
+      {children}
     </div>
   );
 };
