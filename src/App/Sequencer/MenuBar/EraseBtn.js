@@ -20,9 +20,7 @@ export const EraseBtn = () => {
   const eraseMemo = useMemo(() => {
     const onClick = () => {
       dispatch(eraseAll());
-      if (editing) {
-        dispatch(setMode(MODES.PAINT));
-      }
+      if (editing) dispatch(setMode(MODES.PAINT));
     };
 
     // console.log('rendering: Erase');

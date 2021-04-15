@@ -1,28 +1,23 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { TapIcon } from 'assets/icons';
 import { MODES, setMode } from 'App/reducers/editorSlice';
-import { useLocation } from 'react-router';
-import { PATHS } from 'utils/hooks/useGoTo';
 import { MenuItem, PopupMenu } from 'App/shared/PopupMenu/PopupMenu';
 import { useStopPropEventListener } from 'utils/hooks/useStopPropEventListener';
 import { startRecord } from 'App/reducers/thunks/toneThunks';
+import { useAbstractState } from 'utils/hooks/useAbstractState';
 
 export const TapMenu = () => {
-  const pathname = useLocation().pathname;
-  const disabled = pathname === PATHS.CHANGE_KIT;
-  const mode = useSelector((state) => state.editor.mode);
-  const tapping = mode === MODES.TAP;
-  const tapRecording = mode === MODES.TAP_RECORD;
+  const { tapPlayMode, tapRecordMode, selectingKit } = useAbstractState();
 
   let addBtnClasses = ' tap';
-  if (tapping) addBtnClasses += ' active';
-  if (tapRecording) addBtnClasses += ' active record';
+  if (tapPlayMode) addBtnClasses += ' active';
+  if (tapRecordMode) addBtnClasses += ' active record';
   return (
     <PopupMenu
       name='tap'
       Icon={TapIcon}
-      disabled={disabled}
+      disabled={selectingKit}
       addBtnClasses={addBtnClasses}
     >
       <TapMenuItems />
@@ -34,15 +29,13 @@ const modes = [MODES.TAP, MODES.TAP_RECORD];
 const TapMenuItems = () => {
   const dispatch = useDispatch();
   const eventListener = useStopPropEventListener();
-  const currentMode = useSelector((state) => state.editor.mode);
-  const transportState = useSelector((state) => state.tone.transportState);
+  const { started, editorMode } = useAbstractState();
 
   const deactivate = () => dispatch(setMode(MODES.INIT));
 
   const changeMode = (newMode) => {
     dispatch(setMode(newMode));
-    if (newMode === MODES.TAP_RECORD && transportState !== 'started')
-      dispatch(startRecord());
+    if (newMode === MODES.TAP_RECORD && !started) dispatch(startRecord());
     eventListener('tapBtn', 'click', deactivate);
   };
 
@@ -50,7 +43,7 @@ const TapMenuItems = () => {
     <>
       <div className='popupMenuSub'>Tap Modes</div>
       {modes.map((mode) => {
-        const selected = mode === currentMode;
+        const selected = mode === editorMode;
         return (
           <MenuItem
             key={`selectTapMode${mode}`}
