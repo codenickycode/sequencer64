@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { TapIcon } from 'assets/icons';
 import { MODES, setMode } from 'App/reducers/editorSlice';
 import { MenuItem, PopupMenu } from 'App/shared/PopupMenu/PopupMenu';
-import { useStopPropEventListener } from 'utils/hooks/useStopPropEventListener';
 import { startRecord } from 'App/reducers/thunks/toneThunks';
+import { useStopPropEventListener } from 'utils/hooks/useStopPropEventListener';
 import { useAbstractState } from 'utils/hooks/useAbstractState';
 
 export const TapMenu = () => {
@@ -28,7 +28,7 @@ export const TapMenu = () => {
 const modes = [MODES.TAP, MODES.TAP_RECORD];
 const TapMenuItems = () => {
   const dispatch = useDispatch();
-  const eventListener = useStopPropEventListener();
+  const { eventListener } = useStopPropEventListener();
   const { started, editorMode } = useAbstractState();
 
   const deactivate = () => dispatch(setMode(MODES.INIT));

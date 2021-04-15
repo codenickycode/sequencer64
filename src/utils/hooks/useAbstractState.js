@@ -13,6 +13,8 @@ export const useAbstractState = () => {
   state.tapRecordMode = editorMode === MODES.TAP_RECORD;
   state.tapPlayMode = editorMode === MODES.TAP;
   state.tapMode = state.tapRecordMode || state.tapPlayMode;
+  state.editing =
+    editorMode !== MODES.INIT && editorMode !== MODES.PAINT && !state.tapMode;
 
   // Paths
   const pathname = useLocation().pathname;

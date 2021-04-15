@@ -4,15 +4,12 @@ import { eraseAll } from 'App/reducers/sequenceSlice';
 import { MODES, setMode } from 'App/reducers/editorSlice';
 import { EraseAllIcon } from 'assets/icons';
 import { Button } from 'App/shared/Button';
+import { useAbstractState } from 'utils/hooks/useAbstractState';
 
 export const EraseBtn = () => {
   const dispatch = useDispatch();
-  const mode = useSelector((state) => state.editor.mode);
-  const editing =
-    mode !== MODES.INIT &&
-    mode !== MODES.PAINT &&
-    mode !== MODES.TAP &&
-    mode !== MODES.TAP_RECORDING;
+  const { editing } = useAbstractState();
+
   const disabled = useSelector(
     (state) => state.sequence.present.noteTally.total.empty
   );
