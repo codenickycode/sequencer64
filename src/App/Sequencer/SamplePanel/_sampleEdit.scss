@@ -81,7 +81,8 @@
       width: 50%;
     }
 
-    .selectLabel {
+    .selectLabel,
+    .applyInfo {
       height: 100%;
       @include flex;
     }
@@ -102,7 +103,7 @@
       text-align: right;
     }
 
-    .mod-value {
+    .modValue {
       min-width: 20%;
       display: inline-block;
       text-align: center;
@@ -112,6 +113,15 @@
       height: 100%;
       width: 50%;
       cursor: pointer;
+    }
+
+    .applyInfo {
+      opacity: 0;
+      transition: 2s;
+      &.show {
+        transition: none;
+        opacity: 1;
+      }
     }
   }
 

@@ -1,15 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { INITIAL_MODS, setModVal } from 'App/reducers/editorSlice';
+import { EDITOR_MODE_INFO, INITIAL_MODS, setInfo, setModVal } from 'App/reducers/editorSlice';
 import { modAll, resetMods } from 'App/reducers/sequenceSlice';
 import { showEditable, hideEditable } from 'utils/toggleClasses';
+import { showAndHideClass, showAndHideInfo } from 'utils/showAndHide';
 
 export const usePitchVelocityLength = (editorMode, modPitchMode) => {
   const dispatch = useDispatch();
   const selectedSample = useSelector((state) => state.editor.selectedSample);
   const [value, setValue] = useState(INITIAL_MODS[editorMode]);
-  const splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);
-  const detailClass = splitSamplePanel ? 'detail col' : 'detail col dark';
 
   const dispatchModAll = useCallback(() => {
     dispatch(
@@ -47,10 +46,18 @@ export const usePitchVelocityLength = (editorMode, modPitchMode) => {
     }
   };
 
+  const [applyInfoValue, setApplyInfoValue] = useState('');
+  const [applyInfoClasses, setApplyInfoClasses] = useState('applyInfo');
+  useEffect(() => {
+    if (!applyInfoValue) return;
+    showAndHideClass(setApplyInfoClasses, 'applyInfo', 2000);
+  }, [applyInfoValue]);
+
   const toggleAll = () => {
     if (editAll) {
       setEditAll(false);
       showEditable();
+      showAndHideInfo(setApplyInfoValue, EDITOR_MODE_INFO[editorMode], 4000);
     } else {
       dispatchModAll();
       setEditAll(true);
@@ -64,8 +71,12 @@ export const usePitchVelocityLength = (editorMode, modPitchMode) => {
     dispatch(resetMods({ selectedSample, type: editorMode }));
   };
 
+  const splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);
+  const containerClasses = splitSamplePanel ? 'detail col' : 'detail col dark';
+
   return {
-    detailClass,
+    applyInfo: { value: applyInfoValue, classes: applyInfoClasses },
+    containerClasses,
     value,
     onChange,
     onTouchEnd,

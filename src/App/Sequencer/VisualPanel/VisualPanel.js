@@ -1,7 +1,8 @@
-import { MODES } from 'App/reducers/editorSlice';
+import { EDITOR_MODE_INFO, setInfo } from 'App/reducers/editorSlice';
 import { useAbstractState } from 'App/reducers/useAbstractState/useAbstractState';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { showAndHideClass } from 'utils/showAndHide';
 import { Analyzer } from './Analyzer';
 
 export const VisualPanel = () => {
@@ -13,15 +14,11 @@ export const VisualPanel = () => {
   );
 };
 
-const INFO_TEXT = {
-  [MODES.TAP]: 'Tap to play samples',
-  [MODES.TAP_RECORD]: 'Tap to record samples',
-  [MODES.INIT]: 'Select a sample to edit',
-};
-
 const Info = () => {
+  const dispatch = useDispatch();
   const { started, editorMode, editing } = useAbstractState();
   const analyzerOn = useSelector((state) => state.screen.analyzer.on);
+
   const countIn = useSelector((state) => state.tone.countIn);
 
   const [countInClasses, setCountInClasses] = useState('countIn');
@@ -32,22 +29,21 @@ const Info = () => {
     }
   }, [countIn]);
 
-  const [infoText, setInfoText] = useState(INFO_TEXT[editorMode]);
+  const infoText = useSelector((state) => state.editor.info);
   useEffect(() => {
-    if (started) setInfoText('');
-    else setInfoText(INFO_TEXT[editorMode]);
-  }, [editorMode, started]);
+    if (started) dispatch(setInfo(''));
+    else dispatch(setInfo(EDITOR_MODE_INFO[editorMode]));
+  }, [dispatch, editorMode, started]);
 
   const [infoTextClasses, setInfoTextClasses] = useState('infoText');
+
   useEffect(() => {
-    setInfoTextClasses('infoText show');
-    setTimeout(() => setInfoTextClasses('infoText'), 3000);
+    showAndHideClass(setInfoTextClasses, 'infoText', 3000);
   }, [infoText]);
 
   const flashInfo = useSelector((state) => state.app.flashInfo);
   useEffect(() => {
-    if (flashInfo) setInfoTextClasses('infoText show');
-    setTimeout(() => setInfoTextClasses('infoText'), 3000);
+    if (flashInfo) showAndHideClass(setInfoTextClasses, 'infoText', 3000);
   }, [flashInfo]);
 
   let showInfo = !editing;

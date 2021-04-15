@@ -8,7 +8,8 @@ import { useTouchAndMouse } from 'utils/hooks/useTouchAndMouse';
 
 export const PitchVelocityLength = ({ onReturn, editorMode, modPitchMode }) => {
   const {
-    detailClass,
+    applyInfo,
+    containerClasses,
     value,
     onChange,
     onTouchEnd,
@@ -17,15 +18,20 @@ export const PitchVelocityLength = ({ onReturn, editorMode, modPitchMode }) => {
     editAll,
   } = usePitchVelocityLength(editorMode, modPitchMode);
   return (
-    <div className={detailClass}>
+    <div className={containerClasses}>
       <Button classes='close' onClick={onReturn}>
         <ChevronLeftIcon />
       </Button>
       <div className='modWrapper'>
         {editorMode === MODES.MOD_PITCH ? (
-          <Pitch value={value} onChange={onChange} />
+          <Pitch value={value} onChange={onChange} applyInfo={applyInfo} />
         ) : (
-          <VelocityAndLength onTouchEnd={onTouchEnd} value={value} onChange={onChange} />
+          <VelocityAndLength
+            onTouchEnd={onTouchEnd}
+            value={value}
+            onChange={onChange}
+            applyInfo={applyInfo}
+          />
         )}
         <div className='modBtns'>
           <Button onClick={onReset}>Reset All</Button>
@@ -38,12 +44,16 @@ export const PitchVelocityLength = ({ onReturn, editorMode, modPitchMode }) => {
   );
 };
 
-const Pitch = ({ value, onChange }) => {
+const Pitch = ({ value, onChange, applyInfo }) => {
   return (
     <>
-      <label htmlFor='pitchSelect' className='selectLabel'>
-        Select Pitch:
-      </label>
+      {applyInfo.value ? (
+        <p className={applyInfo.classes}>{applyInfo.value}</p>
+      ) : (
+        <label htmlFor='pitchSelect' className='selectLabel'>
+          Select Pitch:
+        </label>
+      )}
       <div className='customSelectWrapper'>
         <select id='pitchSelect' className='customSelect' value={value} onChange={onChange}>
           {/* limit C1-C3 */}
@@ -61,7 +71,7 @@ const Pitch = ({ value, onChange }) => {
   );
 };
 
-const VelocityAndLength = ({ onTouchEnd, value, onChange }) => {
+const VelocityAndLength = ({ onTouchEnd, value, onChange, applyInfo }) => {
   const { touchStart, touchEnd, mouseUp } = useTouchAndMouse(null, null, onTouchEnd);
 
   return (
@@ -79,10 +89,16 @@ const VelocityAndLength = ({ onTouchEnd, value, onChange }) => {
         onChange={onChange}
       />
       <div className='modValueWrapper'>
-        <label htmlFor='modSlider' className='modLabel'>
-          Apply value:
-        </label>
-        <p className='mod-value'>{value}</p>
+        {applyInfo.value ? (
+          <p className={applyInfo.classes}>{applyInfo.value}</p>
+        ) : (
+          <>
+            <label htmlFor='modSlider' className='modLabel'>
+              Apply value:
+            </label>
+            <p className='modValue'>{value}</p>
+          </>
+        )}
       </div>
     </>
   );
