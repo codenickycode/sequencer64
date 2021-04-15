@@ -39,7 +39,7 @@ export const useCell = (id, step, prevCellRef) => {
     }
   }, [dispatch, id, tapCell, tapThisCell]);
 
-  const onTouchStart = useCallback(
+  const startFunc = useCallback(
     (e) => {
       e.stopPropagation();
       dispatch(setToggleOn(!noteOn)); // set dragging effect
@@ -75,5 +75,5 @@ export const useCell = (id, step, prevCellRef) => {
     return { classes, styles, values };
   }, [length, modPitchMode, noteOn, pitch, selectedSample, slice, velocity]);
 
-  return { state, onTouchStart };
+  return { state, startFunc };
 };

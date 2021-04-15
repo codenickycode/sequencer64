@@ -6,10 +6,10 @@ import { useTouchAndMouse } from 'utils/hooks/useTouchAndMouse';
 import { getGrid } from 'utils/getGrid';
 
 export const Cell = ({ id, step, prevCellRef }) => {
-  const { state, onTouchStart } = useCell(id, step, prevCellRef);
+  const { state, startFunc } = useCell(id, step, prevCellRef);
   const { classes, styles, values } = state;
 
-  const { touchStart, mouseDown } = useTouchAndMouse(onTouchStart);
+  const { onTouchStart, onMouseDown } = useTouchAndMouse(startFunc);
 
   const cellMemo = useMemo(() => {
     return (
@@ -17,8 +17,8 @@ export const Cell = ({ id, step, prevCellRef }) => {
         <div
           id={id}
           className={classes.cell}
-          onTouchStart={touchStart}
-          onMouseDown={mouseDown}
+          onTouchStart={onTouchStart}
+          onMouseDown={onMouseDown}
         >
           <SliceIcon addClass={classes.slice1} />
           <SliceIcon addClass={classes.slice2} />
@@ -35,8 +35,8 @@ export const Cell = ({ id, step, prevCellRef }) => {
     classes.slice1,
     classes.slice2,
     classes.bg,
-    touchStart,
-    mouseDown,
+    onTouchStart,
+    onMouseDown,
     styles.bg,
     values.midiNote,
     step,

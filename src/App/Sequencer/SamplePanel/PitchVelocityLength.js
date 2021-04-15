@@ -5,37 +5,21 @@ import { ChevronLeftIcon, ChevronDownIcon } from 'assets/icons';
 import { MIDI_NOTES } from 'utils/MIDI_NOTES';
 import { usePitchVelocityLength } from './usePitchVelocityLength';
 import { useTouchAndMouse } from 'utils/hooks/useTouchAndMouse';
+import { useSelector } from 'react-redux';
 
-export const PitchVelocityLength = ({ onReturn, editorMode, modPitchMode }) => {
-  const {
-    applyInfo,
-    containerClasses,
-    value,
-    onChange,
-    onTouchEnd,
-    onReset,
-    toggleAll,
-    editAll,
-  } = usePitchVelocityLength(editorMode, modPitchMode);
+export const PitchVelocityLength = ({ onReturn }) => {
+  const values = usePitchVelocityLength();
   return (
-    <div className={containerClasses}>
+    <div className={values.containerClasses}>
       <Button classes='close' onClick={onReturn}>
         <ChevronLeftIcon />
       </Button>
       <div className='modWrapper'>
-        {editorMode === MODES.MOD_PITCH ? (
-          <Pitch value={value} onChange={onChange} applyInfo={applyInfo} />
-        ) : (
-          <VelocityAndLength
-            onTouchEnd={onTouchEnd}
-            value={value}
-            onChange={onChange}
-            applyInfo={applyInfo}
-          />
-        )}
+        <Pitch {...values} />
+        <VelocityAndLength {...values} />
         <div className='modBtns'>
-          <Button onClick={onReset}>Reset All</Button>
-          <Button classes={editAll ? 'bgGreen' : ''} onClick={toggleAll}>
+          <Button onClick={values.onReset}>Reset All</Button>
+          <Button classes={values.editAll ? 'bgGreen' : ''} onClick={values.toggleAll}>
             Apply All
           </Button>
         </div>
@@ -45,7 +29,8 @@ export const PitchVelocityLength = ({ onReturn, editorMode, modPitchMode }) => {
 };
 
 const Pitch = ({ value, onChange, applyInfo }) => {
-  return (
+  const editorMode = useSelector((state) => state.editor.mode);
+  return editorMode !== MODES.MOD_PITCH ? null : (
     <>
       {applyInfo.value ? (
         <p className={applyInfo.classes}>{applyInfo.value}</p>
@@ -71,23 +56,21 @@ const Pitch = ({ value, onChange, applyInfo }) => {
   );
 };
 
-const VelocityAndLength = ({ onTouchEnd, value, onChange, applyInfo }) => {
-  const { touchStart, touchEnd, mouseUp } = useTouchAndMouse(null, null, onTouchEnd);
-
+const VelocityAndLength = ({ sliderRef, setSliderValue, endFunc, value, applyInfo }) => {
+  const editorMode = useSelector((state) => state.editor.mode);
+  const touchAndMouse = useTouchAndMouse(setSliderValue, setSliderValue, endFunc);
+  if (editorMode === MODES.MOD_PITCH) return null;
+  const sliderStyle = { transform: `scaleX(${value.toFixed(2)})` };
+  const thumbStyle = { transform: `translateX(${parseInt(value * 100)}%)` };
+  // console.log(thumbStyle.transform);
   return (
     <>
-      <input
-        type='range'
-        id='modSlider'
-        min={0.1}
-        max={1}
-        step={0.01}
-        value={value}
-        onTouchStart={touchStart}
-        onTouchEnd={touchEnd}
-        onMouseUp={mouseUp}
-        onChange={onChange}
-      />
+      <div ref={sliderRef} className='modSliderWrapper' {...touchAndMouse}>
+        <div id='modSlider' style={sliderStyle} />
+        <div className='modSliderThumbWrapper' style={thumbStyle}>
+          <div className='modSliderThumb' />
+        </div>
+      </div>
       <div className='modValueWrapper'>
         {applyInfo.value ? (
           <p className={applyInfo.classes}>{applyInfo.value}</p>

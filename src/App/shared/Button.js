@@ -8,7 +8,7 @@ export const Button = ({
   id,
   classes = '',
   disabled = false,
-  onTouchStart,
+  startFunc,
   onClick,
   type,
   ariaLabel = '',
@@ -20,14 +20,14 @@ export const Button = ({
   const [pressed, setPressed] = useState('');
 
   const handleTouchStart = (e) => {
-    if (onTouchStart) onTouchStart(e);
+    if (startFunc) startFunc(e);
     setPressed(' pressed');
   };
   const handleTouchEnd = (e) => {
     setPressed('');
   };
 
-  const { touchStart, mouseDown } = useTouchAndMouse(handleTouchStart);
+  const { onTouchStart, onMouseDown } = useTouchAndMouse(handleTouchStart);
 
   return (
     <button
@@ -37,8 +37,8 @@ export const Button = ({
       className={'btn ' + classes + pressed}
       disabled={disabled}
       aria-label={ariaLabel}
-      onTouchStart={touchStart}
-      onMouseDown={mouseDown}
+      onTouchStart={onTouchStart}
+      onMouseDown={onMouseDown}
       onTouchEnd={handleTouchEnd}
       onMouseUp={handleTouchEnd}
       onClick={onClick}

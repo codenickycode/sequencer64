@@ -1,42 +1,51 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+
+// onTouchStart and onMouseDown are required on the target
+// onMouseMove and onMouseUp are handled by document listener
+// so out of bounds events are captured
 
 export const useTouchAndMouse = (startFunc, moveFunc, endFunc) => {
   const [touching, setTouching] = useState(false);
 
-  const touchStart = (e) => {
+  const onTouchStart = (e) => {
     setTouching(true);
     if (startFunc) startFunc(e);
   };
 
-  const mouseDown = (e) => {
+  const mouseDownRef = useRef(null);
+  const onMouseDown = (e) => {
     if (touching) return;
     if (startFunc) startFunc(e);
+    mouseDownRef.current = true;
+    document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('mousemove', onMouseMove);
   };
 
-  const touchMove = (e) => {
+  const onTouchMove = (e) => {
     if (moveFunc) moveFunc(e);
   };
 
-  const mouseMove = (e) => {
+  const onMouseMove = (e) => {
     if (touching) return;
-    if (moveFunc) moveFunc(e);
+    if (moveFunc && mouseDownRef.current) moveFunc(e);
   };
 
-  const touchEnd = (e) => {
+  const onTouchEnd = (e) => {
     if (endFunc) endFunc(e);
   };
 
-  const mouseUp = (e) => {
+  const onMouseUp = (e) => {
     if (touching) return;
     if (endFunc) endFunc(e);
+    mouseDownRef.current = false;
+    document.removeEventListener('mouseup', onMouseUp);
+    document.removeEventListener('mousemove', onMouseMove);
   };
 
   return {
-    touchStart,
-    mouseDown,
-    touchMove,
-    mouseMove,
-    touchEnd,
-    mouseUp,
+    onTouchStart,
+    onMouseDown,
+    onTouchMove,
+    onTouchEnd,
   };
 };

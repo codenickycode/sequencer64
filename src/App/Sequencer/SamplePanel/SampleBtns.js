@@ -61,7 +61,7 @@ const SampleBtn = ({ i, sample, selectSample, selected }) => {
     if (!tapModes) selectSample(i);
   };
 
-  const { touchStart, mouseDown } = useTouchAndMouse(startFunc);
+  const { onTouchStart, onMouseDown } = useTouchAndMouse(startFunc);
 
   let classes = 'sampleBtn';
   if (selected) classes += ' selected';
@@ -69,8 +69,8 @@ const SampleBtn = ({ i, sample, selectSample, selected }) => {
   return (
     <div
       className={classes}
-      onTouchStart={touchStart}
-      onMouseDown={mouseDown}
+      onTouchStart={onTouchStart}
+      onMouseDown={onMouseDown}
       onClick={onClick}
       aria-label={sample.name}
     >

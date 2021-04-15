@@ -1,9 +1,17 @@
 export const showAndHideClass = (setter, classes, timeout) => {
   setter(classes + ' show');
-  setTimeout(() => setter(classes), timeout);
+  try {
+    setTimeout(() => setter(classes), timeout);
+  } catch (e) {
+    console.log('component unloaded');
+  }
 };
 
 export const showAndHideInfo = (setter, info, timeout) => {
   setter(info);
-  setTimeout(() => setter(''), timeout);
+  try {
+    setTimeout(() => setter(''), timeout);
+  } catch (e) {
+    console.log('component unloaded');
+  }
 };
