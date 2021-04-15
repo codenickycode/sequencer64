@@ -30,6 +30,7 @@
     @extend %btn;
     @include flex(column);
     height: 100%;
+    // padding-top: 0;
     background: transparent;
     border: 1px solid $color-none;
   }

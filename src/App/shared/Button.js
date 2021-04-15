@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import { ChevronLeftIcon, ChevronRightIcon } from 'assets/icons';
 import cuid from 'cuid';
 import { useTouchAndMouse } from 'utils/useTouchAndMouse';
 
@@ -45,25 +44,5 @@ export const Button = ({
     >
       {children}
     </button>
-  );
-};
-
-export const ScrollLeft = ({ fwdRef, onClick }) => {
-  return (
-    <Button fwdRef={fwdRef} classes='scrollLeft' onClick={onClick}>
-      <div className=''>
-        <ChevronLeftIcon />
-      </div>
-    </Button>
-  );
-};
-
-export const ScrollRight = ({ fwdRef, onClick }) => {
-  return (
-    <Button fwdRef={fwdRef} classes='scrollRight' onClick={onClick}>
-      <div className=''>
-        <ChevronRightIcon />
-      </div>
-    </Button>
   );
 };

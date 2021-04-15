@@ -2,7 +2,7 @@
 @use 'styles/spectrum' as *;
 @use 'styles/mixins' as *;
 @use 'styles/placeholders' as *;
-@use 'styles/customSelect' as *;
+@use 'styles/customSelect';
 @use 'App/shared/preparing';
 @use 'App/StatusBar/statusBar';
 @use 'App/Sequencer/sequencer';
@@ -15,10 +15,10 @@
 @use 'App/Sequencer/SamplePanel/sampleEdit';
 @use 'App/Sequencer/SamplePanel/samplePanel';
 @use 'App/Sequencer/VisualPanel/visualPanel';
-@use 'App/Sequencer/MenuBar/menuBar';
 @use 'App/Sequencer/MenuBar/menuItems';
-@use 'App/Sequencer/MenuBar/transport' as *;
-@use 'App/Sequencer/MenuBar/PopupMenu/popupMenu' as *;
+@use 'App/Sequencer/MenuBar/transport';
+@use 'App/Sequencer/MenuBar/PopupMenu/popupMenu';
+@use 'App/shared/Scrollable/scrollable';
 @use 'App/Login/loginPage';
 @use 'App/ErrorBoundary/errorBoundary';
 @use 'App/mobileConsole';

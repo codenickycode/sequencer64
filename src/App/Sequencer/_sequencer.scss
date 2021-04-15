@@ -53,6 +53,14 @@
   }
 }
 
+#popupMenuPortal {
+  @extend %noEventsLayerAbs;
+  max-width: 1440px;
+  top: 0;
+  z-index: 1000;
+  overflow: hidden;
+}
+
 @media (orientation: landscape) {
   .mainContainer {
     @include flex(row, space-evenly);

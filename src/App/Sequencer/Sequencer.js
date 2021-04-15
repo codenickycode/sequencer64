@@ -3,7 +3,7 @@ import { useHistory, useLocation, useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid } from 'App/Sequencer/MainSection/Grid/Grid';
 import { SamplePanel } from 'App/Sequencer/SamplePanel/SamplePanel';
-import { Menu } from 'App/Sequencer/MenuBar/MenuBar';
+import { MenuBar } from 'App/Sequencer/MenuBar/MenuBar';
 import { loadInitialSequence } from 'App/reducers/sequenceSlice';
 // import { MobileConsole } from 'App/MobileConsole';
 import { PATHS } from 'utils/useGoTo';
@@ -40,6 +40,7 @@ export const SequencerPage = () => {
   // const initialLoad = true;
   const memo = useMemo(() => {
     const mainContainerStyle = { height: mainContainerHeight };
+    const popupMenuPortalStyle = { maxHeight: mainContainerHeight };
     return initialLoad ? null : (
       <div id='sequencer'>
         <div className='mainContainer' style={mainContainerStyle}>
@@ -54,7 +55,8 @@ export const SequencerPage = () => {
             <SamplePanel />
           </div>
         </div>
-        <Menu />
+        <div id='popupMenuPortal' style={popupMenuPortalStyle} />
+        <MenuBar />
       </div>
     );
   }, [initialLoad, mainContainerHeight, splitSamplePanel]);
