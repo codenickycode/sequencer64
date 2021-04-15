@@ -1,151 +1,103 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'App/shared/Button';
+import { Button, TransportBtn } from 'App/shared/Button';
 import {
   StopIcon,
   StartIcon,
   PauseIcon,
   CheckIcon,
   RecordIcon,
-  RecordPauseIcon,
   RestartIcon,
 } from 'assets/icons';
 import { changeBpm } from 'App/reducers/sequenceSlice';
-import {
-  pauseSequence,
-  startSequence,
-  stopSequence,
-} from 'App/reducers/toneSlice';
-import { MODES } from 'App/reducers/editorSlice';
+import { pauseSequence, startSequence, stopSequence } from 'App/reducers/toneSlice';
 import { startRecord } from 'App/reducers/thunks/toneThunks';
+import { useAbstractState } from 'utils/hooks/useAbstractState';
 
 export const TransportPanel = () => {
-  const dispatch = useDispatch();
+  return (
+    <div className='menuItems transport'>
+      <div className='transportWrapper'>
+        <TransportBtns />
+        <BpmInput />
+      </div>
+    </div>
+  );
+};
 
-  const mode = useSelector((state) => state.editor.mode);
-  const transportState = useSelector((state) => state.tone.transportState);
-  const loadingSamples = useSelector((state) => state.tone.loadingSamples);
-  const countIn = useSelector((state) => state.tone.countIn);
-  const countingIn = countIn !== '';
+const TransportBtns = () => {
+  const dispatch = useDispatch();
+  const { show } = useAbstractState();
+  const { recordBtn, restartBtn, startBtn, pauseBtn } = show;
+
+  const onStop = () => dispatch(stopSequence());
+  const onRecord = () => dispatch(startRecord());
+  const onStart = () => dispatch(startSequence());
+  const onPause = () => dispatch(pauseSequence());
+  return (
+    <>
+      <TransportBtn id='stop' onClick={onStop} Icon={StopIcon} show={true} />
+      <TransportBtn id='record' onClick={onRecord} Icon={RecordIcon} show={recordBtn} />
+      <TransportBtn id='restart' onClick={onRecord} Icon={RestartIcon} show={restartBtn} />
+      <TransportBtn id='start' onClick={onStart} Icon={StartIcon} show={startBtn} />
+      <TransportBtn id='pause' onClick={onPause} Icon={PauseIcon} show={pauseBtn} />
+    </>
+  );
+};
+
+const BpmInput = () => {
+  const dispatch = useDispatch();
 
   const bpm = useSelector((state) => state.sequence.present.bpm);
   useEffect(() => {
     setTempBpm(bpm);
   }, [bpm]);
-
   const [tempBpm, setTempBpm] = useState(bpm);
   const [bpmEdited, setBpmEdited] = useState(false);
 
-  const [ready, setReady] = useState(true);
-  useEffect(() => {
-    setReady(!loadingSamples);
-  }, [loadingSamples]);
-
-  const transportMemo = useMemo(() => {
-    // console.log('rendering: TransportPanel');
-
-    const onChange = ({ target: { value } }) => {
-      if (value.match(/\D/)) return;
-      const newTempo = value > 300 ? 300 : value;
-      setTempBpm(newTempo);
-      if (newTempo !== bpm) {
-        setBpmEdited(true);
-      } else {
-        setBpmEdited(false);
-      }
-    };
-
-    const onStop = () => {
-      if (transportState !== 'stopped') dispatch(stopSequence());
-    };
-    const onStart = () => {
-      if (transportState === 'started') {
-        dispatch(pauseSequence());
-      } else {
-        dispatch(startSequence());
-      }
-    };
-    const onRecord = () => {
-      dispatch(startRecord());
-    };
-
-    const handleBpm = () => {
-      dispatch(changeBpm(tempBpm));
+  const onChange = ({ target: { value } }) => {
+    if (value.match(/\D/)) return;
+    const newTempo = value > 300 ? 300 : value;
+    setTempBpm(newTempo);
+    if (newTempo !== bpm) {
+      setBpmEdited(true);
+    } else {
       setBpmEdited(false);
-    };
+    }
+  };
 
-    const onKeyPress = (e) => {
-      if (e.key === 'Enter') {
-        if (bpmEdited) handleBpm();
-      }
-    };
+  const handleBpm = () => {
+    dispatch(changeBpm(tempBpm));
+    setBpmEdited(false);
+  };
 
-    return (
-      <div className='menuItems transport'>
-        <div className='transportWrapper'>
-          <Button
-            id='stop'
-            classes='menuBtn'
-            aria-label='stop'
-            disabled={countingIn}
-            onClick={onStop}
-          >
-            <StopIcon />
+  const onKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      if (bpmEdited) handleBpm();
+    }
+  };
+
+  return (
+    <div className='inputWrapper'>
+      <input
+        id='bpm'
+        className={bpmEdited ? 'input edited' : 'input'}
+        type='tel'
+        value={tempBpm}
+        onChange={onChange}
+        onKeyPress={onKeyPress}
+      ></input>
+      <div className='bpmOrBtn'>
+        {bpmEdited ? (
+          <Button id='bpmBtn' classes='bpmBtn' onClick={handleBpm}>
+            <label htmlFor='bpmBtn'>
+              <CheckIcon />
+            </label>
           </Button>
-          {mode === MODES.TAP_RECORD ? (
-            <Button
-              id='record'
-              classes={!ready ? 'menuBtn flashing' : 'menuBtn'}
-              disabled={!ready || countingIn}
-              aria-label='record'
-              onClick={onRecord}
-            >
-              {transportState === 'started' ? <RestartIcon /> : <RecordIcon />}
-            </Button>
-          ) : (
-            <Button
-              id='start'
-              classes={!ready ? 'menuBtn flashing' : 'menuBtn'}
-              disabled={!ready}
-              aria-label='start'
-              onClick={onStart}
-            >
-              {transportState === 'started' ? <PauseIcon /> : <StartIcon />}
-            </Button>
-          )}
-          <div className='inputWrapper'>
-            <input
-              id='bpm'
-              className={bpmEdited ? 'input edited' : 'input'}
-              type='tel'
-              value={tempBpm}
-              onChange={onChange}
-              onKeyPress={onKeyPress}
-            ></input>
-            <div className='bpmOrBtn'>
-              {bpmEdited ? (
-                <Button id='bpmBtn' classes='bpmBtn' onClick={handleBpm}>
-                  <label htmlFor='bpmBtn'>
-                    <CheckIcon />
-                  </label>
-                </Button>
-              ) : (
-                <label htmlFor='bpm'>bpm</label>
-              )}
-            </div>
-          </div>
-        </div>
+        ) : (
+          <label htmlFor='bpm'>bpm</label>
+        )}
       </div>
-    );
-  }, [
-    bpm,
-    bpmEdited,
-    countingIn,
-    dispatch,
-    mode,
-    ready,
-    tempBpm,
-    transportState,
-  ]);
-  return transportMemo;
+    </div>
+  );
 };

@@ -8,7 +8,7 @@ import { useAbstractState } from 'utils/hooks/useAbstractState';
 
 export const EraseBtn = () => {
   const dispatch = useDispatch();
-  const { editing } = useAbstractState();
+  const { deepEditing } = useAbstractState();
 
   const disabled = useSelector(
     (state) => state.sequence.present.noteTally.total.empty
@@ -17,7 +17,7 @@ export const EraseBtn = () => {
   const eraseMemo = useMemo(() => {
     const onClick = () => {
       dispatch(eraseAll());
-      if (editing) dispatch(setMode(MODES.PAINT));
+      if (deepEditing) dispatch(setMode(MODES.PAINT));
     };
 
     // console.log('rendering: Erase');
@@ -34,7 +34,7 @@ export const EraseBtn = () => {
         </Button>
       </>
     );
-  }, [disabled, dispatch, editing]);
+  }, [disabled, dispatch, deepEditing]);
 
   return eraseMemo;
 };

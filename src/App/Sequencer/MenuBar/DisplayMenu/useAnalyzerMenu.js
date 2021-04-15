@@ -1,6 +1,7 @@
 import { MODES, setMode } from 'App/reducers/editorSlice';
 import { setAnalyzerMode, setAnalyzerOn } from 'App/reducers/screenSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useAbstractState } from 'utils/hooks/useAbstractState';
 
 export const useAnalyzerMenu = () => {
   const dispatch = useDispatch();
@@ -9,9 +10,8 @@ export const useAnalyzerMenu = () => {
   const splitSamplePanel = useSelector(
     (state) => state.screen.splitSamplePanel
   );
-  const mode = useSelector((state) => state.editor.mode);
-  const tapping = mode === MODES.TAP || mode === MODES.TAP_RECORD;
-  const showAnalyzer = !splitSamplePanel && mode !== MODES.INIT && !tapping;
+  const { editing } = useAbstractState();
+  const showAnalyzer = !splitSamplePanel && !editing;
 
   const toggle = () => {
     const newOn = !on;

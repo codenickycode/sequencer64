@@ -1,6 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import cuid from 'cuid';
 import { useTouchAndMouse } from 'utils/hooks/useTouchAndMouse';
+import { useAbstractState } from 'utils/hooks/useAbstractState';
 
 export const Button = ({
   fwdRef,
@@ -45,4 +46,22 @@ export const Button = ({
       {children}
     </button>
   );
+};
+
+export const TransportBtn = ({ id, onClick, Icon, show }) => {
+  const { transportDisabled } = useAbstractState();
+  const memo = useMemo(() => {
+    return !show ? null : (
+      <Button
+        id={id}
+        aria-label={id}
+        classes='menuBtn'
+        disabled={transportDisabled}
+        onClick={onClick}
+      >
+        <Icon />
+      </Button>
+    );
+  }, [id, onClick, show, transportDisabled]);
+  return memo;
 };

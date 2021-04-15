@@ -21,10 +21,11 @@
       height: 1rem;
     }
 
-    &#stop {
+    &#stop,
+    &#start {
       @extend %bgBright;
     }
-    &#start {
+    &#pause {
       @extend %bgBright;
       &.flashing {
         animation: dim-flashing 300ms alternate infinite;
@@ -75,13 +76,15 @@
 }
 
 #stop,
-#start {
+#start,
+#pause {
   .icon {
     @extend %fillMenuBar;
   }
 }
 
-#record {
+#record,
+#restart {
   @extend %bgBlack;
   border: 1px solid $red;
   .icon {
