@@ -8,8 +8,6 @@ import { setLog } from 'App/reducers/appSlice';
 import { AppContent } from './AppContent';
 
 export default function App() {
-  // console.log('rendering: App');
-
   return (
     <BrowserRouter basename='/'>
       <ErrorBoundary>

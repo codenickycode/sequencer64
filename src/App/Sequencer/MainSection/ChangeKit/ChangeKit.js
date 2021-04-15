@@ -5,6 +5,7 @@ import { Button } from 'App/shared/Button';
 import { CloudDownloadIcon } from 'assets/icons';
 import { useKitSelection } from './useKitSelection';
 import { Portal } from 'App/shared/Portal';
+import { getGrid } from 'utils/getGrid';
 
 export const ChangeKit = () => {
   const numKits = useSelector((state) => state.assets.numKits);
@@ -13,12 +14,7 @@ export const ChangeKit = () => {
   const counterRef = useRef(0);
 
   const changeKitMemo = useMemo(() => {
-    // console.log('rendering: ChangeKit');
-    let grid = [];
-    for (let i = 0; i < numKits; i++) {
-      grid.push(i);
-    }
-
+    const grid = getGrid(numKits);
     return (
       <Portal targetId='changeKitPortal'>
         <div id='changeKit' className='changeKit'>

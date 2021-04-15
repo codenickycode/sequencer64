@@ -42,7 +42,7 @@
     }
 
     .infoText {
-      @include responsiveFont(2vw, 14px, 24px);
+      @include responsiveFont(2vw, 15px, 24px);
       opacity: 0;
       transition: 2000ms;
       &.show {
@@ -51,7 +51,7 @@
       }
     }
     .countIn {
-      @include responsiveFont(4vw, 14px, 60px);
+      font-size: 60px;
       opacity: 0;
       transition: 900ms;
       &.show {

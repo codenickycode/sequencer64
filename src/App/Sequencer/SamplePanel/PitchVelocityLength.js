@@ -5,8 +5,10 @@ import { ChevronLeftIcon, ChevronDownIcon } from 'assets/icons';
 import { MIDI_NOTES } from 'utils/MIDI_NOTES';
 import { usePitchVelocityLength } from './usePitchVelocityLength';
 import { useTouchAndMouse } from 'utils/hooks/useTouchAndMouse';
+import { useEditorState } from 'App/reducers/useAbstractState/useEditorState';
 
-export const PitchVelocityLength = ({ onReturn, mode }) => {
+export const PitchVelocityLength = ({ onReturn }) => {
+  const { editorMode, modPitchMode } = useEditorState();
   const {
     detailClass,
     value,
@@ -15,7 +17,7 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
     onReset,
     toggleAll,
     editAll,
-  } = usePitchVelocityLength(mode);
+  } = usePitchVelocityLength(editorMode, modPitchMode);
 
   return (
     <div className={detailClass}>
@@ -23,14 +25,10 @@ export const PitchVelocityLength = ({ onReturn, mode }) => {
         <ChevronLeftIcon />
       </Button>
       <div className='modWrapper'>
-        {mode === MODES.MOD_PITCH ? (
+        {editorMode === MODES.MOD_PITCH ? (
           <Pitch value={value} onChange={onChange} />
         ) : (
-          <VelocityAndLength
-            onTouchEnd={onTouchEnd}
-            value={value}
-            onChange={onChange}
-          />
+          <VelocityAndLength onTouchEnd={onTouchEnd} value={value} onChange={onChange} />
         )}
         <div className='modBtns'>
           <Button onClick={onReset}>Reset All</Button>
@@ -50,12 +48,7 @@ const Pitch = ({ value, onChange }) => {
         Select Pitch:
       </label>
       <div className='customSelectWrapper'>
-        <select
-          id='pitchSelect'
-          className='customSelect'
-          value={value}
-          onChange={onChange}
-        >
+        <select id='pitchSelect' className='customSelect' value={value} onChange={onChange}>
           {/* limit C1-C3 */}
           {MIDI_NOTES.slice(12, 37).map((note) => {
             return (
@@ -72,11 +65,7 @@ const Pitch = ({ value, onChange }) => {
 };
 
 const VelocityAndLength = ({ onTouchEnd, value, onChange }) => {
-  const { touchStart, touchEnd, mouseUp } = useTouchAndMouse(
-    null,
-    null,
-    onTouchEnd
-  );
+  const { touchStart, touchEnd, mouseUp } = useTouchAndMouse(null, null, onTouchEnd);
 
   return (
     <>

@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState } from 'react';
 import cuid from 'cuid';
 import { useTouchAndMouse } from 'utils/hooks/useTouchAndMouse';
-import { useAbstractState } from 'utils/hooks/useAbstractState';
+import { useToneState } from 'App/reducers/useAbstractState/useToneState';
 
 export const Button = ({
   fwdRef,
@@ -49,7 +49,7 @@ export const Button = ({
 };
 
 export const TransportBtn = ({ id, onClick, Icon, show }) => {
-  const { transportDisabled } = useAbstractState();
+  const { transportDisabled } = useToneState();
   const memo = useMemo(() => {
     return !show ? null : (
       <Button

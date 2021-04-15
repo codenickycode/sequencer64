@@ -26,7 +26,6 @@ let UndoRedoBtn = ({ canUndo, canRedo, onUndo, onRedo }) => {
   }, [dispatch, onRedo, redoStatus]);
 
   const undoRedoMemo = useMemo(() => {
-    // console.log('rendering: UndoRedo');
     return (
       <>
         <Button

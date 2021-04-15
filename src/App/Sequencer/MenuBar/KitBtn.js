@@ -3,19 +3,16 @@ import { useDispatch } from 'react-redux';
 import { Button } from 'App/shared/Button';
 import { KitIcon } from 'assets/icons';
 import { MODES, setMode } from 'App/reducers/editorSlice';
-import { useGoTo } from 'utils/hooks/useGoTo';
-import { useAbstractState } from 'utils/hooks/useAbstractState';
+import { useGoTo, useCurrentPath } from 'utils/hooks/useGoTo';
 import { useStopPropEventListener } from 'utils/hooks/useStopPropEventListener';
 
 export const KitBtn = () => {
   const dispatch = useDispatch();
   const goTo = useGoTo();
   const { eventListener, removeElRef } = useStopPropEventListener();
-  const { selectingKit } = useAbstractState();
+  const { selectingKit } = useCurrentPath();
 
   const memo = useMemo(() => {
-    // console.log('rendering: ChangeKitBtn');
-
     const handleGoToBase = () => {
       goTo.base(() => dispatch(setMode(MODES.INIT)));
       removeElRef.current();

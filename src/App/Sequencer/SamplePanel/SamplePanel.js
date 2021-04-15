@@ -1,63 +1,48 @@
 import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { close, setMode, MODES } from 'App/reducers/editorSlice';
+import { setMode, MODES } from 'App/reducers/editorSlice';
 import { Erase, Slice, Copy } from 'App/Sequencer/SamplePanel/EraseSliceCopy';
 import { PitchVelocityLength } from 'App/Sequencer/SamplePanel/PitchVelocityLength';
-import { showEditable, hideEditable } from 'utils/toggleClasses';
 import { SampleEditMenu } from './SampleEditMenu';
 import { SampleBtns } from './SampleBtns';
 import { VisualPanel } from 'App/Sequencer/VisualPanel/VisualPanel';
+import { useEditorState } from 'App/reducers/useAbstractState/useEditorState';
+import { hideEditable, showEditable } from 'utils/toggleClasses';
 
 export const SamplePanel = () => {
   const dispatch = useDispatch();
 
-  const mode = useSelector((state) => state.editor.mode);
+  const { editorMode, cellsEditable, paintMode } = useEditorState();
+  if (cellsEditable) showEditable();
+  if (paintMode) hideEditable();
+
   const landscape = useSelector((state) => state.screen.dimensions.landscape);
-  const splitSamplePanel = useSelector(
-    (state) => state.screen.splitSamplePanel
-  );
+  const splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);
 
   const spMemo = useMemo(() => {
-    // console.log('rendering: SamplePanel');
-    const onReturn = () => {
-      if (mode !== MODES.COPY) {
-        hideEditable();
-      }
-      dispatch(setMode(MODES.PAINT));
-    };
-
-    const onClose = () => {
-      dispatch(close());
-    };
-
-    const selectMode = (mode) => {
-      if (mode !== MODES.INIT && mode !== MODES.PAINT && mode !== MODES.COPY)
-        showEditable();
-      dispatch(setMode(mode));
-    };
-
+    const onReturn = () => dispatch(setMode(MODES.PAINT));
     return (
       <>
         <div className={splitSamplePanel ? 'spTop' : 'noSplit'}>
           {splitSamplePanel && <VisualPanel />}
-          {mode === MODES.PAINT ? (
-            <SampleEditMenu selectMode={selectMode} onClose={onClose} />
-          ) : mode === MODES.ERASE ? (
+          {editorMode === MODES.PAINT ? (
+            <SampleEditMenu />
+          ) : editorMode === MODES.ERASE ? (
             <Erase onReturn={onReturn} landscape={landscape} />
-          ) : mode === MODES.SLICE ? (
+          ) : editorMode === MODES.SLICE ? (
             <Slice onReturn={onReturn} landscape={landscape} />
-          ) : mode === MODES.COPY ? (
+          ) : editorMode === MODES.COPY ? (
             <Copy onReturn={onReturn} landscape={landscape} />
-          ) : mode === MODES.MOD_PITCH ||
-            mode === MODES.MOD_VELOCITY ||
-            mode === MODES.MOD_LENGTH ? (
-            <PitchVelocityLength onReturn={onReturn} mode={mode} />
+          ) : editorMode === MODES.MOD_PITCH ||
+            editorMode === MODES.MOD_VELOCITY ||
+            editorMode === MODES.MOD_LENGTH ? (
+            <PitchVelocityLength onReturn={onReturn} editorMode={editorMode} />
           ) : null}
         </div>
         <SampleBtns />
       </>
     );
-  }, [splitSamplePanel, mode, landscape, dispatch]);
+  }, [splitSamplePanel, editorMode, landscape, dispatch]);
 
   return spMemo;
 };

@@ -1,11 +1,9 @@
 import React from 'react';
+import { getGrid } from 'utils/getGrid';
 import { Portal } from '../Portal';
 
 export const Preparing = () => {
-  let grid = [];
-  for (let i = 0; i < 9; i++) {
-    grid.push(i);
-  }
+  const grid = getGrid(9);
   return (
     <Portal targetId='preparingPortal'>
       <div id='preparing' className='preparing'>

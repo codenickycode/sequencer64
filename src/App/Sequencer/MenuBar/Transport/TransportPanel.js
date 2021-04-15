@@ -11,7 +11,7 @@ import {
 } from 'assets/icons';
 import { pauseSequence, startSequence, stopSequence } from 'App/reducers/toneSlice';
 import { startRecord } from 'App/reducers/thunks/toneThunks';
-import { useAbstractState } from 'utils/hooks/useAbstractState';
+import { useAbstractState } from 'App/reducers/useAbstractState/useAbstractState';
 import { useBpmInput } from './useBpmInput';
 
 export const TransportPanel = () => {

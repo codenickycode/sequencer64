@@ -4,17 +4,14 @@ import * as icons from 'assets/icons/kit';
 import { paste } from 'App/reducers/sequenceSlice';
 import { Button } from 'App/shared/Button';
 import { Portal } from 'App/shared/Portal';
+import { getGrid } from 'utils/getGrid';
 
 export const PastePattern = () => {
   const kit = useSelector((state) => state.sequence.present.kit);
   const samples = useSelector((state) => state.assets.kits[kit].samples);
 
   const pastePatternMemo = useMemo(() => {
-    // console.log('rendering: PastePattern');
-    let grid = [];
-    for (let i = 0, len = samples.length; i < len; i++) {
-      grid.push(i);
-    }
+    const grid = getGrid(samples.length);
     return (
       <Portal targetId='pastePatternPortal'>
         <div id='pastePattern' className={'pastePattern'}>
@@ -50,9 +47,7 @@ const SampleBtn = ({ i, icon, color }) => {
   };
 
   const selected = i === selectedSample;
-  const classes = selected
-    ? 'sample flashing borderActive'
-    : 'sample borderDefault';
+  const classes = selected ? 'sample flashing borderActive' : 'sample borderDefault';
 
   return (
     <Button classes={classes} disabled={selected} onClick={onClick}>

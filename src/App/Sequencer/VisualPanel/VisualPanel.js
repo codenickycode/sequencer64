@@ -1,4 +1,5 @@
 import { MODES } from 'App/reducers/editorSlice';
+import { useAbstractState } from 'App/reducers/useAbstractState/useAbstractState';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Analyzer } from './Analyzer';
@@ -19,14 +20,9 @@ const INFO_TEXT = {
 };
 
 const Info = () => {
+  const { started, editorMode, editing } = useAbstractState();
   const analyzerOn = useSelector((state) => state.screen.analyzer.on);
-  const transportState = useSelector((state) => state.tone.transportState);
-  const mode = useSelector((state) => state.editor.mode);
-  const tapRecording = mode === MODES.TAP_RECORD;
-  const tapping = mode === MODES.TAP;
   const countIn = useSelector((state) => state.tone.countIn);
-  const flashInfo = useSelector((state) => state.app.flashInfo);
-  let showInfo = mode === MODES.INIT || tapping || tapRecording;
 
   const [countInClasses, setCountInClasses] = useState('countIn');
   useEffect(() => {
@@ -36,23 +32,26 @@ const Info = () => {
     }
   }, [countIn]);
 
-  const [infoText, setInfoText] = useState(INFO_TEXT[mode]);
+  const [infoText, setInfoText] = useState(INFO_TEXT[editorMode]);
   useEffect(() => {
-    if (transportState === 'started') setInfoText('');
-    else setInfoText(INFO_TEXT[mode]);
-  }, [mode, transportState]);
+    if (started) setInfoText('');
+    else setInfoText(INFO_TEXT[editorMode]);
+  }, [editorMode, started]);
 
   const [infoTextClasses, setInfoTextClasses] = useState('infoText');
   useEffect(() => {
     setInfoTextClasses('infoText show');
     setTimeout(() => setInfoTextClasses('infoText'), 3000);
   }, [infoText]);
+
+  const flashInfo = useSelector((state) => state.app.flashInfo);
   useEffect(() => {
     if (flashInfo) setInfoTextClasses('infoText show');
     setTimeout(() => setInfoTextClasses('infoText'), 3000);
   }, [flashInfo]);
 
-  if (transportState === 'started' && analyzerOn) showInfo = false;
+  let showInfo = !editing;
+  if (started && analyzerOn) showInfo = false;
   return (
     <div className={showInfo ? 'info show' : 'info'}>
       {countIn ? (

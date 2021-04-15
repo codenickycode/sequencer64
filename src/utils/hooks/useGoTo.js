@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 
 export const PATHS = {
   BASE: '/sequencer/session',
@@ -26,4 +26,12 @@ export const useGoTo = () => {
   goTo.login = (cb) => goToFunc(PATHS.LOGIN, cb);
 
   return goTo;
+};
+
+export const useCurrentPath = () => {
+  const path = {};
+  const pathname = useLocation().pathname;
+  path.selectingKit = pathname === PATHS.CHANGE_KIT;
+
+  return path;
 };

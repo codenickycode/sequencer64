@@ -21,7 +21,6 @@ export const Erase = ({ onReturn, landscape }) => {
     dispatch(eraseSample({ selectedSample }));
   };
 
-  // console.log('rendering: Erase');
   return (
     <div className={splitSamplePanel ? 'detail' : 'detail dark'}>
       <Button classes='close' onClick={onReturn}>
@@ -45,7 +44,6 @@ export const Slice = ({ onReturn, landscape }) => {
   const selectedSample = useSelector((state) => state.editor.selectedSample);
   const splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);
 
-  // console.log('rendering: Slice');
   const onReset = () => {
     dispatch(resetSlice(selectedSample));
   };

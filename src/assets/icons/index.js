@@ -38,6 +38,7 @@ import { ReactComponent as Check } from 'assets/icons/check-bold.svg';
 import { ReactComponent as Twitter } from 'assets/icons/social/twitter.svg';
 import { ReactComponent as Facebook } from 'assets/icons/social/facebook.svg';
 import { ReactComponent as TV } from 'assets/icons/tv.svg';
+import { MODES } from 'App/reducers/editorSlice';
 
 export const ChevronDownIcon = ({ addClass = '' }) => (
   <ChevronDown className={addClass + ' icon chevron-down'} />
@@ -50,15 +51,9 @@ export const ChevronRightIcon = ({ addClass = '' }) => (
   <ChevronRight className={addClass + ' icon chevron-right'} />
 );
 
-export const StopIcon = ({ addClass = '' }) => (
-  <Stop className={addClass + ' icon'} />
-);
-export const StartIcon = ({ addClass = '' }) => (
-  <Start className={addClass + ' icon'} />
-);
-export const PauseIcon = ({ addClass = '' }) => (
-  <Pause className={addClass + ' icon'} />
-);
+export const StopIcon = ({ addClass = '' }) => <Stop className={addClass + ' icon'} />;
+export const StartIcon = ({ addClass = '' }) => <Start className={addClass + ' icon'} />;
+export const PauseIcon = ({ addClass = '' }) => <Pause className={addClass + ' icon'} />;
 export const RecordIcon = ({ addClass = '' }) => (
   <Record className={addClass + ' icon record'} />
 );
@@ -70,16 +65,10 @@ export const RestartIcon = ({ addClass = '' }) => (
   <Restart className={addClass + ' icon restart'} />
 );
 
-export const SpeedIcon = ({ addClass = '' }) => (
-  <Speed className={addClass + ' icon'} />
-);
+export const SpeedIcon = ({ addClass = '' }) => <Speed className={addClass + ' icon'} />;
 
-export const UndoIcon = ({ addClass = '' }) => (
-  <Undo className={addClass + ' icon'} />
-);
-export const RedoIcon = ({ addClass = '' }) => (
-  <Redo className={addClass + ' icon'} />
-);
+export const UndoIcon = ({ addClass = '' }) => <Undo className={addClass + ' icon'} />;
+export const RedoIcon = ({ addClass = '' }) => <Redo className={addClass + ' icon'} />;
 export const EraseOneIcon = ({ addClass = '' }) => (
   <EraseOne className={addClass + ' icon'} />
 );
@@ -87,62 +76,42 @@ export const EraseAllIcon = ({ addClass = '' }) => (
   <EraseAll className={addClass + ' icon'} />
 );
 
-export const SawIcon = ({ addClass = '' }) => (
-  <Saw className={addClass + ' icon'} />
-);
+export const SawIcon = ({ addClass = '' }) => <Saw className={addClass + ' icon'} />;
 
+export const EraserIcon = ({ addClass = '' }) => <Eraser className={addClass + ' icon'} />;
 export const SliceIcon = ({ addClass = '' }) => (
   <div className={addClass}>
     <Saw className='icon' />
   </div>
 );
-
-export const CopyIcon = ({ addClass = '' }) => (
-  <Copy className={addClass + ' icon'} />
-);
-
-export const PaletteIcon = ({ addClass = '' }) => (
-  <Palette className={addClass + ' icon'} />
-);
-
-export const SoloIcon = ({ addClass = '' }) => (
-  <Solo className={addClass + ' icon'} />
-);
-export const MuteIcon = ({ addClass = '' }) => (
-  <Mute className={addClass + ' icon'} />
-);
-
-export const PitchIcon = ({ addClass = '' }) => (
-  <Pitch className={addClass + ' icon'} />
-);
+export const CopyIcon = ({ addClass = '' }) => <Copy className={addClass + ' icon'} />;
+export const PitchIcon = ({ addClass = '' }) => <Pitch className={addClass + ' icon'} />;
 export const VelocityIcon = ({ addClass = '' }) => (
   <Velocity className={addClass + ' icon'} />
 );
-export const LengthIcon = ({ addClass = '' }) => (
-  <Length className={addClass + ' icon'} />
-);
+export const LengthIcon = ({ addClass = '' }) => <Length className={addClass + ' icon'} />;
 
-export const PaintIcon = ({ addClass = '' }) => (
-  <Paint className={addClass + ' icon'} />
-);
-export const CloseIcon = ({ addClass = '' }) => (
-  <Close className={addClass + ' icon'} />
-);
+export const EditorModeIcons = {
+  [MODES.ERASE]: EraserIcon,
+  [MODES.SLICE]: SawIcon,
+  [MODES.COPY]: CopyIcon,
+  [MODES.MOD_LENGTH]: LengthIcon,
+  [MODES.MOD_PITCH]: PitchIcon,
+  [MODES.MOD_VELOCITY]: VelocityIcon,
+};
 
-export const OpenIcon = ({ addClass = '' }) => (
-  <Open className={addClass + ' icon'} />
-);
-export const SaveIcon = ({ addClass = '' }) => (
-  <Save className={addClass + ' icon'} />
-);
+export const PaletteIcon = ({ addClass = '' }) => <Palette className={addClass + ' icon'} />;
 
-export const DeleteIcon = ({ addClass = '' }) => (
-  <Delete className={addClass + ' icon'} />
-);
+export const SoloIcon = ({ addClass = '' }) => <Solo className={addClass + ' icon'} />;
+export const MuteIcon = ({ addClass = '' }) => <Mute className={addClass + ' icon'} />;
 
-export const EraserIcon = ({ addClass = '' }) => (
-  <Eraser className={addClass + ' icon'} />
-);
+export const PaintIcon = ({ addClass = '' }) => <Paint className={addClass + ' icon'} />;
+export const CloseIcon = ({ addClass = '' }) => <Close className={addClass + ' icon'} />;
+
+export const OpenIcon = ({ addClass = '' }) => <Open className={addClass + ' icon'} />;
+export const SaveIcon = ({ addClass = '' }) => <Save className={addClass + ' icon'} />;
+
+export const DeleteIcon = ({ addClass = '' }) => <Delete className={addClass + ' icon'} />;
 
 export const CloudDownloadIcon = ({ addClass = '' }) => (
   <CloudDownload className={addClass + ' icon'} />
@@ -156,33 +125,21 @@ export const CloudOfflineIcon = ({ addClass = '' }) => (
   <CloudOffline className={addClass + ' icon'} />
 );
 
-export const KitIcon = ({ addClass = '' }) => (
-  <Kit className={addClass + ' icon'} />
-);
+export const KitIcon = ({ addClass = '' }) => <Kit className={addClass + ' icon'} />;
 
-export const CheckIcon = ({ addClass = '' }) => (
-  <Check className={addClass + ' icon'} />
-);
+export const CheckIcon = ({ addClass = '' }) => <Check className={addClass + ' icon'} />;
 
-export const TwitterIcon = ({ addClass = '' }) => (
-  <Twitter className={addClass + ' icon'} />
-);
+export const TwitterIcon = ({ addClass = '' }) => <Twitter className={addClass + ' icon'} />;
 
 export const FacebookIcon = ({ addClass = '' }) => (
   <Facebook className={addClass + ' icon'} />
 );
 
-export const TapIcon = ({ addClass = '' }) => (
-  <Tap className={addClass + ' icon'} />
-);
+export const TapIcon = ({ addClass = '' }) => <Tap className={addClass + ' icon'} />;
 
-export const TVIcon = ({ addClass = '' }) => (
-  <TV className={addClass + ' icon'} />
-);
+export const TVIcon = ({ addClass = '' }) => <TV className={addClass + ' icon'} />;
 
-export const PointUpIcon = ({ addClass = '' }) => (
-  <PointUp className={addClass + ' icon'} />
-);
+export const PointUpIcon = ({ addClass = '' }) => <PointUp className={addClass + ' icon'} />;
 
 export const PointDownIcon = ({ addClass = '' }) => (
   <PointDown className={addClass + ' icon'} />

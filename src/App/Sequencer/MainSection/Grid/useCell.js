@@ -2,13 +2,13 @@ import { setTapCellById, setToggleOn } from 'App/reducers/editorSlice';
 import { modCell } from 'App/reducers/sequenceSlice';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAbstractState } from 'utils/hooks/useAbstractState';
+import { useEditorState } from 'App/reducers/useAbstractState/useEditorState';
 
 export const useCell = (id, step, prevCellRef) => {
   const dispatch = useDispatch();
 
   const selectedSample = useSelector((state) => state.editor.selectedSample);
-  const { editing, modPitchMode } = useAbstractState();
+  const { editing, modPitchMode } = useEditorState();
 
   const noteOn = useSelector((state) =>
     editing ? state.sequence.present.pattern[step][selectedSample].noteOn : false

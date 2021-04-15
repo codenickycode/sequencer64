@@ -14,7 +14,6 @@ export const SampleBtns = () => {
   const selectedSample = useSelector((state) => state.editor.selectedSample);
 
   const sampleBtnsMemo = useMemo(() => {
-    // console.log('rendering: SampleBtns');
     const selectSample = (i) => {
       dispatch(edit({ sample: i }));
     };

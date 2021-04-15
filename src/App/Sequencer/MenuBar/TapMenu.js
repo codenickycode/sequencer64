@@ -5,10 +5,13 @@ import { MODES, setMode } from 'App/reducers/editorSlice';
 import { MenuItem, PopupMenu } from 'App/shared/PopupMenu/PopupMenu';
 import { startRecord } from 'App/reducers/thunks/toneThunks';
 import { useStopPropEventListener } from 'utils/hooks/useStopPropEventListener';
-import { useAbstractState } from 'utils/hooks/useAbstractState';
+import { useAbstractState } from 'App/reducers/useAbstractState/useAbstractState';
+import { useCurrentPath } from 'utils/hooks/useGoTo';
+import { useEditorState } from 'App/reducers/useAbstractState/useEditorState';
 
 export const TapMenu = () => {
-  const { tapPlayMode, tapRecordMode, selectingKit } = useAbstractState();
+  const { tapPlayMode, tapRecordMode } = useEditorState();
+  const { selectingKit } = useCurrentPath();
 
   let addBtnClasses = ' tap';
   if (tapPlayMode) addBtnClasses += ' active';

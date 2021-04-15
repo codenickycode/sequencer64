@@ -1,41 +1,39 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { INITIAL_MODS, MODES, setModVal } from 'App/reducers/editorSlice';
+import { INITIAL_MODS, setModVal } from 'App/reducers/editorSlice';
 import { modAll, resetMods } from 'App/reducers/sequenceSlice';
 import { showEditable, hideEditable } from 'utils/toggleClasses';
 
-export const usePitchVelocityLength = (mode) => {
+export const usePitchVelocityLength = (editorMode, modPitchMode) => {
   const dispatch = useDispatch();
   const selectedSample = useSelector((state) => state.editor.selectedSample);
-  const [value, setValue] = useState(INITIAL_MODS[mode]);
-  const splitSamplePanel = useSelector(
-    (state) => state.screen.splitSamplePanel
-  );
+  const [value, setValue] = useState(INITIAL_MODS[editorMode]);
+  const splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);
   const detailClass = splitSamplePanel ? 'detail col' : 'detail col dark';
 
   const dispatchModAll = useCallback(() => {
     dispatch(
       modAll({
         selectedSample,
-        type: mode,
+        type: editorMode,
         value,
       })
     );
-  }, [dispatch, mode, selectedSample, value]);
+  }, [dispatch, editorMode, selectedSample, value]);
 
   const [editAll, setEditAll] = useState(true);
 
   useEffect(() => {
-    if (mode === MODES.MOD_PITCH) {
+    if (modPitchMode) {
       dispatch(setModVal(value));
       if (editAll) dispatchModAll();
     } else {
       dispatch(setModVal(Math.round(value * 100) / 100));
     }
-  }, [dispatch, dispatchModAll, editAll, mode, value]);
+  }, [dispatch, dispatchModAll, editAll, editorMode, modPitchMode, value]);
 
   const onChange = ({ target: { value } }) => {
-    if (mode === MODES.MOD_PITCH) {
+    if (modPitchMode) {
       setValue(value);
     } else {
       setValue(Math.round(value * 100) / 100);
@@ -61,9 +59,9 @@ export const usePitchVelocityLength = (mode) => {
   };
 
   const onReset = () => {
-    setValue(INITIAL_MODS[mode]);
-    dispatch(setModVal(INITIAL_MODS[mode]));
-    dispatch(resetMods({ selectedSample, type: mode }));
+    setValue(INITIAL_MODS[editorMode]);
+    dispatch(setModVal(INITIAL_MODS[editorMode]));
+    dispatch(resetMods({ selectedSample, type: editorMode }));
   };
 
   return {

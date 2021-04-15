@@ -4,15 +4,13 @@ import { eraseAll } from 'App/reducers/sequenceSlice';
 import { MODES, setMode } from 'App/reducers/editorSlice';
 import { EraseAllIcon } from 'assets/icons';
 import { Button } from 'App/shared/Button';
-import { useAbstractState } from 'utils/hooks/useAbstractState';
+import { useEditorState } from 'App/reducers/useAbstractState/useEditorState';
 
 export const EraseBtn = () => {
   const dispatch = useDispatch();
-  const { deepEditing } = useAbstractState();
+  const { deepEditing } = useEditorState();
 
-  const disabled = useSelector(
-    (state) => state.sequence.present.noteTally.total.empty
-  );
+  const disabled = useSelector((state) => state.sequence.present.noteTally.total.empty);
 
   const eraseMemo = useMemo(() => {
     const onClick = () => {
@@ -20,15 +18,9 @@ export const EraseBtn = () => {
       if (deepEditing) dispatch(setMode(MODES.PAINT));
     };
 
-    // console.log('rendering: Erase');
     return (
       <>
-        <Button
-          id='erase-all'
-          classes='menuBtn'
-          disabled={disabled}
-          onClick={onClick}
-        >
+        <Button id='erase-all' classes='menuBtn' disabled={disabled} onClick={onClick}>
           <EraseAllIcon />
           <label htmlFor='erase-all'>erase</label>
         </Button>

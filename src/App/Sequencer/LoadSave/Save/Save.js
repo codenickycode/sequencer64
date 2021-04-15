@@ -12,7 +12,6 @@ export const Save = () => {
   const idRef = useRef(null);
   const { newName, handleNewName, userError, save } = useSaveSequence(idRef);
   const { link, copyLink } = useShareLink(idRef);
-  // console.log('rendering: SaveSequence');
   return (
     <div id='saveSequence' className='saveSequence'>
       <ShareJSX

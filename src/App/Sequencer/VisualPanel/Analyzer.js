@@ -1,14 +1,14 @@
-import { MODES } from 'App/reducers/editorSlice';
 import { startAnalyzer } from 'App/reducers/functions/animations';
 import { ANALYZER_MODES } from 'App/reducers/screenSlice';
+import { useEditorState } from 'App/reducers/useAbstractState/useEditorState';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { getGrid } from 'utils/getGrid';
 
 export const Analyzer = () => {
-  const splitSamplePanel = useSelector(
-    (state) => state.screen.splitSamplePanel
-  );
-  const mode = useSelector((state) => state.editor.mode);
+  const splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);
+  const { editing } = useEditorState();
+
   const analyzerOn = useSelector((state) => state.screen.analyzer.on);
   if (analyzerOn) startAnalyzer();
 
@@ -17,18 +17,12 @@ export const Analyzer = () => {
   const scaleY = analyzerMode === ANALYZER_MODES.RIPPLE ? 1 : 0;
   const blur = analyzerMode === ANALYZER_MODES.BARS ? 0 : 50;
 
-  const editMode =
-    mode !== MODES.INIT && mode !== MODES.TAP && mode !== MODES.TAP_RECORD;
   const memo = useMemo(() => {
-    const grid = [];
-    for (let i = 0; i < 16; i++) {
-      grid.push(i);
-    }
-
+    const grid = getGrid(16);
     let analyzerClasses = 'analyzer ' + analyzerMode;
     if (!splitSamplePanel) {
       analyzerClasses += ' bg3q';
-      if (editMode || !analyzerOn) analyzerClasses += ' hide';
+      if (editing || !analyzerOn) analyzerClasses += ' hide';
     }
     return (
       <div className={analyzerClasses}>
@@ -46,14 +40,6 @@ export const Analyzer = () => {
         })}
       </div>
     );
-  }, [
-    analyzerMode,
-    analyzerOn,
-    blur,
-    editMode,
-    scaleX,
-    scaleY,
-    splitSamplePanel,
-  ]);
+  }, [analyzerMode, analyzerOn, blur, editing, scaleX, scaleY, splitSamplePanel]);
   return memo;
 };

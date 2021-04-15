@@ -31,7 +31,6 @@ export const StatusBar = () => {
   }, [message, count]);
 
   const memo = useMemo(() => {
-    // console.log('rendering: StatusBar');
     let index, status;
     if (message) {
       index = message.indexOf('#');
