@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Button } from 'App/shared/Button';
 import { KitIcon } from 'assets/icons';
 import { MODES, setMode } from 'App/reducers/editorSlice';
-import { PATHS, useGoTo } from 'utils/hooks/useGoTo';
+import { useGoTo } from 'utils/hooks/useGoTo';
 import { useAbstractState } from 'utils/hooks/useAbstractState';
 import { useStopPropEventListener } from 'utils/hooks/useStopPropEventListener';
 
@@ -16,17 +16,17 @@ export const KitBtn = () => {
   const memo = useMemo(() => {
     // console.log('rendering: ChangeKitBtn');
 
-    const goToBase = () => {
-      goTo(PATHS.BASE, () => dispatch(setMode(MODES.INIT)));
+    const handleGoToBase = () => {
+      goTo.base(() => dispatch(setMode(MODES.INIT)));
       removeElRef.current();
     };
 
     const changeKit = () => {
       if (selectingKit) {
-        goToBase();
+        handleGoToBase();
       } else {
-        goTo(PATHS.CHANGE_KIT, () => dispatch(setMode(MODES.TAP)));
-        eventListener('menuBar', 'scroll', goToBase);
+        goTo.changeKit(() => dispatch(setMode(MODES.TAP)));
+        eventListener('menuBar', 'scroll', handleGoToBase);
       }
     };
 

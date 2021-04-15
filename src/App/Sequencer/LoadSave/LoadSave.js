@@ -10,9 +10,8 @@ export const LoadSave = ({ tab }) => {
   const goTo = useGoTo();
 
   const memo = useMemo(() => {
-    const onClose = () => goTo(PATHS.BASE);
     const onClick = (e) => {
-      if (e.target.id && e.target.id === 'loadSave') onClose();
+      if (e.target.id && e.target.id === 'loadSave') goTo.base();
     };
 
     return (
@@ -27,7 +26,7 @@ export const LoadSave = ({ tab }) => {
             {tab === 'load' && <Load />}
           </div>
           <div className={'bottomBtn'}>
-            <Button onClick={onClose}>Close</Button>
+            <Button onClick={goTo.base}>Close</Button>
           </div>
         </>
       </Portal>
@@ -39,8 +38,8 @@ export const LoadSave = ({ tab }) => {
 const Tabs = ({ tab }) => {
   const goTo = useGoTo();
   const changeTab = ({ target: { value } }) => {
-    if (value === 'load') goTo(PATHS.LOAD);
-    if (value === 'save') goTo(PATHS.SAVE);
+    if (value === 'load') goTo.load();
+    if (value === 'save') goTo.save();
   };
   let loadClasses = 'tab';
   let saveClasses = loadClasses;

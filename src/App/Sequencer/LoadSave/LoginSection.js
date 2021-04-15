@@ -35,11 +35,7 @@ const NotLoggedIn = ({ values, fetching }) => {
   return (
     <div className='notLoggedIn'>
       <p className='sub'>{values.sub}</p>
-      <Button
-        classes='loginBtn'
-        onClick={() => goTo(PATHS.LOGIN)}
-        disabled={fetching}
-      >
+      <Button classes='loginBtn' onClick={goTo.login} disabled={fetching}>
         {values.loginBtn}
       </Button>
     </div>
