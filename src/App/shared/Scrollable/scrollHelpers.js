@@ -4,18 +4,19 @@ const NUM_SCROLLS = 3;
 
 export const useInitialScroll = (containerRef, scrollPosition) => {
   const [initialState, setInitialState] = useState(true);
-  useEffect(() => {
-    if (initialState) {
-      if (containerRef.current) {
-        const width = containerRef.current.clientWidth;
-        containerRef.current.scrollTo({
-          left: width * scrollPosition,
-          behavior: 'smooth',
-        });
-        setInitialState(false);
-      }
-    }
-  }, [initialState, containerRef, scrollPosition]);
+
+  function initialScroll() {
+    if (!initialState) return;
+    if (!containerRef.current) return;
+    const width = containerRef.current.clientWidth;
+    containerRef.current.scrollTo({
+      left: width * scrollPosition,
+      behavior: 'smooth',
+    });
+    setInitialState(false);
+  }
+
+  useEffect(initialScroll, [initialState, containerRef, scrollPosition]);
 };
 
 export const getFullyScrolled = (container) => {

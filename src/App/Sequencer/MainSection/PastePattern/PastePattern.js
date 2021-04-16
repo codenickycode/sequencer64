@@ -5,6 +5,7 @@ import { paste } from 'App/reducers/sequenceSlice';
 import { Button } from 'App/shared/Button';
 import { Portal } from 'App/shared/Portal';
 import { getGrid } from 'utils/getGrid';
+import { addAndRemoveClass } from 'utils/showAndHide';
 
 export const PastePattern = () => {
   const kit = useSelector((state) => state.sequence.present.kit);
@@ -42,8 +43,7 @@ const SampleBtn = ({ i, icon, color }) => {
   const [flashClass, setFlashClass] = useState('cells');
   const onClick = () => {
     dispatch(paste({ sample: i, selectedSample }));
-    setFlashClass('cells selected');
-    setTimeout(() => setFlashClass('cells'));
+    addAndRemoveClass(setFlashClass, 'cells', 'selected', 0);
   };
 
   const selected = i === selectedSample;

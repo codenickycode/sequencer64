@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState } from 'react';
 import cuid from 'cuid';
 import { useTouchAndMouse } from 'utils/hooks/useTouchAndMouse';
-import { useToneState } from 'App/reducers/useAbstractState/useToneState';
+import { useSelector } from 'react-redux';
 
 export const Button = ({
   fwdRef,
@@ -49,7 +49,7 @@ export const Button = ({
 };
 
 export const TransportBtn = ({ id, onClick, Icon, show }) => {
-  const { transportDisabled } = useToneState();
+  const transportDisabled = useTransportDisabled();
   const memo = useMemo(() => {
     return !show ? null : (
       <Button
@@ -64,4 +64,14 @@ export const TransportBtn = ({ id, onClick, Icon, show }) => {
     );
   }, [id, onClick, show, transportDisabled]);
   return memo;
+};
+
+const useTransportDisabled = () => {
+  const countIn = useSelector((state) => state.tone.countIn);
+  const loadingSamples = useSelector((state) => state.tone.loadingSamples);
+
+  const countingIn = countIn !== '';
+  const transportDisabled = loadingSamples || countingIn;
+
+  return transportDisabled;
 };

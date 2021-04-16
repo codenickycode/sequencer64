@@ -19,6 +19,7 @@ export const fft = new Tone.FFT({
   size: 32,
   normalRange: true,
 });
+
 export const limiter = new Tone.Limiter(-20);
 mainBus.chain(limiter, fft);
 

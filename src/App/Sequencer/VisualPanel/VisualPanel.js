@@ -1,8 +1,8 @@
 import { EDITOR_MODE_INFO, setInfo } from 'App/reducers/editorSlice';
-import { useAbstractState } from 'App/reducers/useAbstractState/useAbstractState';
-import { useEffect, useState } from 'react';
+import { areWeEditing } from 'App/reducers/useAbstractState/useEditorState';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { showAndHideClass } from 'utils/showAndHide';
+import { useShowAndHideClass } from 'utils/hooks/useShowAndHide';
 import { Analyzer } from './Analyzer';
 
 export const VisualPanel = () => {
@@ -15,46 +15,44 @@ export const VisualPanel = () => {
 };
 
 const Info = () => {
+  const { state, classes } = useInfoState();
+
+  const memo = useMemo(() => {
+    let showInfo = !state.editing;
+    if (state.transportStarted && state.analyzerOn) showInfo = false;
+    return (
+      <div className={showInfo ? 'info show' : 'info'}>
+        {state.countIn ? (
+          <p className={classes.countIn}>{state.countIn}</p>
+        ) : (
+          <p className={classes.infoText}>{state.infoText}</p>
+        )}
+      </div>
+    );
+  }, [classes, state]);
+
+  return memo;
+};
+
+const useInfoState = () => {
+  const editorMode = useSelector((state) => state.editor.mode);
+
+  const state = {};
+  state.editing = areWeEditing(editorMode);
+  state.transportStarted = useSelector((state) => state.tone.transportState === 'started');
+  state.analyzerOn = useSelector((state) => state.screen.analyzer.on);
+  state.countIn = useSelector((state) => state.tone.countIn);
+  state.infoText = useSelector((state) => state.editor.info);
+  state.flashInfo = useSelector((state) => state.app.flashInfo);
+
   const dispatch = useDispatch();
-  const { started, editorMode, editing } = useAbstractState();
-  const analyzerOn = useSelector((state) => state.screen.analyzer.on);
-
-  const countIn = useSelector((state) => state.tone.countIn);
-
-  const [countInClasses, setCountInClasses] = useState('countIn');
   useEffect(() => {
-    if (countIn) {
-      setCountInClasses('countIn show');
-      setTimeout(() => setCountInClasses('countIn'), 100);
-    }
-  }, [countIn]);
+    dispatch(setInfo(EDITOR_MODE_INFO[editorMode]));
+  }, [dispatch, editorMode]);
 
-  const infoText = useSelector((state) => state.editor.info);
-  useEffect(() => {
-    if (started) dispatch(setInfo(''));
-    else dispatch(setInfo(EDITOR_MODE_INFO[editorMode]));
-  }, [dispatch, editorMode, started]);
+  const classes = {};
+  classes.countIn = useShowAndHideClass('countIn', 100, state.countIn);
+  classes.infoText = useShowAndHideClass('infoText', 3000, state.infoText, state.flashInfo);
 
-  const [infoTextClasses, setInfoTextClasses] = useState('infoText');
-
-  useEffect(() => {
-    showAndHideClass(setInfoTextClasses, 'infoText', 3000);
-  }, [infoText]);
-
-  const flashInfo = useSelector((state) => state.app.flashInfo);
-  useEffect(() => {
-    if (flashInfo) showAndHideClass(setInfoTextClasses, 'infoText', 3000);
-  }, [flashInfo]);
-
-  let showInfo = !editing;
-  if (started && analyzerOn) showInfo = false;
-  return (
-    <div className={showInfo ? 'info show' : 'info'}>
-      {countIn ? (
-        <p className={countInClasses}>{countIn}</p>
-      ) : (
-        <p className={infoTextClasses}>{infoText}</p>
-      )}
-    </div>
-  );
+  return { state, classes };
 };

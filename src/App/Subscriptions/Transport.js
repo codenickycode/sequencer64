@@ -1,39 +1,19 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Tone from 'tone';
-import {
-  loadSamples,
-  setRestarting,
-  startSequence,
-} from 'App/reducers/toneSlice';
+import { loadSamples, setRestarting, startSequence } from 'App/reducers/toneSlice';
 import { changeKit } from 'App/reducers/sequenceSlice';
-import { startAnalyzer, stopAnalyzer } from 'App/reducers/functions/animations';
-import { MODES } from 'App/reducers/editorSlice';
 
 export const Transport = () => {
   const dispatch = useDispatch();
 
   const loadingError = useSelector((state) => state.tone.loadingError.error);
-  const loadingErrorCount = useSelector(
-    (state) => state.tone.loadingError.count
-  );
+  const loadingErrorCount = useSelector((state) => state.tone.loadingError.count);
   const restarting = useSelector((state) => state.tone.restarting);
   const bufferedKit = useSelector((state) => state.tone.bufferedKit);
   const loadingSamples = useSelector((state) => state.tone.loadingSamples);
   const sequenceBpm = useSelector((state) => state.sequence.present.bpm);
   const sequenceKitName = useSelector((state) => state.sequence.present.kit);
-
-  const transportState = useSelector((state) => state.tone.transportState);
-  const analyzerOn = useSelector((state) => state.screen.analyzer.on);
-
-  const mode = useSelector((state) => state.editor.mode);
-  const tapping = mode === MODES.TAP || mode === MODES.TAP_RECORD;
-
-  useEffect(() => {
-    if (!analyzerOn) return;
-    if (transportState === 'started') startAnalyzer();
-    else if (transportState !== 'started' && !tapping) stopAnalyzer();
-  }, [analyzerOn, tapping, transportState]);
 
   useEffect(() => {
     Tone.Transport.bpm.value = sequenceBpm;

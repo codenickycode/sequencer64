@@ -19,3 +19,19 @@ export const useEditorState = () => {
 
   return state;
 };
+
+export const areWeTapPlaying = (editorMode) => {
+  return editorMode === MODES.TAP;
+};
+
+export const areWeTapRecording = (editorMode) => {
+  return editorMode === MODES.TAP_RECORD;
+};
+
+export const areWeTapping = (editorMode) => {
+  return areWeTapPlaying(editorMode) || areWeTapRecording(editorMode);
+};
+
+export const areWeEditing = (editorMode) => {
+  return editorMode !== MODES.INIT && !areWeTapping(editorMode);
+};

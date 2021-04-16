@@ -2,13 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 export const StatusBar = () => {
-  const count = useSelector((state) => state.app.status.count);
-  const message = useSelector((state) => state.app.status.message);
-  const bpm = useSelector((state) => state.sequence.present.bpm);
-  const kitName = useSelector((state) => state.sequence.present.kit);
-  const sequenceName = useSelector((state) => state.sequence.present.name);
-  const vh = useSelector((state) => state.screen.dimensions.vh);
-  const landscape = useSelector((state) => state.screen.dimensions.landscape);
+  const { bpm, kitName, landscape, message, count, sequenceName, vh } = useHooks();
 
   const [classes, setClasses] = useState('status');
   useEffect(() => {
@@ -57,5 +51,19 @@ export const StatusBar = () => {
       </div>
     );
   }, [bpm, classes, kitName, landscape, message, sequenceName, vh]);
+
   return message ? memo : null;
+};
+
+const useHooks = () => {
+  const hooks = {};
+  hooks.count = useSelector((state) => state.app.status.count);
+  hooks.message = useSelector((state) => state.app.status.message);
+  hooks.bpm = useSelector((state) => state.sequence.present.bpm);
+  hooks.kitName = useSelector((state) => state.sequence.present.kit);
+  hooks.sequenceName = useSelector((state) => state.sequence.present.name);
+  hooks.vh = useSelector((state) => state.screen.dimensions.vh);
+  hooks.landscape = useSelector((state) => state.screen.dimensions.landscape);
+
+  return hooks;
 };

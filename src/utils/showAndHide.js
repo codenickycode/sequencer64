@@ -7,6 +7,15 @@ export const showAndHideClass = (setter, classes, timeout) => {
   }
 };
 
+export const addAndRemoveClass = (setter, initialClasses, classesToAdd, timeout) => {
+  setter(initialClasses + ' ' + classesToAdd);
+  try {
+    setTimeout(() => setter(initialClasses), timeout);
+  } catch (e) {
+    console.log('component unloaded');
+  }
+};
+
 export const showAndHideInfo = (setter, info, timeout) => {
   setter(info);
   try {
