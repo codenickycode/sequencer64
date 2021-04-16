@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { getGrid } from 'utils/getGrid';
 import { Portal } from '../Portal';
 
 export const Preparing = () => {
-  const grid = getGrid(9);
+  const grid = useMemo(() => getGrid(9), []);
   return (
     <Portal targetId='preparingPortal'>
       <div id='preparing' className='preparing'>
