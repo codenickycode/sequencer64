@@ -4,11 +4,11 @@
 @use 'styles/responsiveFont' as *;
 
 #samplePanel {
-  * {
-    // border: 1px solid red;
-  }
-
   .detail {
+    * {
+      // border: 1px solid red !important;
+    }
+
     @extend %fullAbs;
     top: 0;
     left: 0;
@@ -22,8 +22,13 @@
     }
 
     @media (orientation: landscape) {
+      flex-direction: column-reverse;
+      justify-content: center;
       .dummy {
         display: none;
+      }
+      .middle {
+        max-height: 50%;
       }
     }
 
@@ -81,8 +86,6 @@
       @extend %full;
       max-width: 50%;
       @include flex;
-      // @extend %bg;
-      // @extend %borderHalf;
     }
 
     #modSlider {

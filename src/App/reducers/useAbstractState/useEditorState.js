@@ -40,15 +40,15 @@ export const areCellsEditable = (editorMode) => {
   return editorMode === MODES.ERASE || editorMode === MODES.SLICE;
 };
 
-export const getIsActive = (editorMode) => {
-  const isActive = {};
-  isActive[MODES.PAINT] = editorMode === MODES.PAINT;
-  isActive[MODES.ERASE] = editorMode === MODES.ERASE;
-  isActive[MODES.SLICE] = editorMode === MODES.SLICE;
-  isActive[MODES.COPY] = editorMode === MODES.COPY;
-  isActive[MODES.MOD_PITCH] = editorMode === MODES.MOD_PITCH;
-  isActive[MODES.MOD_VELOCITY] = editorMode === MODES.MOD_VELOCITY;
-  isActive[MODES.MOD_LENGTH] = editorMode === MODES.MOD_LENGTH;
+export const getAbstractEditorMode = (editorMode) => {
+  const abstractEditorMode = {};
+  abstractEditorMode.painting = editorMode === MODES.PAINT;
+  abstractEditorMode.erasing = editorMode === MODES.ERASE;
+  abstractEditorMode.slicing = editorMode === MODES.SLICE;
+  abstractEditorMode.copying = editorMode === MODES.COPY;
+  abstractEditorMode.moddingPitch = editorMode === MODES.MOD_PITCH;
+  abstractEditorMode.moddingVelocity = editorMode === MODES.MOD_VELOCITY;
+  abstractEditorMode.moddingLength = editorMode === MODES.MOD_LENGTH;
 
-  return isActive;
+  return abstractEditorMode;
 };

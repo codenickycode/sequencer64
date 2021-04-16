@@ -30,7 +30,7 @@ export const PitchVelocityLength = ({ onReturn }) => {
 
 const Pitch = ({ value, onChange, applyInfo }) => {
   const editorMode = useSelector((state) => state.editor.mode);
-  return editorMode !== MODES.MOD_PITCH ? null : (
+  return !editorMode === MODES.MOD_PITCH ? null : (
     <>
       {applyInfo.value ? (
         <p className={applyInfo.classes}>{applyInfo.value}</p>

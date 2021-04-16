@@ -7,16 +7,12 @@ import { showAndHideClass, showAndHideInfo } from 'utils/showAndHide';
 
 export const usePitchVelocityLength = () => {
   const editorMode = useSelector((state) => state.editor.mode);
-  const modPitchMode = editorMode === MODES.MOD_PITCH;
+  const moddingPitch = editorMode === MODES.MOD_PITCH;
   const dispatch = useDispatch();
   const selectedSample = useSelector((state) => state.editor.selectedSample);
   const [value, setValue] = useState(INITIAL_MODS[editorMode]);
-  useEffect(() => {
-    console.log(value);
-  }, [value]);
 
   const dispatchModAll = useCallback(() => {
-    console.log(value);
     dispatch(
       modAll({
         selectedSample,
@@ -36,21 +32,21 @@ export const usePitchVelocityLength = () => {
   const [editAll, setEditAll] = useState(true);
 
   useEffect(() => {
-    if (modPitchMode) {
+    if (moddingPitch) {
       dispatch(setModVal(value));
       if (editAll) dispatchModAll();
     } else {
       dispatch(setModVal(value));
     }
-  }, [dispatch, dispatchModAll, editAll, editorMode, modPitchMode, value]);
+  }, [dispatch, dispatchModAll, editAll, editorMode, moddingPitch, value]);
 
   const onChange = useCallback(
     ({ target: { value } }) => {
-      if (modPitchMode) {
+      if (moddingPitch) {
         setValue(value);
       }
     },
-    [modPitchMode]
+    [moddingPitch]
   );
 
   // velocity & length

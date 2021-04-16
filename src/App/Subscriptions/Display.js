@@ -13,7 +13,7 @@ export const Display = () => {
   const tapping = mode === MODES.TAP || mode === MODES.TAP_RECORD;
 
   useEffect(() => {
-    const spBorder = document.getElementById('samplePanelBorder');
+    const spBorder = document.getElementById('sampleBtnsBorder');
     if (!spBorder) return;
     if (tapping) spBorder.classList.add('highlight');
     if (!tapping) spBorder.classList.remove('highlight');

@@ -1,0 +1,61 @@
+@use 'styles/placeholders' as *;
+@use 'styles/mixins' as *;
+@use 'styles/colors' as *;
+
+.editMenu {
+  @extend %fullAbs;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  @extend %bg3q;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  @extend %borderHalf;
+  border-radius: 0;
+
+  &.dark {
+    @extend %bg90;
+  }
+
+  &.flex {
+    @include flex(row, space-evenly);
+  }
+
+  .close.btn {
+    @extend %closeBtnSmall;
+  }
+
+  .sampleMenuBtn {
+    width: 5rem;
+    height: 100%;
+    @include flex(column);
+    display: inline-flex;
+    vertical-align: top;
+    background: transparent;
+    border: 1px solid $color-none;
+    border-radius: 0.5rem;
+
+    &.dummy {
+      min-height: 100%;
+      width: 3.5rem;
+      border: none !important;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        border: 1px solid $white;
+      }
+    }
+
+    .icon {
+      max-height: 4rem;
+    }
+
+    p {
+      padding: 0.25rem;
+      width: 100%;
+      @extend %text;
+    }
+  }
+}

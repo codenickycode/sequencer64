@@ -44,12 +44,17 @@
   height: 100%;
   max-height: 30%;
   overflow: hidden;
+  @include flex(column, space-evenly);
 
   .border {
     @extend %noEventsLayerAbs;
     @extend %borderWhite;
     top: 0;
     opacity: 0;
+  }
+
+  .spTop {
+    @extend %full;
   }
 }
 

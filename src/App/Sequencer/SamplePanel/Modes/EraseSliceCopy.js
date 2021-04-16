@@ -5,6 +5,35 @@ import { Button } from 'App/shared/Button';
 import { ChevronLeftIcon, CopyIcon, EraserIcon, SawIcon } from 'assets/icons';
 import { PastePattern } from 'App/Sequencer/MainSection/PastePattern/PastePattern';
 
+const ModeDetail = ({
+  onReturn,
+  Icon,
+  addIconClass = '',
+  instruction,
+  btnClick,
+  btnLabel,
+  children,
+}) => {
+  const landscape = useSelector((state) => state.screen.landscape);
+  const splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);
+
+  return (
+    <div className={splitSamplePanel ? 'detail' : 'detail dark'}>
+      <Button classes='close' onClick={onReturn}>
+        <ChevronLeftIcon />
+      </Button>
+      <div className='dummy' />
+      <div className='middle'>
+        {landscape && <Icon addClass={addIconClass} />}
+        <p>{instruction}</p>
+        {btnClick && <Button onClick={btnClick}>{btnLabel}</Button>}
+      </div>
+      {!landscape && <Icon addClass={addIconClass} />}
+      {children}
+    </div>
+  );
+};
+
 export const Erase = ({ onReturn }) => {
   const dispatch = useDispatch();
   const selectedSample = useSelector((state) => state.editor.selectedSample);
@@ -57,34 +86,5 @@ export const Copy = ({ onReturn }) => {
     <ModeDetail onReturn={onReturn} Icon={CopyIcon} instruction={instruction}>
       <PastePattern />
     </ModeDetail>
-  );
-};
-
-const ModeDetail = ({
-  onReturn,
-  Icon,
-  addIconClass = '',
-  instruction,
-  btnClick,
-  btnLabel,
-  children,
-}) => {
-  const landscape = useSelector((state) => state.screen.landscape);
-  const splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);
-
-  return (
-    <div className={splitSamplePanel ? 'detail' : 'detail dark'}>
-      <Button classes='close' onClick={onReturn}>
-        <ChevronLeftIcon />
-      </Button>
-      <div className='dummy' />
-      <div className='middle'>
-        {landscape && <Icon addClass={addIconClass} />}
-        <p>{instruction}</p>
-        {btnClick && <Button onClick={btnClick}>{btnLabel}</Button>}
-      </div>
-      {!landscape && <Icon addClass={addIconClass} />}
-      {children}
-    </div>
   );
 };

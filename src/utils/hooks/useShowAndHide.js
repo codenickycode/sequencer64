@@ -18,6 +18,14 @@ export const useShowAndHideClass = (baseClasses = '', timeout = 0, trigger1, tri
   return classes;
 };
 
+export const useFlashState = (timeout) => {
+  const [flash, setFlash] = useState(false);
+  useEffect(() => {
+    if (flash) setTimeout(() => setFlash(false), timeout);
+  }, [flash, timeout]);
+  return [flash, setFlash];
+};
+
 export const useAddAndRemoveClass = (
   baseClasses = '',
   addClasses = '',
