@@ -12,8 +12,7 @@ import { useAutoFalseState } from 'utils/hooks/useAutoFalseState';
 export const useSampleBtnContainer = () => {
   const dispatch = useDispatch();
   const selectedSample = useSelector((state) => state.editor.selectedSample);
-  const sequenceKitName = useSelector((state) => state.sequence.present.kit);
-  const kit = useSelector((state) => state.assets.kits[sequenceKitName]);
+  const kit = useSelector((state) => state.assets.kits[state.sequence.present.kit]);
 
   const selectSample = (i) => dispatch(edit({ sample: i }));
 

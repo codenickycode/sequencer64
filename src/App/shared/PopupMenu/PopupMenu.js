@@ -11,9 +11,9 @@ export const PopupMenu = ({
   keepOpenOnSelect,
   children,
 }) => {
-  const { btnRef, btnClasses, onClick, renderMenu, menuStyle, menuClasses } = usePopupMenu(
-    keepOpenOnSelect
-  );
+  const popupMenu = usePopupMenu(keepOpenOnSelect);
+  const { btnRef, btnClasses, onClick, renderMenu, menuStyle, menuClasses } = popupMenu;
+
   const btnId = `${name}Btn`;
   return (
     <div ref={btnRef} className='menuBtnWrapper'>

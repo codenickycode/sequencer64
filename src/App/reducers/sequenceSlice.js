@@ -12,8 +12,7 @@ import {
 import { INITIAL_MODS, MODES } from 'App/reducers/editorSlice';
 import * as sequenceThunks from './thunks/sequenceThunks';
 
-const INITIAL_PATTERN =
-  getLS('sequencePattern') || getPatternFromStr(analog.patternStr);
+const INITIAL_PATTERN = getLS('sequencePattern') || getPatternFromStr(analog.patternStr);
 
 export const INITIAL_SEQUENCE = {
   _id: getLS('sequenceId') || analog._id,
@@ -90,6 +89,7 @@ export const sequenceSlice = createSlice({
       });
       Object.keys(state.noteTally).forEach((tally) => {
         state.noteTally[tally].count = 0;
+        state.noteTally[tally].empty = true;
       });
       state.noteTally.total.count = 0;
       state.noteTally.total.empty = true;
@@ -100,10 +100,7 @@ export const sequenceSlice = createSlice({
       inc(state.noteTally, sample);
       state.undoStatus = `record`;
     },
-    modCellFinally: (
-      state,
-      { payload: { selectedSample, type, value, step } }
-    ) => {
+    modCellFinally: (state, { payload: { selectedSample, type, value, step } }) => {
       if (type === MODES.MOD_LENGTH && value < 1) value *= 0.25;
       state.pattern[step][selectedSample].notes.forEach((note) => {
         note[type] = value;
