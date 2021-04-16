@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, TransportBtn } from 'App/shared/Button';
+import { Button } from 'App/shared/Button';
 import {
   StopIcon,
   StartIcon,
@@ -13,6 +13,7 @@ import { pauseSequence, startSequence, stopSequence } from 'App/reducers/toneSli
 import { startRecord } from 'App/reducers/thunks/toneThunks';
 import { useAbstractState } from 'App/reducers/useAbstractState/useAbstractState';
 import { useBpmInput } from './useBpmInput';
+import { TransportBtn } from './TransportBtn';
 
 export const TransportPanel = () => {
   return (
