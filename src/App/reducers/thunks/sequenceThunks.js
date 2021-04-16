@@ -25,9 +25,7 @@ export const loadInitialSequence = (_id, clearUrl) => async (dispatch) => {
       sequence.pattern = getPatternFromStr(sequence.patternStr);
       dispatch(loadSequence(sequence));
     } catch (e) {
-      console.log(
-        'Failed to load sequence from url path.  Loading default session.'
-      );
+      console.log('Failed to load sequence from url path.  Loading default session.');
       dispatch(loadSequence(INITIAL_SEQUENCE));
     }
   }
@@ -43,8 +41,7 @@ export const recordSample = (sample) => (dispatch, getState) => {
   if (step === -1) step = getState().sequence.present.length - 1;
   const cell = sequence.pattern[step][sample];
   const prevNoteOn = cell.noteOn;
-  if (!prevNoteOn)
-    wait(150, () => dispatch(recordSampleFinally({ sample, step })));
+  if (!prevNoteOn) wait(150, () => dispatch(recordSampleFinally({ sample, step })));
 };
 
 export const modCell = (step, noteOn) => (dispatch, getState) => {

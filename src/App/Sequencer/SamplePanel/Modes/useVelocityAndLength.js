@@ -1,12 +1,10 @@
 import { useRef } from 'react';
-import { useSetTrueForCallback } from '../../../../utils/hooks/useSetTrueForCallback';
+import { useSideEffect } from 'utils/hooks/useSideEffect';
 import { usePVL } from './usePVL';
 
 export const useVelocityAndLength = () => {
   const pvl = usePVL();
   const { setValue, dispatchModAll, ...state } = pvl;
-
-  const setMouseDispatchModAll = useSetTrueForCallback(dispatchModAll);
 
   const sliderRef = useRef(null);
 
@@ -15,9 +13,12 @@ export const useVelocityAndLength = () => {
     const newVal = getSliderValue(e, sliderRef.current);
     setValue(newVal);
   };
+
+  // mouseDown captures stale value, side effect ensures latest
+  const mouseDispatchModAll = useSideEffect(dispatchModAll);
   const endFunc = (e) => {
     if (!state.editAll) return;
-    if (e.type === 'mouseup') setMouseDispatchModAll(true);
+    if (e.type === 'mouseup') mouseDispatchModAll(true);
     else dispatchModAll();
   };
 

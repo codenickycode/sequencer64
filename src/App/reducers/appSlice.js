@@ -74,20 +74,14 @@ export const appSlice = createSlice({
       state.log.count++;
       state.log.message = payload;
     },
-    updateSequencesFinally: (
-      state,
-      { payload: { message, error, confirmation } }
-    ) => {
+    updateSequencesFinally: (state, { payload: { message, error, confirmation } }) => {
       state.status.count++;
       state.status.message = message;
       if (confirmation) state.confirmation = confirmation;
       if (error) state.error = error;
       state.fetching = false;
     },
-    getUserFinally: (
-      state,
-      { payload: { loggedIn, _id, username, message } }
-    ) => {
+    getUserFinally: (state, { payload: { loggedIn, _id, username, message } }) => {
       state.user.loggedIn = loggedIn;
       state.user._id = _id;
       state.user.username = username;
