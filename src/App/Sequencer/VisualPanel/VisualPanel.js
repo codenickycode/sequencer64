@@ -18,10 +18,8 @@ const Info = () => {
   const { state, classes } = useInfoState();
 
   const memo = useMemo(() => {
-    let showInfo = !state.editing;
-    if (state.transportStarted && state.analyzerOn) showInfo = false;
     return (
-      <div className={showInfo ? 'info show' : 'info'}>
+      <div className={classes.container}>
         {state.countIn ? (
           <p className={classes.countIn}>{state.countIn}</p>
         ) : (
@@ -50,9 +48,19 @@ const useInfoState = () => {
     dispatch(setInfo(EDITOR_MODE_INFO[editorMode]));
   }, [dispatch, editorMode]);
 
+  const classes = useInfoStyle(state);
+
+  return { state, classes };
+};
+
+const useInfoStyle = (state) => {
   const classes = {};
   classes.countIn = useShowAndHideClass('countIn', 100, state.countIn);
   classes.infoText = useShowAndHideClass('infoText', 3000, state.infoText, state.flashInfo);
 
-  return { state, classes };
+  let showInfo = !state.editing;
+  if (state.transportStarted && state.analyzerOn) showInfo = false;
+  classes.container = showInfo ? 'info show' : 'info';
+
+  return classes;
 };

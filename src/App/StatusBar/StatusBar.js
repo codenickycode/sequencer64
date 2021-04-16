@@ -2,20 +2,47 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 export const StatusBar = () => {
-  const { bpm, kitName, landscape, message, count, sequenceName, vh } = useHooks();
+  const { statusBarMessage, containerStyle, statusClasses } = useStatusBarState();
+  return !statusBarMessage ? null : (
+    <div className='statusBar' style={containerStyle}>
+      <p id='status' className={statusClasses}>
+        {statusBarMessage}
+      </p>
+    </div>
+  );
+};
 
-  const [classes, setClasses] = useState('status');
+const useStatusBarState = () => {
+  const state = {};
+  state.count = useSelector((state) => state.app.status.count);
+  state.message = useSelector((state) => state.app.status.message);
+  state.bpm = useSelector((state) => state.sequence.present.bpm);
+  state.kitName = useSelector((state) => state.sequence.present.kit);
+  state.sequenceName = useSelector((state) => state.sequence.present.name);
+  state.vh = useSelector((state) => state.screen.dimensions.vh);
+  state.landscape = useSelector((state) => state.screen.dimensions.landscape);
+
+  const { containerStyle, statusClasses } = useStatusBarStyle(state);
+  const statusBarMessage = useStatusBarMessage(state);
+
+  return { statusBarMessage, containerStyle, statusClasses };
+};
+
+const useStatusBarStyle = ({ message, count, vh, landscape }) => {
+  const [statusClasses, setStatusClasses] = useState('status');
+  const [containerStyle, setContainerStyle] = useState({ top: 0 });
+
   useEffect(() => {
     let onTimer;
     let fadeTimer;
     if (message) {
-      setClasses('status fadeOut fadeOut2');
+      setStatusClasses('status fadeOut fadeOut2');
       if (message.match('Loading samples')) return;
       onTimer = setTimeout(() => {
-        setClasses('status');
+        setStatusClasses('status');
       }, 1000);
       fadeTimer = setTimeout(() => {
-        setClasses('status fadeOut2');
+        setStatusClasses('status fadeOut2');
       }, 500);
     }
     return () => {
@@ -24,46 +51,33 @@ export const StatusBar = () => {
     };
   }, [message, count]);
 
-  const memo = useMemo(() => {
-    let index, status;
-    if (message) {
-      index = message.indexOf('#');
-      status = message.substr(index + 1);
-    }
+  useEffect(() => {
+    if (landscape && vh >= 754) setContainerStyle({ bottom: vh * 0.1 });
+  }, [landscape, vh]);
 
-    if (status.match(/bpm/)) {
-      status = status.substr(6) + bpm;
-    } else if (status.match(/Error loading/)) {
-      status = 'Error loading samples, reverting to default kit';
-    } else if (status.match(/kit/)) {
-      status += kitName;
-    } else if (status.match(/sequence/)) {
-      if (!status.match(/erase/)) status += sequenceName;
-    }
-
-    let statusBarStyle = { top: 0 };
-    if (landscape && vh >= 754) statusBarStyle = { bottom: vh * 0.1 };
-    return (
-      <div className='statusBar' style={statusBarStyle}>
-        <p className={classes} id='status'>
-          {status}
-        </p>
-      </div>
-    );
-  }, [bpm, classes, kitName, landscape, message, sequenceName, vh]);
-
-  return message ? memo : null;
+  return { containerStyle, statusClasses };
 };
 
-const useHooks = () => {
-  const hooks = {};
-  hooks.count = useSelector((state) => state.app.status.count);
-  hooks.message = useSelector((state) => state.app.status.message);
-  hooks.bpm = useSelector((state) => state.sequence.present.bpm);
-  hooks.kitName = useSelector((state) => state.sequence.present.kit);
-  hooks.sequenceName = useSelector((state) => state.sequence.present.name);
-  hooks.vh = useSelector((state) => state.screen.dimensions.vh);
-  hooks.landscape = useSelector((state) => state.screen.dimensions.landscape);
+const useStatusBarMessage = ({ message, bpm, kitName, sequenceName }) => {
+  const memo = useMemo(() => {
+    let index, statusBarMessage;
+    if (message) {
+      index = message.indexOf('#');
+      statusBarMessage = message.substr(index + 1);
+    }
 
-  return hooks;
+    if (statusBarMessage.match(/bpm/)) {
+      statusBarMessage = statusBarMessage.substr(6) + bpm;
+    } else if (statusBarMessage.match(/Error loading/)) {
+      statusBarMessage = 'Error loading samples, reverting to default kit';
+    } else if (statusBarMessage.match(/kit/)) {
+      statusBarMessage += kitName;
+    } else if (statusBarMessage.match(/sequence/)) {
+      if (!statusBarMessage.match(/erase/)) statusBarMessage += sequenceName;
+    }
+
+    return statusBarMessage;
+  }, [bpm, kitName, message, sequenceName]);
+
+  return memo;
 };

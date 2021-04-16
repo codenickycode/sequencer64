@@ -6,8 +6,7 @@ import { useSelector } from 'react-redux';
 import { getGrid } from 'utils/getGrid';
 
 export const Analyzer = () => {
-  const state = useAnalyzerState();
-  const { classes, data } = useAnalyzerStyle(state);
+  const { classes, data } = useAnalyzerState();
 
   const grid = useMemo(() => getGrid(16), []);
 
@@ -42,7 +41,9 @@ const useAnalyzerState = () => {
 
   if (state.analyzerOn) startAnalyzer();
 
-  return state;
+  const { classes, data } = useAnalyzerStyle(state);
+
+  return { classes, data };
 };
 
 const useAnalyzerStyle = ({ analyzerMode, analyzerOn, splitSamplePanel, editing }) => {
