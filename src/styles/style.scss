@@ -15,8 +15,8 @@
 @use 'App/Sequencer/SamplePanel/EditMenu/sampleEditMenu';
 @use 'App/Sequencer/SamplePanel/Modes/sampleEditModes';
 @use 'App/Sequencer/VisualPanel/visualPanel';
-@use 'App/Sequencer/MenuBar/menuItems';
-@use 'App/Sequencer/MenuBar/Transport/transport';
+@use 'App/Sequencer/MenuBar/MenuItems/menuItems';
+@use 'App/Sequencer/MenuBar/MenuItems/Transport/transport';
 @use 'App/shared/Preparing/preparing';
 @use 'App/shared/PopupMenu/popupMenu';
 @use 'App/shared/Scrollable/scrollable';

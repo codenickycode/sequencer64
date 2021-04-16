@@ -11,9 +11,9 @@ import {
 } from 'assets/icons';
 import { pauseSequence, startSequence, stopSequence } from 'App/reducers/toneSlice';
 import { startRecord } from 'App/reducers/thunks/toneThunks';
-import { useAbstractState } from 'App/reducers/useAbstractState/useAbstractState';
 import { useBpmInput } from './useBpmInput';
 import { TransportBtn } from './TransportBtn';
+import { useShowTransportBtns } from './useShowTransportBtns';
 
 export const TransportPanel = () => {
   return (
@@ -28,8 +28,7 @@ export const TransportPanel = () => {
 
 const TransportBtns = () => {
   const dispatch = useDispatch();
-  const { show } = useAbstractState();
-  const { recordBtn, restartBtn, startBtn, pauseBtn } = show;
+  const { recordBtn, restartBtn, startBtn, pauseBtn } = useShowTransportBtns();
 
   const onStop = () => dispatch(stopSequence());
   const onRecord = () => dispatch(startRecord());

@@ -1,21 +1,25 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TapIcon } from 'assets/icons';
 import { MODES, setMode } from 'App/reducers/editorSlice';
 import { MenuItem, PopupMenu } from 'App/shared/PopupMenu/PopupMenu';
 import { startRecord } from 'App/reducers/thunks/toneThunks';
 import { useStopPropEventListener } from 'utils/hooks/useStopPropEventListener';
-import { useAbstractState } from 'App/reducers/useAbstractState/useAbstractState';
 import { useCurrentPath } from 'utils/hooks/useGoTo';
-import { useEditorState } from 'App/reducers/useAbstractState/useEditorState';
+import {
+  areWeTapPlaying,
+  areWeTapRecording,
+} from 'App/reducers/useAbstractState/useEditorState';
 
 export const TapMenu = () => {
-  const { tapPlayMode, tapRecordMode } = useEditorState();
+  const editorMode = useSelector((state) => state.editor.mode);
+  const tapPlaying = areWeTapPlaying(editorMode);
+  const tapRecording = areWeTapRecording(editorMode);
   const { selectingKit } = useCurrentPath();
 
   let addBtnClasses = ' tap';
-  if (tapPlayMode) addBtnClasses += ' active';
-  if (tapRecordMode) addBtnClasses += ' active record';
+  if (tapPlaying) addBtnClasses += ' active';
+  if (tapRecording) addBtnClasses += ' active record';
   return (
     <PopupMenu
       name='tap'
@@ -31,8 +35,9 @@ export const TapMenu = () => {
 const modes = [MODES.TAP, MODES.TAP_RECORD];
 const TapMenuItems = () => {
   const dispatch = useDispatch();
+  const editorMode = useSelector((state) => state.editor.mode);
+  const started = useSelector((state) => state.tone.transportState === 'started');
   const { eventListener } = useStopPropEventListener();
-  const { started, editorMode } = useAbstractState();
 
   const initEditor = () => dispatch(setMode(MODES.INIT));
 

@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
-import { TransportPanel } from 'App/Sequencer/MenuBar/Transport/TransportPanel';
-import { UndoRedoBtn } from 'App/Sequencer/MenuBar/UndoRedoBtn';
-import { EraseBtn } from 'App/Sequencer/MenuBar/EraseBtn';
-import { LoadSaveBtn } from 'App/Sequencer/MenuBar/LoadSaveBtn';
-import { KitBtn } from 'App/Sequencer/MenuBar/KitBtn';
-import { TapMenu } from 'App/Sequencer/MenuBar/TapMenu';
-import { DisplayMenu } from './DisplayMenu/DisplayMenu';
+import { TransportPanel } from './MenuItems/Transport/TransportPanel';
+import { UndoRedoBtn } from './MenuItems/UndoRedoBtn';
+import { EraseBtn } from './MenuItems/EraseBtn';
+import { LoadSaveBtn } from './MenuItems/LoadSaveBtn';
+import { KitBtn } from './MenuItems/KitBtn';
+import { TapMenu } from './MenuItems/TapMenu';
+import { DisplayMenu } from './MenuItems/DisplayMenu/DisplayMenu';
 import { useSelector } from 'react-redux';
 import { Scrollable } from 'App/shared/Scrollable/Scrollable';
 

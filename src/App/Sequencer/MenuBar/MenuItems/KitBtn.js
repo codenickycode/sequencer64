@@ -27,12 +27,9 @@ export const KitBtn = () => {
       }
     };
 
+    const classes = selectingKit ? 'menuBtn active kit' : 'menuBtn kit';
     return (
-      <Button
-        id='changeKitBtn'
-        classes={selectingKit ? 'menuBtn active kit' : 'menuBtn kit'}
-        onClick={changeKit}
-      >
+      <Button id='changeKitBtn' classes={classes} onClick={changeKit}>
         <KitIcon />
         <label htmlFor='changeKitBtn'>kit</label>
       </Button>

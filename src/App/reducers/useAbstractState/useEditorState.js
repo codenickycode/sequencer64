@@ -36,6 +36,10 @@ export const areWeEditing = (editorMode) => {
   return editorMode !== MODES.INIT && !areWeTapping(editorMode);
 };
 
+export const areWeDeepEditing = (editorMode) => {
+  return editorMode !== MODES.PAINT && areWeEditing(editorMode);
+};
+
 export const areCellsEditable = (editorMode) => {
   return editorMode === MODES.ERASE || editorMode === MODES.SLICE;
 };
