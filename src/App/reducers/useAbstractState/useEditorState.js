@@ -35,3 +35,20 @@ export const areWeTapping = (editorMode) => {
 export const areWeEditing = (editorMode) => {
   return editorMode !== MODES.INIT && !areWeTapping(editorMode);
 };
+
+export const areCellsEditable = (editorMode) => {
+  return editorMode === MODES.ERASE || editorMode === MODES.SLICE;
+};
+
+export const getIsActive = (editorMode) => {
+  const isActive = {};
+  isActive[MODES.PAINT] = editorMode === MODES.PAINT;
+  isActive[MODES.ERASE] = editorMode === MODES.ERASE;
+  isActive[MODES.SLICE] = editorMode === MODES.SLICE;
+  isActive[MODES.COPY] = editorMode === MODES.COPY;
+  isActive[MODES.MOD_PITCH] = editorMode === MODES.MOD_PITCH;
+  isActive[MODES.MOD_VELOCITY] = editorMode === MODES.MOD_VELOCITY;
+  isActive[MODES.MOD_LENGTH] = editorMode === MODES.MOD_LENGTH;
+
+  return isActive;
+};

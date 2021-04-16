@@ -6,46 +6,44 @@ import { PitchVelocityLength } from 'App/Sequencer/SamplePanel/PitchVelocityLeng
 import { SampleEditMenu } from './SampleEditMenu';
 import { SampleBtns } from './SampleBtns';
 import { VisualPanel } from 'App/Sequencer/VisualPanel/VisualPanel';
-import { useEditorState } from 'App/reducers/useAbstractState/useEditorState';
+import { areCellsEditable, getIsActive } from 'App/reducers/useAbstractState/useEditorState';
 import { hideEditable, showEditable } from 'utils/toggleClasses';
 
 export const SamplePanel = () => {
-  const dispatch = useDispatch();
-
-  const { editorMode, cellsEditable, paintMode, modPitchMode } = useEditorState();
-  if (cellsEditable) showEditable();
-  if (paintMode) hideEditable();
-
-  const splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);
-
-  const spMemo = useMemo(() => {
-    const onReturn = () => dispatch(setMode(MODES.PAINT));
+  const { splitSamplePanel, isActive, onReturn } = useSamplePanel();
+  const memo = useMemo(() => {
     return (
       <>
         <div className={splitSamplePanel ? 'spTop' : 'noSplit'}>
           {splitSamplePanel && <VisualPanel />}
-          {editorMode === MODES.PAINT ? (
-            <SampleEditMenu />
-          ) : editorMode === MODES.ERASE ? (
-            <Erase onReturn={onReturn} />
-          ) : editorMode === MODES.SLICE ? (
-            <Slice onReturn={onReturn} />
-          ) : editorMode === MODES.COPY ? (
-            <Copy onReturn={onReturn} />
-          ) : editorMode === MODES.MOD_PITCH ||
-            editorMode === MODES.MOD_VELOCITY ||
-            editorMode === MODES.MOD_LENGTH ? (
-            <PitchVelocityLength
-              onReturn={onReturn}
-              editorMode={editorMode}
-              modPitchMode={modPitchMode}
-            />
-          ) : null}
+          {isActive[MODES.PAINT] && <SampleEditMenu />}
+          {isActive[MODES.ERASE] && <Erase onReturn={onReturn} />}
+          {isActive[MODES.SLICE] && <Slice onReturn={onReturn} />}
+          {isActive[MODES.COPY] && <Copy onReturn={onReturn} />}
+          {(isActive[MODES.MOD_PITCH] ||
+            isActive[MODES.MOD_VELOCITY] ||
+            isActive[MODES.MOD_LENGTH]) && (
+            <PitchVelocityLength onReturn={onReturn} isActive={isActive} />
+          )}
         </div>
         <SampleBtns />
       </>
     );
-  }, [splitSamplePanel, editorMode, modPitchMode, dispatch]);
+  }, [splitSamplePanel, isActive, onReturn]);
 
-  return spMemo;
+  return memo;
+};
+
+const useSamplePanel = () => {
+  const dispatch = useDispatch();
+  const splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);
+  const editorMode = useSelector((state) => state.editor.mode);
+  const isActive = getIsActive(editorMode);
+
+  if (areCellsEditable(editorMode)) showEditable();
+  if (isActive[MODES.PAINT]) hideEditable();
+
+  const onReturn = () => dispatch(setMode(MODES.PAINT));
+
+  return { splitSamplePanel, isActive, onReturn };
 };
