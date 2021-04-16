@@ -1,13 +1,11 @@
 import React from 'react';
-import { MODES } from 'App/reducers/editorSlice';
 import { Button } from 'App/shared/Button';
 import { ChevronLeftIcon, ChevronDownIcon } from 'assets/icons';
 import { MIDI_NOTES } from 'utils/MIDI_NOTES';
 import { usePitchVelocityLength } from './usePitchVelocityLength';
 import { useTouchAndMouse } from 'utils/hooks/useTouchAndMouse';
-import { useSelector } from 'react-redux';
 
-export const PitchVelocityLength = ({ onReturn }) => {
+export const PitchVelocityLength = ({ onReturn, moddingPitch }) => {
   const values = usePitchVelocityLength();
   return (
     <div className={values.containerClasses}>
@@ -15,8 +13,8 @@ export const PitchVelocityLength = ({ onReturn }) => {
         <ChevronLeftIcon />
       </Button>
       <div className='modWrapper'>
-        <Pitch {...values} />
-        <VelocityAndLength {...values} />
+        {moddingPitch && <Pitch {...values} />}
+        {!moddingPitch && <VelocityAndLength {...values} />}
         <div className='modBtns'>
           <Button onClick={values.onReset}>Reset All</Button>
           <Button classes={values.editAll ? 'bgGreen' : ''} onClick={values.toggleAll}>
@@ -29,8 +27,7 @@ export const PitchVelocityLength = ({ onReturn }) => {
 };
 
 const Pitch = ({ value, onChange, applyInfo }) => {
-  const editorMode = useSelector((state) => state.editor.mode);
-  return !editorMode === MODES.MOD_PITCH ? null : (
+  return (
     <>
       {applyInfo.value ? (
         <p className={applyInfo.classes}>{applyInfo.value}</p>
@@ -57,12 +54,9 @@ const Pitch = ({ value, onChange, applyInfo }) => {
 };
 
 const VelocityAndLength = ({ sliderRef, setSliderValue, endFunc, value, applyInfo }) => {
-  const editorMode = useSelector((state) => state.editor.mode);
   const touchAndMouse = useTouchAndMouse(setSliderValue, setSliderValue, endFunc);
-  if (editorMode === MODES.MOD_PITCH) return null;
   const sliderStyle = { transform: `scaleX(${value.toFixed(2)})` };
   const thumbStyle = { transform: `translateX(${parseInt(value * 100)}%)` };
-  // console.log(thumbStyle.transform);
   return (
     <>
       <div ref={sliderRef} className='modSliderWrapper' {...touchAndMouse}>

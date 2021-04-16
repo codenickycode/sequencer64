@@ -1,5 +1,5 @@
 import { EditorModeIcons } from 'assets/icons';
-import { close, setMode, MODES } from 'App/reducers/editorSlice';
+import { close, setMode } from 'App/reducers/editorSlice';
 import { useLayoutEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 

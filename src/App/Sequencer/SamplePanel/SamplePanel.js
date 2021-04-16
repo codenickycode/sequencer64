@@ -27,7 +27,7 @@ export const SamplePanel = () => {
           {slicing && <Slice onReturn={onReturn} />}
           {copying && <Copy onReturn={onReturn} />}
           {(moddingPitch || moddingVelocity || moddingLength) && (
-            <PitchVelocityLength onReturn={onReturn} />
+            <PitchVelocityLength onReturn={onReturn} moddingPitch={moddingPitch} />
           )}
         </div>
         <SampleBtns />

@@ -78,13 +78,14 @@
     @extend %full;
     @include flex(column, space-evenly);
     @media (orientation: landscape) {
-      max-height: 225px;
+      max-height: 250px;
     }
     @include responsiveFont(4vw, 14px, 20px);
 
     .modSliderWrapper {
       @extend %full;
       max-width: 50%;
+      min-height: 25%;
       @include flex;
     }
 
@@ -101,7 +102,6 @@
       width: 100%;
       height: 50%;
       left: -1rem;
-      // background: blue;
       @include flex;
       justify-content: flex-start;
 
@@ -160,6 +160,10 @@
   .modBtns {
     @extend %full;
     @include flex(row, space-evenly);
+
+    @media (orientation: landscape) {
+      padding: 2rem 0;
+    }
 
     .btn {
       @extend %btn;
