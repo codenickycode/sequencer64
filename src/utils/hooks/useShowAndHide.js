@@ -7,7 +7,11 @@ export const useShowAndHideClass = (baseClasses = '', timeout = 0, trigger1, tri
     (trigger) => {
       if (!trigger) return;
       setClasses(baseClasses + ' show');
-      setTimeout(() => setClasses(baseClasses), timeout);
+      try {
+        setTimeout(() => setClasses(baseClasses), timeout);
+      } catch (e) {
+        console.log('component unmounted');
+      }
     },
     [baseClasses, timeout]
   );
@@ -16,14 +20,6 @@ export const useShowAndHideClass = (baseClasses = '', timeout = 0, trigger1, tri
   useEffect(() => showAndHide(trigger2), [baseClasses, showAndHide, timeout, trigger2]);
 
   return classes;
-};
-
-export const useFlashState = (timeout) => {
-  const [flash, setFlash] = useState(false);
-  useEffect(() => {
-    if (flash) setTimeout(() => setFlash(false), timeout);
-  }, [flash, timeout]);
-  return [flash, setFlash];
 };
 
 export const useAddAndRemoveClass = (
@@ -36,7 +32,11 @@ export const useAddAndRemoveClass = (
   useEffect(() => {
     if (!trigger) return;
     setClasses(baseClasses + ' ' + addClasses);
-    setTimeout(() => setClasses(baseClasses), timeout);
+    try {
+      setTimeout(() => setClasses(baseClasses), timeout);
+    } catch (e) {
+      console.log('component unmounted');
+    }
   }, [addClasses, baseClasses, timeout, trigger]);
   return classes;
 };
@@ -45,7 +45,11 @@ export const useShowAndHideText = (baseText = '') => {
   const [text, setText] = useState(baseText);
   const showAndHideText = (newText, timeout) => {
     setText(newText);
-    setTimeout(() => setText(''), timeout);
+    try {
+      setTimeout(() => setText(''), timeout);
+    } catch (e) {
+      console.log('component unmounted');
+    }
   };
   return { text, showAndHideText };
 };

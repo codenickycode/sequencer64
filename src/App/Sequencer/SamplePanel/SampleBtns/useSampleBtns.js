@@ -7,7 +7,7 @@ import {
   areWeTapRecording,
   areWeTapping,
 } from 'App/reducers/useAbstractState/useEditorState';
-import { useFlashState } from 'utils/hooks/useShowAndHide';
+import { useAutoFalseState } from 'utils/hooks/useAutoFalseState';
 
 export const useSampleBtnContainer = () => {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ export const useSampleBtn = (selectSample, selected, i) => {
   const recording = areWeTapRecording(editorMode);
   const tapping = areWeTapping(editorMode);
 
-  const [flash, setFlash] = useFlashState(100);
+  const [flash, setFlash] = useAutoFalseState(100);
 
   const startFunc = (e) => {
     if (recording) dispatch(recordSample(i));
