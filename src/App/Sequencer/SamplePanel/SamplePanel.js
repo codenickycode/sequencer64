@@ -8,16 +8,16 @@ import { SampleBtns } from './SampleBtns/SampleBtns';
 import { VisualPanel } from 'App/Sequencer/VisualPanel/VisualPanel';
 import {
   areCellsEditable,
-  getAbstractEditorMode,
+  getSampleEditModes,
 } from 'App/reducers/abstractState/abstractEditorState';
 import { hideEditable, showEditable } from 'utils/toggleClasses';
 
 export const SamplePanel = () => {
-  const { splitSamplePanel, abstractEditorMode, onReturn } = useSamplePanel();
+  const { splitSamplePanel, sampleEditModes, onReturn } = useSamplePanel();
 
   const memo = useMemo(() => {
-    const { painting, erasing, slicing, copying } = abstractEditorMode;
-    const { moddingPitch, moddingVelocity, moddingLength } = abstractEditorMode;
+    const { painting, erasing, slicing, copying } = sampleEditModes;
+    const { moddingPitch, moddingVelocity, moddingLength } = sampleEditModes;
     return (
       <>
         <div className={splitSamplePanel ? 'spTop' : 'noSplit'}>
@@ -33,7 +33,7 @@ export const SamplePanel = () => {
         <SampleBtns />
       </>
     );
-  }, [abstractEditorMode, splitSamplePanel, onReturn]);
+  }, [sampleEditModes, splitSamplePanel, onReturn]);
 
   return memo;
 };
@@ -42,13 +42,13 @@ const useSamplePanel = () => {
   const dispatch = useDispatch();
   const splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);
   const editorMode = useSelector((state) => state.editor.mode);
-  const abstractEditorMode = getAbstractEditorMode(editorMode);
-  const { painting } = abstractEditorMode;
+  const sampleEditModes = getSampleEditModes(editorMode);
+  const { painting } = sampleEditModes;
 
   if (areCellsEditable(editorMode)) showEditable();
   if (painting) hideEditable();
 
   const onReturn = () => dispatch(setMode(MODES.PAINT));
 
-  return { splitSamplePanel, abstractEditorMode, onReturn };
+  return { splitSamplePanel, sampleEditModes, onReturn };
 };

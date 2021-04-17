@@ -64,12 +64,6 @@ export const appSlice = createSlice({
     setTheme: (state, { payload }) => {
       state.theme = payload;
     },
-    setShowDisplayMenu: (state, { payload }) => {
-      state.showDisplayMenu = payload;
-    },
-    setShowTapMenu: (state, { payload }) => {
-      state.showTapMenu = payload;
-    },
     setLog: (state, { payload }) => {
       state.log.count++;
       state.log.message = payload;
@@ -102,8 +96,6 @@ export const {
   setOnline,
   setServiceWorkerActive,
   setTheme,
-  setShowDisplayMenu,
-  setShowTapMenu,
   setLog,
   updateSequencesFinally,
   getUserFinally,

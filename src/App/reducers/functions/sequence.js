@@ -47,28 +47,6 @@ export const initSampleStep = (sample) => {
   sample.notes.push(INIT_NOTE());
 };
 
-export const deepCopyPattern = (pattern) =>
-  Object.assign(
-    [],
-    pattern.map((step) =>
-      Object.assign(
-        [],
-        step.map((sample) =>
-          Object.assign(
-            {},
-            {
-              noteOn: sample.noteOn,
-              notes: Object.assign(
-                [],
-                sample.notes.map((note) => Object.assign({}, note))
-              ),
-            }
-          )
-        )
-      )
-    )
-  );
-
 export const INIT_NOTE = () => ({ pitch: 'C2', velocity: 1, length: 1 });
 
 export const INIT_SAMPLE = () => ({
@@ -134,8 +112,7 @@ export const getStrFromPattern = (editedPattern) => {
   return string || 'init';
 };
 
-const getNoteStrFromObj = (note) =>
-  `p${note.pitch}v${note.velocity}l${note.length}`;
+const getNoteStrFromObj = (note) => `p${note.pitch}v${note.velocity}l${note.length}`;
 
 const getNoteObjFromStr = (string) => {
   const noteVals = INIT_NOTE();

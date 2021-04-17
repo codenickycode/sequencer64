@@ -1,13 +1,20 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { setLS } from 'utils/storage';
+import { setLS, setSS } from 'utils/storage';
 
 export const Storage = () => {
   const theme = useSelector((state) => state.app.theme);
+  const analyzerMode = useSelector((state) => state.screen.analyzer.mode);
+  const analyzerOn = useSelector((state) => state.screen.analyzer.on);
 
   useEffect(() => {
     setLS('theme', theme);
   }, [theme]);
+
+  useEffect(() => {
+    setSS('analyzerOn', analyzerOn);
+    setSS('analyzerMode', analyzerMode);
+  }, [analyzerOn, analyzerMode]);
 
   const sequence = useSelector((state) => state.sequence.present);
 

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import store from 'App/store';
+import { getSS } from 'utils/storage';
 import { startAnalyzer, stopAnalyzer } from './functions/animations';
 
 export const ANALYZER_MODES = {
@@ -23,10 +24,15 @@ const INITIAL_DIMENSIONS = getDimensions();
 const INITIAL_SPLIT =
   INITIAL_DIMENSIONS.mainContainerHeight > 500 && INITIAL_DIMENSIONS.landscape;
 
+const INITIAL_ANALYZER = {
+  on: getSS('analyzerOn') !== undefined ? getSS('analyzerOn') : INITIAL_SPLIT,
+  mode: getSS('analyzerMode') || ANALYZER_MODES.BARS,
+};
+
 const INITIAL_STATE = {
   dimensions: INITIAL_DIMENSIONS,
   splitSamplePanel: INITIAL_SPLIT,
-  analyzer: { on: INITIAL_SPLIT, mode: ANALYZER_MODES.BARS },
+  analyzer: INITIAL_ANALYZER,
 };
 
 export const screenSlice = createSlice({
@@ -36,12 +42,15 @@ export const screenSlice = createSlice({
     setDimensions: (state) => {
       state.dimensions = getDimensions();
       state.splitSamplePanel =
-        state.dimensions.mainContainerHeight > 500 &&
-        state.dimensions.landscape;
+        state.dimensions.mainContainerHeight > 500 && state.dimensions.landscape;
     },
     setAnalyzerOnFinally: (state, { payload }) => {
       state.analyzer.on = payload;
-      console.log(payload);
+    },
+    setAnalyzerOn: (state, { payload }) => {
+      state.analyzer.on = payload;
+      if (state.analyzer.on) startAnalyzer();
+      else stopAnalyzer();
     },
     setAnalyzerMode: (state, { payload }) => {
       state.analyzer.mode = payload;
@@ -50,13 +59,7 @@ export const screenSlice = createSlice({
   },
 });
 
-export const { setDimensions, setAnalyzerMode } = screenSlice.actions;
-
-export const setAnalyzerOn = (newOn) => async (dispatch, getState) => {
-  dispatch(screenSlice.actions.setAnalyzerOnFinally(newOn));
-  if (newOn) startAnalyzer();
-  else stopAnalyzer();
-};
+export const { setDimensions, setAnalyzerMode, setAnalyzerOn } = screenSlice.actions;
 
 export default screenSlice.reducer;
 
@@ -67,7 +70,7 @@ window.addEventListener('blur', () => {
 });
 
 let resizeTimer;
-let prevWidth = document.documentElement.clientWidth;
+let prevWidth = null;
 const root = document.getElementById('root');
 const preparingPortal = document.getElementById('preparingPortal');
 
@@ -78,6 +81,7 @@ function handleResize() {
   preparingPortal.style.display = 'initial';
   resizeTimer = setTimeout(redraw, 350);
 }
+handleResize();
 
 function afterRotate() {
   redraw();
