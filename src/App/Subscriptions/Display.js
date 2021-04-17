@@ -1,5 +1,5 @@
+import { areWeTapping } from 'App/reducers/abstractState/abstractEditorState';
 import { setFlashInfo } from 'App/reducers/appSlice';
-import { MODES } from 'App/reducers/editorSlice';
 import { startAnalyzer, stopAnalyzer } from 'App/reducers/functions/animations';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,9 +10,8 @@ export const Display = () => {
   const splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);
   const transportStarted = useSelector((state) => state.tone.transportState === 'started');
   const analyzerOn = useSelector((state) => state.screen.analyzer.on);
-  const mode = useSelector((state) => state.editor.mode);
-
-  const tapping = mode === MODES.TAP || mode === MODES.TAP_RECORD;
+  const editing = useSelector((state) => state.editor.selectedSample !== -1);
+  const tapping = useSelector((state) => areWeTapping(state.editor.mode));
 
   useEffect(() => {
     const spBorder = document.getElementById('sampleBtnsBorder');
@@ -25,8 +24,8 @@ export const Display = () => {
     if (splitSamplePanel || !analyzerOn) return;
     const analyzer = document.getElementById('analyzer');
     if (!analyzer) return;
-    if (mode === MODES.INIT || tapping) analyzer.style.opacity = 1;
-    if (mode !== MODES.INIT && !tapping) analyzer.style.opacity = 0;
+    if (!editing) analyzer.style.opacity = 1;
+    if (editing) analyzer.style.opacity = 0;
   });
 
   useEffect(() => {

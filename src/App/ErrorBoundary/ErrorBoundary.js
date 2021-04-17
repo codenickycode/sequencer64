@@ -20,21 +20,20 @@ class ErrorBoundary extends React.Component {
 export default ErrorBoundary;
 
 const ErrorHandler = ({ error }) => {
-  const returnHome = () => {
+  const reloadApp = () => {
     localStorage.clear();
     sessionStorage.clear();
     window.location.href = '/';
   };
   return (
     <div id='errorHandler'>
-      <h1>Oops!</h1>
-      <h2>Something went wrong :(</h2>
-      <div className='printError'>{error.message}</div>
-      <div className='printError'>{error.stack}</div>
-
-      <button className='btn' onClick={returnHome}>
-        Return home
-      </button>
+      <div className='container'>
+        <p>Oops!</p>
+        <p>Something went wrong :(</p>
+        <button className='btn' onClick={reloadApp}>
+          Reload app
+        </button>
+      </div>
     </div>
   );
 };

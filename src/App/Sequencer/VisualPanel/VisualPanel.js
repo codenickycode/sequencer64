@@ -1,7 +1,7 @@
 import { EDITOR_MODE_INFO, setInfo } from 'App/reducers/editorSlice';
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useShowAndHideClass } from 'utils/hooks/useShowAndHide';
+import { useShowAndHideClass } from 'hooks/useShowAndHide';
 import { Analyzer } from './Analyzer';
 
 export const VisualPanel = () => {

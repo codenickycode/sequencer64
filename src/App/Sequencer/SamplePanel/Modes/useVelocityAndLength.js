@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useSideEffect } from 'utils/hooks/useSideEffect';
+import { useSideEffect } from 'hooks/useSideEffect';
 import { usePVL } from './usePVL';
 
 export const useVelocityAndLength = () => {

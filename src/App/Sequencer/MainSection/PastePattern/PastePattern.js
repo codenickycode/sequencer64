@@ -5,7 +5,7 @@ import { paste } from 'App/reducers/sequenceSlice';
 import { Button } from 'App/shared/Button';
 import { Portal } from 'App/shared/Portal';
 import { getGrid } from 'utils/getGrid';
-import { useAddAndRemoveClass } from 'utils/hooks/useShowAndHide';
+import { useAddAndRemoveClass } from 'hooks/useShowAndHide';
 
 export const PastePattern = () => {
   const kit = useSelector((state) => state.sequence.present.kit);

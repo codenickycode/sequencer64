@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { SliceIcon } from 'assets/icons';
 import { useCell } from './useCell';
-import { useTouchAndMouse } from 'utils/hooks/useTouchAndMouse';
+import { useTouchAndMouse } from 'hooks/useTouchAndMouse';
 import { getGrid } from 'utils/getGrid';
 
 export const Cell = ({ id, step, prevCellRef }) => {

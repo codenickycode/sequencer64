@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { Button } from 'App/shared/Button';
 import { KitIcon } from 'assets/icons';
 import { MODES, setMode } from 'App/reducers/editorSlice';
-import { useGoTo, useCurrentPath } from 'utils/hooks/useGoTo';
-import { useStopPropEventListener } from 'utils/hooks/useStopPropEventListener';
+import { useGoTo, useCurrentPath } from 'hooks/useGoTo';
+import { useStopPropEventListener } from 'hooks/useStopPropEventListener';
 
 export const KitBtn = () => {
   const dispatch = useDispatch();

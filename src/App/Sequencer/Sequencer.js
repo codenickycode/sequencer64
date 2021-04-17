@@ -5,7 +5,7 @@ import { Grid } from 'App/Sequencer/MainSection/Grid/Grid';
 import { SamplePanel } from 'App/Sequencer/SamplePanel/SamplePanel';
 import { MenuBar } from 'App/Sequencer/MenuBar/MenuBar';
 import { loadInitialSequence } from 'App/reducers/sequenceSlice';
-import { PATHS } from 'utils/hooks/useGoTo';
+import { PATHS } from 'hooks/useGoTo';
 import { VisualPanel } from 'App/Sequencer/VisualPanel/VisualPanel';
 // import { MobileConsole } from 'App/MobileConsole';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from 'App/reducers/appSlice';
 import { Button } from 'App/shared/Button';
-import { useGoTo } from 'utils/hooks/useGoTo';
+import { useGoTo } from 'hooks/useGoTo';
 
 export const LoginSection = () => {
   const loggedIn = useSelector((state) => state.app.user.loggedIn);

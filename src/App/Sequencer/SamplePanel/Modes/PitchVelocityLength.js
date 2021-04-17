@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Button } from 'App/shared/Button';
 import { ChevronLeftIcon, ChevronDownIcon } from 'assets/icons';
 import { MIDI_NOTES } from 'utils/MIDI_NOTES';
-import { useTouchAndMouse } from 'utils/hooks/useTouchAndMouse';
+import { useTouchAndMouse } from 'hooks/useTouchAndMouse';
 import { useSelector } from 'react-redux';
 import { useVelocityAndLength } from 'App/Sequencer/SamplePanel/Modes/useVelocityAndLength';
 import { usePitch } from './usePitch';

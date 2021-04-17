@@ -4,8 +4,8 @@ import { TapIcon } from 'assets/icons';
 import { MODES, setMode } from 'App/reducers/editorSlice';
 import { MenuItem, PopupMenu } from 'App/shared/PopupMenu/PopupMenu';
 import { startRecord } from 'App/reducers/thunks/toneThunks';
-import { useStopPropEventListener } from 'utils/hooks/useStopPropEventListener';
-import { useCurrentPath } from 'utils/hooks/useGoTo';
+import { useStopPropEventListener } from 'hooks/useStopPropEventListener';
+import { useCurrentPath } from 'hooks/useGoTo';
 import {
   areWeTapPlaying,
   areWeTapRecording,

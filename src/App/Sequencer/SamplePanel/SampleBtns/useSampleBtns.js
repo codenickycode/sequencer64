@@ -7,7 +7,7 @@ import {
   areWeTapRecording,
   areWeTapping,
 } from 'App/reducers/abstractState/abstractEditorState';
-import { useAutoFalseState } from 'utils/hooks/useAutoFalseState';
+import { useAutoFalseState } from 'hooks/useAutoFalseState';
 
 export const useSampleBtnContainer = () => {
   const dispatch = useDispatch();

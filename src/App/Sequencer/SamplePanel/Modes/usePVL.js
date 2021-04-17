@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { EDITOR_MODE_INFO, INITIAL_MODS, setModVal } from 'App/reducers/editorSlice';
 import { modAll, resetMods } from 'App/reducers/sequenceSlice';
 import { showEditable, hideEditable } from 'utils/toggleClasses';
-import { useShowAndHideClass, useShowAndHideText } from 'utils/hooks/useShowAndHide';
+import { useShowAndHideClass, useShowAndHideText } from 'hooks/useShowAndHide';
 
 export const usePVL = () => {
   const dispatch = useDispatch();

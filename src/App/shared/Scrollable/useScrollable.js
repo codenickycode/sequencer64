@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { getFullyScrolled, getScrollToLeft, useInitialScroll } from './scrollHelpers';
-import { useCallWhenDone } from 'utils/hooks/useCallWhenDone';
+import { useCallWhenDone } from 'hooks/useCallWhenDone';
 
 export const useScrollable = () => {
   const containerRef = useRef(null);

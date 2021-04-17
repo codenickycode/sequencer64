@@ -3,7 +3,7 @@ import { Load } from 'App/Sequencer/LoadSave/Load/Load';
 import { Save } from 'App/Sequencer/LoadSave/Save/Save';
 import { Button } from 'App/shared/Button';
 import { LoginSection } from './LoginSection';
-import { useGoTo } from 'utils/hooks/useGoTo';
+import { useGoTo } from 'hooks/useGoTo';
 import { Portal } from 'App/shared/Portal';
 
 export const LoadSave = ({ tab }) => {

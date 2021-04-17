@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useTouchAndMouse } from 'utils/hooks/useTouchAndMouse';
+import { useTouchAndMouse } from 'hooks/useTouchAndMouse';
 import * as icons from 'assets/icons/kit';
 import { useSampleBtn, useSampleBtnContainer } from './useSampleBtns';
 

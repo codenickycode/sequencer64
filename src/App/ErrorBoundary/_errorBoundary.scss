@@ -1,9 +1,26 @@
-@use 'styles/placeholders';
+@use 'styles/placeholders' as *;
+@use 'styles/mixins' as *;
 
 #errorHandler {
-  @extend %fullAbs;
-}
+  width: 100vw;
+  height: 100vh;
+  @include flex;
 
-.printError {
-  background: blue;
+  .container {
+    @extend %full;
+    max-width: 500px;
+    max-height: 500px;
+    @include flex(column);
+    @extend %bg;
+    @extend %border;
+
+    p,
+    button {
+      margin: 2rem 0;
+    }
+
+    button {
+      @extend %btn;
+    }
+  }
 }
