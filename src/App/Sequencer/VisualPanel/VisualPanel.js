@@ -1,5 +1,4 @@
 import { EDITOR_MODE_INFO, setInfo } from 'App/reducers/editorSlice';
-import { areWeEditing } from 'App/reducers/useAbstractState/useEditorState';
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useShowAndHideClass } from 'utils/hooks/useShowAndHide';
@@ -36,7 +35,7 @@ const useInfoState = () => {
   const editorMode = useSelector((state) => state.editor.mode);
 
   const state = {};
-  state.editing = areWeEditing(editorMode);
+  state.editing = useSelector((state) => state.editor.selectedSample !== -1);
   state.transportStarted = useSelector((state) => state.tone.transportState === 'started');
   state.analyzerOn = useSelector((state) => state.screen.analyzer.on);
   state.countIn = useSelector((state) => state.tone.countIn);

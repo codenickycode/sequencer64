@@ -1,4 +1,4 @@
-import { areWeTapRecording } from 'App/reducers/useAbstractState/useEditorState';
+import { areWeTapRecording } from 'App/reducers/abstractState/abstractEditorState';
 import { useSelector } from 'react-redux';
 
 export const useShowTransportBtns = () => {

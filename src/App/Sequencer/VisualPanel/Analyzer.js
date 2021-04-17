@@ -1,6 +1,5 @@
 import { startAnalyzer } from 'App/reducers/functions/animations';
 import { ANALYZER_MODES } from 'App/reducers/screenSlice';
-import { areWeEditing } from 'App/reducers/useAbstractState/useEditorState';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { getGrid } from 'utils/getGrid';
@@ -35,7 +34,7 @@ const useAnalyzerState = () => {
   const state = {};
   state.splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);
   state.editorMode = useSelector((state) => state.editor.mode);
-  state.editing = areWeEditing(state.editorMode);
+  state.editing = useSelector((state) => state.editor.selectedSample !== -1);
   state.analyzerMode = useSelector((state) => state.screen.analyzer.mode);
   state.analyzerOn = useSelector((state) => state.screen.analyzer.on);
 

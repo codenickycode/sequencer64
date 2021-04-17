@@ -9,7 +9,7 @@ import { useCurrentPath } from 'utils/hooks/useGoTo';
 import {
   areWeTapPlaying,
   areWeTapRecording,
-} from 'App/reducers/useAbstractState/useEditorState';
+} from 'App/reducers/abstractState/abstractEditorState';
 
 export const TapMenu = () => {
   const editorMode = useSelector((state) => state.editor.mode);

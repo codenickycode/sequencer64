@@ -4,7 +4,7 @@ import { eraseAll } from 'App/reducers/sequenceSlice';
 import { MODES, setMode } from 'App/reducers/editorSlice';
 import { EraseAllIcon } from 'assets/icons';
 import { Button } from 'App/shared/Button';
-import { areWeDeepEditing } from 'App/reducers/useAbstractState/useEditorState';
+import { areWeDeepEditing } from 'App/reducers/abstractState/abstractEditorState';
 
 export const EraseBtn = () => {
   const dispatch = useDispatch();

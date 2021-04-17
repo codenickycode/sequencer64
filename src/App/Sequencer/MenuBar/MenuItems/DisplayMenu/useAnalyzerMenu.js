@@ -1,11 +1,10 @@
 import { MODES, setMode } from 'App/reducers/editorSlice';
 import { setAnalyzerMode, setAnalyzerOn } from 'App/reducers/screenSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { areWeEditing } from 'App/reducers/useAbstractState/useEditorState';
 
 export const useAnalyzerMenu = () => {
   const dispatch = useDispatch();
-  const editing = useSelector((state) => areWeEditing(state.editor.mode));
+  const editing = useSelector((state) => state.editor.selectedSample !== -1);
   const on = useSelector((state) => state.screen.analyzer.on);
   const currentMode = useSelector((state) => state.screen.analyzer.mode);
   const splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);

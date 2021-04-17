@@ -6,13 +6,14 @@ import { recordSample } from 'App/reducers/sequenceSlice';
 import {
   areWeTapRecording,
   areWeTapping,
-} from 'App/reducers/useAbstractState/useEditorState';
+} from 'App/reducers/abstractState/abstractEditorState';
 import { useAutoFalseState } from 'utils/hooks/useAutoFalseState';
 
 export const useSampleBtnContainer = () => {
   const dispatch = useDispatch();
   const selectedSample = useSelector((state) => state.editor.selectedSample);
-  const kit = useSelector((state) => state.assets.kits[state.sequence.present.kit]);
+  const sequenceKitName = useSelector((state) => state.sequence.present.kit);
+  const kit = useSelector((state) => state.assets.kits[sequenceKitName]);
 
   const selectSample = (i) => dispatch(edit({ sample: i }));
 

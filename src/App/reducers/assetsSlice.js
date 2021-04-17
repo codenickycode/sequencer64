@@ -11,7 +11,6 @@ const INITIAL_CHANGE_KIT = {
 
 const INITIAL_STATE = {
   kits: INITIAL_CHANGE_KIT,
-  numKits: Object.values(INITIAL_CHANGE_KIT).length,
   defaultSequences,
   userSequences: [],
 };
@@ -27,9 +26,7 @@ export const assetsSlice = createSlice({
       state.kits[kit].available = available;
     },
     setSynched: (state, { payload: { _id, synched } }) => {
-      const seqToUpdate = state.userSequences.find(
-        (seqId) => seqId._id === _id
-      );
+      const seqToUpdate = state.userSequences.find((seqId) => seqId._id === _id);
       seqToUpdate.synched = synched;
     },
     setFetchingSamples: (state, { payload: { kit, fetching, available } }) => {

@@ -25,11 +25,12 @@ export const useSampleEditMenu = () => {
 
 export const useModeBtn = (mode) => {
   const dispatch = useDispatch();
+  const selectedSample = useSelector((state) => state.editor.selectedSample);
 
   const modeName = mode.toLowerCase();
   const Icon = EditorModeIcons[mode];
   const disabled = useSelector(
-    (state) => state.sequence.present.noteTally[state.editor.selectedSample].empty
+    (state) => state.sequence.present.noteTally[selectedSample].empty
   );
   const selectMode = () => dispatch(setMode(mode));
 

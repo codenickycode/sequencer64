@@ -8,7 +8,7 @@ import { Portal } from 'App/shared/Portal';
 import { getGrid } from 'utils/getGrid';
 
 export const ChangeKit = () => {
-  const numKits = useSelector((state) => state.assets.numKits);
+  const numKits = useSelector((state) => Object.values(state.assets.kits).length);
 
   // track which kit to load after multiple presses
   const counterRef = useRef(0);

@@ -9,7 +9,7 @@ import { VisualPanel } from 'App/Sequencer/VisualPanel/VisualPanel';
 import {
   areCellsEditable,
   getAbstractEditorMode,
-} from 'App/reducers/useAbstractState/useEditorState';
+} from 'App/reducers/abstractState/abstractEditorState';
 import { hideEditable, showEditable } from 'utils/toggleClasses';
 
 export const SamplePanel = () => {

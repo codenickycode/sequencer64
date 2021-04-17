@@ -46,10 +46,10 @@ export const Cell = ({ id, step, prevCellRef }) => {
 
 const SampleCells = ({ id, step }) => {
   const kit = useSelector((state) => state.sequence.present.kit);
-  const length = useSelector((state) => state.assets.kits[kit].samples.length);
+  const gridSize = useSelector((state) => state.assets.kits[kit].samples.length);
 
+  const grid = useMemo(() => getGrid(gridSize), [gridSize]);
   const sampleCellsMemo = useMemo(() => {
-    const grid = getGrid(length);
     return (
       <div className='sample-cells'>
         {grid.map((i) => {
@@ -58,7 +58,7 @@ const SampleCells = ({ id, step }) => {
         })}
       </div>
     );
-  }, [id, length, step]);
+  }, [grid, id, step]);
   return sampleCellsMemo;
 };
 

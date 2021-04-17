@@ -1,14 +1,14 @@
-import { setTapCellById, setToggleOn } from 'App/reducers/editorSlice';
+import { MODES, setTapCellById, setToggleOn } from 'App/reducers/editorSlice';
 import { modCell } from 'App/reducers/sequenceSlice';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEditorState } from 'App/reducers/useAbstractState/useEditorState';
 
 export const useCell = (id, step, prevCellRef) => {
   const dispatch = useDispatch();
 
   const selectedSample = useSelector((state) => state.editor.selectedSample);
-  const { editing, modPitchMode } = useEditorState();
+  const moddingPitch = useSelector((state) => state.editor.mode === MODES.MOD_PITCH);
+  const editing = selectedSample !== -1;
 
   const noteOn = useSelector((state) =>
     editing ? state.sequence.present.pattern[step][selectedSample].noteOn : false
@@ -33,17 +33,16 @@ export const useCell = (id, step, prevCellRef) => {
   // dragging: tap flag sent from Grid onTouchMove/onMouseMove
   const tapThisCell = useSelector((state) => state.editor.tapCellById[id]);
   useEffect(() => {
-    if (tapThisCell) {
-      tapCell();
-      dispatch(setTapCellById({ id, val: false }));
-    }
+    if (!tapThisCell) return;
+    tapCell();
+    dispatch(setTapCellById({ id, val: false }));
   }, [dispatch, id, tapCell, tapThisCell]);
 
   const startFunc = useCallback(
     (e) => {
       e.stopPropagation();
       dispatch(setToggleOn(!noteOn)); // set dragging effect
-      prevCellRef.current = id; // don't double tap on drag
+      prevCellRef.current = id; // for Grid onTouchMove
       tapCell();
     },
     [dispatch, id, noteOn, prevCellRef, tapCell]
@@ -54,18 +53,18 @@ export const useCell = (id, step, prevCellRef) => {
     const styles = {};
     const values = {};
 
-    values.midiNote = noteOn && modPitchMode ? pitch : null;
+    values.midiNote = noteOn && moddingPitch ? pitch : null;
 
     classes.cell = noteOn ? 'cell on' : 'cell';
     classes.bg = noteOn ? `bg bg${selectedSample}` : 'bg';
-    classes.slice1 = modPitchMode
+    classes.slice1 = moddingPitch
       ? 'slice'
       : noteOn && slice === 2
       ? 'slice slice-2'
       : noteOn && slice === 3
       ? 'slice slice-3'
       : 'slice';
-    classes.slice2 = modPitchMode ? 'slice' : noteOn && slice > 2 ? 'slice slice-2' : 'slice';
+    classes.slice2 = moddingPitch ? 'slice' : noteOn && slice > 2 ? 'slice slice-2' : 'slice';
 
     styles.bg = {
       transform: length >= 1 ? 'scaleX(1)' : `scaleX(${length * 3})`,
@@ -73,7 +72,7 @@ export const useCell = (id, step, prevCellRef) => {
     if (noteOn) styles.bg.opacity = velocity;
 
     return { classes, styles, values };
-  }, [length, modPitchMode, noteOn, pitch, selectedSample, slice, velocity]);
+  }, [length, moddingPitch, noteOn, pitch, selectedSample, slice, velocity]);
 
   return { state, startFunc };
 };

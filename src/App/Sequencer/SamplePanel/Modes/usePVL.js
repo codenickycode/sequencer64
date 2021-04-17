@@ -25,21 +25,20 @@ export const usePVL = () => {
     );
   }, [dispatch, editorMode, selectedSample, value]);
 
-  const { text, showAndHideText } = useShowAndHideText();
-  const applyInfoValue = text;
+  const [applyInfoValue, showAndHideApplyInfo] = useShowAndHideText();
   const applyInfoClasses = useShowAndHideClass('applyInfo', 2000, applyInfoValue);
 
   const toggleAll = useCallback(() => {
     if (editAll) {
       setEditAll(false);
       showEditable();
-      showAndHideText(EDITOR_MODE_INFO[editorMode], 4000);
+      showAndHideApplyInfo(EDITOR_MODE_INFO[editorMode], 4000);
     } else {
       dispatchModAll();
       setEditAll(true);
       hideEditable();
     }
-  }, [dispatchModAll, editAll, editorMode, showAndHideText]);
+  }, [dispatchModAll, editAll, editorMode, showAndHideApplyInfo]);
 
   const onReset = useCallback(() => {
     setValue(INITIAL_MODS[editorMode]);

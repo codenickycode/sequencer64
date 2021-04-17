@@ -1,34 +1,13 @@
-import React, { useMemo, useRef, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setTapCellById } from 'App/reducers/editorSlice';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { Cell } from './Cell';
 import { getGrid } from 'utils/getGrid';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTapCellById } from 'App/reducers/editorSlice';
 
 export const Grid = () => {
-  const dispatch = useDispatch();
-  const length = useSelector((state) => state.sequence.present.length);
-  const selectedSample = useSelector((state) => state.editor.selectedSample);
-
-  const prevCellRef = useRef(null);
-
-  const onTouchMove = useCallback(
-    (e) => {
-      if (selectedSample === -1) return;
-      if (!prevCellRef.current) return;
-      const cell = getTouchedCell(e);
-      const id = getIdOfCellToTap(cell, prevCellRef.current);
-      if (!id) return;
-      dispatch(setTapCellById({ id, val: true }));
-      prevCellRef.current = id;
-    },
-    [dispatch, selectedSample]
-  );
-
+  const { gridSize, moveFunc, endFunc, prevCellRef } = useGrid();
   const gridMemo = useMemo(() => {
-    const moveFunc = (e) => onTouchMove(e);
-    const endFunc = () => (prevCellRef.current = null);
-
-    const grid = getGrid(length);
+    const grid = getGrid(gridSize);
     return (
       <div
         id='grid'
@@ -44,8 +23,33 @@ export const Grid = () => {
         })}
       </div>
     );
-  }, [length, onTouchMove]);
+  }, [endFunc, gridSize, moveFunc, prevCellRef]);
   return gridMemo;
+};
+
+const useGrid = () => {
+  const dispatch = useDispatch();
+  const gridSize = useSelector((state) => state.sequence.present.length);
+  const notEditing = useSelector((state) => state.editor.selectedSample === -1);
+
+  const prevCellRef = useRef(null);
+
+  const onTouchMove = useCallback(
+    (e) => {
+      if (notEditing) return;
+      if (!prevCellRef.current) return;
+      const cell = getTouchedCell(e);
+      const id = getIdOfCellToTap(cell, prevCellRef.current);
+      if (!id) return;
+      dispatch(setTapCellById({ id, val: true }));
+      prevCellRef.current = id;
+    },
+    [dispatch, notEditing]
+  );
+  const moveFunc = (e) => onTouchMove(e);
+  const endFunc = () => (prevCellRef.current = null);
+
+  return { gridSize, moveFunc, endFunc, prevCellRef };
 };
 
 const getTouchedCell = (e) => {
