@@ -2,10 +2,6 @@
 @use 'styles/placeholders' as *;
 @use 'styles/colors' as *;
 
-#changeKitPortal {
-  @extend %noEventsLayerAbs;
-}
-
 .changeKit {
   pointer-events: initial;
   @extend %fullAbs;
@@ -74,18 +70,5 @@
         animation: flashing 400ms alternate infinite;
       }
     }
-  }
-}
-
-.kit-info {
-  pointer-events: initial;
-  @extend %full;
-  @include flex(column, space-evenly);
-  padding: 0.5rem;
-  @extend %bg90;
-  .btn.close {
-    @extend %btn;
-    width: 60%;
-    height: 2.5rem;
   }
 }

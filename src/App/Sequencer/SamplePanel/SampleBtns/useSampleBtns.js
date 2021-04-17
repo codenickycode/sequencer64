@@ -8,6 +8,9 @@ import {
   areWeTapping,
 } from 'App/reducers/abstractState/abstractEditorState';
 import { useAutoFalseState } from 'hooks/useAutoFalseState';
+import { useEffect } from 'react';
+import { useCurrentPath } from 'hooks/useGoTo';
+import { vanillaShowAndHideClass } from 'hooks/useShowAndHide';
 
 export const useSampleBtnContainer = () => {
   const dispatch = useDispatch();
@@ -25,8 +28,15 @@ export const useSampleBtn = (selectSample, selected, i) => {
   const editorMode = useSelector((state) => state.editor.mode);
   const recording = areWeTapRecording(editorMode);
   const tapping = areWeTapping(editorMode);
+  const { mixing } = useCurrentPath();
 
   const [flash, setFlash] = useAutoFalseState(100);
+
+  // flash mix panel
+  useEffect(() => {
+    if (!flash || !mixing) return;
+    vanillaShowAndHideClass(`mixSample${i}`, 'flash', 100);
+  }, [flash, i, mixing]);
 
   const startFunc = (e) => {
     if (recording) dispatch(recordSample(i));

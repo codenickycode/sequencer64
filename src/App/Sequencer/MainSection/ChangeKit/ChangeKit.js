@@ -16,7 +16,7 @@ export const ChangeKit = () => {
   const changeKitMemo = useMemo(() => {
     const grid = getGrid(numKits);
     return (
-      <Portal targetId='changeKitPortal'>
+      <Portal targetId='overGridPortal'>
         <div id='changeKit' className='changeKit'>
           <div className='kits'>
             {grid.map((i) => {

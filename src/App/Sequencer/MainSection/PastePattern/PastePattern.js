@@ -14,7 +14,7 @@ export const PastePattern = () => {
   const grid = useMemo(() => getGrid(samples.length), [samples.length]);
   const pastePatternMemo = useMemo(() => {
     return (
-      <Portal targetId='pastePatternPortal'>
+      <Portal targetId='overGridPortal'>
         <div id='pastePattern' className={'pastePattern'}>
           <div className='samples'>
             {grid.map((i) => {

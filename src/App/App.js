@@ -12,6 +12,7 @@ import { ChangeKit } from './Sequencer/MainSection/ChangeKit/ChangeKit';
 import { LoadSave } from './Sequencer/LoadSave/LoadSave';
 import { LoginPage } from './Login/LoginPage';
 import { PATHS } from 'hooks/useGoTo';
+import { Mixer } from './Sequencer/MainSection/Mixer/Mixer';
 
 export default function App() {
   return (
@@ -32,6 +33,7 @@ const AppContent = () => {
       <Route path='/' exact render={() => <Redirect to={PATHS.BASE} />} />
       <Route path='/sequencer/:shared' component={SequencerPage} />
       <Route path={PATHS.CHANGE_KIT} component={ChangeKit} />
+      <Route path={PATHS.MIXER} component={Mixer}/>
       <Route path={PATHS.LOAD} render={() => <LoadSave tab='load' />} />
       <Route path={PATHS.SAVE} render={() => <LoadSave tab='save' />} />
       <Route path={PATHS.LOGIN} component={LoginPage} />

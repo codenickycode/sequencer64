@@ -31,6 +31,7 @@ import { ReactComponent as Open } from 'assets/icons/open.svg';
 import { ReactComponent as Save } from 'assets/icons/save.svg';
 import { ReactComponent as Delete } from 'assets/icons/delete.svg';
 import { ReactComponent as Kit } from 'assets/icons/kit.svg';
+import { ReactComponent as Mixer } from 'assets/icons/mixer.svg';
 import { ReactComponent as Eraser } from 'assets/icons/eraser.svg';
 import { ReactComponent as CloudDownload } from 'assets/icons/cloud-download.svg';
 import { ReactComponent as CloudUpload } from 'assets/icons/cloud-upload.svg';
@@ -131,6 +132,8 @@ export const CloudOfflineIcon = ({ addClass = '' }) => (
 );
 
 export const KitIcon = ({ addClass = '' }) => <Kit className={addClass + ' icon'} />;
+
+export const MixerIcon = ({ addClass = '' }) => <Mixer className={addClass + ' icon'} />;
 
 export const CheckIcon = ({ addClass = '' }) => <Check className={addClass + ' icon'} />;
 

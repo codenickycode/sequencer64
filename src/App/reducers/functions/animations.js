@@ -43,12 +43,15 @@ export const animateCell = (time, cell) => {
 
 export const animateSample = (time, step) => {
   const sampleBtns = document.querySelectorAll('.sampleBtn');
+  const mixSamples = document.querySelectorAll('.mixSample');
   Tone.Draw.schedule(() => {
     step.forEach((sample, i) => {
       if (sample.noteOn) {
         sampleBtns && sampleBtns[i]?.classList.add('pulse');
+        mixSamples && mixSamples[i]?.classList.add('pulse');
         setTimeout(() => {
           sampleBtns && sampleBtns[i]?.classList.remove('pulse');
+          mixSamples && mixSamples[i]?.classList.remove('pulse');
         }, 0);
       }
     });

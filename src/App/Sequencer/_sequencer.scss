@@ -38,6 +38,10 @@
   @include flex;
 }
 
+#overGridPortal {
+  @extend %noEventsLayerAbs;
+}
+
 #samplePanel {
   position: relative;
   width: 100%;

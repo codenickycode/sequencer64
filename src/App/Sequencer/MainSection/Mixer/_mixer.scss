@@ -1,0 +1,37 @@
+@use 'styles/mixins' as *;
+@use 'styles/placeholders' as *;
+@use 'styles/colors' as *;
+
+.mixer {
+  pointer-events: initial;
+  @extend %fullAbs;
+  @extend %bg90;
+
+  .mixSamples {
+    @extend %full;
+    @include grid(3, 3, 5px);
+    padding: 0.25rem;
+
+    .mixSample {
+      padding: 0.5rem;
+      @extend %full;
+      @include flex(column);
+      @extend %borderHalf;
+      @extend %color;
+
+      .mixSampleBorder {
+        @extend %fullAbs;
+        opacity: 0;
+        transition: 400ms;
+      }
+
+      &.flash,
+      &.pulse {
+        .mixSampleBorder {
+          transition: none;
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

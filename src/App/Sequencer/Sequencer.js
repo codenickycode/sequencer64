@@ -20,8 +20,7 @@ export const SequencerPage = () => {
           <div id='main'>
             <Grid />
             {!splitSamplePanel && <VisualPanel />}
-            <div id='changeKitPortal' />
-            <div id='pastePatternPortal' />
+            <div id='overGridPortal' />
             {/* <MobileConsole /> */}
           </div>
           <div id='samplePanel'>

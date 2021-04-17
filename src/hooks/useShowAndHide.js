@@ -22,6 +22,14 @@ export const useShowAndHideClass = (baseClasses = '', timeout = 0, trigger1, tri
   return classes;
 };
 
+export const vanillaShowAndHideClass = (id, classToAdd, timeout) => {
+  const element = document.getElementById(id);
+  if (element) element.classList.add(classToAdd);
+  setTimeout(() => {
+    if (element) element.classList.remove(classToAdd);
+  }, timeout);
+};
+
 export const useAddAndRemoveClass = (baseClasses = '', addClasses = '', timeout = 0) => {
   const [classes, setClasses] = useState(baseClasses);
   const [trigger, setTrigger] = useState(false);

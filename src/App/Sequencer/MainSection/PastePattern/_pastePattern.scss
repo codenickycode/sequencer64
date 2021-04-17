@@ -2,10 +2,6 @@
 @use 'styles/mixins' as *;
 @use 'styles/colors' as *;
 
-#pastePatternPortal {
-  @extend %noEventsLayerAbs;
-}
-
 .pastePattern {
   @extend %full;
   pointer-events: initial;
