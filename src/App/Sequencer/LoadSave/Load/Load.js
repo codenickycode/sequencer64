@@ -6,7 +6,7 @@ import { UserSequence } from './UserSequence';
 import { useSelectSequence } from './useSelectSequence';
 
 export const Load = () => {
-  const props = useSelectSequence(); // user/default sharing instance
+  const props = useSelectSequence();
 
   return (
     <div id='loadSequence' className='loadSequence'>
@@ -38,9 +38,7 @@ const UserSequences = (props) => {
 };
 
 const DefaultSequences = (props) => {
-  const defaultSequences = useSelector(
-    (state) => state.assets.defaultSequences
-  );
+  const defaultSequences = useSelector((state) => state.assets.defaultSequences);
   return (
     <div className='defaultSequences'>
       <p className='title'>Default Sequences</p>

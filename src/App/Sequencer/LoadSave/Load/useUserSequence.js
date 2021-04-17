@@ -37,14 +37,9 @@ export const useUserSequence = (sequence, selectedId) => {
     if (synched || !online || !loggedIn) return;
     setUploading(true);
     try {
-      const idbSeqs = await get('sequences');
-      const seqToUpdate = idbSeqs.find((seq) => seq._id.toString() === _id);
-      if (seqToUpdate) {
-        seqToUpdate.sharedWith.push(userId);
-        await set('sequences', idbSeqs);
-      }
       const newSequence = { ...sequence };
       newSequence.sharedWith = [...sequence.sharedWith, userId];
+      await addSharedPropToIDBSeq(_id, userId);
       await apiSaveSequence(newSequence);
       dispatch(setSynched({ _id, synched: true }));
       dispatch(setStatus('Sequence saved to cloud'));
@@ -78,4 +73,13 @@ export const useUserSequence = (sequence, selectedId) => {
   }
   const functions = { cancelConfirm, handleDelete, handleUpload };
   return { classes, values, functions, Sync };
+};
+
+const addSharedPropToIDBSeq = async (_id, userId) => {
+  const idbSeqs = await get('sequences');
+  const seqToUpdate = idbSeqs.find((seq) => seq._id.toString() === _id);
+  if (seqToUpdate) {
+    seqToUpdate.sharedWith.push(userId);
+    await set('sequences', idbSeqs);
+  }
 };
