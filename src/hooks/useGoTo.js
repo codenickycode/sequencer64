@@ -13,9 +13,7 @@ export const useGoTo = () => {
   const goToFunc = (path, cb) => {
     history.push(path);
     document.getElementById('root').scrollTop = 0;
-    if (!cb) return;
-    if (cb instanceof Event) return;
-    if (cb.constructor.name === 'SyntheticBaseEvent') return;
+    if (!cb || typeof cb !== 'function') return;
     cb();
   };
   const goTo = {};

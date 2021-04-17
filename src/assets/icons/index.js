@@ -23,6 +23,7 @@ import { ReactComponent as PointUp } from 'assets/icons/pointers/point-up.svg';
 import { ReactComponent as PointDown } from 'assets/icons/pointers/point-down.svg';
 import { ReactComponent as Paint } from 'assets/icons/paint.svg';
 import { ReactComponent as Close } from 'assets/icons/close.svg';
+import { ReactComponent as ChevronUp } from 'assets/icons/chevrons/chevron-up.svg';
 import { ReactComponent as ChevronDown } from 'assets/icons/chevrons/chevron-down.svg';
 import { ReactComponent as ChevronRight } from 'assets/icons/chevrons/chevron-right.svg';
 import { ReactComponent as ChevronLeft } from 'assets/icons/chevrons/chevron-left.svg';
@@ -39,6 +40,10 @@ import { ReactComponent as Twitter } from 'assets/icons/social/twitter.svg';
 import { ReactComponent as Facebook } from 'assets/icons/social/facebook.svg';
 import { ReactComponent as TV } from 'assets/icons/tv.svg';
 import { MODES } from 'App/reducers/editorSlice';
+
+export const ChevronUpIcon = ({ addClass = '' }) => (
+  <ChevronUp className={addClass + ' icon chevron-up'} />
+);
 
 export const ChevronDownIcon = ({ addClass = '' }) => (
   <ChevronDown className={addClass + ' icon chevron-down'} />
