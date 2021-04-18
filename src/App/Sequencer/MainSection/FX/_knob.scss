@@ -1,0 +1,34 @@
+@use 'styles/mixins' as *;
+@use 'styles/placeholders' as *;
+@use 'styles/colors' as *;
+
+.knob-wrapper {
+  cursor: pointer;
+  @include flex(column);
+
+  .knob {
+    position: relative;
+
+    label {
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      transform: translate(-50%);
+      @extend %colorKnob;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .arc {
+    stroke-dasharray: 126px;
+    @extend %colorKnob;
+  }
+
+  .arc-hide {
+    /* display: none; */
+  }
+}

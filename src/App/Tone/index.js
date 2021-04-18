@@ -13,15 +13,29 @@ document.addEventListener('touchstart', initialClick);
 document.addEventListener('mousedown', initialClick);
 
 const mainBus = Tone.getDestination();
-mainBus.volume.value = -6;
+mainBus.volume.value = -12;
 
 export const fft = new Tone.FFT({
   size: 32,
   normalRange: true,
 });
 
-export const limiter = new Tone.Limiter(-20);
-mainBus.chain(limiter, fft);
+export const filter = new Tone.Filter(20000, 'lowpass', -24);
+export const pitchShift = new Tone.PitchShift();
+export const envelope = new Tone.AmplitudeEnvelope();
+
+// export const limiter = new Tone.Limiter(-18);
+//
+export const delay = new Tone.PingPongDelay({
+  delayTime: '8d',
+  feedback: 0.2,
+  wet: 0,
+}).connect(mainBus);
+export const reverb = new Tone.Reverb({ decay: 1.5, wet: 0.2 }).connect(mainBus);
+
+export const kitBus = new Tone.Channel({ volume: 0, pan: 0, channelCount: 2 });
+kitBus.fan(delay, reverb);
+kitBus.chain(filter, pitchShift, envelope, fft, mainBus);
 
 export const Kit = { name: 'init', samples: [{}] };
 

@@ -115,6 +115,24 @@ $red: rgb(232, 12, 48);
   }
 }
 
+%colorKnob {
+  .themeJoker & {
+    color: $joker;
+  }
+  .themeNES & {
+    color: $nes;
+  }
+  .themeTMNT & {
+    color: $tmnt;
+  }
+  .themeBlack & {
+    color: $white;
+  }
+  .themeWhite & {
+    color: $black;
+  }
+}
+
 /**************** BG *******************/
 
 %bgBright {
@@ -285,11 +303,7 @@ $red: rgb(232, 12, 48);
     background: linear-gradient($nes-dark2, $nes, $nes-dark2);
   }
   .themeTMNT & {
-    background: linear-gradient(
-      $tmnt-blue-dark-quarter,
-      $tmnt-blue,
-      $tmnt-blue-dark-quarter
-    );
+    background: linear-gradient($tmnt-blue-dark-quarter, $tmnt-blue, $tmnt-blue-dark-quarter);
   }
   .themeBlack & {
     background: linear-gradient($grey, $white, $grey);

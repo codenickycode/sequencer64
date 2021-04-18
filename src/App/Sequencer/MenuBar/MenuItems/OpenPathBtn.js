@@ -43,7 +43,7 @@ export const KitBtn = () => {
   return <OpenPathBtn active={selectingKit} path='changeKit' label='kit' Icon={KitIcon} />;
 };
 
-export const MixerBtn = () => {
-  const { mixing } = useCurrentPath();
-  return <OpenPathBtn active={mixing} path='mixer' label='mixer' Icon={MixerIcon} />;
+export const FXBtn = () => {
+  const { fx } = useCurrentPath();
+  return <OpenPathBtn active={fx} path='fx' label='fx' Icon={MixerIcon} />;
 };

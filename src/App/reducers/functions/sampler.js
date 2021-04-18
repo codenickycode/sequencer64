@@ -1,6 +1,6 @@
 import * as Tone from 'tone';
 import { NETWORK_TIMEOUT } from 'utils/network';
-import { Kit, metronome } from 'App/Tone';
+import { Kit, kitBus, metronome } from 'App/Tone';
 
 export const disposeSamplers = () => {
   for (let sample of Kit.samples) {
@@ -16,10 +16,7 @@ export const buildSamplers = (kitAssets) =>
   new Promise(async (resolve, reject) => {
     const addSamplersPromises = addSamplersToKit(kitAssets);
     try {
-      let rejectTimer = setTimeout(
-        () => reject('error loading samples'),
-        NETWORK_TIMEOUT
-      );
+      let rejectTimer = setTimeout(() => reject('error loading samples'), NETWORK_TIMEOUT);
       await Promise.all(addSamplersPromises);
       clearTimeout(rejectTimer);
       console.log(`${Kit.name} buffers loaded!`);
@@ -33,10 +30,7 @@ export const buildSamplers = (kitAssets) =>
 const addSamplersToKit = (kitAssets) => {
   const promises = [];
   for (let [i, sample] of kitAssets.samples.entries()) {
-    Kit.samples[i] = {
-      ...kitAssets.samples,
-      samples: kitAssets.samples.map((sample) => ({ ...sample })),
-    };
+    Kit.samples[i] = { ...sample };
     promises.push(connectSample(Kit.samples[i], sample.path));
   }
   return promises;
@@ -53,7 +47,7 @@ const connectSample = (sample, url) => {
           volume: 0,
           pan: 0,
           channelCount: 2,
-        }).toDestination();
+        }).connect(kitBus);
         sample.sampler.connect(sample.channel);
         resolve();
       },

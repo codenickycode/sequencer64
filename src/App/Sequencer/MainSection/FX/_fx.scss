@@ -7,30 +7,50 @@
   @extend %fullAbs;
   @extend %bg90;
 
-  .mixSamples {
+  .fxSamples {
     @extend %full;
     @include grid(3, 3, 5px);
     padding: 0.25rem;
 
-    .mixSample {
+    .fxSample {
       padding: 0.5rem;
       @extend %full;
-      @include flex(column);
       @extend %borderHalf;
       @extend %color;
+      @include flex(column, space-evenly);
 
-      .mixSampleBorder {
-        @extend %fullAbs;
+      * {
+        // border: 1px solid red;
+      }
+
+      .fxSampleBorder {
+        @extend %noEventsLayerAbs;
+        top: 0;
+        left: 0;
         opacity: 0;
         transition: 400ms;
       }
 
       &.flash,
       &.pulse {
-        .mixSampleBorder {
+        .fxSampleBorder {
           transition: none;
           opacity: 1;
         }
+      }
+    }
+
+    .smallBtns {
+      padding: 1rem;
+      width: 100%;
+      bottom: 0;
+      @include flex(row, space-evenly);
+    }
+    .btn {
+      @extend %btn;
+
+      &.active {
+        @extend %bgBtnFull;
       }
     }
   }
