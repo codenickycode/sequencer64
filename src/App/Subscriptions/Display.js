@@ -1,6 +1,7 @@
 import { areWeTapping } from 'App/reducers/abstractState/abstractEditorState';
 import { setFlashInfo } from 'App/reducers/appSlice';
 import { startAnalyzer, stopAnalyzer } from 'App/reducers/functions/animations';
+import { setAnalyzerOn } from 'App/reducers/screenSlice';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -21,12 +22,18 @@ export const Display = () => {
   }, [tapping]);
 
   useEffect(() => {
+    if (splitSamplePanel && analyzerOn === null) {
+      dispatch(setAnalyzerOn(true));
+    }
+  }, [splitSamplePanel, analyzerOn, dispatch]);
+
+  useEffect(() => {
     if (splitSamplePanel || !analyzerOn) return;
     const analyzer = document.getElementById('analyzer');
     if (!analyzer) return;
     if (!editing) analyzer.style.opacity = 1;
     if (editing) analyzer.style.opacity = 0;
-  });
+  }, [analyzerOn, editing, splitSamplePanel]);
 
   useEffect(() => {
     if (!analyzerOn) return;

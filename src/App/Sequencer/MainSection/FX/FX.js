@@ -1,11 +1,10 @@
 import cuid from 'cuid';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Portal } from 'App/shared/Portal';
 import { getGrid } from 'utils/getGrid';
 import { Button } from 'App/shared/Button';
 import { useTouchAndMouse } from 'hooks/useTouchAndMouse';
 import { Knob } from './Knob';
-import { useSelector } from 'react-redux';
 import { Kit } from 'App/Tone';
 
 export const FX = () => {
@@ -24,10 +23,7 @@ export const FX = () => {
 };
 
 const FXSample = ({ i }) => {
-  // const kitName = useSelector((state) => state.sequence.present.kit);
-  // const sample = useSelector((state) => state.assets.kits[kitName].samples[i]);
   const sample = Kit.samples[i];
-  console.log(sample);
 
   const [edit, setEdit] = useState('filter');
   const { value, startFunc, moveFunc, endFunc } = useRotaryKnob();
@@ -60,9 +56,9 @@ const FXSample = ({ i }) => {
 };
 
 const useApplyFX = (i, value) => {
-  useEffect(() => {
-    Kit.samples[i].filter.set({ frequency: (20000 * value) / 100 });
-  }, [i, value]);
+  // useEffect(() => {
+  //   Kit.samples[i].filter.set({ frequency: (20000 * value) / 100 });
+  // }, [i, value]);
 };
 
 const useRotaryKnob = () => {

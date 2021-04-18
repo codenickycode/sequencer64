@@ -32,7 +32,7 @@ export const useCurrentPath = () => {
   const path = {};
   const pathname = useLocation().pathname;
   path.selectingKit = pathname === PATHS.CHANGE_KIT;
-  path.mixing = pathname === PATHS.FX;
+  path.fx = pathname === PATHS.FX;
 
   return path;
 };

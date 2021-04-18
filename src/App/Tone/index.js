@@ -35,7 +35,7 @@ export const reverb = new Tone.Reverb({ decay: 1.5, wet: 0.2 }).connect(mainBus)
 
 export const kitBus = new Tone.Channel({ volume: 0, pan: 0, channelCount: 2 });
 kitBus.fan(delay, reverb);
-kitBus.chain(filter, pitchShift, envelope, fft, mainBus);
+kitBus.chain(fft, mainBus);
 
 export const Kit = { name: 'init', samples: [{}] };
 

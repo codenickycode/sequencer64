@@ -25,7 +25,7 @@ const INITIAL_SPLIT =
   INITIAL_DIMENSIONS.mainContainerHeight > 500 && INITIAL_DIMENSIONS.landscape;
 
 const INITIAL_ANALYZER = {
-  on: getSS('analyzerOn') !== undefined ? getSS('analyzerOn') : INITIAL_SPLIT,
+  on: getSS('analyzerOn') ?? INITIAL_SPLIT,
   mode: getSS('analyzerMode') || ANALYZER_MODES.BARS,
 };
 

@@ -1,3 +1,4 @@
+import { areWeTapping } from 'App/reducers/abstractState/abstractEditorState';
 import { startAnalyzer } from 'App/reducers/functions/animations';
 import { ANALYZER_MODES } from 'App/reducers/screenSlice';
 import { useMemo } from 'react';
@@ -38,7 +39,11 @@ const useAnalyzerState = () => {
   state.analyzerMode = useSelector((state) => state.screen.analyzer.mode);
   state.analyzerOn = useSelector((state) => state.screen.analyzer.on);
 
-  if (state.analyzerOn) startAnalyzer();
+  const transportStarted = useSelector((state) => state.tone.transportState === 'started');
+  const tapping = useSelector((state) => areWeTapping(state.editor.mode));
+  if (state.analyzerOn) {
+    if (transportStarted || tapping) startAnalyzer();
+  }
 
   const { classes, data } = useAnalyzerStyle(state);
 
