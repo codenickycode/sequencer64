@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "https://drumnickydrum-sequencer.herokuapp.com/"
+  from = "https://drumnickydrum-sequencer.herokuapp.com/*"
   to = "https://drumnickydrum-sequencer.herokuapp.com/:splat"
   status = 200
   force = true
