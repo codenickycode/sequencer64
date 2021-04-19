@@ -35,7 +35,7 @@ export const useSampleBtn = (selectSample, selected, i) => {
   // flash mix panel
   useEffect(() => {
     if (!flash || !mixing) return;
-    vanillaShowAndHideClass(`fxSample${i}`, 'flash', 100);
+    vanillaShowAndHideClass(`mixSample${i}`, 'flash', 100);
   }, [flash, i, mixing]);
 
   const startFunc = (e) => {

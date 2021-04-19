@@ -6,7 +6,7 @@ export const PATHS = {
   SAVE: '/sequencer/session/save',
   LOGIN: '/sequencer/session/login',
   CHANGE_KIT: '/sequencer/session/kits',
-  FX: '/sequencer/session/fx',
+  MIXER: '/sequencer/session/mixer',
 };
 
 export const useGoTo = () => {
@@ -23,7 +23,7 @@ export const useGoTo = () => {
   goTo.save = (cb) => goToFunc(PATHS.SAVE, cb);
   goTo.login = (cb) => goToFunc(PATHS.LOGIN, cb);
   goTo.changeKit = (cb) => goToFunc(PATHS.CHANGE_KIT, cb);
-  goTo.fx = (cb) => goToFunc(PATHS.FX, cb);
+  goTo.mixer = (cb) => goToFunc(PATHS.MIXER, cb);
 
   return goTo;
 };
@@ -32,7 +32,7 @@ export const useCurrentPath = () => {
   const path = {};
   const pathname = useLocation().pathname;
   path.selectingKit = pathname === PATHS.CHANGE_KIT;
-  path.fx = pathname === PATHS.FX;
+  path.mixing = pathname === PATHS.MIXER;
 
   return path;
 };

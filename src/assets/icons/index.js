@@ -27,6 +27,7 @@ import { ReactComponent as ChevronUp } from 'assets/icons/chevrons/chevron-up.sv
 import { ReactComponent as ChevronDown } from 'assets/icons/chevrons/chevron-down.svg';
 import { ReactComponent as ChevronRight } from 'assets/icons/chevrons/chevron-right.svg';
 import { ReactComponent as ChevronLeft } from 'assets/icons/chevrons/chevron-left.svg';
+import { ReactComponent as ArrowUpDown } from 'assets/icons/arrow-up-down.svg';
 import { ReactComponent as Open } from 'assets/icons/open.svg';
 import { ReactComponent as Save } from 'assets/icons/save.svg';
 import { ReactComponent as Delete } from 'assets/icons/delete.svg';
@@ -53,8 +54,13 @@ export const ChevronDownIcon = ({ addClass = '' }) => (
 export const ChevronLeftIcon = ({ addClass = '' }) => (
   <ChevronLeft className={addClass + ' icon chevron-left'} />
 );
+
 export const ChevronRightIcon = ({ addClass = '' }) => (
   <ChevronRight className={addClass + ' icon chevron-right'} />
+);
+
+export const ArrowUpDownIcon = ({ addClass = '' }) => (
+  <ArrowUpDown className={addClass + ' icon arrowUpDown'} />
 );
 
 export const StopIcon = ({ addClass = '' }) => <Stop className={addClass + ' icon'} />;

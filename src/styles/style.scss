@@ -11,8 +11,8 @@
 @use 'App/Sequencer/MainSection/Grid/grid';
 @use 'App/Sequencer/MainSection/PastePattern/pastePattern';
 @use 'App/Sequencer/MainSection/ChangeKit/changeKit';
-@use 'App/Sequencer/MainSection/FX/fx';
-@use 'App/Sequencer/MainSection/FX/knob';
+@use 'App/Sequencer/MainSection/Mixer/mixer';
+@use 'App/Sequencer/MainSection/Mixer/knob';
 @use 'App/Sequencer/SamplePanel/SampleBtns/sampleBtns';
 @use 'App/Sequencer/SamplePanel/EditMenu/sampleEditMenu';
 @use 'App/Sequencer/SamplePanel/Modes/sampleEditModes';

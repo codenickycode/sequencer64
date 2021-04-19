@@ -3,7 +3,7 @@ import { TransportPanel } from './MenuItems/Transport/TransportPanel';
 import { UndoRedoBtn } from './MenuItems/UndoRedoBtn';
 import { EraseBtn } from './MenuItems/EraseBtn';
 import { FileBtn } from './MenuItems/FileBtn';
-import { KitBtn, FXBtn } from './MenuItems/OpenPathBtn';
+import { KitBtn, MixerBtn } from './MenuItems/OpenPathBtn';
 import { TapMenu } from './MenuItems/TapMenu';
 import { DisplayMenu } from './MenuItems/DisplayMenu/DisplayMenu';
 import { useSelector } from 'react-redux';
@@ -22,7 +22,7 @@ export const MenuBar = () => {
           <DisplayMenu />
           <FileBtn />
           <KitBtn />
-          <FXBtn />
+          <MixerBtn />
         </div>
         <TransportPanel />
         <div className='menuItems'>

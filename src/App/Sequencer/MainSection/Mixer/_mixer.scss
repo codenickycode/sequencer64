@@ -7,12 +7,12 @@
   @extend %fullAbs;
   @extend %bg90;
 
-  .fxSamples {
+  .mixSamples {
     @extend %full;
     @include grid(3, 3, 5px);
     padding: 0.25rem;
 
-    .fxSample {
+    .mixSample {
       padding: 0.5rem;
       @extend %full;
       @extend %borderHalf;
@@ -23,7 +23,11 @@
         // border: 1px solid red;
       }
 
-      .fxSampleBorder {
+      .sampleName {
+        text-transform: capitalize;
+      }
+
+      .mixSampleBorder {
         @extend %noEventsLayerAbs;
         top: 0;
         left: 0;
@@ -33,24 +37,35 @@
 
       &.flash,
       &.pulse {
-        .fxSampleBorder {
+        .mixSampleBorder {
           transition: none;
           opacity: 1;
         }
       }
     }
 
-    .smallBtns {
-      padding: 1rem;
-      width: 100%;
-      bottom: 0;
-      @include flex(row, space-evenly);
+    .knobWrapper {
+      flex: 0 1 auto;
+      min-height: 0;
+      min-width: 0;
     }
-    .btn {
-      @extend %btn;
 
-      &.active {
-        @extend %bgBtnFull;
+    .customSelectWrapper {
+      width: 100%;
+      padding: 0;
+
+      .customSelect {
+      }
+
+      @media (max-height: 735px) {
+        .customSelect {
+          padding-top: 0;
+          padding-bottom: 0;
+          font-size: 1rem;
+        }
+        .chevron-down {
+          right: 0;
+        }
       }
     }
   }

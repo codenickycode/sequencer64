@@ -1,6 +1,17 @@
 import * as Tone from 'tone';
 import { NETWORK_TIMEOUT } from 'utils/network';
-import { Kit, kitBus, metronome } from 'App/Tone';
+import {
+  delay16n,
+  delay8n,
+  delay8d,
+  delay4n,
+  Kit,
+  kitBus,
+  metronome,
+  reverb,
+  FX_NAMES,
+  CHANNEL_PROPERTIES,
+} from 'App/Tone';
 
 export const disposeSamplers = () => {
   for (let sample of Kit.samples) {
@@ -48,6 +59,18 @@ const connectSample = (sample, url) => {
           pan: 0,
           channelCount: 2,
         }).connect(kitBus);
+        sample[CHANNEL_PROPERTIES.delay16n] = new Tone.Gain(0).connect(delay16n);
+        sample[CHANNEL_PROPERTIES.delay8n] = new Tone.Gain(0).connect(delay8n);
+        sample[CHANNEL_PROPERTIES.delay8d] = new Tone.Gain(0).connect(delay8d);
+        sample[CHANNEL_PROPERTIES.delay4n] = new Tone.Gain(0).connect(delay4n);
+        sample.reverb = new Tone.Gain(0).connect(reverb);
+        sample.channel.fan(
+          sample[CHANNEL_PROPERTIES.delay16n],
+          sample[CHANNEL_PROPERTIES.delay8n],
+          sample[CHANNEL_PROPERTIES.delay8d],
+          sample[CHANNEL_PROPERTIES.delay4n],
+          sample.reverb
+        );
         sample.sampler.connect(sample.channel);
         resolve();
       },
