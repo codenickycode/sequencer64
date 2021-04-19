@@ -41,7 +41,7 @@ export const usePopupMenu = (keepOpenOnSelect) => {
       }
     }
     document.removeEventListener('click', closeMenu);
-    document.getElementById('menuBar').removeEventListener('scroll', closeMenu);
+    document.getElementById('menuBar')?.removeEventListener('scroll', closeMenu);
     setShowMenu(false);
   };
 
@@ -49,7 +49,7 @@ export const usePopupMenu = (keepOpenOnSelect) => {
     e.stopPropagation();
     if (!showMenu) {
       document.addEventListener('click', closeMenu);
-      document.getElementById('menuBar').addEventListener('scroll', closeMenu);
+      document.getElementById('menuBar')?.addEventListener('scroll', closeMenu);
     }
     setShowMenu(!showMenu);
   };

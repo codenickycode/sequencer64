@@ -7,12 +7,12 @@
   @extend %fullAbs;
   @extend %bg90;
 
-  .mixSamples {
+  .mixItemWrapper {
     @extend %full;
     @include grid(3, 3, 5px);
     padding: 0.25rem;
 
-    .mixSample {
+    .mixItem {
       padding: 0.5rem;
       @extend %full;
       @extend %borderHalf;
@@ -23,11 +23,11 @@
         // border: 1px solid red;
       }
 
-      .sampleName {
+      .mixItemName {
         text-transform: capitalize;
       }
 
-      .mixSampleBorder {
+      .mixItemBorder {
         @extend %noEventsLayerAbs;
         top: 0;
         left: 0;
@@ -37,7 +37,7 @@
 
       &.flash,
       &.pulse {
-        .mixSampleBorder {
+        .mixItemBorder {
           transition: none;
           opacity: 1;
         }

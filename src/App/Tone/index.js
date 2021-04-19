@@ -12,25 +12,39 @@ const initialClick = async () => {
 document.addEventListener('touchstart', initialClick);
 document.addEventListener('mousedown', initialClick);
 
-const limiter = new Tone.Limiter(-20);
-const mainBus = new Tone.Channel({ volume: -6, pan: 0, channelCount: 2 }).chain(
-  limiter,
-  Tone.Destination
-);
-const fxFilter = new Tone.Filter(240, 'highpass', -12);
-const fxBus = new Tone.Channel({ volume: 0, pan: 0, channelCount: 2 }).chain(
-  fxFilter,
-  mainBus
-);
-
 export const fft = new Tone.FFT({
   size: 32,
   normalRange: true,
 });
 
-export const filter = new Tone.Filter(20000, 'lowpass', -24);
-export const pitchShift = new Tone.PitchShift();
-export const envelope = new Tone.AmplitudeEnvelope();
+const limiter = new Tone.Limiter(-20);
+const output = new Tone.Channel({ volume: -6, pan: 0, channelCount: 2 }).chain(
+  limiter,
+  Tone.Destination
+);
+
+const fxFilter = new Tone.Filter(240, 'highpass', -12);
+const fxBus = new Tone.Channel({ volume: 0, pan: 0, channelCount: 2 }).chain(
+  fxFilter,
+  output
+);
+
+export const mainBus = new Tone.Channel({ volume: -6, pan: 0, channelCount: 2 }).connect(
+  output
+);
+mainBus.mixer = { volume: mainBus.volume };
+mainBus.mixer.delay = new Tone.Gain(0).chain(
+  new Tone.PingPongDelay({
+    delayTime: '.8n',
+    feedback: 0.2,
+    wet: 1,
+  }),
+  fxBus
+);
+mainBus.mixer.reverb = new Tone.Gain(0).chain(new Tone.Reverb({ decay: 2, wet: 1 }), fxBus);
+mainBus.mixer.filter = new Tone.Filter(20000, 'lowpass', -24).connect(fxBus);
+mainBus.mixer['pitch shift'] = new Tone.PitchShift().connect(fxBus);
+mainBus.mixer['envelope'] = new Tone.AmplitudeEnvelope().connect(fxBus);
 
 export const FX = {
   'delay 1\u204416': new Tone.PingPongDelay({

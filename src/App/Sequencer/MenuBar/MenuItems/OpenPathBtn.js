@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button } from 'App/shared/Button';
-import { KitIcon, MixerIcon } from 'assets/icons';
+import { KitIcon } from 'assets/icons';
 import { MODES, setMode } from 'App/reducers/editorSlice';
 import { useGoTo, useCurrentPath } from 'hooks/useGoTo';
 import { useStopPropEventListener } from 'hooks/useStopPropEventListener';
@@ -41,9 +41,4 @@ const OpenPathBtn = ({ active, path, label, Icon }) => {
 export const KitBtn = () => {
   const { selectingKit } = useCurrentPath();
   return <OpenPathBtn active={selectingKit} path='changeKit' label='kit' Icon={KitIcon} />;
-};
-
-export const MixerBtn = () => {
-  const { mixing } = useCurrentPath();
-  return <OpenPathBtn active={mixing} path='mixer' label='mixer' Icon={MixerIcon} />;
 };
