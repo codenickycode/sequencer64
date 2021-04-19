@@ -12,7 +12,16 @@ const initialClick = async () => {
 document.addEventListener('touchstart', initialClick);
 document.addEventListener('mousedown', initialClick);
 
-const mainBus = new Tone.Channel({ volume: -12, pan: 0, channelCount: 2 }).toDestination();
+const limiter = new Tone.Limiter(-20);
+const mainBus = new Tone.Channel({ volume: -6, pan: 0, channelCount: 2 }).chain(
+  limiter,
+  Tone.Destination
+);
+const fxFilter = new Tone.Filter(240, 'highpass', -12);
+const fxBus = new Tone.Channel({ volume: 0, pan: 0, channelCount: 2 }).chain(
+  fxFilter,
+  mainBus
+);
 
 export const fft = new Tone.FFT({
   size: 32,
@@ -23,33 +32,30 @@ export const filter = new Tone.Filter(20000, 'lowpass', -24);
 export const pitchShift = new Tone.PitchShift();
 export const envelope = new Tone.AmplitudeEnvelope();
 
-// export const limiter = new Tone.Limiter(-18);
-
 export const FX = {
-  'delay 1\u204416': new Tone.FeedbackDelay({
+  'delay 1\u204416': new Tone.PingPongDelay({
     delayTime: '16n',
     feedback: 0.25,
     wet: 1,
-  }).connect(mainBus),
-  'delay 1\u20448': new Tone.FeedbackDelay({
+  }).connect(fxBus),
+  'delay 1\u20448': new Tone.PingPongDelay({
     delayTime: '8n',
     feedback: 0.2,
     wet: 1,
-  }).connect(mainBus),
-  'delay .1\u20448': new Tone.FeedbackDelay({
+  }).connect(fxBus),
+  'delay .1\u20448': new Tone.PingPongDelay({
     delayTime: '.8n',
     feedback: 0.2,
     wet: 1,
-  }).connect(mainBus),
-  'delay 1\u20444': new Tone.FeedbackDelay({
-    delayTime: '.8n',
+  }).connect(fxBus),
+  'delay 1\u20444': new Tone.PingPongDelay({
+    delayTime: '4n',
     feedback: 0.2,
     wet: 1,
-  }).connect(mainBus),
-  reverb: new Tone.Reverb({ decay: 2, wet: 1 }).connect(mainBus),
-  'bit crusher': new Tone.BitCrusher({ bits: 4, wet: 1 }).connect(mainBus),
-  waveshaper: new Tone.Chebyshev({ order: 100, wet: 1 }).connect(mainBus),
-  distortion: new Tone.Distortion({ distortion: 1, wet: 1 }).connect(mainBus),
+  }).connect(fxBus),
+  reverb: new Tone.Reverb({ decay: 2, wet: 1 }).connect(fxBus),
+  'bit crusher': new Tone.BitCrusher({ bits: 4, wet: 1 }).connect(fxBus),
+  distortion: new Tone.Distortion({ distortion: 0.5, wet: 1 }).connect(fxBus),
 };
 
 export const kitBus = new Tone.Channel({ volume: 0, pan: 0, channelCount: 2 });
