@@ -1,17 +1,6 @@
 import * as Tone from 'tone';
 import { NETWORK_TIMEOUT } from 'utils/network';
-import {
-  delay16n,
-  delay8n,
-  delay8d,
-  delay4n,
-  Kit,
-  kitBus,
-  metronome,
-  reverb,
-  FX_NAMES,
-  CHANNEL_PROPERTIES,
-} from 'App/Tone';
+import { Kit, kitBus, metronome, FX } from 'App/Tone';
 
 export const disposeSamplers = () => {
   for (let sample of Kit.samples) {
@@ -19,6 +8,10 @@ export const disposeSamplers = () => {
     delete sample.sampler;
     sample.channel?.dispose();
     delete sample.channel;
+    Object.keys(FX).forEach((fx) => {
+      sample[fx]?.dispose();
+      delete sample[fx];
+    });
   }
   Kit.samples.length = 0;
 };
@@ -59,18 +52,12 @@ const connectSample = (sample, url) => {
           pan: 0,
           channelCount: 2,
         }).connect(kitBus);
-        sample[CHANNEL_PROPERTIES.delay16n] = new Tone.Gain(0).connect(delay16n);
-        sample[CHANNEL_PROPERTIES.delay8n] = new Tone.Gain(0).connect(delay8n);
-        sample[CHANNEL_PROPERTIES.delay8d] = new Tone.Gain(0).connect(delay8d);
-        sample[CHANNEL_PROPERTIES.delay4n] = new Tone.Gain(0).connect(delay4n);
-        sample.reverb = new Tone.Gain(0).connect(reverb);
-        sample.channel.fan(
-          sample[CHANNEL_PROPERTIES.delay16n],
-          sample[CHANNEL_PROPERTIES.delay8n],
-          sample[CHANNEL_PROPERTIES.delay8d],
-          sample[CHANNEL_PROPERTIES.delay4n],
-          sample.reverb
-        );
+        const fxConnections = [];
+        for (let [fxKey, fxNode] of Object.entries(FX)) {
+          sample[fxKey] = new Tone.Gain(0).connect(fxNode);
+          fxConnections.push(sample[fxKey]);
+        }
+        sample.channel.fan(...fxConnections);
         sample.sampler.connect(sample.channel);
         resolve();
       },

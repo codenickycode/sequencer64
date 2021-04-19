@@ -12,8 +12,7 @@ const initialClick = async () => {
 document.addEventListener('touchstart', initialClick);
 document.addEventListener('mousedown', initialClick);
 
-const mainBus = Tone.getDestination();
-mainBus.volume.value = -12;
+const mainBus = new Tone.Channel({ volume: -12, pan: 0, channelCount: 2 }).toDestination();
 
 export const fft = new Tone.FFT({
   size: 32,
@@ -26,35 +25,32 @@ export const envelope = new Tone.AmplitudeEnvelope();
 
 // export const limiter = new Tone.Limiter(-18);
 
-export const CHANNEL_PROPERTIES = {
-  delay16n: 'delay 1\u204416',
-  delay8n: 'delay 1\u20448',
-  delay8d: 'delay .1\u20448',
-  delay4n: 'delay 1\u20444',
-  reverb: 'reverb',
+export const FX = {
+  'delay 1\u204416': new Tone.FeedbackDelay({
+    delayTime: '16n',
+    feedback: 0.25,
+    wet: 1,
+  }).connect(mainBus),
+  'delay 1\u20448': new Tone.FeedbackDelay({
+    delayTime: '8n',
+    feedback: 0.2,
+    wet: 1,
+  }).connect(mainBus),
+  'delay .1\u20448': new Tone.FeedbackDelay({
+    delayTime: '.8n',
+    feedback: 0.2,
+    wet: 1,
+  }).connect(mainBus),
+  'delay 1\u20444': new Tone.FeedbackDelay({
+    delayTime: '.8n',
+    feedback: 0.2,
+    wet: 1,
+  }).connect(mainBus),
+  reverb: new Tone.Reverb({ decay: 2, wet: 1 }).connect(mainBus),
+  'bit crusher': new Tone.BitCrusher({ bits: 4, wet: 1 }).connect(mainBus),
+  waveshaper: new Tone.Chebyshev({ order: 100, wet: 1 }).connect(mainBus),
+  distortion: new Tone.Distortion({ distortion: 1, wet: 1 }).connect(mainBus),
 };
-
-export const delay16n = new Tone.PingPongDelay({
-  delayTime: '16n',
-  feedback: 0.25,
-  wet: 1,
-}).connect(mainBus);
-export const delay8n = new Tone.PingPongDelay({
-  delayTime: '8n',
-  feedback: 0.2,
-  wet: 1,
-}).connect(mainBus);
-export const delay8d = new Tone.PingPongDelay({
-  delayTime: '.8n',
-  feedback: 0.2,
-  wet: 1,
-}).connect(mainBus);
-export const delay4n = new Tone.PingPongDelay({
-  delayTime: '.8n',
-  feedback: 0.2,
-  wet: 1,
-}).connect(mainBus);
-export const reverb = new Tone.Reverb({ decay: 2, wet: 1 }).connect(mainBus);
 
 export const kitBus = new Tone.Channel({ volume: 0, pan: 0, channelCount: 2 });
 kitBus.chain(fft, mainBus);

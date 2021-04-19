@@ -4,7 +4,7 @@ import { Portal } from 'App/shared/Portal';
 import { getGrid } from 'utils/getGrid';
 import { useTouchAndMouse } from 'hooks/useTouchAndMouse';
 import { Knob } from './Knob';
-import { Kit, CHANNEL_PROPERTIES } from 'App/Tone';
+import { Kit, FX } from 'App/Tone';
 import { ArrowUpDownIcon, ChevronDownIcon } from 'assets/icons';
 
 export const Mixer = () => {
@@ -22,19 +22,19 @@ export const Mixer = () => {
   );
 };
 
-const properties = Object.values(CHANNEL_PROPERTIES);
+const fxKeys = Object.keys(FX);
 const MixSample = ({ i }) => {
   const sample = Kit.samples[i];
 
-  const [property, setProperty] = useState(properties[2]);
-  const { value, startFunc, moveFunc, endFunc } = useRotaryKnob(sample, property);
+  const [fxKey, setProperty] = useState(fxKeys[2]);
+  const { value, startFunc, moveFunc, endFunc } = useRotaryKnob(sample, fxKey);
   const touchAndMouse = useTouchAndMouse(startFunc, moveFunc, endFunc);
-  useApplyValue(sample, property, value);
+  useApplyValue(sample, fxKey, value);
 
   const onChange = ({ target: { value } }) => setProperty(value);
 
   const id = `mixSample${i}`;
-  const knobId = id + property;
+  const knobId = id + fxKey;
   return (
     <div id={id} className='mixSample'>
       <p className='sampleName'>{sample.name}</p>
@@ -47,16 +47,11 @@ const MixSample = ({ i }) => {
         </div>
       </div>
       <div className='customSelectWrapper'>
-        <select
-          id='mixerSelect'
-          className='customSelect'
-          value={property}
-          onChange={onChange}
-        >
-          {properties.map((property) => {
+        <select id='mixerSelect' className='customSelect' value={fxKey} onChange={onChange}>
+          {fxKeys.map((fxKey) => {
             return (
-              <option key={`option-${id}-${property}`} value={property}>
-                {property}
+              <option key={`option-${id}-${fxKey}`} value={fxKey}>
+                {fxKey}
               </option>
             );
           })}
@@ -68,19 +63,19 @@ const MixSample = ({ i }) => {
   );
 };
 
-const useApplyValue = (sample, property, value) => {
+const useApplyValue = (sample, fxKey, value) => {
   const prevPropertyRef = useRef(null);
   useEffect(() => {
-    if (prevPropertyRef.current !== property) return (prevPropertyRef.current = property);
-    sample[property].set({ gain: value / 100 });
-  }, [property, sample, value]);
+    if (prevPropertyRef.current !== fxKey) return (prevPropertyRef.current = fxKey);
+    sample[fxKey].set({ gain: value / 100 });
+  }, [fxKey, sample, value]);
 };
 
-const useRotaryKnob = (sample, property) => {
-  const [value, setValue] = useState(sample[property].gain.value * 100);
+const useRotaryKnob = (sample, fxKey) => {
+  const [value, setValue] = useState(sample[fxKey].gain.value * 100);
   useEffect(() => {
-    setValue(sample[property].gain.value * 100);
-  }, [property, sample]);
+    setValue(sample[fxKey].gain.value * 100);
+  }, [fxKey, sample]);
 
   const prevYRef = useRef(null);
 
