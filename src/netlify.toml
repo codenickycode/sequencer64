@@ -4,7 +4,7 @@
   status = 200
   force = true
 
-  [[redirects]]
+[[redirects]]
   from = "/*"
   to = "/"
   status = 200
