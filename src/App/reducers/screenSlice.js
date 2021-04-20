@@ -96,6 +96,6 @@ function redraw() {
     document.body.style.display = 'initial';
     store.dispatch(setDimensions());
     prevWidth = document.documentElement.clientWidth;
-  }, 350);
+  }, 0);
   window.removeEventListener('focus', redraw);
 }
