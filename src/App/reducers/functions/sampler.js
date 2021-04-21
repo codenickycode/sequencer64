@@ -52,8 +52,8 @@ const connectSample = (sample, url) => {
           pan: 0,
           channelCount: 2,
         }).connect(kitBus);
-        sample.vol = normalGetAndSetVol(sample);
-        sample.pan = normalGetAndSetPan(sample);
+        sample.vol = scaledGetAndSetVol(sample);
+        sample.pan = scaledGetAndSetPan(sample);
         const fxConnections = [];
         for (let [fxKey, fxNode] of Object.entries(FX)) {
           sample[fxKey] = new Tone.Gain(0).connect(fxNode);
@@ -67,24 +67,24 @@ const connectSample = (sample, url) => {
   });
 };
 
-const normalGetAndSetVol = (sample) => ({
-  getVal: () => {
+const scaledGetAndSetVol = (sample) => ({
+  getRotaryVal: () => {
     let value = sample.channel.volume.value * 4 + 100;
     if (value > 100) value = 100;
     return value;
   },
-  setVal: (val) => {
+  setValFromRotary: (val) => {
     sample.channel.set({ volume: (val - 100) * 0.25 });
   },
   initialVal: 100,
 });
 
-const normalGetAndSetPan = (sample) => ({
-  getVal: () => {
+const scaledGetAndSetPan = (sample) => ({
+  getRotaryVal: () => {
     const val = sample.channel.pan.value * 50 + 50;
     return val;
   },
-  setVal: (val) => {
+  setValFromRotary: (val) => {
     sample.channel.set({ pan: (val - 50) / 50 });
   },
   initialVal: 50,

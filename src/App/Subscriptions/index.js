@@ -3,6 +3,7 @@ import { GetUser } from './GetUser';
 import { Storage } from './Storage';
 import { Display } from './Display';
 import { Transport } from './Transport';
+import { Mixer } from './Mixer';
 
 export const Subscriptions = () => {
   return (
@@ -12,6 +13,7 @@ export const Subscriptions = () => {
       <Storage />
       <Transport />
       <Display />
+      <Mixer />
     </>
   );
 };

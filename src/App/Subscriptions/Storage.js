@@ -19,28 +19,36 @@ export const Storage = () => {
   const sequence = useSelector((state) => state.sequence.present);
 
   useEffect(() => {
-    setLS('sequenceId', sequence._id);
+    setSS('sequenceId', sequence._id);
   }, [sequence._id]);
 
   useEffect(() => {
-    setLS('sequenceName', sequence.name);
+    setSS('sequenceName', sequence.name);
   }, [sequence.name]);
 
   useEffect(() => {
-    setLS('sequenceBpm', sequence.bpm);
+    setSS('sequenceBpm', sequence.bpm);
   }, [sequence.bpm]);
 
   useEffect(() => {
-    setLS('sequenceLength', sequence.length);
+    setSS('sequenceLength', sequence.length);
   }, [sequence.length]);
 
   useEffect(() => {
-    setLS('sequencePattern', sequence.pattern);
+    setSS('sequencePattern', sequence.pattern);
   }, [sequence.pattern]);
 
   useEffect(() => {
-    setLS('sequenceKitName', sequence.kit);
+    setSS('sequenceKitName', sequence.kit);
   }, [sequence.kit]);
+
+  useEffect(() => {
+    setSS('mainMixer', sequence.mainMixer);
+  }, [sequence.mainMixer]);
+
+  useEffect(() => {
+    setSS('sampleMixer', sequence.sampleMixer);
+  }, [sequence.sampleMixer]);
 
   return null;
 };

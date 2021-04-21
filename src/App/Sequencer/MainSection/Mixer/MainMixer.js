@@ -1,24 +1,31 @@
-import { mainBus } from 'App/Tone';
 import { Portal } from 'App/shared/Portal';
 import { useTouchAndMouse } from 'hooks/useTouchAndMouse';
 import { Knob } from './Knob';
-import { useRotaryKnob } from 'hooks/useRotaryKnob';
-import { useEffect, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Button } from 'App/shared/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  MAIN_MIXER_PROPERTIES,
+  adjustMainMixer,
+  adjustMainMixerWarp,
+  resetMainMixerProperty,
+  resetMainMixerWarp,
+} from 'App/reducers/sequenceSlice';
 
 export const MainMixer = () => {
+  const mainMixer = useSelector((state) => state.sequence.present.mainMixer);
   return (
     <Portal targetId='overGridPortal'>
       <div id='mixer' className='mixer'>
         <div className='mixItemWrapper main'>
-          {Object.entries(mainBus.mixer).map(([property, node], i) => {
-            const currentVal = node.getVal();
+          {Object.entries(mainMixer).map(([property, value]) => {
+            const properties = MAIN_MIXER_PROPERTIES[property];
             return (
               <RotaryKnob
-                key={`rotaryKnob${i}`}
+                key={`${property}mainMixer`}
                 property={property}
-                node={node}
-                currentVal={currentVal}
+                value={value}
+                properties={properties}
               />
             );
           })}
@@ -28,25 +35,45 @@ export const MainMixer = () => {
   );
 };
 
-const RotaryKnob = ({ property, node, currentVal }) => {
-  const { value, reset, startFunc, moveFunc, endFunc } = useRotaryKnob(currentVal, node);
+const RotaryKnob = ({ property, value, properties }) => {
+  const dispatch = useDispatch();
+
+  const adjustMixer = useCallback(
+    (amount) => {
+      if (property === 'warp') dispatch(adjustMainMixerWarp(amount));
+      else dispatch(adjustMainMixer({ property, amount }));
+    },
+    [dispatch, property]
+  );
+
   const [editing, setEditing] = useState(false);
 
-  const handleStart = (e) => {
+  const prevYRef = useRef(null);
+
+  const startFunc = useCallback((e) => {
     setEditing(true);
-    startFunc(e);
+    prevYRef.current = getY(e);
+  }, []);
+
+  const moveFunc = (e) => {
+    const newY = getY(e);
+    let amount = getKnobAmount(newY, prevYRef.current);
+    adjustMixer(amount);
+    prevYRef.current = newY;
   };
 
-  const handleEnd = (e) => {
+  const reset = useCallback(() => {
+    if (property === 'warp') dispatch(resetMainMixerWarp());
+    else dispatch(resetMainMixerProperty(property));
+  }, [dispatch, property]);
+
+  const endFunc = useCallback(() => {
     setEditing(false);
-    endFunc(e);
-  };
+    if (properties.snapback) setTimeout(reset, 0);
+    prevYRef.current = null;
+  }, [properties.snapback, reset]);
 
-  const touchAndMouse = useTouchAndMouse(handleStart, moveFunc, handleEnd);
-
-  useEffect(() => {
-    node.setVal(value);
-  }, [node, value]);
+  const touchAndMouse = useTouchAndMouse(startFunc, moveFunc, endFunc);
 
   const id = `mainMixItem${property}`;
   const knobId = `${id}Knob`;
@@ -57,10 +84,26 @@ const RotaryKnob = ({ property, node, currentVal }) => {
       <p className='mixItemName'>{property}</p>
       <div className='mixProperties main'>
         <Knob value={value} id={knobId} {...touchAndMouse} onDoubleClick={reset} />
-        <Button disabled={node.snapback} classes='reset' onClick={reset}>
+        <Button
+          disabled={properties.snapback || value === properties.initialValue}
+          classes='reset'
+          onClick={reset}
+        >
           reset
         </Button>
       </div>
     </div>
   );
+};
+
+const getY = (e) => {
+  let y;
+  if (e.touches) y = e.touches[0].clientY;
+  else y = e.clientY;
+  return y;
+};
+
+const getKnobAmount = (newY, prevY) => {
+  let amount = prevY - newY;
+  return amount;
 };

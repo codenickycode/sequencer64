@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import undoable, { excludeAction, groupByActionTypes } from 'redux-undo';
+import undoable, { groupByActionTypes } from 'redux-undo';
 import { analog } from 'assets/sequences';
-import { getSS } from 'utils/storage';
+import { getLS } from 'utils/storage';
 import {
   getNoteTally,
   inc,
@@ -12,25 +12,14 @@ import {
 import { INITIAL_MODS, MODES } from 'App/reducers/editorSlice';
 import * as sequenceThunks from './thunks/sequenceThunks';
 
-const INITIAL_PATTERN = getSS('sequencePattern') || getPatternFromStr(analog.patternStr);
-
-export const MAIN_MIXER_PROPERTIES = {
-  volume: { min: 0, max: 100, initialValue: 76, snapback: false },
-  reverb: { min: 0, max: 100, initialValue: 0, snapback: false },
-  filter: { min: 1, max: 100, initialValue: 100, snapback: false },
-  warp: { min: 0, max: 100, initialValue: 50, snapback: true },
-  crush: { min: 0, max: 100, initialValue: 0, snapback: false },
-  distort: { min: 0, max: 100, initialValue: 0, snapback: false },
-};
+const INITIAL_PATTERN = getLS('sequencePattern') || getPatternFromStr(analog.patternStr);
 
 export const INITIAL_SEQUENCE = {
-  _id: getSS('sequenceId') || analog._id,
-  name: getSS('sequenceName') || analog.name,
-  kit: getSS('sequenceKitName') || analog.kit,
-  bpm: getSS('sequenceBpm') || analog.bpm,
-  length: getSS('sequenceLength') || analog.length,
-  mainMixer: getSS('mainMixer') || analog.mainMixer,
-  sampleMixer: getSS('sampleMixer') || analog.sampleMixer,
+  _id: getLS('sequenceId') || analog._id,
+  name: getLS('sequenceName') || analog.name,
+  kit: getLS('sequenceKitName') || analog.kit,
+  bpm: getLS('sequenceBpm') || analog.bpm,
+  length: getLS('sequenceLength') || analog.length,
   pattern: INITIAL_PATTERN,
 };
 
@@ -158,29 +147,6 @@ export const sequenceSlice = createSlice({
       state.bpm = payload;
       state.undoStatus = `change bpm: `;
     },
-    adjustMainMixer: (state, { payload: { property, amount } }) => {
-      const { min, max } = MAIN_MIXER_PROPERTIES[property];
-      let newVal = state.mainMixer[property] + amount;
-      if (newVal < min) newVal = min;
-      if (newVal > max) newVal = max;
-      state.mainMixer[property] = newVal;
-      state.undoStatus = `main mixer | adjust ${property}`;
-    },
-    adjustMainMixerWarp: (state, { payload }) => {
-      console.log('warping');
-      const { min, max } = MAIN_MIXER_PROPERTIES.warp;
-      let newVal = state.mainMixer.warp + payload;
-      if (newVal < min) newVal = min;
-      if (newVal > max) newVal = max;
-      state.mainMixer.warp = newVal;
-    },
-    resetMainMixerProperty: (state, { payload }) => {
-      state.mainMixer[payload] = MAIN_MIXER_PROPERTIES[payload].initialValue;
-      state.undoStatus = `main mixer | reset ${payload}`;
-    },
-    resetMainMixerWarp: (state) => {
-      state.mainMixer.warp = MAIN_MIXER_PROPERTIES.warp.initialValue;
-    },
   },
 });
 
@@ -201,10 +167,6 @@ export const {
   changeKit,
   changeBpm,
   setInitialLoad,
-  adjustMainMixer,
-  adjustMainMixerWarp,
-  resetMainMixerProperty,
-  resetMainMixerWarp,
 } = sequenceSlice.actions;
 
 export const { loadInitialSequence, modCell, recordSample } = sequenceThunks;
@@ -216,9 +178,7 @@ const reducer = undoable(sequenceSlice.reducer, {
     'sequence/sliceCell',
     'sequence/modCell',
     'sequence/recordSampleFinally',
-    'sequence/adjustMainMixer',
   ]),
-  filter: excludeAction(['sequence/adjustMainMixerWarp', 'sequence/resetMainMixerWarp']),
   limit: 100,
 });
 

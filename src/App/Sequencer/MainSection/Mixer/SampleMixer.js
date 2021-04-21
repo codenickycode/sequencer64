@@ -28,8 +28,16 @@ const MixSample = ({ i }) => {
     <div className='mixItem'>
       <p className='mixItemName'>{sample.name}</p>
       <div id={id} className='mixProperties'>
-        <MixItemProperty property='vol' sample={sample} currentVal={sample.vol.getVal()} />
-        <MixItemProperty property='pan' sample={sample} currentVal={sample.pan.getVal()} />
+        <MixItemProperty
+          property='vol'
+          sample={sample}
+          currentVal={sample.vol.getRotaryVal()}
+        />
+        <MixItemProperty
+          property='pan'
+          sample={sample}
+          currentVal={sample.pan.getRotaryVal()}
+        />
         <div className={`mixItemBorder border${i}`} />
       </div>
     </div>
@@ -41,7 +49,7 @@ const MixItemProperty = ({ property, sample, currentVal }) => {
   const touchAndMouse = useTouchAndMouse(startFunc, moveFunc, endFunc);
 
   useEffect(() => {
-    sample[property].setVal(value);
+    sample[property].setValFromRotary(value);
   }, [property, sample, value]);
 
   let formattedValue = property === 'pan' ? formatPan(value) : parseInt(value);
