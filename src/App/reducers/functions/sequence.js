@@ -188,3 +188,46 @@ export const getPatternFromStr = (editString) => {
   });
   return pattern;
 };
+
+const INIT_MAIN_MIXER = () => ({
+  volume: 76,
+  reverb: 0,
+  filter: 100,
+  warp: 50,
+  crush: 0,
+  distort: 0,
+});
+
+const mainMixerPropertyLookup = {
+  v: 'volume',
+  r: 'reverb',
+  f: 'filter',
+  w: 'warp',
+  c: 'crush',
+  d: 'distort',
+};
+
+export const getStrFromMainMixer = (editedMainMixer) => {
+  const initialMainMixer = INIT_MAIN_MIXER();
+  const edits = [];
+  for (let [key, val] of Object.entries(initialMainMixer)) {
+    const newVal = editedMainMixer[key];
+    if (val !== newVal) edits.push(key.substr(0, 1), newVal);
+  }
+  const string = edits.join('');
+  return string || 'init';
+};
+
+export const getMainMixerFromStr = (string) => {
+  const mainMixer = INIT_MAIN_MIXER();
+  if (string === 'init') return mainMixer;
+  const edits = string.split(/([a-z]\d+)/g);
+  for (let edit of edits) {
+    if (!edit) continue;
+    const [, letter, val] = edit.split(/([a-z])(\d+)/);
+    mainMixer[mainMixerPropertyLookup[letter]] = parseInt(val);
+  }
+  return mainMixer;
+};
+
+console.log(getStrFromMainMixer(INIT_MAIN_MIXER()));
