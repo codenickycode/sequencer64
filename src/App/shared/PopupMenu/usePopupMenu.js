@@ -36,22 +36,27 @@ export const usePopupMenu = (keepOpenOnSelect, active, activeCB) => {
 
   const closeMenu = (e) => {
     if (keepOpenOnSelect) {
-      for (let className of e.target.classList) {
-        if (className.match(/popup/)) return;
+      if (e.target.classList) {
+        for (let className of e.target.classList) {
+          if (className.match(/popup/)) return;
+        }
       }
     }
     document.removeEventListener('click', closeMenu);
+    document.removeEventListener('anotherMenuOpened', closeMenu);
     document.getElementById('menuBar')?.removeEventListener('scroll', closeMenu);
     setShowMenu(false);
   };
 
   const onClick = (e) => {
     e.stopPropagation();
+    document.dispatchEvent(new Event('anotherMenuOpened'));
     if (active && activeCB) {
       activeCB();
     } else {
       if (!showMenu) {
         document.addEventListener('click', closeMenu);
+        document.addEventListener('anotherMenuOpened', closeMenu);
         document.getElementById('menuBar')?.addEventListener('scroll', closeMenu);
       }
       setShowMenu(!showMenu);

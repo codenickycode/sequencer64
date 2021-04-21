@@ -18,6 +18,7 @@ export const TapMenu = () => {
   const tapRecording = areWeTapRecording(editorMode);
   const { selectingKit, mixing } = useCurrentPath();
 
+  // allows disable of tap mode while mixer or changeKit open
   const activeCB = () => dispatch(setMode(MODES.INIT));
 
   let addBtnClasses = 'tap';

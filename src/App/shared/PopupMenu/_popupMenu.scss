@@ -7,7 +7,7 @@
   position: absolute;
   width: 250px;
   @include flex(column);
-  @extend %bgMenuBarHalf;
+  @extend %bgMenuBar;
   opacity: 0;
   transform: translateY(100%);
   transition: 150ms ease;

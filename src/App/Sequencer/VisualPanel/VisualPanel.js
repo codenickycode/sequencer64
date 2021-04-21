@@ -3,6 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useShowAndHideClass } from 'hooks/useShowAndHide';
 import { Analyzer } from './Analyzer';
+import { useCurrentPath } from 'hooks/useGoTo';
 
 export const VisualPanel = () => {
   return (
@@ -38,9 +39,12 @@ const useInfoState = () => {
   state.editing = useSelector((state) => state.editor.selectedSample !== -1);
   state.transportStarted = useSelector((state) => state.tone.transportState === 'started');
   state.analyzerOn = useSelector((state) => state.screen.analyzer.on);
+  state.splitSamplePanel = useSelector((state) => state.screen.splitSamplePanel);
   state.countIn = useSelector((state) => state.tone.countIn);
   state.infoText = useSelector((state) => state.editor.info);
   state.flashInfo = useSelector((state) => state.app.flashInfo);
+  const { mixing } = useCurrentPath();
+  state.mixing = mixing;
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -59,6 +63,7 @@ const useInfoStyle = (state) => {
 
   let showInfo = !state.editing;
   if (state.transportStarted && state.analyzerOn) showInfo = false;
+  if (!state.splitSamplePanel && state.mixing) showInfo = false;
   classes.container = showInfo ? 'info show' : 'info';
 
   return classes;
