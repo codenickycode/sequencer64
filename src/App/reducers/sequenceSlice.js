@@ -8,11 +8,16 @@ import {
   dec,
   initSampleStep,
   getPatternFromStr,
+  getMainMixerFromStr,
+  getSampleMixerFromStr,
 } from 'App/reducers/functions/sequence';
 import { INITIAL_MODS, MODES } from 'App/reducers/editorSlice';
 import * as sequenceThunks from './thunks/sequenceThunks';
 
 const INITIAL_PATTERN = getSS('sequencePattern') || getPatternFromStr(analog.patternStr);
+const INITIAL_MAIN_MIXER = getSS('mainMixer') || getMainMixerFromStr(analog.mainMixerStr);
+const INITIAL_SAMPLE_MIXER =
+  getSS('sampleMixer') || getSampleMixerFromStr(analog.sampleMixerStr);
 
 export const MAIN_MIXER_PROPERTIES = {
   volume: { min: 0, max: 100, initialValue: 76, snapback: false },
@@ -34,9 +39,9 @@ export const INITIAL_SEQUENCE = {
   kit: getSS('sequenceKitName') || analog.kit,
   bpm: getSS('sequenceBpm') || analog.bpm,
   length: getSS('sequenceLength') || analog.length,
-  mainMixer: getSS('mainMixer') || analog.mainMixer,
-  sampleMixer: getSS('sampleMixer') || analog.sampleMixer,
   pattern: INITIAL_PATTERN,
+  mainMixer: INITIAL_MAIN_MIXER,
+  sampleMixer: INITIAL_SAMPLE_MIXER,
 };
 
 export const INITIAL_STATE = {

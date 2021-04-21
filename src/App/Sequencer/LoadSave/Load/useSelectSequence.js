@@ -1,4 +1,8 @@
-import { getPatternFromStr } from 'App/reducers/functions/sequence';
+import {
+  getMainMixerFromStr,
+  getPatternFromStr,
+  getSampleMixerFromStr,
+} from 'App/reducers/functions/sequence';
 import { loadSequence } from 'App/reducers/sequenceSlice';
 import { setRestarting } from 'App/reducers/toneSlice';
 import { useState } from 'react';
@@ -6,9 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export const useSelectSequence = () => {
   const dispatch = useDispatch();
-  const defaultSequences = useSelector(
-    (state) => state.assets.defaultSequences
-  );
+  const defaultSequences = useSelector((state) => state.assets.defaultSequences);
   const userSequences = useSelector((state) => state.assets.userSequences);
   const [selectedId, setSelectedId] = useState(null);
 
@@ -26,6 +28,8 @@ export const useSelectSequence = () => {
       loadSequence({
         ...sequence,
         pattern: getPatternFromStr(sequence.patternStr),
+        mainMixer: getMainMixerFromStr(sequence.mainMixerStr),
+        sampleMixer: getSampleMixerFromStr(sequence.sampleMixerStr),
       })
     );
     dispatch(setRestarting(true));

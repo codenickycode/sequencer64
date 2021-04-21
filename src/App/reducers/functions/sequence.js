@@ -198,15 +198,6 @@ const INIT_MAIN_MIXER = () => ({
   distort: 0,
 });
 
-const mainMixerPropertyLookup = {
-  v: 'volume',
-  r: 'reverb',
-  f: 'filter',
-  w: 'warp',
-  c: 'crush',
-  d: 'distort',
-};
-
 export const getStrFromMainMixer = (editedMainMixer) => {
   const initialMainMixer = INIT_MAIN_MIXER();
   const edits = [];
@@ -218,6 +209,15 @@ export const getStrFromMainMixer = (editedMainMixer) => {
   return string || 'init';
 };
 
+const mainMixerPropertyLookup = {
+  v: 'volume',
+  r: 'reverb',
+  f: 'filter',
+  w: 'warp',
+  c: 'crush',
+  d: 'distort',
+};
+
 export const getMainMixerFromStr = (string) => {
   const mainMixer = INIT_MAIN_MIXER();
   if (string === 'init') return mainMixer;
@@ -225,9 +225,53 @@ export const getMainMixerFromStr = (string) => {
   for (let edit of edits) {
     if (!edit) continue;
     const [, letter, val] = edit.split(/([a-z])(\d+)/);
-    mainMixer[mainMixerPropertyLookup[letter]] = parseInt(val);
+    const property = mainMixerPropertyLookup[letter];
+    mainMixer[property] = parseInt(val);
   }
   return mainMixer;
 };
 
-console.log(getStrFromMainMixer(INIT_MAIN_MIXER()));
+const INIT_SAMPLE_MIXER = () => [
+  { vol: 100, pan: 50 },
+  { vol: 100, pan: 50 },
+  { vol: 100, pan: 50 },
+  { vol: 100, pan: 50 },
+  { vol: 100, pan: 50 },
+  { vol: 100, pan: 50 },
+  { vol: 100, pan: 50 },
+  { vol: 100, pan: 50 },
+  { vol: 100, pan: 50 },
+];
+
+export const getStrFromSampleMixer = (editedSampleMixer) => {
+  const initialSampleMixer = INIT_SAMPLE_MIXER();
+  const edits = [];
+  editedSampleMixer.forEach((sample, i) => {
+    let sampleEdits = [];
+    let sampleEdited = false;
+    for (let [key, val] of Object.entries(sample)) {
+      if (initialSampleMixer[i][key] !== val) {
+        sampleEdits.push(key.substr(0, 1), val);
+        sampleEdited = true;
+      }
+    }
+    if (sampleEdited) edits.push('S', i, ...sampleEdits);
+  });
+  const string = edits.join('');
+  return string || 'init';
+};
+
+const sampleMixerPropertyLookup = { v: 'vol', p: 'pan' };
+
+export const getSampleMixerFromStr = (string) => {
+  const sampleMixer = INIT_SAMPLE_MIXER();
+  if (string === 'init') return sampleMixer;
+  const edits = string.split(/S/g);
+  for (let edit of edits) {
+    if (!edit) continue;
+    const [, sample, letter, val] = edit.split(/(\d)([v|p])(\d+)/);
+    const property = sampleMixerPropertyLookup[letter];
+    sampleMixer[sample][property] = parseInt(val);
+  }
+  return sampleMixer;
+};

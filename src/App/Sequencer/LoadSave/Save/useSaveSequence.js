@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ObjectID from 'bson-objectid';
-import { getStrFromPattern } from 'App/reducers/functions/sequence';
+import {
+  getStrFromMainMixer,
+  getStrFromPattern,
+  getStrFromSampleMixer,
+} from 'App/reducers/functions/sequence';
 import { saveSequence } from 'App/reducers/appSlice';
 
 export const useSaveSequence = (idRef) => {
@@ -33,8 +37,8 @@ export const useSaveSequence = (idRef) => {
       kit: sequence.kit,
       bpm: sequence.bpm,
       length: sequence.length,
-      mainMixer: sequence.mainMixer,
-      sampleMixer: sequence.sampleMixer,
+      mainMixerStr: getStrFromMainMixer(sequence.mainMixer),
+      sampleMixerStr: getStrFromSampleMixer(sequence.sampleMixer),
       patternStr: getStrFromPattern(sequence.pattern),
     };
     setNewName('');
