@@ -76,6 +76,10 @@ body {
   transform: rotate(270deg);
 }
 
+.d-none {
+  display: none !important;
+}
+
 input {
   user-select: initial;
 }

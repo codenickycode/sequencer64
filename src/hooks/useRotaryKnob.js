@@ -1,32 +1,42 @@
 import { useEffect, useRef, useState } from 'react';
 
-export const useRotaryKnob = (initialVal = 50) => {
-  const [value, setValue] = useState(initialVal);
+export const useRotaryKnob = (currentVal, properties) => {
+  const min = properties.min ?? 0;
+  const max = properties.max ?? 100;
+  const snapback = properties.snapback || false;
+  const initialVal = properties.initialVal ?? 50;
+
+  const [value, setValue] = useState(currentVal);
   useEffect(() => {
-    setValue(initialVal);
-  }, [initialVal]);
+    setValue(currentVal);
+  }, [currentVal]);
 
   const prevYRef = useRef(null);
 
   const startFunc = (e) => {
     prevYRef.current = getY(e);
   };
+
   const moveFunc = (e) => {
     const newY = getY(e);
     let amount = getKnobAmount(newY, prevYRef.current);
     prevYRef.current = newY;
     setValue((value) => {
       let newVal = value + amount;
-      if (newVal < 0) newVal = 0;
-      if (newVal > 100) newVal = 100;
+      if (newVal < min) newVal = min;
+      if (newVal > max) newVal = max;
       return newVal;
     });
   };
+
   const endFunc = () => {
+    if (snapback) setTimeout(() => setValue(initialVal), 0);
     prevYRef.current = null;
   };
 
-  return { value, startFunc, moveFunc, endFunc };
+  const reset = () => setValue(initialVal);
+
+  return { value, reset, startFunc, moveFunc, endFunc };
 };
 
 const getY = (e) => {

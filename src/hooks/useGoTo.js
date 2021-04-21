@@ -36,6 +36,8 @@ export const useCurrentPath = () => {
   path.selectingKit = pathname === PATHS.CHANGE_KIT;
   path.mixingGlobal = pathname === PATHS.GLOBAL_MIXER;
   path.mixingSamples = pathname === PATHS.SAMPLE_MIXER;
+  path.mixing = path.mixingGlobal || path.mixingSamples;
+  path.atBase = pathname === PATHS.BASE;
 
   return path;
 };

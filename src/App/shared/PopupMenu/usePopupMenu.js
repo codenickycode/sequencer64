@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 const MENU_TRANSITION = 150;
 
-export const usePopupMenu = (keepOpenOnSelect) => {
+export const usePopupMenu = (keepOpenOnSelect, active, activeCB) => {
   const [btnClasses, setBtnClasses] = useState('menuBtn'); // active border when menu open
   const [menuClasses, setMenuClasses] = useState('popupMenu'); // initial class is hidden
   const [renderMenu, setRenderMenu] = useState(false); // react: render the component
@@ -47,11 +47,15 @@ export const usePopupMenu = (keepOpenOnSelect) => {
 
   const onClick = (e) => {
     e.stopPropagation();
-    if (!showMenu) {
-      document.addEventListener('click', closeMenu);
-      document.getElementById('menuBar')?.addEventListener('scroll', closeMenu);
+    if (active && activeCB) {
+      activeCB();
+    } else {
+      if (!showMenu) {
+        document.addEventListener('click', closeMenu);
+        document.getElementById('menuBar')?.addEventListener('scroll', closeMenu);
+      }
+      setShowMenu(!showMenu);
     }
-    setShowMenu(!showMenu);
   };
 
   const btnRef = useRef();

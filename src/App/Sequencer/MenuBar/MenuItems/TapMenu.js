@@ -12,19 +12,23 @@ import {
 } from 'App/reducers/abstractState/abstractEditorState';
 
 export const TapMenu = () => {
+  const dispatch = useDispatch();
   const editorMode = useSelector((state) => state.editor.mode);
   const tapPlaying = areWeTapPlaying(editorMode);
   const tapRecording = areWeTapRecording(editorMode);
-  const { selectingKit } = useCurrentPath();
+  const { selectingKit, mixing } = useCurrentPath();
 
-  let addBtnClasses = ' tap';
+  const activeCB = () => dispatch(setMode(MODES.INIT));
+
+  let addBtnClasses = 'tap';
   if (tapPlaying) addBtnClasses += ' active';
   if (tapRecording) addBtnClasses += ' active record';
   return (
     <PopupMenu
       name='tap'
       Icon={TapIcon}
-      disabled={selectingKit}
+      active={selectingKit || mixing}
+      activeCB={activeCB}
       addBtnClasses={addBtnClasses}
     >
       <TapMenuItems />

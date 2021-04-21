@@ -9,14 +9,16 @@ export const PopupMenu = ({
   disabled = false,
   addBtnClasses = '',
   keepOpenOnSelect,
+  active,
+  activeCB,
   children,
 }) => {
-  const popupMenu = usePopupMenu(keepOpenOnSelect);
+  const popupMenu = usePopupMenu(keepOpenOnSelect, active, activeCB);
   const { btnRef, btnClasses, onClick, renderMenu, menuStyle, menuClasses } = popupMenu;
 
   const btnId = `${name}Btn`;
   return (
-    <div ref={btnRef} className='menuBtnWrapper'>
+    <div ref={btnRef} className='menuBtnWrapper '>
       <Button
         id={btnId}
         classes={btnClasses + ' ' + addBtnClasses}

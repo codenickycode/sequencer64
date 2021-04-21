@@ -6,7 +6,7 @@ import { MODES, setMode } from 'App/reducers/editorSlice';
 import { useGoTo, useCurrentPath } from 'hooks/useGoTo';
 import { useStopPropEventListener } from 'hooks/useStopPropEventListener';
 
-const OpenPathBtn = ({ active, path, label, Icon }) => {
+export const OpenPathBtn = ({ addClass = '', active, path, label, Icon }) => {
   const dispatch = useDispatch();
   const goTo = useGoTo();
   const { eventListener, removeElRef } = useStopPropEventListener();
@@ -14,7 +14,7 @@ const OpenPathBtn = ({ active, path, label, Icon }) => {
   const memo = useMemo(() => {
     const handleGoToBase = () => {
       goTo.base(() => dispatch(setMode(MODES.INIT)));
-      removeElRef.current();
+      if (removeElRef.current) removeElRef.current();
     };
 
     const openPath = () => {
@@ -29,12 +29,14 @@ const OpenPathBtn = ({ active, path, label, Icon }) => {
     const classes = active ? 'menuBtn active openPath' : 'menuBtn openPath';
     const id = `${label}Btn`;
     return (
-      <Button id={id} classes={classes} onClick={openPath}>
-        <Icon />
-        <label htmlFor={id}>{label}</label>
-      </Button>
+      <div className={'menuBtnWrapper ' + addClass}>
+        <Button id={id} classes={classes} onClick={openPath}>
+          <Icon />
+          <label htmlFor={id}>{label}</label>
+        </Button>
+      </div>
     );
-  }, [active, dispatch, eventListener, goTo, label, path, removeElRef]);
+  }, [active, addClass, dispatch, eventListener, goTo, label, path, removeElRef]);
   return memo;
 };
 

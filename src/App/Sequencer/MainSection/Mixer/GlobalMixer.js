@@ -1,24 +1,24 @@
 import { mainBus } from 'App/Tone';
 import { Portal } from 'App/shared/Portal';
-import { ArrowUpDownIcon } from 'assets/icons';
 import { useTouchAndMouse } from 'hooks/useTouchAndMouse';
 import { Knob } from './Knob';
 import { useRotaryKnob } from 'hooks/useRotaryKnob';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Button } from 'App/shared/Button';
 
 export const GlobalMixer = () => {
   return (
     <Portal targetId='overGridPortal'>
       <div id='mixer' className='mixer'>
-        <div className='mixItemWrapper'>
+        <div className='mixItemWrapper global'>
           {Object.entries(mainBus.mixer).map(([property, node], i) => {
-            const initialVal = getInitialValue(property, node);
+            const currentVal = node.getVal();
             return (
               <RotaryKnob
                 key={`rotaryKnob${i}`}
                 property={property}
                 node={node}
-                initialVal={initialVal}
+                currentVal={currentVal}
               />
             );
           })}
@@ -28,47 +28,39 @@ export const GlobalMixer = () => {
   );
 };
 
-const RotaryKnob = ({ property, node, initialVal }) => {
-  console.log(`property: ${property} | initialValue: ${initialVal}`);
-  const { value, startFunc, moveFunc, endFunc } = useRotaryKnob(initialVal);
-  const touchAndMouse = useTouchAndMouse(startFunc, moveFunc, endFunc);
+const RotaryKnob = ({ property, node, currentVal }) => {
+  const { value, reset, startFunc, moveFunc, endFunc } = useRotaryKnob(currentVal, node);
+  const [editing, setEditing] = useState(false);
+
+  const handleStart = (e) => {
+    setEditing(true);
+    startFunc(e);
+  };
+
+  const handleEnd = (e) => {
+    setEditing(false);
+    endFunc(e);
+  };
+
+  const touchAndMouse = useTouchAndMouse(handleStart, moveFunc, handleEnd);
 
   useEffect(() => {
-    if (property === 'volume') {
-      let newVal = (value - 100) * 0.25;
-      return (node.value = newVal);
-    }
-    if (property === 'filter') return (node.frequency = value * 20000);
-    if (property === 'pitch shift') return (node.pitch = value - 50);
-    if (property === 'envelope') return (node.decay = value / 100);
-    if (property === 'delay' || property === 'reverb') return node.set({ gain: value / 100 });
-  }, [node, property, value]);
+    node.setVal(value);
+  }, [node, value]);
 
   const id = `globalMixItem${property}`;
   const knobId = `${id}Knob`;
+  let containerClass = 'mixItem';
+  if (editing) containerClass += ' editing';
   return (
-    <div id={id} className='mixItem'>
+    <div id={id} className={containerClass}>
       <p className='mixItemName'>{property}</p>
-      <div className='knobWrapper'>
-        <div className='knob' id={knobId} {...touchAndMouse}>
-          <label htmlFor={knobId}>
-            <ArrowUpDownIcon />
-          </label>
-          <Knob value={value} />
-        </div>
+      <div className='mixProperties global'>
+        <Knob value={value} id={knobId} {...touchAndMouse} onDoubleClick={reset} />
+        <Button disabled={node.snapback} classes='reset' onClick={reset}>
+          reset
+        </Button>
       </div>
     </div>
   );
-};
-
-const getInitialValue = (property, node) => {
-  if (property === 'volume') {
-    let value = node.value * 4 + 100;
-    if (value > 100) value = 100;
-    return value;
-  }
-  if (property === 'filter') return node.frequency / 20000;
-  if (property === 'pitch shift') return node.pitch + 50;
-  if (property === 'envelope') return node.release * 100; //?!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  if (property === 'delay' || property === 'reverb') return node.gain.value * 100;
 };

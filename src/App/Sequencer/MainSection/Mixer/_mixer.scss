@@ -1,30 +1,85 @@
 @use 'styles/mixins' as *;
 @use 'styles/placeholders' as *;
 @use 'styles/colors' as *;
+@use 'styles/responsiveFont' as *;
 
 .mixer {
   pointer-events: initial;
   @extend %fullAbs;
-  @extend %bg90;
+  @extend %bg3q;
+
+  * {
+    // border: 1px solid red;
+  }
 
   .mixItemWrapper {
     @extend %full;
-    @include grid(3, 3, 5px);
     padding: 0.25rem;
 
+    &.global {
+      @include grid(3, 2, 5px);
+    }
+    &.mixSamples {
+      @include grid(3, 3, 5px);
+    }
+
     .mixItem {
-      padding: 0.5rem;
+      margin: 0 auto;
       @extend %full;
       @extend %borderHalf;
       @extend %color;
-      @include flex(column, space-evenly);
+      @include flex(column, flex-start);
 
-      * {
-        // border: 1px solid red;
+      &.editing {
+        @extend %border;
+        .mixItemName {
+          @extend %bgBright;
+        }
       }
 
+      font-style: italic;
+      font-weight: bold;
+      text-transform: capitalize;
+
       .mixItemName {
-        text-transform: capitalize;
+        width: 100%;
+        padding: 0.5rem;
+        justify-self: flex-start;
+        @extend %bgSampleBtn;
+        border-radius: 0.5rem;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      .mixProperties {
+        @extend %full;
+        @include flex(column, space-evenly);
+
+        &.global {
+          flex-direction: row;
+        }
+
+        .mixItemProperty {
+          cursor: pointer;
+          @include flex(row, space-evenly);
+          padding: 0.25rem 0;
+          width: 100%;
+          @extend %borderHalf;
+          border-left-color: transparent !important;
+          border-right-color: transparent !important;
+          @include responsiveFont(2vw, 16px, 20px);
+          @extend %bg3q;
+        }
+      }
+
+      .knob {
+        max-height: 50%;
+        max-width: 50%;
+      }
+
+      .reset {
+        @extend %btn;
+        border: none;
       }
 
       .mixItemBorder {
@@ -40,31 +95,6 @@
         .mixItemBorder {
           transition: none;
           opacity: 1;
-        }
-      }
-    }
-
-    .knobWrapper {
-      flex: 0 1 auto;
-      min-height: 0;
-      min-width: 0;
-    }
-
-    .customSelectWrapper {
-      width: 100%;
-      padding: 0;
-
-      .customSelect {
-      }
-
-      @media (max-height: 735px) {
-        .customSelect {
-          padding-top: 0;
-          padding-bottom: 0;
-          font-size: 1rem;
-        }
-        .chevron-down {
-          right: 0;
         }
       }
     }

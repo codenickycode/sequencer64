@@ -5,10 +5,26 @@ import { useGoTo, useCurrentPath } from 'hooks/useGoTo';
 import { useDispatch } from 'react-redux';
 
 export const MixerMenu = () => {
+  const dispatch = useDispatch();
+  const goTo = useGoTo();
+  const { mixing } = useCurrentPath();
+
+  const activeCB = () => {
+    goTo.base(() => dispatch(setMode(MODES.INIT)));
+  };
+
   return (
-    <PopupMenu name='mixer' Icon={MixerIcon}>
-      <MixerMenuItems />
-    </PopupMenu>
+    <>
+      <PopupMenu
+        addBtnClasses={mixing ? ' mixerBtn active' : 'mixerBtn'}
+        name='mixer'
+        Icon={MixerIcon}
+        active={mixing}
+        activeCB={activeCB}
+      >
+        <MixerMenuItems />
+      </PopupMenu>
+    </>
   );
 };
 

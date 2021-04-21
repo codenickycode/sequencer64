@@ -9,16 +9,21 @@ import {
 } from 'App/reducers/abstractState/abstractEditorState';
 import { useAutoFalseState } from 'hooks/useAutoFalseState';
 import { useEffect } from 'react';
-import { useCurrentPath } from 'hooks/useGoTo';
+import { useCurrentPath, useGoTo } from 'hooks/useGoTo';
 import { vanillaShowAndHideClass } from 'hooks/useShowAndHide';
 
 export const useSampleBtnContainer = () => {
   const dispatch = useDispatch();
+  const goTo = useGoTo();
+  const { atBase } = useCurrentPath();
   const selectedSample = useSelector((state) => state.editor.selectedSample);
   const sequenceKitName = useSelector((state) => state.sequence.present.kit);
   const kit = useSelector((state) => state.assets.kits[sequenceKitName]);
 
-  const selectSample = (i) => dispatch(edit({ sample: i }));
+  const selectSample = (i) => {
+    dispatch(edit({ sample: i }));
+    if (!atBase) goTo.base();
+  };
 
   return { kit, selectedSample, selectSample };
 };
@@ -28,22 +33,20 @@ export const useSampleBtn = (selectSample, selected, i) => {
   const editorMode = useSelector((state) => state.editor.mode);
   const recording = areWeTapRecording(editorMode);
   const tapping = areWeTapping(editorMode);
-  const { mixing } = useCurrentPath();
+  const { mixingSamples } = useCurrentPath();
 
   const [flash, setFlash] = useAutoFalseState(100);
 
   // flash mix panel
   useEffect(() => {
-    if (!flash || !mixing) return;
-    vanillaShowAndHideClass(`mixSample${i}`, 'flash', 100);
-  }, [flash, i, mixing]);
+    if (!flash || !mixingSamples) return;
+    vanillaShowAndHideClass(`mixItem${i}`, 'flash', 100);
+  }, [flash, i, mixingSamples]);
 
   const startFunc = (e) => {
     if (recording) dispatch(recordSample(i));
-    if (tapping) {
-      Kit.samples[i].sampler.triggerAttack('C2', Tone.immediate(), 1);
-      setFlash(true);
-    }
+    Kit.samples[i].sampler.triggerAttack('C2', Tone.immediate(), 1);
+    setFlash(true);
   };
 
   const onClick = () => {
