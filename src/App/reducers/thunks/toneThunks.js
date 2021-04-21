@@ -6,6 +6,7 @@ import {
   startFlashing,
 } from 'App/reducers/functions/animations';
 import {
+  applySampleMixer,
   buildSamplers,
   disposeSamplers,
   triggerMetronome,
@@ -48,6 +49,7 @@ export const loadSamples = () => async (dispatch, getState) => {
   try {
     if (Kit.samples[0].sampler) disposeSamplers();
     await buildSamplers(kitAssets);
+    applySampleMixer(getState().sequence.present.sampleMixer);
     available = true;
     payload.bufferedKit = sequenceKitName;
     payload.buffersLoaded = true;

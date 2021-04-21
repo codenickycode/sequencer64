@@ -78,6 +78,13 @@ const scaledGetAndSetPan = (sample) => ({
   },
 });
 
+export const applySampleMixer = (sampleMixer) => {
+  sampleMixer.forEach(({ vol, pan }, i) => {
+    Kit.samples[i].vol.setValFromRotary(vol);
+    Kit.samples[i].pan.setValFromRotary(pan);
+  });
+};
+
 export const triggerMetronome = (time, step) => {
   if (step % 16 === 0) metronome.triggerAttack('C2', time);
   else if (step % 4 === 0) metronome.triggerAttack('C1', time);

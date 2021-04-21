@@ -20,7 +20,7 @@ const INITIAL_SAMPLE_MIXER =
   getSS('sampleMixer') || getSampleMixerFromStr(analog.sampleMixerStr);
 
 export const MAIN_MIXER_PROPERTIES = {
-  volume: { min: 0, max: 100, initialValue: 76, snapback: false },
+  volume: { min: 1, max: 100, initialValue: 76, snapback: false },
   reverb: { min: 0, max: 100, initialValue: 0, snapback: false },
   filter: { min: 1, max: 100, initialValue: 100, snapback: false },
   warp: { min: 0, max: 100, initialValue: 50, snapback: true },
@@ -29,7 +29,7 @@ export const MAIN_MIXER_PROPERTIES = {
 };
 
 export const SAMPLE_MIXER_PROPERTIES = {
-  vol: { min: 0, max: 100, initialValue: 100 },
+  vol: { min: 1, max: 100, initialValue: 100 },
   pan: { min: 0, max: 100, initialValue: 50 },
 };
 
