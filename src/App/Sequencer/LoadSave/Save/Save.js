@@ -25,6 +25,7 @@ export const Save = () => {
     changeCycleCount,
     supported,
     duration,
+    timeLeft,
   } = useDownload();
   return (
     <div id='saveSequence' className='saveSequence'>
@@ -61,7 +62,7 @@ export const Save = () => {
                   </Button>
                 </div>
                 <p className='duration'>
-                  Duration: <span>{formatDuration(duration)}</span>
+                  Duration: <span>{formatTime(duration)}</span>
                 </p>
               </div>
               <Button classes='downloadBtn' onClick={download}>
@@ -73,9 +74,9 @@ export const Save = () => {
         {preparingDownload && (
           <Preparing
             addClass='preparingDownload'
-            message={
-              'Please wait while your mp3 is prepared.\n Do not close this window until complete.'
-            }
+            message={`Please wait while your mp3 is prepared.\n Do not close this window until complete.\n\nTime left: ${formatTime(
+              timeLeft
+            )}`}
             targetId='preparingPortalTop'
             cancel={cancelDownload}
           />
@@ -91,6 +92,13 @@ const useDownload = () => {
   const bpm = useSelector((state) => state.sequence.present.bpm);
 
   const [duration, setDuration] = useState(0);
+
+  const [timeLeft, setTimeLeft] = useState(0);
+  useEffect(() => {
+    let timer;
+    if (timeLeft) timer = setTimeout(() => setTimeLeft(timeLeft - 1000), 1000);
+    return () => clearTimeout(timer);
+  }, [timeLeft]);
 
   const [cycleCount, setCycleCount] = useState(1);
 
@@ -110,16 +118,18 @@ const useDownload = () => {
     if (cycleCount === 16) setCycleCount(1);
   };
 
+  const cancelRef = useRef();
+
   const download = async () => {
     dispatch(setPreparingDownload(true));
     try {
       recorder.start();
       dispatch(stopSequence());
       dispatch(startSequence(cycleCount));
-      await downloadMp3(duration);
+      setTimeLeft(duration);
+      await downloadMp3(duration, cancelRef);
     } catch (e) {
-      console.log('RECORDING ->');
-      console.log(e);
+      console.log('user cancelled recording');
     } finally {
       dispatch(stopSequence());
       dispatch(setPreparingDownload(false));
@@ -127,6 +137,10 @@ const useDownload = () => {
   };
 
   const cancelDownload = () => {
+    if (cancelRef.current) cancelRef.current();
+    recorder.stop();
+    dispatch(stopSequence());
+    setTimeLeft(0);
     dispatch(setPreparingDownload(false));
   };
 
@@ -139,11 +153,13 @@ const useDownload = () => {
     cycleCount,
     changeCycleCount,
     duration,
+    timeLeft,
   };
 };
 
-const downloadMp3 = (duration) =>
+const downloadMp3 = (duration, cancelRef) =>
   new Promise((resolve, reject) => {
+    cancelRef.current = reject;
     setTimeout(async () => {
       try {
         const recording = await recorder.stop();
@@ -159,10 +175,10 @@ const downloadMp3 = (duration) =>
     }, duration);
   });
 
-const formatDuration = (duration) => {
-  const durationInSecs = duration / 1000;
-  const minutes = parseInt(durationInSecs / 60).toString();
-  const seconds = parseInt(durationInSecs % 60).toString();
+const formatTime = (time) => {
+  const timeInSecs = time / 1000;
+  const minutes = parseInt(timeInSecs / 60).toString();
+  const seconds = parseInt(timeInSecs % 60).toString();
   const formattedDuration = `${minutes.padStart(2, '0')}:${seconds.padStart(2, '0')}`;
   return formattedDuration;
 };
