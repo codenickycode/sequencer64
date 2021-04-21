@@ -1,10 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import * as Tone from 'tone';
-import {
-  addCursor,
-  pauseFlashing,
-  startFlashing,
-} from 'App/reducers/functions/animations';
+import { addCursor, pauseFlashing, startFlashing } from 'App/reducers/functions/animations';
 import * as toneThunks from './thunks/toneThunks';
 
 const INITIAL_STATE = {

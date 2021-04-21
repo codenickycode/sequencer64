@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Portal } from 'App/shared/Portal';
 import { getGrid } from 'utils/getGrid';
 import { useTouchAndMouse } from 'hooks/useTouchAndMouse';

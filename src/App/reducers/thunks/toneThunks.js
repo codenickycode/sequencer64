@@ -42,9 +42,7 @@ export const loadSamples = () => async (dispatch, getState) => {
   const kitAssets = kits[sequenceKitName];
   dispatch(setStatus(`Loading samples: ${sequenceKitName}`));
   let available = kitAssets.available;
-  dispatch(
-    setFetchingSamples({ kit: sequenceKitName, fetching: true, available })
-  );
+  dispatch(setFetchingSamples({ kit: sequenceKitName, fetching: true, available }));
   let payload = { bufferedKit: Kit.name, loadingError: false };
   dispatch(setLoadingSamples(true));
   try {
@@ -62,9 +60,7 @@ export const loadSamples = () => async (dispatch, getState) => {
   } finally {
     payload.loadingSamples = false;
     dispatch(loadSamplesFinally(payload));
-    dispatch(
-      setFetchingSamples({ kit: sequenceKitName, fetching: false, available })
-    );
+    dispatch(setFetchingSamples({ kit: sequenceKitName, fetching: false, available }));
     dispatch(setStatus(payload.message));
   }
 };

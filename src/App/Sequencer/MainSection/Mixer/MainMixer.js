@@ -6,11 +6,11 @@ import { useRotaryKnob } from 'hooks/useRotaryKnob';
 import { useEffect, useState } from 'react';
 import { Button } from 'App/shared/Button';
 
-export const GlobalMixer = () => {
+export const MainMixer = () => {
   return (
     <Portal targetId='overGridPortal'>
       <div id='mixer' className='mixer'>
-        <div className='mixItemWrapper global'>
+        <div className='mixItemWrapper main'>
           {Object.entries(mainBus.mixer).map(([property, node], i) => {
             const currentVal = node.getVal();
             return (
@@ -48,14 +48,14 @@ const RotaryKnob = ({ property, node, currentVal }) => {
     node.setVal(value);
   }, [node, value]);
 
-  const id = `globalMixItem${property}`;
+  const id = `mainMixItem${property}`;
   const knobId = `${id}Knob`;
   let containerClass = 'mixItem';
   if (editing) containerClass += ' editing';
   return (
     <div id={id} className={containerClass}>
       <p className='mixItemName'>{property}</p>
-      <div className='mixProperties global'>
+      <div className='mixProperties main'>
         <Knob value={value} id={knobId} {...touchAndMouse} onDoubleClick={reset} />
         <Button disabled={node.snapback} classes='reset' onClick={reset}>
           reset

@@ -16,7 +16,7 @@
     @extend %full;
     padding: 0.25rem;
 
-    &.global {
+    &.main {
       @include grid(3, 2, 5px);
     }
     &.mixSamples {
@@ -55,7 +55,7 @@
         @extend %full;
         @include flex(column, space-evenly);
 
-        &.global {
+        &.main {
           flex-direction: row;
         }
 

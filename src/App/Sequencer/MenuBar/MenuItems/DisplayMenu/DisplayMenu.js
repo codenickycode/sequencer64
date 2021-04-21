@@ -1,22 +1,21 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { setTheme, THEMES } from 'App/reducers/appSlice';
 import { ANALYZER_MODES } from 'App/reducers/screenSlice';
 import { TVIcon } from 'assets/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  MenuItem,
-  MenuItemToggle,
-  PopupMenu,
-} from 'App/shared/PopupMenu/PopupMenu';
+import { MenuItem, MenuItemToggle, PopupMenu } from 'App/shared/PopupMenu/PopupMenu';
 import { useAnalyzerMenu } from './useAnalyzerMenu';
 
 export const DisplayMenu = () => {
-  return (
-    <PopupMenu name='display' Icon={TVIcon} keepOpenOnSelect={true}>
-      <Themes />
-      <Analyzer />
-    </PopupMenu>
-  );
+  const memo = useMemo(() => {
+    return (
+      <PopupMenu name='display' Icon={TVIcon} keepOpenOnSelect={true}>
+        <Themes />
+        <Analyzer />
+      </PopupMenu>
+    );
+  }, []);
+  return memo;
 };
 
 const themes = Object.values(THEMES);

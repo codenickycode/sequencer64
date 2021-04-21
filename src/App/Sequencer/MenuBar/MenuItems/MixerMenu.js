@@ -2,6 +2,7 @@ import { MODES, setMode } from 'App/reducers/editorSlice';
 import { MenuItem, PopupMenu } from 'App/shared/PopupMenu/PopupMenu';
 import { MixerIcon } from 'assets/icons';
 import { useGoTo, useCurrentPath } from 'hooks/useGoTo';
+import { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 
 export const MixerMenu = () => {
@@ -9,37 +10,36 @@ export const MixerMenu = () => {
   const goTo = useGoTo();
   const { mixing } = useCurrentPath();
 
-  const activeCB = () => {
+  const activeCB = useCallback(() => {
     goTo.base(() => dispatch(setMode(MODES.INIT)));
-  };
+  }, [dispatch, goTo]);
 
-  return (
-    <>
-      <PopupMenu
-        addBtnClasses={mixing ? ' mixerBtn active' : 'mixerBtn'}
-        name='mixer'
-        Icon={MixerIcon}
-        active={mixing}
-        activeCB={activeCB}
-      >
-        <MixerMenuItems />
-      </PopupMenu>
-    </>
-  );
+  const memo = useMemo(() => {
+    return (
+      <>
+        <PopupMenu
+          addBtnClasses={mixing ? ' mixerBtn active' : 'mixerBtn'}
+          name='mixer'
+          Icon={MixerIcon}
+          active={mixing}
+          activeCB={activeCB}
+        >
+          <MixerMenuItems />
+        </PopupMenu>
+      </>
+    );
+  }, [activeCB, mixing]);
+  return memo;
 };
 
 export const MixerMenuItems = () => {
   const dispatch = useDispatch();
   const goTo = useGoTo();
-  const { mixingGlobal, mixingSamples } = useCurrentPath();
+  const { mixingMain, mixingSamples } = useCurrentPath();
   const openPath = (path) => goTo[path](() => dispatch(setMode(MODES.TAP)));
   return (
     <>
-      <MenuItem
-        item={'Global'}
-        selected={mixingGlobal}
-        onClick={() => openPath('globalMixer')}
-      />
+      <MenuItem item={'Main'} selected={mixingMain} onClick={() => openPath('mainMixer')} />
       <MenuItem
         item={'Samples'}
         selected={mixingSamples}

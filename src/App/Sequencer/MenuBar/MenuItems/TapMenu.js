@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TapIcon } from 'assets/icons';
 import { MODES, setMode } from 'App/reducers/editorSlice';
@@ -19,22 +19,25 @@ export const TapMenu = () => {
   const { selectingKit, mixing } = useCurrentPath();
 
   // allows disable of tap mode while mixer or changeKit open
-  const activeCB = () => dispatch(setMode(MODES.INIT));
+  const activeCB = useCallback(() => dispatch(setMode(MODES.INIT)), [dispatch]);
 
-  let addBtnClasses = 'tap';
-  if (tapPlaying) addBtnClasses += ' active';
-  if (tapRecording) addBtnClasses += ' active record';
-  return (
-    <PopupMenu
-      name='tap'
-      Icon={TapIcon}
-      active={selectingKit || mixing}
-      activeCB={activeCB}
-      addBtnClasses={addBtnClasses}
-    >
-      <TapMenuItems />
-    </PopupMenu>
-  );
+  const memo = useMemo(() => {
+    let addBtnClasses = 'tap';
+    if (tapPlaying) addBtnClasses += ' active';
+    if (tapRecording) addBtnClasses += ' active record';
+    return (
+      <PopupMenu
+        name='tap'
+        Icon={TapIcon}
+        active={selectingKit || mixing}
+        activeCB={activeCB}
+        addBtnClasses={addBtnClasses}
+      >
+        <TapMenuItems />
+      </PopupMenu>
+    );
+  }, [activeCB, mixing, selectingKit, tapPlaying, tapRecording]);
+  return memo;
 };
 
 const modes = [MODES.TAP, MODES.TAP_RECORD];
