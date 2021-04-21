@@ -86,34 +86,3 @@ export const metronome = new Tone.Sampler({
     C2: clickHi,
   },
 }).toDestination();
-
-export const FX = {};
-// export const FX = {
-//   'delay 1\u204416': new Tone.FeedbackDelay({
-//     delayTime: '16n',
-//     feedback: 0.25,
-//     wet: 1,
-//   }),
-//   'delay 1\u20448': new Tone.FeedbackDelay({
-//     delayTime: '8n',
-//     feedback: 0.2,
-//     wet: 1,
-//   }),
-//   'delay .1\u20448': new Tone.FeedbackDelay({
-//     delayTime: '.8n',
-//     feedback: 0.2,
-//     wet: 1,
-//   }),
-//   'delay 1\u20444': new Tone.FeedbackDelay({
-//     delayTime: '4n',
-//     feedback: 0.2,
-//     wet: 1,
-//   }),
-//   reverb: new Tone.Reverb({ decay: 2, wet: 1 }),
-//   'bit crusher': new Tone.BitCrusher({ bits: 4, wet: 1 }),
-//   distortion: new Tone.Distortion({ distortion: 0.5, wet: 1 }),
-// };
-// Tone.Transport.syncSignal(FX['delay 1\u204416'].delayTime);
-// Tone.Transport.syncSignal(FX['delay 1\u20448'].delayTime);
-// Tone.Transport.syncSignal(FX['delay .1\u20448'].delayTime);
-// Tone.Transport.syncSignal(FX['delay 1\u20444'].delayTime);

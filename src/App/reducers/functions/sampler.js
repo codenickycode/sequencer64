@@ -1,6 +1,6 @@
 import * as Tone from 'tone';
 import { NETWORK_TIMEOUT } from 'utils/network';
-import { Kit, kitBus, metronome, FX } from 'App/Tone';
+import { Kit, kitBus, metronome } from 'App/Tone';
 
 export const disposeSamplers = () => {
   for (let sample of Kit.samples) {
@@ -8,10 +8,6 @@ export const disposeSamplers = () => {
     delete sample.sampler;
     sample.channel?.dispose();
     delete sample.channel;
-    Object.keys(FX).forEach((fx) => {
-      sample[fx]?.dispose();
-      delete sample[fx];
-    });
   }
   Kit.samples.length = 0;
 };
@@ -54,12 +50,6 @@ const connectSample = (sample, url) => {
         }).connect(kitBus);
         sample.vol = scaledGetAndSetVol(sample);
         sample.pan = scaledGetAndSetPan(sample);
-        const fxConnections = [];
-        for (let [fxKey, fxNode] of Object.entries(FX)) {
-          sample[fxKey] = new Tone.Gain(0).connect(fxNode);
-          fxConnections.push(sample[fxKey]);
-        }
-        sample.channel.fan(...fxConnections);
         sample.sampler.connect(sample.channel);
         resolve();
       },
