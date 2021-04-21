@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { TransportPanel } from './MenuItems/Transport/TransportPanel';
 import { UndoRedoBtn } from './MenuItems/UndoRedoBtn';
 import { EraseBtn } from './MenuItems/EraseBtn';
-import { FileBtn } from './MenuItems/FileBtn';
+import { FileMenu } from './MenuItems/FileMenu';
 import { KitBtn } from './MenuItems/OpenPathBtn';
 import { MixerMenu } from './MenuItems/MixerMenu';
 import { TapMenu } from './MenuItems/TapMenu';
@@ -21,7 +21,7 @@ export const MenuBar = () => {
       <Scrollable id='menuBar' style={{ height }}>
         <div className='menuItems'>
           <DisplayMenu />
-          <FileBtn />
+          <FileMenu />
           <KitBtn />
           <MixerMenu />
         </div>

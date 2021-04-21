@@ -3,6 +3,9 @@ import store from 'App/store';
 import * as Tone from 'tone';
 import clickHi from 'assets/audio/clickHi.mp3';
 import clickLow from 'assets/audio/clickLow.mp3';
+// import AudioRecorder from 'audio-recorder-polyfill';
+
+// window.MediaRecorder = AudioRecorder;
 
 const initialClick = async () => {
   store.dispatch(startTone());
@@ -17,11 +20,9 @@ export const fft = new Tone.FFT({
   normalRange: true,
 });
 
-const limiter = new Tone.Limiter(-18);
-const output = new Tone.Channel({ volume: -6, pan: 0, channelCount: 2 }).chain(
-  limiter,
-  Tone.Destination
-);
+export const recorder = new Tone.Recorder();
+const limiter = new Tone.Limiter(-18).fan(recorder, Tone.Destination);
+const output = new Tone.Channel({ volume: -6, pan: 0, channelCount: 2 }).connect(limiter);
 
 export const mainBus = new Tone.Channel({ volume: -6, pan: 0, channelCount: 2 });
 mainBus.mixer = {

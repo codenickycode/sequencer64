@@ -1,11 +1,16 @@
 import React, { useMemo } from 'react';
 import { getGrid } from 'utils/getGrid';
+import { Button } from '../Button';
 import { Portal } from '../Portal';
 
-export const Preparing = () => {
+export const Preparing = ({
+  message = 'preparing...',
+  targetId = 'preparingPortal',
+  cancel,
+}) => {
   const grid = useMemo(() => getGrid(9), []);
   return (
-    <Portal targetId='preparingPortal'>
+    <Portal targetId={targetId}>
       <div id='preparing' className='preparing'>
         <h1 className='prepHeader'>Sequencer64</h1>
         <div className='prepGrid'>
@@ -16,8 +21,9 @@ export const Preparing = () => {
           ))}
         </div>
         <p className='prepMsgContainer'>
-          <span className='prepMsg'>preparing...</span>
+          <span className='prepMsg'>{message}</span>
         </p>
+        {cancel && <Button onClick={cancel}>cancel</Button>}
       </div>
     </Portal>
   );

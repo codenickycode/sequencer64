@@ -20,11 +20,15 @@ class ErrorBoundary extends React.Component {
 export default ErrorBoundary;
 
 const ErrorHandler = ({ error }) => {
+  const topPortal = document.getElementById('preparingPortalTop');
+  if (topPortal) topPortal.style.display = 'none';
+
   const reloadApp = () => {
     localStorage.clear();
     sessionStorage.clear();
     window.location.href = '/';
   };
+
   return (
     <div id='errorHandler'>
       <div className='container'>

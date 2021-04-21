@@ -20,6 +20,8 @@ import {
   stopSequenceFinally,
   setAudioContextReady,
   setCountIn,
+  toneSlice,
+  setCycle,
 } from '../toneSlice';
 import { setFetchingSamples } from '../assetsSlice';
 import { setStatus } from '../appSlice';
@@ -81,18 +83,23 @@ export const schedulePattern = (dispatch, getState) => {
       console.log('scheduleRepeat passed buffer interrupt');
     }
     const length = getState().sequence.present.length;
-    dispatch(setStep((step + 1) % length));
+    if (step === length - 1) {
+      dispatch(incCycleCount());
+      dispatch(setStep(0));
+    } else {
+      dispatch(setStep(step + 1));
+    }
   }, '16n');
 };
 
-export const startSequence = () => async (dispatch, getState) => {
+export const startSequence = (stopAfterCycle) => async (dispatch, getState) => {
   const audioContextReady = getState().tone.audioContextReady;
   if (!audioContextReady) return dispatch(startTone(true));
   const mode = getState().editor.mode;
   removeCursor(getState().sequence.present.length, getState().tone.step);
   if (Tone.Transport.state === 'stopped') schedulePattern(dispatch, getState);
   if (mode === MODES.TAP_RECORD) await countIn();
-  dispatch(startSequenceFinally());
+  dispatch(startSequenceFinally(stopAfterCycle));
 };
 
 export const stopSequence = () => (dispatch, getState) => {
@@ -100,6 +107,16 @@ export const stopSequence = () => (dispatch, getState) => {
   removeCursor(getState().sequence.present.length, getState().tone.step);
   startFlashing();
   dispatch(stopSequenceFinally());
+};
+
+export const incCycleCount = () => (dispatch, getState) => {
+  const prevCycle = getState().tone.cycle;
+  const stopAfterCycle = getState().tone.stopAfterCycle;
+  if (stopAfterCycle && prevCycle === stopAfterCycle) {
+    dispatch(stopSequence());
+  } else {
+    dispatch(setCycle(prevCycle + 1));
+  }
 };
 
 const stopAndCancelEvents = () => {

@@ -28,6 +28,7 @@ const INITIAL_STATE = {
   serviceWorkerActive: false,
   theme: getLS('theme') || THEMES.JOKER,
   log: { count: 0, message: '' },
+  preparingDownload: false,
 };
 
 export const appSlice = createSlice({
@@ -83,6 +84,12 @@ export const appSlice = createSlice({
       state.status.message = message;
       state.fetching = false;
     },
+    setPreparingDownload: (state, { payload }) => {
+      state.preparingDownload = payload;
+      const portal = document.getElementById('preparingPortalTop');
+      if (payload && portal) portal.style.display = 'initial';
+      if (!payload && portal) portal.style.display = 'none';
+    },
   },
 });
 
@@ -99,6 +106,7 @@ export const {
   setLog,
   updateSequencesFinally,
   getUserFinally,
+  setPreparingDownload,
 } = appSlice.actions;
 
 export const { saveSequence, deleteSequence, getUser, logout } = appThunks;

@@ -13,6 +13,8 @@ const INITIAL_STATE = {
   audioContextReady: false,
   loadingError: { error: false, count: 0 },
   countIn: '',
+  cycle: 1,
+  stopAfterCycle: null,
 };
 
 export const toneSlice = createSlice({
@@ -52,7 +54,8 @@ export const toneSlice = createSlice({
     setRestarting: (state, { payload }) => {
       state.restarting = payload;
     },
-    startSequenceFinally: (state) => {
+    startSequenceFinally: (state, { payload }) => {
+      if (payload) state.stopAfterCycle = payload;
       state.restarting = false;
       state.transportState = 'started';
       Tone.Transport.start();
@@ -60,10 +63,15 @@ export const toneSlice = createSlice({
     },
     stopSequenceFinally: (state) => {
       state.step = 0;
+      state.cycle = 1;
+      state.stopAfterCycle = null;
       state.transportState = 'stopped';
     },
     setCountIn: (state, { payload }) => {
       state.countIn = payload;
+    },
+    setCycle: (state, { payload }) => {
+      state.cycle = payload;
     },
   },
 });
@@ -79,6 +87,7 @@ export const {
   startSequenceFinally,
   stopSequenceFinally,
   setCountIn,
+  setCycle,
 } = toneSlice.actions;
 
 export const {

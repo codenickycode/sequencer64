@@ -7,17 +7,18 @@
   padding: 1rem 0.5rem;
 
   .share,
-  .save {
+  .save,
+  .download {
     @extend %borderHalf;
     margin-bottom: 1rem;
     padding: 2rem;
-  }
 
-  .share {
     .header {
       @extend %headerLeft;
     }
+  }
 
+  .share {
     p {
       margin-top: 1rem;
       @extend %textHalf;
@@ -74,7 +75,6 @@
 
   .save {
     .header {
-      @extend %headerLeft;
       @include flex(row, space-between);
 
       .saveLocation {
@@ -116,6 +116,40 @@
         &.error {
           color: $red;
         }
+      }
+    }
+  }
+
+  .download {
+    .downloadMain {
+      @extend %full;
+
+      .notSupported {
+        @extend %textHalf;
+      }
+
+      .sub {
+        padding: 1rem;
+      }
+
+      .downloadInputs {
+        width: 100%;
+      }
+
+      .countAndDuration {
+        width: 100%;
+        @include flex(row, space-evenly);
+
+        .btn {
+          @extend %btn;
+          margin-left: 1rem;
+        }
+      }
+
+      .downloadBtn {
+        margin: 0.5rem 0;
+        @extend %btn;
+        width: 100%;
       }
     }
   }

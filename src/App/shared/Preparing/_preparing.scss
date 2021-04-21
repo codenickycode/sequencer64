@@ -3,13 +3,19 @@
 @use 'styles/colors' as *;
 @use 'styles/spectrum' as *;
 
-#preparingPortal {
+#preparingPortal,
+#preparingPortalTop {
   position: fixed;
+  z-index: 201;
   top: 0;
   left: 0;
   min-width: 100%;
   min-height: 100%;
-  @extend %bg3q;
+  @extend %bg90;
+}
+
+#preparingPortalTop {
+  display: none;
 }
 
 #preparing {
@@ -32,8 +38,15 @@
     padding: 1rem;
   }
   .prepMsg {
+    text-align: center;
+    line-height: 1.5rem;
+    white-space: pre-wrap;
     display: inline-block;
-    font-size: 1.25rem;
+    font-size: 1rem;
+  }
+
+  .btn {
+    @extend %btn;
   }
 
   .prepGrid {
