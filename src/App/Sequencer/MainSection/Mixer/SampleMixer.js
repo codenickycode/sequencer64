@@ -80,8 +80,8 @@ const MixItemProperty = ({ property, value, properties, sample }) => {
   };
 
   const reset = useCallback(() => {
-    dispatch(resetSampleMixerProperty(property));
-  }, [dispatch, property]);
+    dispatch(resetSampleMixerProperty({ sample, property }));
+  }, [dispatch, property, sample]);
 
   const endFunc = useCallback(() => {
     setEditing(false);

@@ -33,8 +33,8 @@ export const useSaveSequence = (idRef) => {
       kit: sequence.kit,
       bpm: sequence.bpm,
       length: sequence.length,
-      // mainMixer: sequence.mainMixer,
-      // sampleMixer: sequence.sampleMixer,
+      mainMixer: sequence.mainMixer,
+      sampleMixer: sequence.sampleMixer,
       patternStr: getStrFromPattern(sequence.pattern),
     };
     setNewName('');

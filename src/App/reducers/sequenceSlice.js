@@ -24,7 +24,7 @@ export const MAIN_MIXER_PROPERTIES = {
 };
 
 export const SAMPLE_MIXER_PROPERTIES = {
-  vol: { min: 0, max: 100, intialValue: 100 },
+  vol: { min: 0, max: 100, initialValue: 100 },
   pan: { min: 0, max: 100, initialValue: 50 },
 };
 
