@@ -1,10 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Portal } from 'App/shared/Portal';
 import { getGrid } from 'utils/getGrid';
 import { useTouchAndMouse } from 'hooks/useTouchAndMouse';
 import { Kit } from 'App/Tone';
-import { useRotaryKnob } from 'hooks/useRotaryKnob';
 import { ArrowUpDownIcon } from 'assets/icons';
+import {
+  adjustSampleMixer,
+  resetSampleMixerProperty,
+  SAMPLE_MIXER_PROPERTIES,
+} from 'App/reducers/sequenceSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getY } from 'utils/getY';
 
 export const SampleMixer = () => {
   const grid = getGrid(Kit.samples.length);
@@ -22,21 +28,24 @@ export const SampleMixer = () => {
 };
 
 const MixSample = ({ i }) => {
-  const sample = Kit.samples[i];
+  const sampleName = Kit.samples[i].name;
+  const value = useSelector((state) => state.sequence.present.sampleMixer[i]);
   const id = `mixItem${i}`;
   return (
     <div className='mixItem'>
-      <p className='mixItemName'>{sample.name}</p>
+      <p className='mixItemName'>{sampleName}</p>
       <div id={id} className='mixProperties'>
         <MixItemProperty
           property='vol'
-          sample={sample}
-          currentVal={sample.vol.getRotaryVal()}
+          value={value.vol}
+          properties={SAMPLE_MIXER_PROPERTIES.vol}
+          sample={i}
         />
         <MixItemProperty
           property='pan'
-          sample={sample}
-          currentVal={sample.pan.getRotaryVal()}
+          value={value.pan}
+          properties={SAMPLE_MIXER_PROPERTIES.pan}
+          sample={i}
         />
         <div className={`mixItemBorder border${i}`} />
       </div>
@@ -44,17 +53,49 @@ const MixSample = ({ i }) => {
   );
 };
 
-const MixItemProperty = ({ property, sample, currentVal }) => {
-  const { value, reset, startFunc, moveFunc, endFunc } = useRotaryKnob(currentVal, sample);
+const MixItemProperty = ({ property, value, properties, sample }) => {
+  const dispatch = useDispatch();
+
+  const adjustSample = useCallback(
+    (amount) => {
+      dispatch(adjustSampleMixer({ sample, property, amount }));
+    },
+    [dispatch, property, sample]
+  );
+
+  const [editing, setEditing] = useState(false);
+
+  const prevYRef = useRef(null);
+
+  const startFunc = useCallback((e) => {
+    setEditing(true);
+    prevYRef.current = getY(e);
+  }, []);
+
+  const moveFunc = (e) => {
+    const newY = getY(e);
+    let amount = prevYRef.current - newY;
+    adjustSample(amount);
+    prevYRef.current = newY;
+  };
+
+  const reset = useCallback(() => {
+    dispatch(resetSampleMixerProperty(property));
+  }, [dispatch, property]);
+
+  const endFunc = useCallback(() => {
+    setEditing(false);
+    if (properties.snapback) setTimeout(reset, 0);
+    prevYRef.current = null;
+  }, [properties.snapback, reset]);
+
   const touchAndMouse = useTouchAndMouse(startFunc, moveFunc, endFunc);
 
-  useEffect(() => {
-    sample[property].setValFromRotary(value);
-  }, [property, sample, value]);
-
+  let mixItemPropertyClass = 'mixItemProperty';
+  if (editing) mixItemPropertyClass += ' editing';
   let formattedValue = property === 'pan' ? formatPan(value) : parseInt(value);
   return (
-    <div className='mixItemProperty' {...touchAndMouse} onDoubleClick={reset}>
+    <div className={mixItemPropertyClass} {...touchAndMouse} onDoubleClick={reset}>
       <p className='propertyName'>{property}:</p>
       <p className='propertyValue'>{formattedValue}</p>
       <ArrowUpDownIcon />

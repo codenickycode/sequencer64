@@ -23,6 +23,11 @@ export const MAIN_MIXER_PROPERTIES = {
   distort: { min: 0, max: 100, initialValue: 0, snapback: false },
 };
 
+export const SAMPLE_MIXER_PROPERTIES = {
+  vol: { min: 0, max: 100, intialValue: 100 },
+  pan: { min: 0, max: 100, initialValue: 50 },
+};
+
 export const INITIAL_SEQUENCE = {
   _id: getSS('sequenceId') || analog._id,
   name: getSS('sequenceName') || analog.name,
@@ -167,7 +172,6 @@ export const sequenceSlice = createSlice({
       state.undoStatus = `main mixer | adjust ${property}`;
     },
     adjustMainMixerWarp: (state, { payload }) => {
-      console.log('warping');
       const { min, max } = MAIN_MIXER_PROPERTIES.warp;
       let newVal = state.mainMixer.warp + payload;
       if (newVal < min) newVal = min;
@@ -180,6 +184,18 @@ export const sequenceSlice = createSlice({
     },
     resetMainMixerWarp: (state) => {
       state.mainMixer.warp = MAIN_MIXER_PROPERTIES.warp.initialValue;
+    },
+    adjustSampleMixer: (state, { payload: { sample, property, amount } }) => {
+      const { min, max } = SAMPLE_MIXER_PROPERTIES[property];
+      let newVal = state.sampleMixer[sample][property] + amount;
+      if (newVal < min) newVal = min;
+      if (newVal > max) newVal = max;
+      state.sampleMixer[sample][property] = newVal;
+      state.undoStatus = `sample mixer | sample: ${sample} ${property}`;
+    },
+    resetSampleMixerProperty: (state, { payload: { sample, property } }) => {
+      state.sampleMixer[sample][property] = SAMPLE_MIXER_PROPERTIES[property].initialValue;
+      state.undoStatus = `sample mixer | reset ${property}`;
     },
   },
 });
@@ -205,6 +221,8 @@ export const {
   adjustMainMixerWarp,
   resetMainMixerProperty,
   resetMainMixerWarp,
+  adjustSampleMixer,
+  resetSampleMixerProperty,
 } = sequenceSlice.actions;
 
 export const { loadInitialSequence, modCell, recordSample } = sequenceThunks;
@@ -217,6 +235,7 @@ const reducer = undoable(sequenceSlice.reducer, {
     'sequence/modCell',
     'sequence/recordSampleFinally',
     'sequence/adjustMainMixer',
+    'sequence/adjustSampleMixer',
   ]),
   filter: excludeAction(['sequence/adjustMainMixerWarp', 'sequence/resetMainMixerWarp']),
   limit: 100,

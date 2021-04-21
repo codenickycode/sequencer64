@@ -66,7 +66,6 @@ const scaledGetAndSetVol = (sample) => ({
   setValFromRotary: (val) => {
     sample.channel.set({ volume: (val - 100) * 0.25 });
   },
-  initialVal: 100,
 });
 
 const scaledGetAndSetPan = (sample) => ({
@@ -77,7 +76,6 @@ const scaledGetAndSetPan = (sample) => ({
   setValFromRotary: (val) => {
     sample.channel.set({ pan: (val - 50) / 50 });
   },
-  initialVal: 50,
 });
 
 export const triggerMetronome = (time, step) => {

@@ -11,6 +11,7 @@ import {
   resetMainMixerProperty,
   resetMainMixerWarp,
 } from 'App/reducers/sequenceSlice';
+import { getY } from 'utils/getY';
 
 export const MainMixer = () => {
   const mainMixer = useSelector((state) => state.sequence.present.mainMixer);
@@ -57,7 +58,7 @@ const RotaryKnob = ({ property, value, properties }) => {
 
   const moveFunc = (e) => {
     const newY = getY(e);
-    let amount = getKnobAmount(newY, prevYRef.current);
+    let amount = prevYRef.current - newY;
     adjustMixer(amount);
     prevYRef.current = newY;
   };
@@ -94,16 +95,4 @@ const RotaryKnob = ({ property, value, properties }) => {
       </div>
     </div>
   );
-};
-
-const getY = (e) => {
-  let y;
-  if (e.touches) y = e.touches[0].clientY;
-  else y = e.clientY;
-  return y;
-};
-
-const getKnobAmount = (newY, prevY) => {
-  let amount = prevY - newY;
-  return amount;
 };

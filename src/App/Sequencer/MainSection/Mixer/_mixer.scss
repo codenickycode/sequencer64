@@ -67,8 +67,12 @@
           @extend %borderHalf;
           border-left-color: transparent !important;
           border-right-color: transparent !important;
-          @include responsiveFont(2vw, 16px, 20px);
+          @include responsiveFont(2vw, 14px, 18px);
           @extend %bg3q;
+
+          &.editing {
+            @extend %bgBright;
+          }
         }
       }
 
