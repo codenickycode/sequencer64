@@ -74,7 +74,8 @@ const scaledGetAndSetPan = (sample) => ({
     return val;
   },
   setValFromRotary: (val) => {
-    sample.channel.set({ pan: (val - 50) / 50 });
+    if (val > 40 && val < 59) sample.channel.set({ pan: 0 });
+    else sample.channel.set({ pan: (val - 50) / 50 });
   },
 });
 

@@ -104,7 +104,7 @@ const MixItemProperty = ({ property, value, properties, sample }) => {
 };
 
 const formatPan = (value) => {
-  if (value === 50) return 'C';
-  if (value < 50) return (value - 50).toString().replace('-', 'L');
-  if (value > 50) return 'R' + (value - 50);
+  if (value < 41) return ((value - 50) * 2).toString().replace('-', 'L');
+  if (value > 59) return 'R' + (value - 50) * 2;
+  else return 'C';
 };
