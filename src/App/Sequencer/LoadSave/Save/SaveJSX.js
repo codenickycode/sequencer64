@@ -15,7 +15,7 @@ export const SaveJSX = ({
     <div className='save'>
       <form id='save-form' onSubmit={save}>
         <h1 className='header flexBetween'>
-          Save:
+          Save
           <span className='saveLocation'>{`(saving to ${
             online && loggedIn ? 'cloud and device' : 'device'
           })`}</span>
@@ -43,9 +43,7 @@ export const SaveJSX = ({
           File limit:
           <span className={fileLimit <= 0 ? 'error' : ''}>{fileLimit}</span>
         </p>
-        {fileLimit <= 0 && (
-          <p className='error'>Delete some old sequences to save</p>
-        )}
+        {fileLimit <= 0 && <p className='error'>Delete some old sequences to save</p>}
       </div>
     </div>
   );

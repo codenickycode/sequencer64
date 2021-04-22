@@ -20,7 +20,6 @@ import {
   stopSequenceFinally,
   setAudioContextReady,
   setCountIn,
-  toneSlice,
   setCycle,
 } from '../toneSlice';
 import { setFetchingSamples } from '../assetsSlice';

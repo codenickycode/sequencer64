@@ -6,7 +6,7 @@ import { FacebookIcon, TwitterIcon } from 'assets/icons';
 export const ShareJSX = ({ online, loggedIn, link, copyLink }) => {
   return (
     <div className='share'>
-      <h1 className='header'>Share:</h1>
+      <h1 className='header'>Share</h1>
       <div className='shareDiv'>
         {!online ? (
           <p>Share unavailable while offline</p>
@@ -17,32 +17,19 @@ export const ShareJSX = ({ online, loggedIn, link, copyLink }) => {
         ) : (
           <div>
             <div className='shareLink'>
-              <input
-                type='text'
-                value={link}
-                id='sequence-link'
-                readOnly={true}
-              />
+              <input type='text' value={link} id='sequence-link' readOnly={true} />
               <Button id='copy-link' onClick={copyLink}>
                 <label htmlFor='copy-link'>copy</label>
               </Button>
             </div>
             <div className='socialLinks'>
-              <a
-                href={`${TWITTER_URL}${link}`}
-                target='_blank'
-                rel='noreferrer'
-              >
+              <a href={`${TWITTER_URL}${link}`} target='_blank' rel='noreferrer'>
                 <Button aria-label='Tweet'>
                   <TwitterIcon />
                   <span>Tweet</span>
                 </Button>
               </a>
-              <a
-                href={`${FACEBOOK_URL}${link}`}
-                target='_blank'
-                rel='noreferrer'
-              >
+              <a href={`${FACEBOOK_URL}${link}`} target='_blank' rel='noreferrer'>
                 <Button aria-label='Share to Facebook'>
                   <FacebookIcon />
                   <span>Share</span>

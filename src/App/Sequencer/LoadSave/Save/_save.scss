@@ -14,7 +14,12 @@
     padding: 2rem;
 
     .header {
-      @extend %headerLeft;
+      padding: 0;
+      padding-bottom: 0.5rem;
+      width: 100%;
+      text-align: left;
+      font-size: 1.25rem;
+      @extend %borderBottomHalf;
     }
   }
 
@@ -86,7 +91,7 @@
 
     .saveInputWrapper {
       width: 100%;
-      margin-bottom: 0.5rem;
+      margin: 1rem 0;
       @include flex(column, space-evenly);
 
       .nameInput {
@@ -137,6 +142,7 @@
       }
 
       .countAndDuration {
+        margin: 1rem 0 0.5rem 0;
         width: 100%;
         @include flex(row, space-evenly);
 
