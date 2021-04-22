@@ -114,6 +114,8 @@ export const sequenceSlice = createSlice({
       });
       state.noteTally.total.count = 0;
       state.noteTally.total.empty = true;
+      state.mainMixer = getMainMixerFromStr('init');
+      state.sampleMixer = getSampleMixerFromStr('init');
       state.undoStatus = `erase sequence`;
     },
     recordSampleFinally: (state, { payload: { sample, step } }) => {
