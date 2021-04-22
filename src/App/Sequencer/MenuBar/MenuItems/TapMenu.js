@@ -57,7 +57,6 @@ const TapMenuItems = () => {
 
   return (
     <>
-      <div className='popupMenuSub'>Tap Modes</div>
       {modes.map((mode) => {
         const selected = mode === editorMode;
         return (

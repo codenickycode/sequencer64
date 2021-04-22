@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { TransportPanel } from './MenuItems/Transport/TransportPanel';
-import { UndoRedoBtn } from './MenuItems/UndoRedoBtn';
+import { UndoRedoMenu } from './MenuItems/UndoRedoMenu';
 import { EraseBtn } from './MenuItems/EraseBtn';
 import { FileMenu } from './MenuItems/FileMenu';
 import { KitBtn } from './MenuItems/OpenPathBtn';
@@ -9,6 +9,7 @@ import { TapMenu } from './MenuItems/TapMenu';
 import { DisplayMenu } from './MenuItems/DisplayMenu/DisplayMenu';
 import { useSelector } from 'react-redux';
 import { Scrollable } from 'App/shared/Scrollable/Scrollable';
+import { Info } from './MenuItems/Info';
 
 export const MenuBar = () => {
   const vh = useSelector((state) => state.screen.dimensions.vh);
@@ -20,15 +21,16 @@ export const MenuBar = () => {
     return (
       <Scrollable id='menuBar' style={{ height }}>
         <div className='menuItems'>
+          <Info />
           <DisplayMenu />
           <FileMenu />
           <KitBtn />
-          <MixerMenu />
         </div>
         <TransportPanel />
         <div className='menuItems'>
+          <MixerMenu />
           <TapMenu />
-          <UndoRedoBtn />
+          <UndoRedoMenu />
           <EraseBtn />
         </div>
       </Scrollable>

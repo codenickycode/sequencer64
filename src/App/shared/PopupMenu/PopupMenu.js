@@ -48,20 +48,20 @@ const PopupMenuItems = ({ renderMenu, menuStyle, menuClasses, children }) => {
   return !renderMenu ? null : memo;
 };
 
-export const MenuItem = ({ item, selected, onClick, label }) => {
+export const MenuItem = ({ item, selected, onClick, label, disabled }) => {
   const btnId = `item${item}`;
   const memo = useMemo(() => {
     return (
       <Button
         id={btnId}
         classes={selected ? 'popupMenuBtn active' : 'popupMenuBtn'}
-        disabled={selected}
+        disabled={selected || disabled}
         onClick={() => onClick(item)}
       >
         <label htmlFor={btnId}>{label ? label : item}</label>
       </Button>
     );
-  }, [btnId, item, label, onClick, selected]);
+  }, [btnId, disabled, item, label, onClick, selected]);
   return memo;
 };
 

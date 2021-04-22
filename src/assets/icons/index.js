@@ -1,3 +1,4 @@
+import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 import { ReactComponent as Stop } from 'assets/icons/stop.svg';
 import { ReactComponent as Start } from 'assets/icons/start.svg';
 import { ReactComponent as Pause } from 'assets/icons/pause.svg';
@@ -7,6 +8,7 @@ import { ReactComponent as Restart } from 'assets/icons/restart.svg';
 import { ReactComponent as Speed } from 'assets/icons/speed.svg';
 import { ReactComponent as Undo } from 'assets/icons/undo.svg';
 import { ReactComponent as Redo } from 'assets/icons/redo.svg';
+import { ReactComponent as UndoRedo } from 'assets/icons/undoRedo.svg';
 import { ReactComponent as EraseOne } from 'assets/icons/erase-one.svg';
 import { ReactComponent as EraseAll } from 'assets/icons/erase-all.svg';
 import { ReactComponent as Saw } from 'assets/icons/saw.svg';
@@ -63,6 +65,8 @@ export const ArrowUpDownIcon = ({ addClass = '' }) => (
   <ArrowUpDown className={addClass + ' icon arrowUpDown'} />
 );
 
+export const LogoIcon = ({ addClass = '' }) => <Logo className={addClass + ' icon'} />;
+
 export const StopIcon = ({ addClass = '' }) => <Stop className={addClass + ' icon'} />;
 export const StartIcon = ({ addClass = '' }) => <Start className={addClass + ' icon'} />;
 export const PauseIcon = ({ addClass = '' }) => <Pause className={addClass + ' icon'} />;
@@ -81,6 +85,10 @@ export const SpeedIcon = ({ addClass = '' }) => <Speed className={addClass + ' i
 
 export const UndoIcon = ({ addClass = '' }) => <Undo className={addClass + ' icon'} />;
 export const RedoIcon = ({ addClass = '' }) => <Redo className={addClass + ' icon'} />;
+export const UndoRedoIcon = ({ addClass = '' }) => (
+  <UndoRedo className={addClass + ' icon'} />
+);
+
 export const EraseOneIcon = ({ addClass = '' }) => (
   <EraseOne className={addClass + ' icon'} />
 );

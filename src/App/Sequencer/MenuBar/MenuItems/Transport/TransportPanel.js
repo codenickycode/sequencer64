@@ -17,11 +17,9 @@ import { useShowTransportBtns } from './useShowTransportBtns';
 
 export const TransportPanel = () => {
   return (
-    <div className='menuItems transport'>
-      <div className='transportWrapper'>
-        <TransportBtns />
-        <BpmInput />
-      </div>
+    <div className='transportWrapper'>
+      <TransportBtns />
+      <BpmInput />
     </div>
   );
 };

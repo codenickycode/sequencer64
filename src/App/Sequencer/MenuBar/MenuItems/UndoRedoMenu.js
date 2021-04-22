@@ -1,17 +1,29 @@
 import React, { useCallback, useMemo } from 'react';
 import { ActionCreators as UndoActionCreators } from 'redux-undo';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { Button } from 'App/shared/Button';
-import { RedoIcon, UndoIcon } from 'assets/icons';
+import { UndoRedoIcon } from 'assets/icons';
 import { setStatus } from 'App/reducers/appSlice';
+import { MenuItem, PopupMenu } from 'App/shared/PopupMenu/PopupMenu';
 
-let UndoRedoBtn = ({ canUndo, canRedo, onUndo, onRedo }) => {
+let UndoRedoMenu = ({ canUndo, canRedo }) => {
+  return (
+    <PopupMenu
+      name='undo/redo'
+      Icon={UndoRedoIcon}
+      disabled={!canUndo && !canRedo}
+      keepOpenOnSelect={true}
+    >
+      <UndoRedoMenuItems />
+    </PopupMenu>
+  );
+};
+
+let UndoRedoMenuItems = ({ canUndo, canRedo, onUndo, onRedo }) => {
   const dispatch = useDispatch();
 
   const undoStatus = useSelector((state) => state.sequence.present.undoStatus);
   const future = useSelector((state) => state.sequence.future);
   const redoStatus = future.length > 0 ? future[0].undoStatus : null;
-  const buffersLoaded = useSelector((state) => state.tone.buffersLoaded);
 
   const handleUndo = useCallback(() => {
     const prefix = !undoStatus.match(/kit|sequence/g) ? 'undo: ' : '';
@@ -25,37 +37,21 @@ let UndoRedoBtn = ({ canUndo, canRedo, onUndo, onRedo }) => {
     dispatch(setStatus(prefix + redoStatus));
   }, [dispatch, onRedo, redoStatus]);
 
-  const undoRedoMemo = useMemo(() => {
+  const memo = useMemo(() => {
     return (
       <>
-        <Button
-          id='undo'
-          classes='menuBtn'
-          disabled={!canUndo || !buffersLoaded}
-          onClick={handleUndo}
-        >
-          <UndoIcon />
-          <label htmlFor='undo'>undo</label>
-        </Button>
-        <Button
-          id='redo'
-          classes='menuBtn'
-          disabled={!canRedo || !buffersLoaded}
-          onClick={handleRedo}
-        >
-          <RedoIcon />
-          <label htmlFor='redo'>redo</label>
-        </Button>
+        <MenuItem item='undo' disabled={!canUndo} onClick={handleUndo} />
+        <MenuItem item='redo' disabled={!canRedo} onClick={handleRedo} />
       </>
     );
-  }, [buffersLoaded, canRedo, canUndo, handleRedo, handleUndo]);
-  return undoRedoMemo;
+  }, [canRedo, canUndo, handleRedo, handleUndo]);
+  return memo;
 };
 
 const mapStateToProps = (state) => {
   return {
-    canUndo: state.sequence.past.length > 0,
-    canRedo: state.sequence.future.length > 0,
+    canUndo: state.sequence.past.length > 0 && state.tone.buffersLoaded,
+    canRedo: state.sequence.future.length > 0 && state.tone.buffersLoaded,
   };
 };
 
@@ -66,6 +62,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-UndoRedoBtn = connect(mapStateToProps, mapDispatchToProps)(UndoRedoBtn);
-
-export { UndoRedoBtn };
+UndoRedoMenu = connect(mapStateToProps)(UndoRedoMenu);
+export { UndoRedoMenu };
+UndoRedoMenuItems = connect(mapStateToProps, mapDispatchToProps)(UndoRedoMenuItems);

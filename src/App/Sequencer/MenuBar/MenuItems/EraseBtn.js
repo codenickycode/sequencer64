@@ -20,12 +20,12 @@ export const EraseBtn = () => {
     };
 
     return (
-      <>
+      <div className='menuBtnWrapper'>
         <Button id='erase-all' classes='menuBtn' disabled={disabled} onClick={onClick}>
           <EraseAllIcon />
           <label htmlFor='erase-all'>erase</label>
         </Button>
-      </>
+      </div>
     );
   }, [disabled, dispatch, deepEditing]);
 
