@@ -40,7 +40,6 @@ export const useCell = (id, step, prevCellRef) => {
 
   const startFunc = useCallback(
     (e) => {
-      e.stopPropagation();
       dispatch(setToggleOn(!noteOn)); // set dragging effect
       prevCellRef.current = id; // for Grid onTouchMove
       tapCell();
