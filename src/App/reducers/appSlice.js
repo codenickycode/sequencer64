@@ -4,6 +4,8 @@ import { getLS } from 'utils/storage';
 import * as appThunks from './thunks/appThunks';
 
 export const THEMES = {
+  DARK: 'Dark',
+  LIGHT: 'Light',
   JOKER: 'Joker',
   NES: 'NES',
   TMNT: 'TMNT',

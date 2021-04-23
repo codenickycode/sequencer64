@@ -48,14 +48,10 @@
 %input {
   padding: 0.5rem;
   outline: none;
-  border: 1px solid $white;
+  border: 1px solid var(--fg);
   border-radius: 0.3rem;
-  color: $white;
-  background: $black;
-  .themeWhite & {
-    color: $black;
-    background: $white;
-  }
+  color: var(--fg);
+  background: var(--bgOverlay);
 }
 
 %inputBtn {
@@ -96,8 +92,8 @@
   height: 3rem;
   padding: 0;
   background: none;
-  fill: $white;
-  color: $white;
+  fill: var(--fg);
+  color: var(--fg);
   border: none;
 
   .chevron-left {
@@ -118,7 +114,7 @@
   bottom: 0;
   width: 100%;
   padding: 0.5rem;
-  @extend %bg3q;
+  background: var(--bgOverlay3q);
 
   &:disabled {
     cursor: initial;

@@ -13,7 +13,7 @@
   overflow-y: hidden;
   white-space: nowrap;
   scroll-behavior: smooth;
-  @extend %bgMenuBar;
+  background: var(--primary-darkest);
 
   @media (min-width: 768px) {
     overflow-x: hidden;

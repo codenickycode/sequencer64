@@ -3,7 +3,6 @@
 @use 'styles/colors' as *;
 
 .transportWrapper {
-  // width: 100%;
   @include flex;
 
   .btn,
@@ -23,10 +22,10 @@
 
     &#stop,
     &#start {
-      @extend %bgBright;
+      background: var(--primary);
     }
     &#pause {
-      @extend %bgBright;
+      background: var(--primary);
       &.flashing {
         animation: dim-flashing 300ms alternate infinite;
       }
@@ -63,12 +62,12 @@
 
       .btn {
         background: none;
-        @extend %borderWhite;
+        border: 1px solid var(--fg);
         border-radius: 0.5rem;
         outline: none;
 
         .icon {
-          fill: $green;
+          fill: var(--green);
         }
       }
     }
@@ -79,17 +78,17 @@
 #start,
 #pause {
   .icon {
-    @extend %fillMenuBar;
+    fill: var(--fg);
   }
 }
 
 #record,
 #restart {
-  @extend %bgBlack;
-  border: 1px solid $red;
+  background: var(--bgOverlay);
+  border: 1px solid var(--red);
   .icon {
     min-height: 3rem;
-    @extend %fillRed;
+    fill: var(--red);
     &.restart {
       min-height: 1.5rem;
     }

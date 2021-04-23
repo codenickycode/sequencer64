@@ -15,10 +15,10 @@
     padding: 0.5rem;
     font-size: 1rem;
     font-family: Orbitron, Roboto, sans-serif;
-    color: $red;
+    color: var(--red);
     letter-spacing: 2px;
     text-align: center;
-    background: $black-90;
+    background: var(--bgOverlay90);
     opacity: 0;
     transition: 1500ms;
 

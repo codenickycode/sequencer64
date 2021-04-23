@@ -26,9 +26,10 @@
 
 .arc {
   stroke-dasharray: 126px;
-  @extend %colorKnob;
+  color: var(--primary);
 }
 
+// bottom stroke 'container'
 .arc-hide {
   /* display: none; */
 }

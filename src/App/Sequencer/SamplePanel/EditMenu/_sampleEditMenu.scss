@@ -7,15 +7,15 @@
   top: 0;
   left: 0;
   z-index: 5;
-  @extend %bg3q;
+  background: var(--bgOverlay3q);
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
-  @extend %borderHalf;
+  border: 1px solid var(--primary-half);
   border-radius: 0;
 
   &.dark {
-    @extend %bg90;
+    background: var(--bgOverlay90);
   }
 
   &.flex {
@@ -33,7 +33,7 @@
     display: inline-flex;
     vertical-align: top;
     background: transparent;
-    border: 1px solid $color-none;
+    border: 1px solid transparent;
     border-radius: 0.5rem;
 
     &.dummy {
@@ -44,7 +44,7 @@
 
     @media (hover: hover) {
       &:hover {
-        border: 1px solid $white;
+        border: 1px solid var(--fg);
       }
     }
 
@@ -55,7 +55,7 @@
     p {
       padding: 0.25rem;
       width: 100%;
-      @extend %text;
+      color: var(--fg);
     }
   }
 }

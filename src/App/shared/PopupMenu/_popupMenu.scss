@@ -7,7 +7,7 @@
   position: absolute;
   width: 250px;
   @include flex(column);
-  @extend %bgMenuBar;
+  background: var(--primary-darkest);
   opacity: 0;
   transform: translateY(100%);
   transition: 150ms ease;
@@ -19,14 +19,14 @@
 
   .popupMenuBtn {
     @extend %btn;
-    @extend %bgMenuBarHalf;
-    border: 1px solid $color-none;
+    background: var(--primary-darkest-half);
+    border: 1px solid transparent;
     border-radius: 0;
     margin-bottom: 0.5rem;
     width: 100%;
 
     &.active {
-      @extend %bgBtnFull;
+      background: var(--primary-dark);
     }
     &:disabled {
       opacity: 0.5;
@@ -34,13 +34,13 @@
         opacity: 1;
       }
       &:hover {
-        border-color: $color-none;
+        border-color: transparent;
       }
     }
 
     @media (hover: hover) {
       &:hover {
-        @include borderActive;
+        border: 1px solid var(--fg);
       }
     }
   }
@@ -50,6 +50,6 @@
     width: 100%;
     padding: 0.5rem;
     align-self: flex-start;
-    @extend %borderBottomHalf;
+    border-bottom: 1px solid var(--primary-half);
   }
 }

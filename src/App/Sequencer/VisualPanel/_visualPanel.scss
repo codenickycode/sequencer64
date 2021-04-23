@@ -17,7 +17,7 @@
 
     &.show {
       display: flex;
-      @extend %bg3q;
+      background: var(--bgOverlay3q);
     }
 
     .analyzer.wave,
@@ -69,7 +69,7 @@
     border-radius: 0;
 
     &.bg3q {
-      @extend %bg3q;
+      background: var(--bgOverlay3q);
     }
     &.hide {
       opacity: 0;

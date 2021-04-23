@@ -6,11 +6,7 @@
 .mixer {
   pointer-events: initial;
   @extend %fullAbs;
-  @extend %bg3q;
-
-  * {
-    // border: 1px solid red;
-  }
+  background: var(--bgOverlay3q);
 
   .mixItemWrapper {
     @extend %full;
@@ -26,14 +22,14 @@
     .mixItem {
       margin: 0 auto;
       @extend %full;
-      @extend %borderHalf;
-      @extend %color;
+      border: 1px solid var(--primary-half);
+      color: var(--fg);
       @include flex(column, flex-start);
 
       &.editing {
-        @extend %border;
+        border: 1px solid var(--primary);
         .mixItemName {
-          @extend %bgBright;
+          background: var(--primary);
         }
       }
 
@@ -45,7 +41,7 @@
         width: 100%;
         padding: 0.5rem;
         justify-self: flex-start;
-        @extend %bgSampleBtn;
+        background: var(--primary-darker);
         border-radius: 0.5rem;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
@@ -64,14 +60,14 @@
           @include flex(row, space-evenly);
           padding: 0.25rem 0;
           width: 100%;
-          @extend %borderHalf;
+          border: 1px solid var(--primary-half);
           border-left-color: transparent !important;
           border-right-color: transparent !important;
           @include responsiveFont(2vw, 14px, 18px);
-          @extend %bg3q;
+          background: var(--bg3q);
 
           &.editing {
-            @extend %bgBright;
+            background: var(--primary);
           }
         }
       }

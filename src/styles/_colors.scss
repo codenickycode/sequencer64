@@ -1,3 +1,5 @@
+@use 'styles/themes/dark' as *;
+@use 'styles/themes/light' as *;
 @use 'styles/themes/joker' as *;
 @use 'styles/themes/nes' as *;
 @use 'styles/themes/tmnt' as *;
@@ -11,7 +13,6 @@ $grey: rgba(197, 185, 219, 1);
 $grey-half: rgba(150, 140, 170, 0.5);
 $grey-quarter: rgba(150, 140, 170, 0.25);
 $grey-dim: rgb(150, 140, 170, 0.15);
-$color-none: rgb(150, 140, 170, 0);
 $black: #000;
 $black-90: rgba(0, 0, 0, 0.9);
 $black-3q: rgba(0, 0, 0, 0.75);
@@ -26,273 +27,51 @@ $green: rgba(47, 222, 126, 1);
 $green-dark: rgb(40, 170, 99);
 $red: rgb(232, 12, 48);
 
-/**************** FG *******************/
+/* vars and target stylesheet */
+html {
+  --grey-dim: rgb(150, 140, 170, 0.15);
+  --green: rgba(47, 222, 126, 1);
+  --green-dark: rgb(40, 170, 99);
+  --red: rgb(232, 12, 48);
 
-%text,
-%color {
-  color: white;
-  .themeWhite & {
-    color: black;
-  }
-}
+  --primary: rgba(113, 27, 228, 1);
+  --primary-3q: rgba(113, 27, 228, 0.75);
+  --primary-half: rgba(113, 27, 228, 0.5);
+  --primary-third: rgba(113, 27, 228, 0.33);
+  --primary-quarter: rgba(113, 27, 228, 0.25);
 
-%textDim {
-  color: $white-quarter;
-  .themeWhite & {
-    color: $black;
-  }
-}
-%textDim2,
-%textHalf {
-  color: $white-half;
-  .themeWhite & {
-    color: $black;
-  }
-}
+  --primary-dark: rgb(60, 10, 99);
+  --primary-dark-half: rgba(60, 10, 99, 0.5);
 
-%iconFill {
-  fill: $white;
-  .themeWhite & {
-    fill: $black;
-  }
-}
+  --primary-darker: rgb(34, 8, 68);
 
-%fillRed {
-  fill: $red;
-}
+  --primary-darkest: rgb(19, 4, 37);
+  --primary-darkest-half: rgba(19, 4, 37, 0.9);
+  --fg: rgb(255, 255, 255);
+  --fg90: rgba(255, 255, 255, 0.9);
+  --fg3q: rgba(255, 255, 255, 0.75);
+  --fgHalf: rgba(255, 255, 255, 0.5);
+  --fgQuarter: rgba(255, 255, 255, 0.25);
 
-%sliceStroke {
-  .themeJoker & {
-    stroke: $joker-dark;
-  }
-  .themeNES & {
-    stroke: $nes-grey;
-  }
-  .themeTMNT & {
-    stroke: $tmnt-grey;
-  }
-  .themeBlack & {
-    stroke: $black;
-  }
-  .themeWhite & {
-    stroke: $white;
-  }
-}
+  --bgOverlay: black;
+  --bgOverlay90: rgba(0, 0, 0, 0.9);
+  --bgOverlay3q: rgba(0, 0, 0, 0.75);
+  --bgOverlayHalf: rgba(0, 0, 0, 0.5);
 
-%pitchColor {
-  .themeJoker & {
-    color: $black;
-  }
-  .themeNES & {
-    color: $nes-grey;
-  }
-  .themeTMNT & {
-    color: $black;
-  }
-  .themeBlack & {
-    color: $black;
-  }
-  .themeWhite & {
-    color: $white;
-  }
-}
+  --bg: rgb(21, 19, 24);
+  --bg90: rgba(21, 19, 24, 0.9);
+  --bg3q: rgba(21, 19, 24, 0.75);
+  --bgHalf: rgba(21, 19, 24, 0.5);
 
-%fillMenuBar {
-  .themeJoker & {
-    fill: $white;
-  }
-  .themeNES & {
-    fill: $nes-grey-darkest;
-  }
-  .themeTMNT & {
-    fill: $tmnt-grey-darkest;
-  }
-  .themeBlack & {
-    fill: $black;
-  }
-  .themeWhite & {
-    fill: $white;
-  }
-}
-
-%colorKnob {
-  .themeJoker & {
-    color: $joker;
-  }
-  .themeNES & {
-    color: $nes;
-  }
-  .themeTMNT & {
-    color: $tmnt;
-  }
-  .themeBlack & {
-    color: $white;
-  }
-  .themeWhite & {
-    color: $black;
-  }
-}
-
-/**************** BG *******************/
-
-%bgBright {
-  .themeJoker & {
-    background: $joker;
-  }
-  .themeNES & {
-    background: $nes;
-  }
-  .themeTMNT & {
-    background: $tmnt;
-  }
-  .themeBlack & {
-    background: $white;
-  }
-  .themeWhite & {
-    background: $black;
-  }
-}
-
-%bgBlack {
-  background: $black;
-  .themeWhite & {
-    background: $white;
-  }
-}
-
-%bg {
-  background: $black;
-  .themeJoker & {
-    background: $joker-bg;
-  }
-  .themeWhite & {
-    background: $white;
-  }
-}
-
-%bg3q {
-  background: $black-3q;
-  .themeWhite & {
-    background: $white-3q;
-  }
-}
-
-%bgHalf {
-  background: $black-half;
-  .themeWhite & {
-    background: $white-half;
-  }
-}
-
-%bg90 {
-  background: $black-90;
-  .themeWhite & {
-    background: $white-90;
-  }
-}
-
-%bgRed {
-  background: $red;
-}
-%bgGreen {
-  background: $green;
-}
-.bgGreen {
-  @extend %bgGreen;
-}
-
-%bgSampleBtn {
-  .themeJoker & {
-    background: $joker-darker;
-  }
-  .themeNES & {
-    background: $black;
-  }
-  .themeTMNT & {
-    background: $tmnt-darkest;
-  }
-  .themeBlack & {
-    background: $black;
-  }
-  .themeWhite & {
-    background: $white;
-  }
-}
-
-%bgCellOff {
-  background: $grey-dim;
-}
-
-%bgBtnFull {
-  .themeJoker & {
-    background: $joker-dark;
-  }
-  .themeNES & {
-    background: $nes-dark2;
-  }
-  .themeTMNT & {
-    background: $tmnt-darkest;
-  }
-  .themeBlack & {
-    background: $true-grey-dark;
-  }
-  .themeWhite & {
-    background: $true-grey-light !important;
-  }
-}
-
-%bgBtnHalf {
-  .themeJoker & {
-    background: $joker-dark-half;
-  }
-  .themeNES & {
-    background: $nes-dark2-half;
-  }
-  .themeTMNT & {
-    background: $tmnt-blue-dark-quarter;
-  }
-  .themeBlack & {
-    background: $true-grey-dark-half;
-  }
-  .themeWhite & {
-    background: $true-grey-half;
-  }
-}
-
-%bgMenuBar {
-  .themeJoker & {
-    background: $joker-darkest;
-  }
-  .themeNES & {
-    background: $nes-grey-darkest;
-  }
-  .themeTMNT & {
-    background: $tmnt-grey-darkest;
-  }
-  .themeBlack & {
-    background: $black;
-  }
-  .themeWhite & {
-    background: $white;
-  }
-}
-
-%bgMenuBarHalf {
-  .themeJoker & {
-    background: $joker-darkest-half;
-  }
-  .themeNES & {
-    background: $nes-grey-darkest-half;
-  }
-  .themeTMNT & {
-    background: $tmnt-grey-darkest-half;
-  }
-  .themeBlack & {
-    background: $black-half;
-  }
-  .themeWhite & {
-    background: $white-half;
-  }
+  --color0: rgb(231, 15, 111);
+  --color1: rgb(230, 18, 173);
+  --color2: rgb(227, 21, 230);
+  --color3: rgb(169, 24, 229);
+  --color4: rgb(58, 30, 227);
+  --color5: rgb(33, 60, 226);
+  --color6: rgb(36, 115, 225);
+  --color7: rgb(39, 169, 225);
+  --color8: rgb(41, 221, 224);
 }
 
 %bgGradient {
@@ -308,83 +87,7 @@ $red: rgb(232, 12, 48);
   .themeBlack & {
     background: linear-gradient($grey, $white, $grey);
   }
-  .themeWhite & {
-    background: linear-gradient($grey, $black, $grey);
-  }
-}
-
-/************** BORDER *****************/
-
-%border {
-  .themeJoker & {
-    border: 1px solid $joker;
-  }
-  .themeNES & {
-    border: 1px solid $nes-grey;
-  }
-  .themeTMNT & {
-    border: 1px solid $tmnt;
-  }
-  .themeBlack & {
-    border: 1px solid $grey;
-  }
-  .themeWhite & {
-    border: 1px solid $true-grey-dark;
-  }
-}
-.borderDefault {
-  @extend %border;
-}
-
-%borderActive,
-%borderWhite {
-  border: 1px solid $white;
-  .themeWhite & {
-    border: 1px solid $black;
-  }
-}
-.borderActive {
-  @extend %borderActive;
-}
-@mixin borderActive {
-  border: 1px solid $white;
-  .themeWhite & {
-    border: 1px solid $black;
-  }
-}
-
-%borderHalf {
-  .themeJoker & {
-    border: 1px solid $joker-half;
-  }
-  .themeNES & {
-    border: 1px solid $nes-half;
-  }
-  .themeTMNT & {
-    border: 1px solid $tmnt-half;
-  }
-  .themeBlack & {
-    border: $grey-half;
-  }
-  .themeWhite & {
-    border: $true-grey;
-  }
-}
-
-%borderBottomHalf {
-  .themeJoker & {
-    border-bottom: 1px solid $joker-half;
-  }
-  .themeNES & {
-    border-bottom: 1px solid $nes-half;
-  }
-  .themeTMNT & {
-    border-bottom: 1px solid $tmnt-half;
-  }
-  .themeBlack & {
-    border-bottom: 1px solid $grey-half;
-  }
-  .themeWhite & {
-    border-bottom: 1px solid $grey;
+  .themeLight & {
+    background: linear-gradient($light-bg, $light, $light-dark);
   }
 }

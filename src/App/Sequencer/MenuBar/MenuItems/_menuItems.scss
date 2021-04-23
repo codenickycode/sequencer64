@@ -31,7 +31,7 @@
     @include flex(column);
     height: 100%;
     background: transparent;
-    border: 1px solid $color-none;
+    border: 1px solid transparent;
   }
 
   .menuBtnWrapper {
@@ -50,34 +50,34 @@
     }
 
     &.menuOpen {
-      @extend %borderActive;
+      border: 1px solid var(--fg);
     }
 
     &.active {
       label {
-        color: $green;
+        color: var(--green);
       }
       .icon {
-        fill: $green;
+        fill: var(--green);
       }
       &.openPath,
       &.mixerBtn {
-        border-color: $green;
+        border-color: var(--green);
       }
     }
 
     &.active.tap {
-      border-color: $green;
+      border-color: var(--green);
       animation: flashTapBtn 400ms alternate infinite;
     }
     &.active.tap.record {
-      @extend %bgBlack;
-      border-color: $red;
+      background: var(--bgOverlay);
+      border-color: var(--red);
       label {
-        color: $red;
+        color: var(--red);
       }
       .icon {
-        fill: $red;
+        fill: var(--red);
       }
     }
   }

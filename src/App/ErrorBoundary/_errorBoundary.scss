@@ -11,8 +11,8 @@
     max-width: 500px;
     max-height: 500px;
     @include flex(column);
-    @extend %bg;
-    @extend %border;
+    background: var(--bg);
+    border: 1px solid var(--primary);
 
     p,
     button {

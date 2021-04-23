@@ -12,9 +12,9 @@
 
   #sampleBtnsBorder {
     @extend %noEventsLayerAbs;
-    @extend %borderActive;
+    border: 1px solid var(--fg);
     top: 0;
-    border-color: $color-none;
+    border-color: transparent;
     &.highlight {
       border-color: initial;
     }
@@ -24,12 +24,12 @@
     cursor: pointer;
     position: relative;
     @include flex();
-    @extend %border;
-    @extend %bgSampleBtn;
+    border: 1px solid var(--primary);
+    background: var(--primary-darker);
 
     @media (hover: hover) {
       &:hover {
-        border: 1px solid $white;
+        border: 1px solid var(--fg);
       }
     }
 
@@ -51,7 +51,7 @@
       border-radius: 0;
     }
     .bgFlash {
-      @extend %bgBright;
+      background: var(--primary);
     }
     .bgSelected {
       transition: none;
@@ -71,7 +71,7 @@
       opacity: 1;
     }
     .icon {
-      @extend %iconFill;
+      fill: var(--fg);
     }
   }
 }

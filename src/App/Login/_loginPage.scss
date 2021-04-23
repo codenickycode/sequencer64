@@ -7,7 +7,7 @@
   pointer-events: initial;
   min-height: 100%;
   width: 100%;
-  @extend %bg90;
+  background: var(--bgOverlay90);
   @include flex(column);
 }
 
@@ -21,14 +21,14 @@ h1 {
   padding: 1rem;
   width: 100%;
   max-width: 600px;
-  @extend %bg;
+  background: var(--bg);
   border-radius: 0.5rem;
 }
 
 .methodBtn {
   margin: 1rem 0;
   padding: 1rem;
-  @extend %bg90;
+  background: var(--bg90);
   max-height: 5rem;
   width: 100%;
   display: flex;
@@ -43,9 +43,8 @@ h1 {
 }
 
 .methodBtn p {
-  color: white;
+  color: var(--fg);
 }
-
-.loginPage .bottomBtn {
+k .loginPage .bottomBtn {
   transform: translateX(-50%);
 }

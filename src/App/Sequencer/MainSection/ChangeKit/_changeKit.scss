@@ -5,7 +5,7 @@
 .changeKit {
   pointer-events: initial;
   @extend %fullAbs;
-  @extend %bg90;
+  background: var(--bgOverlay90);
 
   .kits {
     @extend %full;
@@ -17,8 +17,8 @@
       padding: 0.5rem;
       @extend %full;
       @include flex(column);
-      @extend %border;
-      @extend %color;
+      border: 1px solid var(--primary);
+      color: var(--fg);
       background: none;
       font-size: 1rem;
       transform: scale(1);
@@ -28,12 +28,12 @@
       }
 
       &.selected {
-        @extend %borderActive;
+        border: 1px solid var(--fg);
         border-width: 2px !important;
       }
 
       &.borderDim {
-        @extend %borderHalf;
+        border: 1px solid var(--primary-half);
       }
 
       p,
@@ -54,7 +54,7 @@
         &.ready {
           opacity: 0;
           transition: 1500ms;
-          color: $green;
+          color: var(--green);
 
           &.show {
             @extend %turnOn;

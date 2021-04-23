@@ -5,7 +5,7 @@
 .pastePattern {
   @extend %full;
   pointer-events: initial;
-  @extend %bg90;
+  background: var(--bgOverlay90);
   .samples {
     position: relative;
     min-width: 100%;
@@ -18,7 +18,14 @@
     .sample {
       position: relative;
       background: none;
+      border: 1px solid var(--primary-half);
       @include flex;
+
+      @media (hover: hover) {
+        &:hover {
+          border-color: var(--fg);
+        }
+      }
 
       &.flashing {
         animation: flashing 450ms alternate infinite;
@@ -27,20 +34,16 @@
       p {
         padding: 0.5rem;
         text-align: center;
-        @extend %bg3q;
+        background: var(--bg3q);
         border-radius: 0.5rem;
         z-index: 3;
-        color: $white;
+        color: var(--fg);
       }
 
       .icon-wrapper {
         height: 25%;
         width: 25%;
         z-index: 3;
-
-        // .icon {
-        //   fill: $white;
-        // }
       }
 
       .cells {

@@ -52,7 +52,7 @@
 
   .border {
     @extend %noEventsLayerAbs;
-    @extend %borderWhite;
+    border: 1px solid var(--fg);
     top: 0;
     opacity: 0;
   }

@@ -8,7 +8,7 @@
 
   .userSequences,
   .defaultSequences {
-    @extend %borderHalf;
+    border: 1px solid var(--primary-half);
     margin-bottom: 1rem;
     padding-bottom: 1rem;
 
@@ -18,7 +18,7 @@
 
     .title {
       @extend %textCenterPadding;
-      @extend %borderBottomHalf;
+      border-bottom: 1px solid var(--primary-half);
     }
 
     .sync,
@@ -69,7 +69,7 @@
         max-width: 1.75rem;
 
         &.check {
-          fill: $green;
+          fill: var(--green);
           max-height: 1rem;
         }
 
@@ -94,7 +94,7 @@
     .defaultSequence,
     .userSequence {
       @extend %btnFull;
-      @extend %bgBtnFull;
+      background: var(--primary-dark);
       display: grid;
       align-items: center;
       margin: 0.25rem auto;
@@ -102,11 +102,11 @@
       transform: scale(1);
 
       &.selected {
-        background: $green-dark;
+        background: var(--green-dark);
       }
 
       &.fetching {
-        background: $green-dark;
+        background: var(--green-dark);
         animation: flashing 400ms alternate infinite;
       }
     }
@@ -115,12 +115,12 @@
       width: 100%;
       padding: 0.5rem;
       @include flex(row, space-evenly);
-      @extend %bgBtnFull;
+      background: var(--primary-dark);
 
       .btn {
         @extend %btn;
         &.red {
-          @extend %bgRed;
+          background: var(--red);
         }
       }
     }

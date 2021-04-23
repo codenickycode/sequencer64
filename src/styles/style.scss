@@ -41,14 +41,14 @@ html {
 html,
 body {
   @extend %fullAbs;
-  @extend %bgBlack;
+  background: var(--bgOverlay);
   touch-action: pan-y;
 }
 
 body {
   max-width: 100%;
   max-height: 100%;
-  @extend %text;
+  color: var(--fg);
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
   overflow-x: hidden;
@@ -56,13 +56,7 @@ body {
 
 #root {
   @extend %full;
-  @extend %bgBlack;
-  color: $white;
-
-  &.themeWhite {
-    background: $white;
-    color: $black;
-  }
+  background: var(--bgOverlay);
 }
 
 .deg90 {
@@ -91,6 +85,7 @@ button {
   font-style: inherit;
   font-weight: bold;
   letter-spacing: 2px;
+  border: none;
   @media (hover: hover) {
     cursor: pointer;
   }
@@ -101,7 +96,7 @@ button.pressed::before {
   @extend %noEventsLayerAbs;
   top: 0;
   left: 0;
-  @extend %bgCellOff;
+  background: var(--grey-dim);
 }
 
 label {
@@ -125,15 +120,15 @@ a.disabled {
 .icon {
   height: 100%;
   width: 100%;
-  @extend %iconFill;
+  fill: var(--fg);
 }
 
 .error {
-  color: $red;
+  color: var(--red);
 }
 
 .confirmation {
-  color: $green;
+  color: var(--green);
 }
 
 h1 {
@@ -141,11 +136,11 @@ h1 {
 }
 
 p.dim {
-  @extend %textDim;
+  color: var(--fgQuarter);
 }
 
 p.dim-2 {
-  @extend %textDim2;
+  color: var(--fgHalf);
 }
 
 .p-left-25 {
@@ -186,42 +181,6 @@ p.dim-2 {
   }
   100% {
     opacity: 0.5;
-  }
-}
-
-@keyframes bounce {
-  0% {
-    transform: translateY(0);
-  }
-  20% {
-    transform: translateY(50%);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-@keyframes bounceUp {
-  0% {
-    transform: translateY(25%);
-  }
-  20% {
-    transform: translateY(-25%);
-  }
-  100% {
-    transform: translateY(25%);
-  }
-}
-
-@keyframes bounceLeft {
-  0% {
-    transform: translateX(25%);
-  }
-  20% {
-    transform: translateX(-25%);
-  }
-  100% {
-    transform: translateX(25%);
   }
 }
 

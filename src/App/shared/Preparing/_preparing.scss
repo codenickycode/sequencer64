@@ -11,7 +11,7 @@
   left: 0;
   min-width: 100%;
   min-height: 100%;
-  @extend %bg90;
+  background: var(--bgOverlay90);
 }
 
 #preparingPortalTop {
@@ -63,12 +63,12 @@
     padding: 0.5rem;
     @include grid(3, 3, 0.25rem, 1fr, 1fr);
     border-radius: 0.5rem;
-    @extend %border;
+    border: 1px solid var(--primary);
 
     .prepCell {
       @extend %full;
       border-radius: 0.25rem;
-      @extend %bgCellOff;
+      background: var(--grey-dim);
     }
   }
 
@@ -81,47 +81,47 @@
 
   .prepBg0 {
     animation-delay: 1ms;
-    @extend %bg0;
+    @extend .bg0;
   }
 
   .prepBg1 {
     animation-delay: 150ms;
-    @extend %bg1;
+    @extend .bg1;
   }
 
   .prepBg2 {
     animation-delay: 300ms;
-    @extend %bg2;
+    @extend .bg2;
   }
 
   .prepBg3 {
     animation-delay: 450ms;
-    @extend %bg3;
+    @extend .bg3;
   }
 
   .prepBg4 {
     animation-delay: 600ms;
-    @extend %bg4;
+    @extend .bg4;
   }
 
   .prepBg5 {
     animation-delay: 750ms;
-    @extend %bg5;
+    @extend .bg5;
   }
 
   .prepBg6 {
     animation-delay: 900ms;
-    @extend %bg6;
+    @extend .bg6;
   }
 
   .prepBg7 {
     animation-delay: 1050ms;
-    @extend %bg7;
+    @extend .bg7;
   }
 
   .prepBg8 {
     animation-delay: 1200ms;
-    @extend %bg8;
+    @extend .bg8;
   }
 }
 

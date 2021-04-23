@@ -9,7 +9,7 @@
   .share,
   .save,
   .download {
-    @extend %borderHalf;
+    border: 1px solid var(--primary-half);
     margin-bottom: 1rem;
     padding: 2rem;
 
@@ -19,14 +19,14 @@
       width: 100%;
       text-align: left;
       font-size: 1.25rem;
-      @extend %borderBottomHalf;
+      border-bottom: 1px solid var(--primary-half);
     }
   }
 
   .share {
     p {
       margin-top: 1rem;
-      @extend %textHalf;
+      color: var(--fgHalf);
     }
 
     .shareLink {
@@ -65,14 +65,13 @@
         justify-content: flex-start;
 
         span {
-          @extend %text;
+          color: var(--fg);
           margin-left: 0.5rem;
         }
 
         .icon {
           height: 2rem;
           width: 2rem;
-          // fill: $white;
         }
       }
     }
@@ -85,7 +84,7 @@
       .saveLocation {
         font-size: 0.8rem;
         font-weight: lighter;
-        @extend %textHalf;
+        color: var(--fgHalf);
       }
     }
 
@@ -116,10 +115,10 @@
       span {
         margin-left: 0.5rem;
         font-size: 1.25rem;
-        color: $green;
+        color: var(--green);
 
         &.error {
-          color: $red;
+          color: var(--red);
         }
       }
     }
@@ -130,7 +129,7 @@
       @extend %full;
 
       .notSupported {
-        @extend %textHalf;
+        color: var(--fgHalf);
         margin: 1rem 0;
       }
 

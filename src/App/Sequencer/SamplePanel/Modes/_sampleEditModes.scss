@@ -5,20 +5,18 @@
 
 #samplePanel {
   .detail {
-    * {
-      // border: 1px solid red !important;
-    }
-
     @extend %fullAbs;
     top: 0;
     left: 0;
     z-index: 5;
-    @extend %bg3q;
+    background: var(--bgOverlay3q);
+    border: 1px solid var(--primary-half);
+    border-radius: 0;
     @include flex(row, space-evenly);
     overflow: hidden;
 
     &.dark {
-      @extend %bg90;
+      background: var(--bgOverlay90);
     }
 
     @media (orientation: landscape) {
@@ -92,7 +90,7 @@
     #modSlider {
       width: 100%;
       height: 10%;
-      @extend %bgBright;
+      background: var(--primary);
       border-radius: 0.25rem;
       transform-origin: left;
     }
@@ -106,7 +104,7 @@
       justify-content: flex-start;
 
       .modSliderThumb {
-        @extend %bgBright;
+        background: var(--primary);
         width: 1rem;
         height: 1rem;
         border-radius: 50%;
@@ -169,8 +167,8 @@
       @extend %btn;
 
       &.bgGreen {
-        color: $black;
-        background: $green;
+        color: var(--bg);
+        background: var(--green);
       }
     }
   }

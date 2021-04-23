@@ -10,7 +10,7 @@
   width: 100%;
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
-  @extend %bg90;
+  background: var(--bgOverlay90);
   @include flex(column);
 
   .tabs {
@@ -20,15 +20,15 @@
     height: 2.5rem;
     width: 100%;
     display: flex;
-    @extend %bg;
+    background: var(--bg);
     .tab {
       @extend %inputBtn;
-      @extend %text;
+      color: var(--fg);
       border-radius: 0;
-      @extend %bgBtnHalf;
+      background: var(--primary-dark-half);
       &.selected {
         opacity: 1;
-        @extend %bgBtnFull;
+        background: var(--primary-dark);
       }
     }
   }
@@ -50,10 +50,10 @@
   .loginBtn {
     @extend %btn;
     @extend %btnFull;
-    @extend %bgBtnFull;
+    background: var(--primary-dark);
     max-width: 450px;
     @include flex;
-    @extend %text;
+    color: var(--fg);
     border: none;
   }
 }
@@ -78,7 +78,7 @@
   .online {
     font-size: 0.8rem;
     font-weight: normal;
-    color: $green;
+    color: var(--green);
   }
 
   .btn {
@@ -94,7 +94,7 @@
 .loadSequence,
 .saveSequence,
 .top {
-  @extend %bg;
+  background: var(--bg);
   border-radius: 0;
 }
 
