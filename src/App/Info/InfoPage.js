@@ -15,7 +15,7 @@ import {
   AAVEIcon,
 } from 'assets/icons';
 import { useGoTo } from 'hooks/useGoTo';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Coin = React.lazy(() => import('./Coin'));
 
@@ -93,7 +93,7 @@ export const InfoPage = () => {
           <Support />
         </div>
       </div>
-      <div className={'bottomBtn'}>
+      <div id='closeInfo' className={'bottomBtn'}>
         <Button onClick={goTo.base}>Close</Button>
       </div>
     </Portal>
@@ -123,6 +123,13 @@ const Support = () => {
 const CryptoLinks = ({ expand }) => {
   const containerClass = expand ? 'cryptoLinks' : 'cryptoLinks d-none';
   const [coin, setCoin] = useState('');
+  useEffect(() => {
+    const closeInfo = document.getElementById('closeInfo');
+    if (!closeInfo) return;
+    if (coin) closeInfo.style.display = 'none';
+    if (!coin) closeInfo.style.display = 'flex';
+  }, [coin]);
+
   const closeCoin = () => setCoin('');
 
   return (
