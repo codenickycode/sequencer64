@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button } from 'App/shared/Button';
-import { KitIcon } from 'assets/icons';
+import { InfoIcon, KitIcon } from 'assets/icons';
 import { MODES, setMode } from 'App/reducers/editorSlice';
 import { useGoTo, useCurrentPath } from 'hooks/useGoTo';
 import { useStopPropEventListener } from 'hooks/useStopPropEventListener';
@@ -21,7 +21,8 @@ export const OpenPathBtn = ({ addClass = '', active, path, label, Icon }) => {
       if (active) {
         handleGoToBase();
       } else {
-        goTo[path](() => dispatch(setMode(MODES.TAP)));
+        if (path === 'changeKit') goTo[path](() => dispatch(setMode(MODES.TAP)));
+        else goTo[path]();
         eventListener('menuBar', 'scroll', handleGoToBase);
       }
     };
@@ -43,4 +44,9 @@ export const OpenPathBtn = ({ addClass = '', active, path, label, Icon }) => {
 export const KitBtn = () => {
   const { selectingKit } = useCurrentPath();
   return <OpenPathBtn active={selectingKit} path='changeKit' label='kit' Icon={KitIcon} />;
+};
+
+export const InfoBtn = () => {
+  const { showingInfo } = useCurrentPath();
+  return <OpenPathBtn active={showingInfo} path='info' label='info' Icon={InfoIcon} />;
 };

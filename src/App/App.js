@@ -11,6 +11,7 @@ import { SequencerPage } from './Sequencer/Sequencer';
 import { ChangeKit } from './Sequencer/MainSection/ChangeKit/ChangeKit';
 import { LoadSave } from './Sequencer/LoadSave/LoadSave';
 import { LoginPage } from './Login/LoginPage';
+import { InfoPage } from './Info/InfoPage';
 import { MainMixer } from './Sequencer/MainSection/Mixer/MainMixer';
 import { SampleMixer } from './Sequencer/MainSection/Mixer/SampleMixer';
 import { PATHS } from 'hooks/useGoTo';
@@ -39,6 +40,7 @@ const AppContent = () => {
       <Route path={PATHS.LOAD} render={() => <LoadSave tab='load' />} />
       <Route path={PATHS.SAVE} render={() => <LoadSave tab='save' />} />
       <Route path={PATHS.LOGIN} component={LoginPage} />
+      <Route path={PATHS.INFO} component={InfoPage} />
       <StatusBar />
       <Preparing />
     </>

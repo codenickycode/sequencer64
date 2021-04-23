@@ -1,4 +1,5 @@
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
+import { ReactComponent as Info } from 'assets/icons/info.svg';
 import { ReactComponent as Stop } from 'assets/icons/stop.svg';
 import { ReactComponent as Start } from 'assets/icons/start.svg';
 import { ReactComponent as Pause } from 'assets/icons/pause.svg';
@@ -42,8 +43,30 @@ import { ReactComponent as CloudOffline } from 'assets/icons/cloud-offline.svg';
 import { ReactComponent as Check } from 'assets/icons/check-bold.svg';
 import { ReactComponent as Twitter } from 'assets/icons/social/twitter.svg';
 import { ReactComponent as Facebook } from 'assets/icons/social/facebook.svg';
+import { ReactComponent as GitHub } from 'assets/icons/social/github.svg';
+import { ReactComponent as Instagram } from 'assets/icons/social/instagram.svg';
+import { ReactComponent as Email } from 'assets/icons/social/email.svg';
 import { ReactComponent as TV } from 'assets/icons/tv.svg';
 import { MODES } from 'App/reducers/editorSlice';
+import { ReactComponent as LTC } from 'assets/icons/crypto/litecoin.svg';
+import { ReactComponent as Doge } from 'assets/icons/crypto/doge.svg';
+import { ReactComponent as ETH } from 'assets/icons/crypto/ethereum.svg';
+import { ReactComponent as BTC } from 'assets/icons/crypto/bitcoin.svg';
+import { ReactComponent as USDC } from 'assets/icons/crypto/usdc.svg';
+import { ReactComponent as AAVE } from 'assets/icons/crypto/aave.svg';
+import { ReactComponent as DAI } from 'assets/icons/crypto/dai.svg';
+import { ReactComponent as MKR } from 'assets/icons/crypto/mkr.svg';
+import { ReactComponent as COMP } from 'assets/icons/crypto/comp.svg';
+
+export const LTCIcon = ({ addClass = '' }) => <LTC className={addClass + ' icon'} />;
+export const DogeIcon = ({ addClass = '' }) => <Doge className={addClass + ' icon'} />;
+export const ETHIcon = ({ addClass = '' }) => <ETH className={addClass + ' icon'} />;
+export const USDCIcon = ({ addClass = '' }) => <USDC className={addClass + ' icon'} />;
+export const AAVEIcon = ({ addClass = '' }) => <AAVE className={addClass + ' icon'} />;
+export const DAIIcon = ({ addClass = '' }) => <DAI className={addClass + ' icon'} />;
+export const MKRIcon = ({ addClass = '' }) => <MKR className={addClass + ' icon'} />;
+export const COMPIcon = ({ addClass = '' }) => <COMP className={addClass + ' icon'} />;
+export const BTCIcon = ({ addClass = '' }) => <BTC className={addClass + ' icon'} />;
 
 export const ChevronUpIcon = ({ addClass = '' }) => (
   <ChevronUp className={addClass + ' icon chevron-up'} />
@@ -66,6 +89,8 @@ export const ArrowUpDownIcon = ({ addClass = '' }) => (
 );
 
 export const LogoIcon = ({ addClass = '' }) => <Logo className={addClass + ' icon'} />;
+
+export const InfoIcon = ({ addClass = '' }) => <Info className={addClass + ' icon'} />;
 
 export const StopIcon = ({ addClass = '' }) => <Stop className={addClass + ' icon'} />;
 export const StartIcon = ({ addClass = '' }) => <Start className={addClass + ' icon'} />;
@@ -156,6 +181,14 @@ export const TwitterIcon = ({ addClass = '' }) => <Twitter className={addClass +
 export const FacebookIcon = ({ addClass = '' }) => (
   <Facebook className={addClass + ' icon'} />
 );
+
+export const GitHubIcon = ({ addClass = '' }) => <GitHub className={addClass + ' icon'} />;
+
+export const InstagramIcon = ({ addClass = '' }) => (
+  <Instagram className={addClass + ' icon'} />
+);
+
+export const EmailIcon = ({ addClass = '' }) => <Email className={addClass + ' icon'} />;
 
 export const TapIcon = ({ addClass = '' }) => <Tap className={addClass + ' icon'} />;
 

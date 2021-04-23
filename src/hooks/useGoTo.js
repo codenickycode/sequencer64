@@ -2,6 +2,7 @@ import { useHistory, useLocation } from 'react-router';
 
 export const PATHS = {
   BASE: '/sequencer/session',
+  INFO: '/sequencer/session/info',
   LOAD: '/sequencer/session/load',
   SAVE: '/sequencer/session/save',
   LOGIN: '/sequencer/session/login',
@@ -20,6 +21,7 @@ export const useGoTo = () => {
   };
   const goTo = {};
   goTo.base = (cb) => goToFunc(PATHS.BASE, cb);
+  goTo.info = (cb) => goToFunc(PATHS.INFO, cb);
   goTo.load = (cb) => goToFunc(PATHS.LOAD, cb);
   goTo.save = (cb) => goToFunc(PATHS.SAVE, cb);
   goTo.login = (cb) => goToFunc(PATHS.LOGIN, cb);
@@ -38,6 +40,7 @@ export const useCurrentPath = () => {
   path.mixingSamples = pathname === PATHS.SAMPLE_MIXER;
   path.mixing = path.mixingMain || path.mixingSamples;
   path.atBase = pathname === PATHS.BASE;
+  path.showingInfo = pathname === PATHS.INFO;
 
   return path;
 };

@@ -36,6 +36,7 @@ const Themes = () => {
             item={theme}
             selected={selected}
             onClick={changeTheme}
+            addClass='noDim'
           />
         );
       })}
@@ -58,6 +59,7 @@ const Analyzer = () => {
             item={mode}
             selected={selected}
             onClick={changeMode}
+            addClass='noDim'
           />
         );
       })}

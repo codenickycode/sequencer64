@@ -1,0 +1,118 @@
+@use 'styles/placeholders' as *;
+@use 'styles/mixins' as *;
+
+.infoPage {
+  pointer-events: initial;
+  position: absolute;
+  min-height: 100%;
+  width: 100%;
+  z-index: 101;
+  @extend %bg3q;
+  @include flex;
+  letter-spacing: 1.25px;
+
+  .container {
+    padding: 1rem;
+    padding-bottom: 3rem;
+    max-width: 600px;
+    @extend %border;
+    @extend %bg;
+  }
+
+  section {
+    margin-bottom: 2rem;
+  }
+
+  .infoTitle {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .subHeader {
+    padding: 0.5rem 0;
+    font-size: 1rem;
+    @extend %borderBottomHalf;
+  }
+
+  p {
+    margin: 1rem 0;
+    line-height: 1.5;
+  }
+
+  .link {
+    a,
+    .crypto {
+      padding: 0.25rem 0.5rem;
+      @extend %borderHalf;
+      @extend %text;
+      @include flex;
+      display: inline-flex;
+      text-decoration: none;
+    }
+
+    .icon {
+      margin: 0.25rem;
+      height: 1rem;
+      width: 1rem;
+    }
+  }
+
+  .contactLinks,
+  .support {
+    width: 100%;
+    margin: 0.5rem 0;
+    .link {
+      cursor: pointer;
+      display: inline-block;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+
+      .crypto {
+        text-transform: capitalize;
+      }
+    }
+  }
+
+  .coin {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    @extend %bg3q;
+
+    .coinContainer {
+      padding: 1.5rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      @extend %border;
+      @extend %bg;
+      @include flex(column);
+
+      .close.btn {
+        @extend %closeBtnSmall;
+      }
+
+      .coinName {
+        text-transform: capitalize;
+      }
+
+      img {
+        width: 250px;
+        height: 250px;
+      }
+
+      #walletAddress {
+        margin: 1rem 0;
+        @extend %input;
+      }
+      #copyAddress {
+        @extend %btn;
+        margin-left: 0.25rem;
+      }
+    }
+  }
+}

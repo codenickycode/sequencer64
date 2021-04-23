@@ -5,12 +5,10 @@
   position: absolute;
   z-index: 201;
   pointer-events: initial;
-  // height: auto;
   min-height: 100%;
   width: 100%;
   @extend %bg90;
   @include flex(column);
-  // overflow-y: scroll;
 }
 
 h1 {
