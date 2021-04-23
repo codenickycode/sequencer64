@@ -1,10 +1,9 @@
 import { useRef, useState } from 'react';
-import { getFullyScrolled, getScrollToLeft, useInitialScroll } from './scrollHelpers';
+import { getFullyScrolled, getScrollToLeft } from './scrollHelpers';
 import { useCallWhenDone } from 'hooks/useCallWhenDone';
 
 export const useScrollable = () => {
   const containerRef = useRef(null);
-  useInitialScroll(containerRef, 1);
 
   const [disabled, setDisabled] = useState({ left: false, right: false });
 

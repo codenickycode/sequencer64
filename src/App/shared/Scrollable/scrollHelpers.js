@@ -1,23 +1,4 @@
-import { useEffect, useState } from 'react';
-
 const NUM_SCROLLS = 3;
-
-export const useInitialScroll = (containerRef, scrollPosition) => {
-  const [initialState, setInitialState] = useState(true);
-
-  function initialScroll() {
-    if (!initialState) return;
-    if (!containerRef.current) return;
-    const width = containerRef.current.clientWidth;
-    containerRef.current.scrollTo({
-      left: width * scrollPosition,
-      behavior: 'smooth',
-    });
-    setInitialState(false);
-  }
-
-  useEffect(initialScroll, [initialState, containerRef, scrollPosition]);
-};
 
 export const getFullyScrolled = (container) => {
   const leftFullyScrolled = container.scrollLeft <= 0;
@@ -33,4 +14,15 @@ export const getScrollToLeft = (container, dir) => {
   const start = container.scrollLeft;
   const left = start + offset;
   return left;
+};
+
+export const scrollToTransport = () => {
+  const menuBar = document.getElementById('menuBar');
+  const transport = document.getElementById('transport');
+  if (!menuBar || !transport) return;
+  const { left } = transport.getBoundingClientRect();
+  menuBar.scrollTo({
+    left,
+    behavior: 'smooth',
+  });
 };

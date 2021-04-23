@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button } from 'App/shared/Button';
 import {
@@ -14,14 +14,21 @@ import { startRecord } from 'App/reducers/thunks/toneThunks';
 import { useBpmInput } from './useBpmInput';
 import { TransportBtn } from './TransportBtn';
 import { useShowTransportBtns } from './useShowTransportBtns';
+import { scrollToTransport } from 'App/shared/Scrollable/scrollHelpers';
 
 export const TransportPanel = () => {
-  return (
-    <div className='transportWrapper'>
-      <TransportBtns />
-      <BpmInput />
-    </div>
-  );
+  useEffect(() => setTimeout(scrollToTransport, 150), []);
+  const memo = useMemo(() => {
+    return (
+      <div id='transport' className='menuItems transport'>
+        <div className='transportWrapper'>
+          <TransportBtns />
+          <BpmInput />
+        </div>
+      </div>
+    );
+  }, []);
+  return memo;
 };
 
 const TransportBtns = () => {

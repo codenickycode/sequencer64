@@ -6,16 +6,19 @@ import { setStatus } from 'App/reducers/appSlice';
 import { MenuItem, PopupMenu } from 'App/shared/PopupMenu/PopupMenu';
 
 let UndoRedoMenu = ({ canUndo, canRedo }) => {
-  return (
-    <PopupMenu
-      name='undo/redo'
-      Icon={UndoRedoIcon}
-      disabled={!canUndo && !canRedo}
-      keepOpenOnSelect={true}
-    >
-      <UndoRedoMenuItems />
-    </PopupMenu>
-  );
+  const memo = useMemo(() => {
+    return (
+      <PopupMenu
+        name='undo/redo'
+        Icon={UndoRedoIcon}
+        disabled={!canUndo && !canRedo}
+        keepOpenOnSelect={true}
+      >
+        <UndoRedoMenuItems />
+      </PopupMenu>
+    );
+  }, [canRedo, canUndo]);
+  return memo;
 };
 
 let UndoRedoMenuItems = ({ canUndo, canRedo, onUndo, onRedo }) => {

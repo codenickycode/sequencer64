@@ -16,23 +16,41 @@ export const PopupMenu = ({
   const popupMenu = usePopupMenu(keepOpenOnSelect, active, activeCB);
   const { btnRef, btnClasses, onClick, renderMenu, menuStyle, menuClasses } = popupMenu;
 
-  const btnId = `${name}Btn`;
-  return (
-    <div ref={btnRef} className='menuBtnWrapper '>
-      <Button
-        id={btnId}
-        classes={btnClasses + ' ' + addBtnClasses}
-        disabled={disabled}
-        onClick={onClick}
-      >
-        <Icon />
-        <label htmlFor={btnId}>{name}</label>
-      </Button>
-      <PopupMenuItems renderMenu={renderMenu} menuStyle={menuStyle} menuClasses={menuClasses}>
-        {children}
-      </PopupMenuItems>
-    </div>
-  );
+  const memo = useMemo(() => {
+    const btnId = `${name}Btn`;
+    return (
+      <div ref={btnRef} className='menuBtnWrapper '>
+        <Button
+          id={btnId}
+          classes={btnClasses + ' ' + addBtnClasses}
+          disabled={disabled}
+          onClick={onClick}
+        >
+          <Icon />
+          <label htmlFor={btnId}>{name}</label>
+        </Button>
+        <PopupMenuItems
+          renderMenu={renderMenu}
+          menuStyle={menuStyle}
+          menuClasses={menuClasses}
+        >
+          {children}
+        </PopupMenuItems>
+      </div>
+    );
+  }, [
+    addBtnClasses,
+    btnClasses,
+    btnRef,
+    children,
+    disabled,
+    menuClasses,
+    menuStyle,
+    name,
+    onClick,
+    renderMenu,
+  ]);
+  return memo;
 };
 
 const PopupMenuItems = ({ renderMenu, menuStyle, menuClasses, children }) => {
