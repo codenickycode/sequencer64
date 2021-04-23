@@ -45,8 +45,10 @@ export const useSampleBtn = (selectSample, selected, i) => {
 
   const startFunc = (e) => {
     if (recording) dispatch(recordSample(i));
-    Kit.samples[i].sampler.triggerAttack('C2', Tone.immediate(), 1);
-    setFlash(true);
+    if (tapping) {
+      Kit.samples[i].sampler.triggerAttack('C2', Tone.immediate(), 1);
+      setFlash(true);
+    }
   };
 
   const onClick = () => {
