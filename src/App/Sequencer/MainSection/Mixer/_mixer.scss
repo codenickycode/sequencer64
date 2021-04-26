@@ -6,7 +6,7 @@
 .mixer {
   pointer-events: initial;
   @extend %fullAbs;
-  background: var(--bgOverlay3q);
+  background: var(--bgHTML3q);
 
   .mixItemWrapper {
     @extend %full;

@@ -5,7 +5,7 @@
 .changeKit {
   pointer-events: initial;
   @extend %fullAbs;
-  background: var(--bgOverlay90);
+  background: var(--bgHTML90);
 
   .kits {
     @extend %full;

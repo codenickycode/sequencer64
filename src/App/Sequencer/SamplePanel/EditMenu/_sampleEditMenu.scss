@@ -7,7 +7,7 @@
   top: 0;
   left: 0;
   z-index: 5;
-  background: var(--bgOverlay3q);
+  background: var(--bgHTML3q);
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
@@ -15,7 +15,7 @@
   border-radius: 0;
 
   &.dark {
-    background: var(--bgOverlay90);
+    background: var(--bgHTML90);
   }
 
   &.flex {

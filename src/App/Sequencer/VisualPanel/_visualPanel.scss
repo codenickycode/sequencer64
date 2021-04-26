@@ -17,7 +17,7 @@
 
     &.show {
       display: flex;
-      background: var(--bgOverlay3q);
+      background: var(--bgHTML3q);
     }
 
     .analyzer.wave,
@@ -69,7 +69,7 @@
     border-radius: 0;
 
     &.bg3q {
-      background: var(--bgOverlay3q);
+      background: var(--bgHTML3q);
     }
     &.hide {
       opacity: 0;
@@ -82,7 +82,7 @@
     border-radius: 0;
     transform: scale(1, 0) translate(0, 0);
     transform-origin: center;
-    @extend %bgGradient;
+    background: linear-gradient(var(--gradient1), var(--gradient2), var(--gradient3));
     transition-property: opacity, transform, filter;
     opacity: 0.15;
 

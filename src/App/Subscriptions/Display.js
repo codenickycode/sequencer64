@@ -4,6 +4,7 @@ import { startAnalyzer, stopAnalyzer } from 'App/reducers/functions/animations';
 import { setAnalyzerOn } from 'App/reducers/screenSlice';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import * as THEMES from 'styles/themes';
 
 export const Display = () => {
   const dispatch = useDispatch();
@@ -23,11 +24,14 @@ export const Display = () => {
 
   return null;
 };
+
 const useChangeTheme = () => {
   const theme = useSelector((state) => state.app.theme);
-
   useEffect(() => {
-    document.getElementById('root').className = `theme${theme}`;
+    if (!theme) return;
+    for (let [key, val] of Object.entries(THEMES[theme.toLowerCase()])) {
+      document.body.style.setProperty(key, val);
+    }
   }, [theme]);
   return null;
 };

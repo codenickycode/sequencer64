@@ -71,7 +71,7 @@
       animation: flashTapBtn 400ms alternate infinite;
     }
     &.active.tap.record {
-      background: var(--bgOverlay);
+      background: var(--bgHTML);
       border-color: var(--red);
       label {
         color: var(--red);

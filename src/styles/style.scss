@@ -41,7 +41,7 @@ html {
 html,
 body {
   @extend %fullAbs;
-  background: var(--bgOverlay);
+  background: var(--bgHTML);
   touch-action: pan-y;
 }
 
@@ -56,7 +56,7 @@ body {
 
 #root {
   @extend %full;
-  background: var(--bgOverlay);
+  background: var(--bgHTML);
 }
 
 .deg90 {

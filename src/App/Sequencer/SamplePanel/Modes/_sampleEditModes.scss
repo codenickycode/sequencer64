@@ -9,14 +9,14 @@
     top: 0;
     left: 0;
     z-index: 5;
-    background: var(--bgOverlay3q);
+    background: var(--bgHTML3q);
     border: 1px solid var(--primary-half);
     border-radius: 0;
     @include flex(row, space-evenly);
     overflow: hidden;
 
     &.dark {
-      background: var(--bgOverlay90);
+      background: var(--bgHTML90);
     }
 
     @media (orientation: landscape) {

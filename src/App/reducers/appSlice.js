@@ -4,13 +4,10 @@ import { getLS } from 'utils/storage';
 import * as appThunks from './thunks/appThunks';
 
 export const THEMES = {
-  DARK: 'Dark',
-  LIGHT: 'Light',
+  MARIO: 'Mario',
   JOKER: 'Joker',
-  NES: 'NES',
   TMNT: 'TMNT',
-  BLACK: 'Black',
-  WHITE: 'White',
+  LIGHT: 'Light',
 };
 
 export const INITIAL_USER = {
@@ -28,7 +25,7 @@ const INITIAL_STATE = {
   error: '',
   online: window.navigator.onLine,
   serviceWorkerActive: false,
-  theme: getLS('theme') || THEMES.JOKER,
+  theme: getLS('theme') || THEMES.MARIO,
   log: { count: 0, message: '' },
   preparingDownload: false,
 };
