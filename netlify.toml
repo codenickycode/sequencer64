@@ -1,10 +1,16 @@
-[[redirects]]
-  from = "https://drumnickydrum-sequencer.herokuapp.com/*"
-  to = "https://drumnickydrum-sequencer.herokuapp.com/:splat"
-  status = 200
-  force = true
+# [[redirects]]
+#   from = "https://drumnickydrum-sequencer.herokuapp.com/*"
+#   to = "https://drumnickydrum-sequencer.herokuapp.com/:splat"
+#   status = 200
+#   force = true
 
 [[redirects]]
   from = "/*"
   to = "/"
   status = 200
+
+[[headers]]
+# Define which paths this specific [[headers]] block will cover.
+  for = "https://drumnickydrum-sequencer.herokuapp.com/*"
+  [headers.values]
+  Access-Control-Allow-Origin = "*"
