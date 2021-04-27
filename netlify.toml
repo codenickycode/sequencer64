@@ -9,8 +9,8 @@
   to = "/"
   status = 200
 
-[[headers]]
-# Define which paths this specific [[headers]] block will cover.
-  for = "https://drumnickydrum-sequencer.herokuapp.com/*"
-  [headers.values]
-  Access-Control-Allow-Origin = "*"
+# [[headers]]
+# # Define which paths this specific [[headers]] block will cover.
+#   for = "https://drumnickydrum-sequencer.herokuapp.com/*"
+#   [headers.values]
+#   Access-Control-Allow-Origin = "*"
