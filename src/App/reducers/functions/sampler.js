@@ -31,17 +31,15 @@ const addSamplersToKit = (kitAssets) => {
   const promises = [];
   for (let [i, sample] of kitAssets.samples.entries()) {
     Kit.samples[i] = { ...sample };
-    promises.push(connectSample(Kit.samples[i], sample.path));
+    promises.push(connectSample(Kit.samples[i]));
   }
   return promises;
 };
 
-const connectSample = (sample, url) => {
+const connectSample = (sample) => {
   return new Promise((resolve) => {
     sample.sampler = new Tone.Sampler({
-      urls: {
-        C2: url,
-      },
+      urls: sample.urls,
       onload: () => {
         sample.channel = new Tone.Channel({
           volume: 0,

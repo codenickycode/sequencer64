@@ -3,6 +3,15 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 export const Mixer = () => {
+  const sequence = useSelector((state) => state.sequence.present.pattern);
+  console.log(sequence);
+
+  const mainMixer = useSelector((state) => state.sequence.present.mainMixer);
+  console.log(mainMixer);
+
+  const sampleMixer = useSelector((state) => state.sequence.present.sampleMixer);
+  console.log(sampleMixer);
+
   const mainVolume = useSelector((state) => state.sequence.present.mainMixer.volume);
   useEffect(() => {
     mainBus.mixer.volume.setValFromRotary(mainVolume);

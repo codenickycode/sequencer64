@@ -22,9 +22,9 @@ export const fft = new Tone.FFT({
 
 export const recorder = new Tone.Recorder();
 const limiter = new Tone.Limiter(-18).fan(recorder, Tone.Destination);
-const output = new Tone.Channel({ volume: -6, pan: 0, channelCount: 2 }).connect(limiter);
+const output = new Tone.Channel({ volume: 0, pan: 0, channelCount: 2 }).connect(limiter);
 
-export const mainBus = new Tone.Channel({ volume: -6, pan: 0, channelCount: 2 });
+export const mainBus = new Tone.Channel({ volume: 0, pan: 0, channelCount: 2 });
 mainBus.mixer = {
   volume: {
     getRotaryVal: () => {
@@ -35,7 +35,7 @@ mainBus.mixer = {
     setValFromRotary: (val) => {
       mainBus.volume.value = (val - 100) * 0.25;
     },
-    initialVal: 76,
+    initialVal: 100,
   },
 };
 
@@ -58,7 +58,7 @@ mainBus.mixer.warp.setValFromRotary = (val) => {
   mainBus.mixer.warp.set({ pitch: newPitch, wet: newWet });
 };
 
-mainBus.mixer.crush = new Tone.BitCrusher({ bits: 3, wet: 0 });
+mainBus.mixer.crush = new Tone.BitCrusher({ bits: 4, wet: 0 });
 mainBus.mixer.crush.getRotaryVal = () => mainBus.mixer.crush.get().wet * 100;
 mainBus.mixer.crush.setValFromRotary = (val) => mainBus.mixer.crush.set({ wet: val / 100 });
 

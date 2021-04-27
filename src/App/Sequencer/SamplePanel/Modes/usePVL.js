@@ -13,7 +13,7 @@ export const usePVL = () => {
   const [value, setValue] = useState(INITIAL_MODS[editorMode]);
   useEffect(() => dispatch(setModVal(value)), [dispatch, value]);
 
-  const [editAll, setEditAll] = useState(true);
+  const [editAll, setEditAll] = useState(false);
 
   const dispatchModAll = useCallback(() => {
     dispatch(

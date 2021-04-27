@@ -71,7 +71,7 @@
       opacity: 1;
     }
     .icon {
-      fill: var(--fg);
+      fill: var(--fg) !important;
     }
   }
 }

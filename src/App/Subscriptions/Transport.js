@@ -38,6 +38,12 @@ export const Transport = () => {
   // after loadSequence && loadSamples ↑
   useEffect(() => {
     if (loadingSamples) return;
+    if (bufferedKit === sequenceKitName) {
+      if (bufferedKit === 'saffron') {
+        Tone.Transport.swing = 0.3;
+        Tone.Transport.swingSubdivision = '16n';
+      } else Tone.Transport.swing = 0;
+    }
     if (bufferedKit === sequenceKitName && restarting) {
       dispatch(startSequence());
     }

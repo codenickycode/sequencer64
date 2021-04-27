@@ -16,6 +16,7 @@ import { ReactComponent as Tom } from 'assets/icons/kit/tom.svg';
 import { ReactComponent as Vocal } from 'assets/icons/kit/voc.svg';
 import { ReactComponent as Woodblock } from 'assets/icons/kit/wb.svg';
 import { ReactComponent as Tambourine } from 'assets/icons/kit/tamb.svg';
+import { ReactComponent as Note } from 'assets/icons/kit/note.svg';
 
 export const cb = (color) => {
   const classes = color || color === 0 ? `icon fill${color}` : 'icon fillWhite';
@@ -105,4 +106,9 @@ export const wb = (color) => {
 export const tamb = (color) => {
   const classes = color || color === 0 ? `icon fill${color}` : 'icon white';
   return <Tambourine className={classes} />;
+};
+
+export const note = (color) => {
+  const classes = color || color === 0 ? `icon fill${color}` : 'icon white';
+  return <Note className={classes} />;
 };
