@@ -1,4 +1,10 @@
 [[redirects]]
+  from = "api/*"
+  to = "https://drumnickydrum-sequencer.herokuapp.com/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/*"
   to = "/"
   status = 200
