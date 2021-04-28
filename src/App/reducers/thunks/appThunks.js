@@ -106,9 +106,7 @@ export const logout = () => async (dispatch) => {
   try {
     dispatch(setFetching(true));
     await apiLogout();
-    dispatch(
-      setUser({ user: { ...INITIAL_USER }, message: 'Successfully logged out' })
-    );
+    dispatch(setUser({ user: { ...INITIAL_USER }, message: 'Successfully logged out' }));
   } catch (e) {
     console.error('logout ->\n', e);
     dispatch(setStatus('error logging out'));

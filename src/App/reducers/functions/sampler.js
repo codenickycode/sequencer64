@@ -16,7 +16,10 @@ export const buildSamplers = (kitAssets) =>
   new Promise(async (resolve, reject) => {
     const addSamplersPromises = addSamplersToKit(kitAssets);
     try {
-      let rejectTimer = setTimeout(() => reject('error loading samples'), NETWORK_TIMEOUT);
+      let rejectTimer = setTimeout(
+        () => reject('timed out loading samples'),
+        NETWORK_TIMEOUT
+      );
       await Promise.all(addSamplersPromises);
       clearTimeout(rejectTimer);
       console.log(`${Kit.name} buffers loaded!`);
@@ -37,10 +40,12 @@ const addSamplersToKit = (kitAssets) => {
 };
 
 const connectSample = (sample) => {
+  console.log('connectSample sample -> ', sample);
   return new Promise((resolve) => {
     sample.sampler = new Tone.Sampler({
       urls: sample.urls,
       onload: () => {
+        console.log('sample onLoad success');
         sample.channel = new Tone.Channel({
           volume: 0,
           pan: 0,
