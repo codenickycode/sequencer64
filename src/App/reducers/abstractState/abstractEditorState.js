@@ -13,7 +13,13 @@ export const areWeTapping = (editorMode) => {
 };
 
 export const areCellsEditable = (editorMode) => {
-  return editorMode === MODES.ERASE || editorMode === MODES.SLICE;
+  return (
+    editorMode === MODES.ERASE ||
+    editorMode === MODES.SLICE ||
+    editorMode === MODES.MOD_PITCH ||
+    editorMode === MODES.MOD_VELOCITY ||
+    editorMode === MODES.MOD_LENGTH
+  );
 };
 
 export const getSampleEditModes = (editorMode) => {
