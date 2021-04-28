@@ -1,4 +1,4 @@
-export const HOST = 'api';
+export const HOST = '/api';
 export const ORIGIN = 'sequencer64.com';
 export const NETWORK_TIMEOUT = 5000;
 export const SHARE_TEXT = 'Check%20out%20my%20new%20beat%20using%20%23Sequencer64!%20';
