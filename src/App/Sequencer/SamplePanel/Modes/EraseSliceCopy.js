@@ -48,7 +48,7 @@ export const Erase = ({ onReturn }) => {
   const onEraseAll = () => {
     dispatch(eraseSample({ selectedSample }));
   };
-  const instruction = ' Click and drag to erase cells';
+  const instruction = ' Click and drag to erase notes';
   return (
     <ModeDetail
       onReturn={onReturn}
@@ -67,7 +67,7 @@ export const Slice = ({ onReturn }) => {
   const onReset = () => {
     dispatch(resetSlice(selectedSample));
   };
-  const instruction = 'Click each cell to slice into halves or thirds';
+  const instruction = 'Click active notes to slice into halves or thirds';
   return (
     <ModeDetail
       onReturn={onReturn}
@@ -81,7 +81,7 @@ export const Slice = ({ onReturn }) => {
 };
 
 export const Copy = ({ onReturn }) => {
-  const instruction = "Click to paste current samples's pattern";
+  const instruction = "Click to paste current instrument's pattern";
   return (
     <ModeDetail onReturn={onReturn} Icon={CopyIcon} instruction={instruction}>
       <PastePattern />

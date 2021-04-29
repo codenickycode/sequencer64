@@ -21,9 +21,9 @@ export const INITIAL_MODS = {
 
 export const MOD_INFO = 'Change value then tap cells to apply';
 export const EDITOR_MODE_INFO = {
-  [MODES.TAP]: 'Tap to play samples',
-  [MODES.TAP_RECORD]: 'Tap to record samples',
-  [MODES.INIT]: 'Select a sample to edit',
+  [MODES.TAP]: 'Tap to play instrument',
+  [MODES.TAP_RECORD]: 'Press record then tap instruments',
+  [MODES.INIT]: 'Select an instrument to edit',
   [MODES.MOD_VELOCITY]: MOD_INFO,
   [MODES.MOD_LENGTH]: MOD_INFO,
   [MODES.MOD_PITCH]: MOD_INFO,
