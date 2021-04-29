@@ -1,7 +1,11 @@
 import { ActionCreators } from 'redux-undo';
 import { apiGetSequence } from 'api';
 import { setFetching, setFlashInfo } from '../appSlice';
-import { getPatternFromStr } from '../functions/sequence';
+import {
+  getMainMixerFromStr,
+  getPatternFromStr,
+  getSampleMixerFromStr,
+} from '../functions/sequence';
 import {
   loadSequence,
   eraseCell,
@@ -22,6 +26,8 @@ export const loadInitialSequence = (_id, clearUrl) => async (dispatch) => {
     try {
       const res = await apiGetSequence(_id);
       const sequence = res.data;
+      sequence.mainMixer = getMainMixerFromStr(sequence.mainMixerStr);
+      sequence.sampleMixer = getSampleMixerFromStr(sequence.sampleMixerStr);
       sequence.pattern = getPatternFromStr(sequence.patternStr);
       dispatch(loadSequence(sequence));
     } catch (e) {
