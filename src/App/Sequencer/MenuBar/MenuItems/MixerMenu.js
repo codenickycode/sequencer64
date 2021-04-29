@@ -33,10 +33,9 @@ export const MixerMenu = () => {
 };
 
 export const MixerMenuItems = () => {
-  const dispatch = useDispatch();
   const goTo = useGoTo();
   const { mixingMain, mixingSamples } = useCurrentPath();
-  const openPath = (path) => goTo[path](() => dispatch(setMode(MODES.TAP)));
+  const openPath = (path) => goTo[path]();
   return (
     <>
       <MenuItem item={'Main'} selected={mixingMain} onClick={() => openPath('mainMixer')} />

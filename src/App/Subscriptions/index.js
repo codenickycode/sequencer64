@@ -4,6 +4,7 @@ import { Storage } from './Storage';
 import { Display } from './Display';
 import { Transport } from './Transport';
 import { Mixer } from './Mixer';
+import { Paths } from './Paths';
 
 export const Subscriptions = () => {
   return (
@@ -14,6 +15,7 @@ export const Subscriptions = () => {
       <Transport />
       <Display />
       <Mixer />
+      <Paths />
     </>
   );
 };

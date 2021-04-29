@@ -21,8 +21,7 @@ export const OpenPathBtn = ({ addClass = '', active, path, label, Icon }) => {
       if (active) {
         handleGoToBase();
       } else {
-        if (path === 'changeKit') goTo[path](() => dispatch(setMode(MODES.TAP)));
-        else goTo[path]();
+        goTo[path]();
         eventListener('menuBar', 'scroll', handleGoToBase);
       }
     };
