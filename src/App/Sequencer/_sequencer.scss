@@ -62,6 +62,10 @@
   }
 }
 
+#menuBar {
+  border-top: 1px solid var(--primary-dark);
+}
+
 #popupMenuPortal {
   @extend %noEventsLayerAbs;
   max-width: 1440px;

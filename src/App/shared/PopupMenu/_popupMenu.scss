@@ -7,6 +7,8 @@
   position: absolute;
   width: 250px;
   @include flex(column);
+  border: 1px solid var(--primary-dark);
+  border-bottom: none;
   background: var(--primary-darkest);
   opacity: 0;
   transform: translateY(100%);
