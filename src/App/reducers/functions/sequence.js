@@ -69,7 +69,7 @@ export const INIT_PATTERN = () => {
 
 const stepRegexp = /S(\d+)/g;
 const sampleRegexp = /s(\d+)/g;
-const valsRegexp = /p\w\d|v\d+(?:\.\d+)?|l\d+(?:\.\d+)?/g;
+const valsRegexp = /p\w#?\d|v\d+(?:\.\d+)?|l\d+(?:\.\d+)?/g;
 const slicesRegexp = /(n1.*)(n2.*)|n1.*$|n2.*$/;
 
 export const getStrFromPattern = (editedPattern) => {
