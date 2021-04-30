@@ -6,6 +6,7 @@ export const addCloudUserToPayload = async (payload) => {
   try {
     const cloudUser = await apiGetUser();
     if (cloudUser?.data && cloudUser.data.username) {
+      console.log(cloudUser.data);
       payload.loggedIn = true;
       payload._id = cloudUser.data._id;
       payload.username = cloudUser.data.username;
