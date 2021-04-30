@@ -4,7 +4,6 @@ import { HOST } from 'utils/network';
 export const apiGetUser = () =>
   axios.get(`${HOST}/user`, {
     withCredentials: true,
-    headers: { 'Content-Type': 'application/json' },
   });
 
 export const apiLogout = () =>
