@@ -9,5 +9,5 @@ export const AuthSuccess = () => {
   const { authToken } = useParams();
   dispatch(setAuthToken(authToken));
   dispatch(getUser());
-  return <Redirect to={PATHS.BASE} />;
+  return <Redirect to={PATHS.LOAD} />;
 };
