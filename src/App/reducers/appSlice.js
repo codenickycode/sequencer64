@@ -106,6 +106,7 @@ export const appSlice = createSlice({
 
 export const {
   setAuthToken,
+  logout,
   setUser,
   setStatus,
   setFlashInfo,
@@ -121,7 +122,7 @@ export const {
   setPreparingDownload,
 } = appSlice.actions;
 
-export const { saveSequence, deleteSequence, getUser, logout } = appThunks;
+export const { saveSequence, deleteSequence, getUser } = appThunks;
 
 export default appSlice.reducer;
 
