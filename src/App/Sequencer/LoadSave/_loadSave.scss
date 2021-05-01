@@ -79,6 +79,10 @@
     font-size: 0.8rem;
     font-weight: normal;
     color: var(--green);
+
+    &.error {
+      color: var(--red);
+    }
   }
 
   .btn {
