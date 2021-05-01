@@ -6,6 +6,11 @@ export const Storage = () => {
   const theme = useSelector((state) => state.app.theme);
   const analyzerMode = useSelector((state) => state.screen.analyzer.mode);
   const analyzerOn = useSelector((state) => state.screen.analyzer.on);
+  const authToken = useSelector((state) => state.app.authToken);
+
+  useEffect(() => {
+    setLS('authToken', authToken);
+  }, [authToken]);
 
   useEffect(() => {
     setLS('theme', theme);
