@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { apiLogout } from 'api';
 import store from 'App/store';
 import { getLS } from 'utils/storage';
 import * as appThunks from './thunks/appThunks';
@@ -44,7 +43,6 @@ export const appSlice = createSlice({
       state.user = { ...INITIAL_USER };
       state.status.count++;
       state.status.message = 'Successfully logged out';
-      apiLogout();
     },
     setUser: (state, { payload: { user, message } }) => {
       state.user = user;

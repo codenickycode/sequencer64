@@ -8,13 +8,6 @@ export const apiGetUser = () =>
     headers: { authorization: 'Bearer ' + store.getState().app.authToken },
   });
 
-export const apiLogout = () =>
-  axios({
-    url: `${HOST}/user/logout`,
-    method: 'GET',
-    withCredentials: true,
-  });
-
 export const apiGetSequence = (_id) =>
   axios({
     url: `${HOST}/user/sequence`,
