@@ -6,15 +6,8 @@ import {
   idbSaveSeqs,
   mergeSequences,
 } from 'App/reducers/functions/user';
-import { apiDeleteSequence, apiLogout, apiSaveSequence } from 'api';
-import {
-  getUserFinally,
-  INITIAL_USER,
-  setFetching,
-  setStatus,
-  setUser,
-  updateSequencesFinally,
-} from '../appSlice';
+import { apiDeleteSequence, apiSaveSequence } from 'api';
+import { getUserFinally, setFetching, setStatus, updateSequencesFinally } from '../appSlice';
 import { setUserSequences } from '../assetsSlice';
 
 export const saveSequence = (sequence) => async (dispatch, getState) => {
