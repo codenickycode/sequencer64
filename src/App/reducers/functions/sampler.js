@@ -43,7 +43,7 @@ const connectSample = (sample) => {
   console.log('connectSample sample -> ', sample);
   return new Promise((resolve) => {
     sample.sampler = new Tone.Sampler({
-      urls: sample.urls,
+      urls: { C2: sample.path },
       onload: () => {
         console.log('sample onLoad success');
         sample.channel = new Tone.Channel({
