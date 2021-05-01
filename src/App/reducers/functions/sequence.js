@@ -1,6 +1,6 @@
 export const getNoteTally = (pattern) => {
   if (!Array.isArray(pattern)) {
-    console.log('pattern is not an array');
+    console.log('getNoteTally -> pattern is not an array');
     return;
   }
   let noteTally = {

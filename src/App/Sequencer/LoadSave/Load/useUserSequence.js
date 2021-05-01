@@ -44,7 +44,7 @@ export const useUserSequence = (sequence, selectedId) => {
       dispatch(setSynched({ _id, synched: true }));
       dispatch(setStatus('Sequence saved to cloud'));
     } catch (e) {
-      console.log(e);
+      console.error('handleUpload -> ', e);
       dispatch(setStatus('Error saving sequence to cloud'));
       setUploading(false);
     }

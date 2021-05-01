@@ -22,7 +22,7 @@ export const useShareLink = (idRef) => {
       document.execCommand('copy');
       dispatch(setStatus('Link copied to clipboard'));
     } catch (e) {
-      console.log(e);
+      console.error('copyLink error -> ', e);
     }
   };
 

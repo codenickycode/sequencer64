@@ -36,11 +36,10 @@ const Coin = ({ coin, closeCoin }) => {
       document.execCommand('copy');
       dispatch(setStatus('Address copied to clipboard'));
     } catch (e) {
-      console.log(e);
+      console.error('copyAddress error -> ', e);
     }
   };
 
-  console.log(coin);
   return !coin ? null : (
     <div id='coin' className='coin' onClick={close}>
       <div className='coinContainer'>

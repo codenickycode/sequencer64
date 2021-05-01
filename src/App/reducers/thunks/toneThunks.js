@@ -56,7 +56,7 @@ export const loadSamples = () => async (dispatch, getState) => {
     payload.buffersLoaded = true;
     payload.message = sequenceKitName + ' samples loaded';
   } catch (e) {
-    console.log('loadSamples ->\n', e);
+    console.error('loadSamples ->\n', e);
     payload.buffersLoaded = false;
     payload.loadingError = true;
     payload.message = `Error loading ${sequenceKitName} samples`;
@@ -79,7 +79,7 @@ export const schedulePattern = (dispatch, getState) => {
       animateCell(time, document.getElementById(`cell-${step}`));
       animateSample(time, patternStep);
     } catch (e) {
-      console.log('scheduleRepeat passed buffer interrupt');
+      console.error('scheduleRepeat passed buffer interrupt');
     }
     const length = getState().sequence.present.length;
     if (step === length - 1) {

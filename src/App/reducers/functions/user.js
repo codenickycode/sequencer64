@@ -6,7 +6,6 @@ export const addCloudUserToPayload = async (payload) => {
   try {
     const cloudUser = await apiGetUser();
     if (cloudUser?.data && cloudUser.data.username) {
-      console.log(cloudUser.data);
       payload.loggedIn = true;
       payload._id = cloudUser.data._id;
       payload.username = cloudUser.data.username;
@@ -14,10 +13,9 @@ export const addCloudUserToPayload = async (payload) => {
       cloudSeqs = cloudUser.data.sequences;
     }
   } catch (e) {
-    console.log('getUserFromCloud ->\n', e);
+    console.error('getUserFromCloud ->\n', e);
   } finally {
     payload.cloudSeqs = cloudSeqs;
-    console.log('addCloudUser finally -> ', payload);
   }
 };
 
@@ -30,7 +28,7 @@ export const addIDBUserToPayload = async (payload) => {
     if (idbSeqs) seqs = idbSeqs;
     if (!payload.message) payload.message = 'user data loaded from device';
   } catch (e) {
-    console.log('getUserFromIDB ->\n', e);
+    console.error('getUserFromIDB ->\n', e);
   } finally {
     payload.idbSeqs = seqs;
   }
@@ -46,7 +44,6 @@ export const mergeSequences = async (payload) => {
 
 const syncCloudSeqs = async (payload) => {
   const { cloudSeqs, idbSeqs, mergedSeqs, promises } = payload;
-  console.log('syncCloudSeqs -> ', payload);
   payload.idbUpdate = false;
   const deletedIds = await get('deleted');
   for (let cloudSeq of cloudSeqs) {

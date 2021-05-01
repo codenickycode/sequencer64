@@ -25,7 +25,7 @@ export const buildSamplers = (kitAssets) =>
       console.log(`${Kit.name} buffers loaded!`);
       resolve();
     } catch (e) {
-      console.log('buildSamplers: ', e);
+      console.error('buildSamplers error -> ', e);
       reject('error loading samples');
     }
   });
@@ -40,12 +40,10 @@ const addSamplersToKit = (kitAssets) => {
 };
 
 const connectSample = (sample) => {
-  console.log('connectSample sample -> ', sample);
   return new Promise((resolve) => {
     sample.sampler = new Tone.Sampler({
       urls: { C2: sample.path },
       onload: () => {
-        console.log('sample onLoad success');
         sample.channel = new Tone.Channel({
           volume: 0,
           pan: 0,

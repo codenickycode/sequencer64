@@ -41,7 +41,6 @@ export const useKitSelection = (i, counterRef) => {
   };
 
   const handleChangeKit = async () => {
-    console.log('handleChangeKit');
     dispatch(setFetchingSamples({ kit: name, fetching: true }));
     const thisClick = ++counterRef.current;
     const [received, error] = await preFetchSamples(kit.samples);

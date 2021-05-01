@@ -50,8 +50,7 @@ registerRoute(
 // precache, in this case same-origin .png requests like those from in public/
 registerRoute(
   // Add in any other file extensions or routing criteria as needed.
-  ({ url }) =>
-    url.origin === self.location.origin && url.pathname.endsWith('.png'), // Customize this strategy as needed, e.g., by changing to CacheFirst.
+  ({ url }) => url.origin === self.location.origin && url.pathname.endsWith('.png'), // Customize this strategy as needed, e.g., by changing to CacheFirst.
   new StaleWhileRevalidate({
     cacheName: 'images',
     plugins: [
@@ -87,7 +86,7 @@ self.addEventListener('fetch', (e) => {
           cachedRes = res;
           await cache.put(e.request, res.clone());
         } catch (e) {
-          console.log(e);
+          console.error('cache error -> ', e);
         } finally {
           console.log('returning from fetch: ', cachedRes);
           return cachedRes;
