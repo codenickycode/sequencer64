@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiLogout } from 'api';
 import store from 'App/store';
-import { getLS, setLS } from 'utils/storage';
+import { getLS } from 'utils/storage';
 import * as appThunks from './thunks/appThunks';
 
 export const THEMES = {
