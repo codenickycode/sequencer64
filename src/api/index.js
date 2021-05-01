@@ -49,6 +49,7 @@ export const preFetchSamples = async (samples) => {
   let received, error;
   try {
     await Promise.all(promises);
+    console.log('didnt throw after rejected');
     received = true;
   } catch (e) {
     error = e;
