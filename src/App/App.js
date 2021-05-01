@@ -15,6 +15,7 @@ import { InfoPage } from './Info/InfoPage';
 import { MainMixer } from './Sequencer/MainSection/Mixer/MainMixer';
 import { SampleMixer } from './Sequencer/MainSection/Mixer/SampleMixer';
 import { PATHS } from 'hooks/useGoTo';
+import { AuthSuccess } from './AuthSuccess';
 
 export default function App() {
   return (
@@ -33,6 +34,7 @@ const AppContent = () => {
   return (
     <>
       <Route path='/' exact render={() => <Redirect to={PATHS.BASE} />} />
+      <Route path='/auth/success/:authToken' component={AuthSuccess} />
       <Route path='/sequencer/:shared' component={SequencerPage} />
       <Route path={PATHS.CHANGE_KIT} component={ChangeKit} />
       <Route path={PATHS.GLOBAL_MIXER} component={MainMixer}/>

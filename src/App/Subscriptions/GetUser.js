@@ -6,10 +6,11 @@ import { checkCachedKits } from 'App/reducers/assetsSlice';
 export const GetUser = () => {
   const dispatch = useDispatch();
   const online = useSelector((state) => state.app.online);
+  const authToken = useSelector((state) => state.app.authToken);
 
   useEffect(() => {
-    dispatch(getUser());
-    dispatch(checkCachedKits());
+    if (authToken) dispatch(getUser());
+    dispatch(checkCachedKits()); // this is too unrelated
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

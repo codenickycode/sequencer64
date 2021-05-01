@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { apiLogout } from 'api';
 import store from 'App/store';
 import { getLS } from 'utils/storage';
 import * as appThunks from './thunks/appThunks';
@@ -17,6 +18,7 @@ export const INITIAL_USER = {
 };
 
 const INITIAL_STATE = {
+  authToken: getLS('authToken') || null,
   user: { ...INITIAL_USER },
   fetching: false,
   status: { count: 0, message: 'loading' },
@@ -34,6 +36,16 @@ export const appSlice = createSlice({
   name: 'app',
   initialState: INITIAL_STATE,
   reducers: {
+    setAuthToken: (state, { payload }) => {
+      state.authToken = payload;
+    },
+    logout: (state) => {
+      state.authToken = null;
+      state.user = { ...INITIAL_USER };
+      state.status.count++;
+      state.status.message = 'Successfully logged out';
+      apiLogout();
+    },
     setUser: (state, { payload: { user, message } }) => {
       state.user = user;
       state.status.count++;
@@ -93,6 +105,7 @@ export const appSlice = createSlice({
 });
 
 export const {
+  setAuthToken,
   setUser,
   setStatus,
   setFlashInfo,

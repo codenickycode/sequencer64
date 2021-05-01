@@ -1,9 +1,11 @@
+import store from 'App/store';
 import axios from 'axios';
 import { HOST } from 'utils/network';
 
 export const apiGetUser = () =>
   axios.get(`${HOST}/user`, {
     withCredentials: true,
+    headers: { authorization: 'Bearer ' + store.getState().app.authToken },
   });
 
 export const apiLogout = () =>
@@ -27,6 +29,7 @@ export const apiSaveSequence = (sequence) =>
     method: 'POST',
     data: sequence,
     withCredentials: true,
+    headers: { authorization: 'Bearer ' + store.getState().app.authToken },
   });
 
 export const apiDeleteSequence = (_id) =>
@@ -35,6 +38,7 @@ export const apiDeleteSequence = (_id) =>
     method: 'POST',
     data: { _id },
     withCredentials: true,
+    headers: { authorization: 'Bearer ' + store.getState().app.authToken },
   });
 
 export const preFetchSamples = async (samples) => {
