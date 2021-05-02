@@ -113,7 +113,3 @@ function animateAnalyzer() {
   }
   if (drawAnalyzer) requestAnimationFrame(animateAnalyzer);
 }
-
-document.addEventListener('keydown', () => {
-  store.dispatch(startSequence());
-});
