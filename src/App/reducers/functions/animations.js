@@ -1,7 +1,5 @@
-import store from 'App/store';
 import { fft } from 'App/Tone';
 import * as Tone from 'tone';
-import { startSequence } from '../toneSlice';
 
 export const startFlashing = () => {
   const flashingCells = document.querySelectorAll('.flashing');
@@ -104,9 +102,9 @@ function animateAnalyzer() {
         if (scaleY !== '1') scaleY = newDb;
         let transform = `scale(${scaleX}, ${scaleY})`;
         freq.style.transform = transform;
-        let blur = freq.dataset.blur - newDb * 100;
-        if (blur < 0) blur = 0;
-        freq.style.filter = `blur(${blur}px)`;
+        // let blur = freq.dataset.blur - newDb * 100;
+        // if (blur < 0) blur = 0;
+        // freq.style.filter = `blur(${blur}px)`;
         freq.style.opacity = newDb + 0.5;
       }
     });

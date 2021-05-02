@@ -20,14 +20,14 @@ export const Analyzer = () => {
               className='freq'
               data-scalex={data.scaleX}
               data-scaley={data.scaleY}
-              data-blur={data.blur}
+              // data-blur={data.blur}
               data-i={i}
             />
           );
         })}
       </div>
     );
-  }, [classes.analyzer, data.blur, data.scaleX, data.scaleY, grid]);
+  }, [classes.analyzer, data.scaleX, data.scaleY, grid]);
   return memo;
 };
 
@@ -55,7 +55,7 @@ const useAnalyzerStyle = ({ analyzerMode, analyzerOn, splitSamplePanel, editing 
     const data = {};
     data.scaleX = analyzerMode === ANALYZER_MODES.WAVE ? 0.2 : 1;
     data.scaleY = analyzerMode === ANALYZER_MODES.RIPPLE ? 1 : 0;
-    data.blur = analyzerMode === ANALYZER_MODES.BARS ? 0 : 50;
+    // data.blur = analyzerMode === ANALYZER_MODES.BARS ? 0 : 50;
 
     const classes = {};
     classes.analyzer = 'analyzer ' + analyzerMode;
