@@ -53,7 +53,7 @@ export const useSampleBtn = (selectSample, selected, i) => {
 
   useEffect(() => {
     function mpcStyle(e) {
-      if (e.code === `Numpad${i + 1}`) startFunc(true);
+      if (e.code === Kit.samples[i].code) startFunc(true);
     }
     document.addEventListener('keydown', mpcStyle);
     return () => document.removeEventListener('keydown', mpcStyle);
