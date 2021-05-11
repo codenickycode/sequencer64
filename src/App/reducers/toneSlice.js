@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import * as Tone from 'tone';
 import { addCursor, pauseFlashing, startFlashing } from 'App/reducers/functions/animations';
 import * as toneThunks from './thunks/toneThunks';
+import store from 'App/store';
 
 const INITIAL_STATE = {
   bufferedKit: null,
@@ -90,12 +91,14 @@ export const {
   setCycle,
 } = toneSlice.actions;
 
-export const {
-  startTone,
-  loadSamples,
-  schedulePattern,
-  startSequence,
-  stopSequence,
-} = toneThunks;
+export const { startTone, loadSamples, schedulePattern, startSequence, stopSequence } =
+  toneThunks;
 
 export default toneSlice.reducer;
+
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space') {
+    if (Tone.Transport.state === 'started') store.dispatch(pauseSequence());
+    else store.dispatch(startSequence());
+  }
+});
