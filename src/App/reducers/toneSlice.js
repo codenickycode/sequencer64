@@ -98,6 +98,7 @@ export default toneSlice.reducer;
 
 document.addEventListener('keydown', (e) => {
   if (!store.getState().tone.buffersLoaded) return;
+  if (e.target?.id === 'saveSequenceInput') return;
 
   if (e.code === 'Space') {
     if (Tone.Transport.state === 'started') store.dispatch(pauseSequence());

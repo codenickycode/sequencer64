@@ -17,6 +17,7 @@
     position: fixed;
     z-index: 2;
     top: 0;
+    left: 0;
     height: 2.5rem;
     width: 100%;
     display: flex;
@@ -36,6 +37,7 @@
 
 .top {
   width: 100%;
+  max-width: 600px;
 }
 
 .notLoggedIn {

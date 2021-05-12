@@ -43,9 +43,9 @@ export const useSampleBtn = (selectSample, selected, i) => {
     vanillaShowAndHideClass(`mixItem${i}`, 'flash', 100);
   }, [flash, i, mixingSamples]);
 
-  const startFunc = (numpad) => {
+  const startFunc = (keydown) => {
     if (recording) dispatch(recordSample(i));
-    if (tapping || numpad) {
+    if (tapping || keydown) {
       Kit.samples[i].sampler.triggerAttack('C2', Tone.immediate(), 1);
       setFlash(true);
     }
@@ -53,7 +53,10 @@ export const useSampleBtn = (selectSample, selected, i) => {
 
   useEffect(() => {
     function mpcStyle(e) {
-      if (e.code === Kit.samples[i].code) startFunc(true);
+      if (e.target?.id === 'saveSequenceInput') return;
+      if (e.code === Kit.samples[i].code || e.code === Kit.samples[i].altCode) {
+        startFunc(true);
+      }
     }
     document.addEventListener('keydown', mpcStyle);
     return () => document.removeEventListener('keydown', mpcStyle);

@@ -23,6 +23,7 @@ export const SaveJSX = ({
 
         <div className='saveInputWrapper'>
           <input
+            id='saveSequenceInput'
             className='nameInput'
             type='text'
             value={newName}
