@@ -3,9 +3,10 @@ import store from 'App/store';
 import * as Tone from 'tone';
 import clickHi from 'assets/audio/clickHi.mp3';
 import clickLow from 'assets/audio/clickLow.mp3';
-// import AudioRecorder from 'audio-recorder-polyfill';
+import AudioRecorder from 'audio-recorder-polyfill';
 
-// window.MediaRecorder = AudioRecorder;
+if (!window.MediaRecorder || window.MediaRecorder.notSupported)
+  window.MediaRecorder = AudioRecorder;
 
 const initialClick = async () => {
   store.dispatch(startTone());
