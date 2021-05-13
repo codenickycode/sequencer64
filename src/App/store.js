@@ -17,8 +17,8 @@ export default configureStore({
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({
-      immutableCheck: false,
-      serializableCheck: false,
+      // immutableCheck: false,
+      // serializableCheck: false,
     });
   },
 });
