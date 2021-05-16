@@ -45,6 +45,7 @@ import { ReactComponent as Twitter } from 'assets/icons/social/twitter.svg';
 import { ReactComponent as Facebook } from 'assets/icons/social/facebook.svg';
 import { ReactComponent as GitHub } from 'assets/icons/social/github.svg';
 import { ReactComponent as Instagram } from 'assets/icons/social/instagram.svg';
+import { ReactComponent as LinkedIn } from 'assets/icons/social/linkedin.svg';
 import { ReactComponent as Email } from 'assets/icons/social/email.svg';
 import { ReactComponent as TV } from 'assets/icons/tv.svg';
 import { MODES } from 'App/reducers/editorSlice';
@@ -186,6 +187,10 @@ export const GitHubIcon = ({ addClass = '' }) => <GitHub className={addClass + '
 
 export const InstagramIcon = ({ addClass = '' }) => (
   <Instagram className={addClass + ' icon'} />
+);
+
+export const LinkedInIcon = ({ addClass = '' }) => (
+  <LinkedIn className={addClass + ' icon'} />
 );
 
 export const EmailIcon = ({ addClass = '' }) => <Email className={addClass + ' icon'} />;

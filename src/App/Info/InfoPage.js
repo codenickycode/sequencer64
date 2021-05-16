@@ -1,6 +1,6 @@
 import { Button } from 'App/shared/Button';
 import { Portal } from 'App/shared/Portal';
-import { EmailIcon, GitHubIcon, InstagramIcon } from 'assets/icons';
+import { EmailIcon, GitHubIcon, InstagramIcon, LinkedInIcon } from 'assets/icons';
 import { useGoTo } from 'hooks/useGoTo';
 import React from 'react';
 import { Support } from './Support';
@@ -71,6 +71,22 @@ const Contact = () => {
       <p>Feature request? Bug report? Talk code?</p>
       <div className='contactLinks'>
         <span className='link'>
+          <a href='https://github.com/drumnickydrum/' target='_blank' rel='noreferrer'>
+            GitHub
+            <GitHubIcon />
+          </a>
+        </span>
+        <span className='link'>
+          <a
+            href='https://www.linkedin.com/in/drumnickydrum'
+            target='_blank'
+            rel='noreferrer'
+          >
+            LinkedIn
+            <LinkedInIcon />
+          </a>
+        </span>
+        <span className='link'>
           <a href='mailto:drumnickydrum@gmail.com'>
             Email
             <EmailIcon />
@@ -80,12 +96,6 @@ const Contact = () => {
           <a href='https://www.instagram.com/drumnickydrum/' target='_blank' rel='noreferrer'>
             Instagram
             <InstagramIcon />
-          </a>
-        </span>
-        <span className='link'>
-          <a href='https://github.com/drumnickydrum/' target='_blank' rel='noreferrer'>
-            GitHub
-            <GitHubIcon />
           </a>
         </span>
       </div>
