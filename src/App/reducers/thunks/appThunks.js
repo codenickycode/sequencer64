@@ -86,7 +86,7 @@ export const getUser = () => async (dispatch, getState) => {
     const online = getState().app.online;
     if (online && payload.loggedIn && payload.promises.length > 0) {
       try {
-        Promise.all(payload.promises);
+        await Promise.all(payload.promises);
         dispatch(setStatus('user data refreshed'));
       } catch (e) {
         console.error('getUser | promises ->:\n', e);
