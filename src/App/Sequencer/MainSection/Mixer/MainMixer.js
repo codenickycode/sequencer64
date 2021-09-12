@@ -12,6 +12,7 @@ import {
   resetMainMixerWarp,
 } from 'App/reducers/sequenceSlice';
 import { getY } from 'utils/getY';
+import { disableScrolling, enableScrolling } from 'utils/disableScrolling';
 
 export const MainMixer = () => {
   const mainMixer = useSelector((state) => state.sequence.present.mainMixer);
@@ -52,6 +53,7 @@ const RotaryKnob = ({ property, value, properties }) => {
   const prevYRef = useRef(null);
 
   const startFunc = useCallback((e) => {
+    disableScrolling();
     setEditing(true);
     prevYRef.current = getY(e);
   }, []);
@@ -72,6 +74,7 @@ const RotaryKnob = ({ property, value, properties }) => {
     setEditing(false);
     if (properties.snapback) setTimeout(reset, 0);
     prevYRef.current = null;
+    enableScrolling();
   }, [properties.snapback, reset]);
 
   const touchAndMouse = useTouchAndMouse(startFunc, moveFunc, endFunc);
