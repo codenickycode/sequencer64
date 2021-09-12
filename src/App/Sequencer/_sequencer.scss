@@ -28,6 +28,8 @@
   @media (orientation: landscape) {
     flex-direction: row;
   }
+
+  touch-action: none;
 }
 
 #main {

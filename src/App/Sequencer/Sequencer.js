@@ -11,9 +11,11 @@ import { VisualPanel } from 'App/Sequencer/VisualPanel/VisualPanel';
 
 export const SequencerPage = () => {
   const { mainContainerHeight, initialLoad, splitSamplePanel } = useSequencer();
+
   const memo = useMemo(() => {
     const mainContainerStyle = { height: mainContainerHeight };
     const popupMenuPortalStyle = { maxHeight: mainContainerHeight };
+
     return initialLoad ? null : (
       <div id='sequencer'>
         <div className='mainContainer' style={mainContainerStyle}>

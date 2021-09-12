@@ -4,11 +4,10 @@ import { getGrid } from 'utils/getGrid';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTapCellById } from 'App/reducers/editorSlice';
 import { useTouchAndMouse } from 'hooks/useTouchAndMouse';
-import { disableScrolling, enableScrolling } from 'utils/disableScrolling';
 
 export const Grid = () => {
-  const { gridSize, startFunc, moveFunc, endFunc, prevCellRef } = useGrid();
-  const touchAndMouse = useTouchAndMouse(startFunc, moveFunc, endFunc);
+  const { gridSize, moveFunc, endFunc, prevCellRef } = useGrid();
+  const touchAndMouse = useTouchAndMouse(null, moveFunc, endFunc);
 
   const gridMemo = useMemo(() => {
     const grid = getGrid(gridSize);
@@ -43,14 +42,12 @@ const useGrid = () => {
     },
     [dispatch, editing]
   );
-  const startFunc = () => disableScrolling();
   const moveFunc = (e) => onTouchMove(e);
   const endFunc = () => {
     prevCellRef.current = null;
-    enableScrolling();
   };
 
-  return { gridSize, startFunc, moveFunc, endFunc, prevCellRef };
+  return { gridSize, moveFunc, endFunc, prevCellRef };
 };
 
 const getTouchedCell = (e) => {

@@ -11,7 +11,6 @@ import {
 } from 'App/reducers/sequenceSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { getY } from 'utils/getY';
-import { disableScrolling, enableScrolling } from 'utils/disableScrolling';
 
 export const SampleMixer = () => {
   const grid = getGrid(Kit.samples.length);
@@ -69,7 +68,6 @@ const MixItemProperty = ({ property, value, properties, sample }) => {
   const prevYRef = useRef(null);
 
   const startFunc = useCallback((e) => {
-    disableScrolling();
     setEditing(true);
     prevYRef.current = getY(e);
   }, []);
@@ -89,7 +87,6 @@ const MixItemProperty = ({ property, value, properties, sample }) => {
     setEditing(false);
     if (properties.snapback) setTimeout(reset, 0);
     prevYRef.current = null;
-    enableScrolling();
   }, [properties.snapback, reset]);
 
   const touchAndMouse = useTouchAndMouse(startFunc, moveFunc, endFunc);
