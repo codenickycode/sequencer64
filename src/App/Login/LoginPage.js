@@ -26,7 +26,7 @@ export const LoginPage = () => {
         <div className='loginMethods'>
           <MethodBtn type='google' login={login} rage={rage} />
           <MethodBtn type='twitter' login={login} rage={rage} />
-          <MethodBtn type='facebook' login={login} rage={rage} />
+            {/* <MethodBtn type='facebook' login={login} rage={rage} /> */}
           <MethodBtn type='github' login={login} rage={rage} />
         </div>
         <div className='bottom-btn show'>
