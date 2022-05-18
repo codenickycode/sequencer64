@@ -114,9 +114,9 @@
   }
 
   .tabs {
-    position: absolute;
     max-width: 50%;
-    left: 50%;
+    position: absolute !important;
+    left: 50% !important;
     transform: translateX(-50%);
   }
 
